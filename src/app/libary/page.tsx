@@ -16,6 +16,7 @@ import {
   getDocs,
   getFirestore,
   onSnapshot,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -41,6 +42,7 @@ export default function Home() {
   const [products, setproducts] = useState([]);
   const [trimmed_product, settrimmed_product] = useState([]);
   const [trimmed_text, settrimmed_text] = useState("");
+  const [search_text, setsearch_text] = useState("");
   const [libraryItems, setlibraryItems] = useState<any>([]);
   const [libary_is_loading, setlibary_is_loading] = useState(true);
   const [downloadmodal_png_link, setdownloadmodal_png_link] = useState("");
@@ -129,7 +131,11 @@ export default function Home() {
   useEffect(() => {
     // Reference to the user's library in the 'library' collection
     const libraryRef = collection(db, "libray");
-    const q = query(libraryRef, where("userid", "==", uid));
+    const q = query(
+      libraryRef,
+      where("userid", "==", uid),
+      orderBy("createdAt", "desc"),
+    );
 
     // Set loading state initially
     setlibary_is_loading(true);
@@ -232,6 +238,19 @@ export default function Home() {
     }
   }, [trimmed_text, libraryItems]);
 
+  useEffect(() => {
+    if (search_text === "") {
+      settrimmed_product(libraryItems);
+    } else {
+      // Custom case-insensitive search using filter
+      const foundObjects = libraryItems.filter((item: any) =>
+        item.title.toLowerCase().includes(search_text.toLowerCase()),
+      );
+
+      settrimmed_product(foundObjects);
+    }
+  }, [search_text]);
+
   return (
     <>
       {page_loader && <Loader />}
@@ -272,6 +291,8 @@ export default function Home() {
               setdownloadmodal_png_link={setdownloadmodal_png_link}
               setdownloadmodal_pngwith_model={setdownloadmodal_pngwith_model}
               setcurrently_downloading_id={setcurrently_downloading_id}
+              setsearch_text={setsearch_text}
+              search_text={search_text}
             />
           </>
         ) : (

@@ -328,11 +328,18 @@ const Forge = (props: any) => {
 
   const handleAddForge = async () => {
     // Iterate through selectedProducts and call the function for each product
-    if (selectedProducts.length > allocation_number) {
+    if (selectedProducts.length == 0) {
+      setadding_forge_text("Select a product ");
+      setTimeout(() => {
+        setadding_forge_text("Confirm to your forge library");
+      }, 3000);
+      return;
+    } else if (selectedProducts.length > allocation_number) {
       setadding_forge_text("Insufficient Allocations ");
       setTimeout(() => {
         setadding_forge_text("Confirm to your forge library");
       }, 3000);
+      return;
     } else {
       setadding_forge_text("Adding to libray");
       const updatePromises = selectedProducts.map(async (product: any) => {

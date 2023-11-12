@@ -223,7 +223,7 @@ export default function Login_component() {
           <div className="w-full h-auto ">
             <input
               type="text"
-              className="w-full h-[3.3vw] rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
+              className="w-full h-[3.3vw] lowercase rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
               placeholder="Username"
               autoComplete="name"
               onChange={(e) => {
