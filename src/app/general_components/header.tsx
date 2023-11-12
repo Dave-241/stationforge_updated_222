@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import { useProfile_Context } from "../utils/profile_context";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import logo from "../../../public/logo.webp";
+import mob_ham from "../../../public/mob_ham.png";
+import mob_cart from "../../../public/mob_cart.png";
 import { initializeApp } from "firebase/app";
 
 import {
@@ -113,10 +115,82 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="w-full h-[4.7vw] bg-transparent absolute z-[99] top-[2.5vw] flex justify-center ">
-      <nav className="w-[90%] h-full pr-[1.3vw]  bg-[#0A0B0B] border-[#CCFF00] border-opacity-[5%] border rounded-[1.06vw] flex justify-between items-center backdrop-blur-[14px] bg-opacity-[30%]">
+    <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute z-[99] top-[2.5vw] sm:top-0 flex justify-center ">
+      <nav className="w-[90%] sm:w-[100%] sm:px-[5%] h-full pr-[1.3vw] bg-[#0A0B0B] sm:bg-[black] border-[#CCFF00] sm:bg-opacity-[50%] border-opacity-[5%] sm:border-none border rounded-[1.06vw] flex justify-between  items-center backdrop-blur-[14px]  bg-opacity-[30%]">
+        {/* mobile design */}
+        {/* mobile design */}
+        {/* mobile design */}
+        {/* mobile design */}
+        {/* mobile design */}
+        <div className="sm:block sm:w-fit  hidden">
+          <button
+            className="= w-[10vw] h-auto flex"
+            // onClick={() => {
+            //   if (pathname == "/") {
+            //     setpage_loader(false);
+            //   } else {
+            //     setpage_loader(true);
+            //   }
+            // }}
+          >
+            <Image
+              src={mob_ham}
+              alt="StationForge Logo"
+              className="w-full h-fit"
+            />
+          </button>
+        </div>
+
+        <div className="sm:block sm:w-fit  hidden">
+          <Link
+            href="/"
+            aria-label="StationForge Home"
+            className="= w-[30vw] h-auto flex"
+            onClick={() => {
+              if (pathname == "/") {
+                setpage_loader(false);
+              } else {
+                setpage_loader(true);
+              }
+            }}
+          >
+            <Image
+              src={logo}
+              alt="StationForge Logo"
+              className="w-full h-fit"
+            />
+          </Link>
+        </div>
+
+        <div className="sm:block sm:w-fit  hidden">
+          <button
+            className="= w-[10vw] h-auto flex"
+            // onClick={() => {
+            //   if (pathname == "/") {
+            //     setpage_loader(false);
+            //   } else {
+            //     setpage_loader(true);
+            //   }
+            // }}
+          >
+            <Image
+              src={mob_cart}
+              alt="StationForge Logo"
+              className="w-full h-fit"
+            />
+          </button>
+        </div>
+
+        {/* destop designs */}
+        {/* destop designs */}
+        {/* destop designs */}
+        {/* destop designs */}
+        {/* destop designs */}
+        {/* destop designs */}
+        {/* destop designs */}
+        {/* destop designs */}
         {/* logo image */}
-        <div className="">
+        <div className="sm:hidden">
           <Link
             href="/"
             aria-label="StationForge Home"
@@ -137,7 +211,7 @@ const Header = () => {
           </Link>
         </div>
         {/* nav array list  */}
-        <div className="neuer  flex items-center gap-[1.8vw] capitalize text-[1vw]">
+        <div className="neuer sm:hidden  flex items-center gap-[1.8vw] capitalize text-[1vw]">
           {links.map((e: any, index: any) => {
             return (
               <>
@@ -164,7 +238,7 @@ const Header = () => {
             );
           })}
         </div>
-        <div className="text-white  flex gap-[0.9vw] text-[1vw] items-center justify-center">
+        <div className="text-white sm:hidden  flex gap-[0.9vw] text-[1vw] items-center justify-center">
           {/* now this is for the download */}
           {!track_hide_download && (
             <div

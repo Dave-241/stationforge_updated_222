@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import hero_img from "../../../public/subscription/hero_sub.webp";
 import Link from "next/link";
+import mob_hero_img from "../../../public/subscription/mob_hero_sub.webp";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useProfile_Context } from "../utils/profile_context";
@@ -30,26 +31,31 @@ const Subscription_Hero = () => {
 
   return (
     <>
-      <div className="w-full h-auto px-[2vw] pt-[2vw]">
+      <div className="w-full h-auto px-[2vw] sm:px-[3vw] pt-[2vw]">
         <Image
           src={hero_img}
-          className="w-full h-fit"
+          className="w-full sm:hidden h-fit"
+          alt="Subscription hero image"
+        />
+        <Image
+          src={mob_hero_img}
+          className="w-full hidden sm:block h-fit"
           alt="Subscription hero image"
         />
       </div>
 
       <div className="w-full justify-center flex items-center pb-[4vw]  ">
-        <div className="w-auto h-auto  gap-[2.7vw] flex-col justify-center flex items-center pt-[3vw]">
+        <div className="w-auto h-auto  gap-[2.7vw] sm:gap-[5vw]  flex-col justify-center flex items-center pt-[3vw]">
           {/* members and post numbers */}
-          <div className="w-auto gap-[3vw] relative h-auto flex justify-center items-center ">
+          <div className="w-auto gap-[3vw] sm:gap-[7vw]  relative h-auto flex justify-center items-center ">
             {" "}
-            <span className="capitalize neuer text-[#F6F6F6]  bg-white bg-opacity-[8%] h-[3vw] w-[10vw] flex justify-center items-center border-[0.06vw] border-[#F6F6F6] rounded-[1.3vw] text-[1.2vw] border-opacity-[80%] z-[20]">
+            <span className="capitalize neuer text-[#F6F6F6]  bg-white bg-opacity-[8%] h-[3vw] w-[10vw] sm:w-[30vw] sm:rounded-[5vw] sm:h-[10vw] sm:text-[3vw] flex justify-center items-center border-[0.06vw] border-[#F6F6F6] rounded-[1.3vw]  text-[1.2vw] border-opacity-[80%] z-[20]">
               2370 Members
             </span>
-            <span className="capitalize neuer text-[#F6F6F6]  bg-white bg-opacity-[8%] h-[3vw] w-[10vw] flex justify-center items-center  border-[0.06vw] border-[#F6F6F6] rounded-[1.3vw] text-[1.2vw] border-opacity-[80%] z-[20]">
+            <span className="capitalize neuer text-[#F6F6F6]  bg-white bg-opacity-[8%] h-[3vw] w-[10vw] sm:w-[30vw] sm:rounded-[5vw] sm:h-[10vw] sm:text-[3vw] flex justify-center items-center  border-[0.06vw] border-[#F6F6F6] rounded-[1.3vw] text-[1.2vw] border-opacity-[80%] z-[20]">
               230 Posts
             </span>
-            <div className="border-b-[0.2vw] absolute left-[50%] translate-x-[-50%] border-white border-opacity-[20%] w-[3vw] border-dotted z-[4]"></div>
+            <div className="border-b-[0.2vw] sm:w-[7vw] sm:border-b-[0.6vw] absolute left-[50%] translate-x-[-50%] border-white border-opacity-[20%] w-[3vw] border-dotted z-[4]"></div>
           </div>
 
           <p className="neuer text-[1.2vw] capitalize text-white text-center">

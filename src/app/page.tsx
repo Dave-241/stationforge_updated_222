@@ -178,7 +178,7 @@ export default function Home() {
     <>
       {page_loader && <Loader />}
       {forge_loader && <Forge />}
-      <div className="w-full h-fit z-[99]  fixed top-[0vw] ">
+      <div className="w-full h-fit z-[99] sm:h-[20vw]   fixed top-[0vw] ">
         <Header />
       </div>
 
@@ -186,7 +186,7 @@ export default function Home() {
       {show_setting_modal && <Settings_modal />}
 
       <Home_hero />
-      <div className="w-full h-[4vw]"></div>
+      <div className="w-full h-[4vw] sm:h-[20vw]"></div>
       <div
         className="w-full h-auto  flex transition duration-[2s] "
         style={{
