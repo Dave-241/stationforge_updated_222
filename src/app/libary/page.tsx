@@ -66,61 +66,111 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // useEffect(() => {
+  //   // Reference to the user's library in the 'library' collection
+  //   const libraryRef = collection(db, "libray");
+  //   const q = query(libraryRef, where("userid", "==", uid));
+
+  //   // Real-time listener for the user's library
+  //   // Real-time listener for the user's library
+  //   const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  //     const postArray: any = [];
+  //     querySnapshot.forEach((change) => {
+  //       setlibary_is_loading(true);
+
+  //       const libraryData = change.data();
+  //       const productRef = doc(db, "products", libraryData.productid);
+  //       setlibary_is_loading(true);
+  //       const libray_collections: any = {
+  //         // Data from the product collection
+  //         month: "",
+  //         id: change.id,
+  //         coverImage: "",
+  //         title: "",
+  //         downloadPngLink: "",
+  //         downloadPngModelLink: "",
+  //         // Data from the library collection
+  //         downloaded: false,
+  //       };
+
+  //       getDoc(productRef)
+  //         .then((productDoc) => {
+  //           if (productDoc.exists()) {
+  //             const productData = productDoc.data();
+  //             //   libray_collections.id = productDoc.id;
+  //             libray_collections.coverImage = productData.cover_png;
+  //             libray_collections.title = productData.title;
+  //             libray_collections.downloadPngLink = productData.png_file;
+  //             libray_collections.downloadPngModelLink =
+  //               productData.png_model_file;
+  //             libray_collections.downloaded = libraryData.downloaded;
+  //             libray_collections.month = libraryData.month;
+  //           } else {
+  //             console.log("No matching product found");
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           console.error("Error fetching product data:", error);
+  //         });
+
+  //       postArray.push(libray_collections);
+  //       setlibary_is_loading(false);
+
+  //       // Move setlibraryItems inside the loop
+  //       // settrimmed_product(postArray)
+  //     });
+  //     setlibraryItems(postArray);
+  //   });
+
+  //   // Clean up the listener when the component unmounts
+  //   return () => unsubscribe();
+  // }, [uid]);
+
   useEffect(() => {
     // Reference to the user's library in the 'library' collection
     const libraryRef = collection(db, "libray");
     const q = query(libraryRef, where("userid", "==", uid));
 
-    // Real-time listener for the user's library
-    // Real-time listener for the user's library
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const postArray: any = [];
-      querySnapshot.forEach((change) => {
-        setlibary_is_loading(true);
+    // Set loading state initially
+    setlibary_is_loading(true);
 
+    // Real-time listener for the user's library
+    const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+      const postArray = [];
+
+      for (const change of querySnapshot.docs) {
         const libraryData = change.data();
         const productRef = doc(db, "products", libraryData.productid);
-        setlibary_is_loading(true);
-        const libray_collections: any = {
-          // Data from the product collection
-          month: "",
-          id: change.id,
-          coverImage: "",
-          title: "",
-          downloadPngLink: "",
-          downloadPngModelLink: "",
-          // Data from the library collection
-          downloaded: false,
-        };
 
-        getDoc(productRef)
-          .then((productDoc) => {
-            if (productDoc.exists()) {
-              const productData = productDoc.data();
-              //   libray_collections.id = productDoc.id;
-              libray_collections.coverImage = productData.cover_png;
-              libray_collections.title = productData.title;
-              libray_collections.downloadPngLink = productData.png_file;
-              libray_collections.downloadPngModelLink =
-                productData.png_model_file;
-              libray_collections.downloaded = libraryData.downloaded;
-              libray_collections.month = libraryData.month;
+        try {
+          // Fetch product data
+          const productDoc = await getDoc(productRef);
 
-              setlibary_is_loading(false);
-            } else {
-              console.log("No matching product found");
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching product data:", error);
-          });
+          if (productDoc.exists()) {
+            const productData = productDoc.data();
+            const libray_collections = {
+              month: libraryData.month,
+              id: change.id,
+              coverImage: productData.cover_png,
+              title: productData.title,
+              downloadPngLink: productData.png_file,
+              downloadPngModelLink: productData.png_model_file,
+              downloaded: libraryData.downloaded,
+            };
+            postArray.push(libray_collections);
+          } else {
+            console.log("No matching product found");
+          }
+        } catch (error) {
+          console.error("Error fetching product data:", error);
+        }
+      }
 
-        postArray.push(libray_collections);
+      // Set loading state to false after data processing
+      setlibary_is_loading(false);
 
-        // Move setlibraryItems inside the loop
-        // settrimmed_product(postArray)
-        setlibraryItems(postArray);
-      });
+      // Set the state outside the loop
+      setlibraryItems(postArray);
     });
 
     // Clean up the listener when the component unmounts
@@ -153,21 +203,35 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array means this effect runs only on mount
 
-  useEffect(() => {
-    if (trimmed_text == "") {
-      return settrimmed_product(libraryItems);
-    } else {
-      const searcher = new JsonSearch(libraryItems, {
-        indice: {
-          month: "month", // search the `title`
-          // name: "author", // search the `author` but it's renamed as `name` in queries
-        },
-      });
+  // useEffect(() => {
+  //   if (trimmed_text == "") {
+  //     return settrimmed_product(libraryItems);
+  //   } else {
+  //     const searcher = new JsonSearch(libraryItems, {
+  //       indice: {
+  //         month: "month", // search the `title`
+  //         // name: "author", // search the `author` but it's renamed as `name` in queries
+  //       },
+  //     });
 
-      let foundObjects = searcher.query(trimmed_text);
-      return settrimmed_product(foundObjects);
+  //     let foundObjects = searcher.query(trimmed_text);
+  //     return settrimmed_product(foundObjects);
+  //   }
+  // }, [trimmed_text, libraryItems]);
+
+  useEffect(() => {
+    if (trimmed_text === "") {
+      settrimmed_product(libraryItems);
+    } else {
+      // Custom case-insensitive search using filter
+      const foundObjects = libraryItems.filter((item: any) =>
+        item.month.toLowerCase().includes(trimmed_text.toLowerCase()),
+      );
+
+      settrimmed_product(foundObjects);
     }
   }, [trimmed_text, libraryItems]);
+
   return (
     <>
       {page_loader && <Loader />}

@@ -38,7 +38,7 @@ const Showcase_body = (props: any) => {
   const { page_loader, setpage_loader }: any = useProfile_Context();
   const router = useRouter();
   const [forgeerr, setforgeerr] = useState("");
-  const [forge_text, setforge_text] = useState("Add to ");
+  const [forge_text, setforge_text] = useState("Add to forge");
   const [addForge_modal, setaddForge_modal] = useState(false);
   const [already_exist, setalready_exist] = useState(false);
   const [forgeTitle, setforgeTitle] = useState("");
@@ -76,6 +76,7 @@ const Showcase_body = (props: any) => {
         router.push("/");
       }, 6000);
     } else if (userSTep > product_arr.role) {
+      setforge_text("Adding to forge ...");
       setforgeerr("");
       addForge(
         cover_img_link,
@@ -107,6 +108,8 @@ const Showcase_body = (props: any) => {
         if (!querySnapshot.empty) {
           // A document with the same userId and productId already exists
           setAlreadyExists(true);
+          setforge_text("Add to forge");
+
           setforgeTitle(title);
           setforgeUrl(image);
           setaddForge_modal(true);
@@ -125,6 +128,7 @@ const Showcase_body = (props: any) => {
       .then((docRef) => {
         if (docRef) {
           // This check ensures that this code runs only if a document was added
+          setforge_text("Added to forge");
           setforgeTitle(title);
           setforgeUrl(image);
           setaddForge_modal(true);
@@ -230,12 +234,12 @@ const Showcase_body = (props: any) => {
           <h1 className="neuem text-[2.5vw] w-[80%] ">{product_arr.title}</h1>
           <div className="flex gap-[3vw] items-center ">
             <button
-              className="bg-[#CCFF00] text-black neuer text-[1.1vw] rounded-[3.2vw] py-[0.7vw] px-[3vw]"
+              className="bg-[#CCFF00] text-black neuer text-[1.1vw] rounded-[3.2vw] w-[13vw] h-[3.4vw]"
               onClick={() => {
                 handleAddToForge();
               }}
             >
-              Add to forge{" "}
+              {forge_text}{" "}
             </button>
 
             <p className="text-[red] text-[0.9vw] w-[20vw] neuer capitalize">

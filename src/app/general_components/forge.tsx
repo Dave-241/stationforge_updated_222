@@ -6,6 +6,7 @@ import Image from "next/image";
 import logo from "../../../public/logo.webp";
 import test from "../../../public/subscription/post_1.webp";
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -13,6 +14,8 @@ import {
   getFirestore,
   onSnapshot,
   query,
+  serverTimestamp,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -26,6 +29,11 @@ const Forge = (props: any) => {
   const [is_loading_allocation, setis_loading_allocation] = useState(true);
   const [is_loading_forge, setis_loading_forge] = useState(true);
   const [uid, setuid] = useState("");
+  const [can_add, setcan_add] = useState(false);
+  const [adding_forge_text, setadding_forge_text] = useState(
+    " Confirm to your forge library",
+  );
+  const [selectedProducts, setselectedProducts] = useState<any>([]);
   const [allocation_number, setallocation_number] = useState(0);
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -110,7 +118,23 @@ const Forge = (props: any) => {
     // Clean up the listener on component unmount
     return () => unsubscribe();
   }, [uid]); // Rerun the effect if userId changesuu
+  const date = new Date();
 
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const currentMonthName = monthNames[date.getMonth()];
   const [items, setitems] = useState([]);
   const [preload_forge_arr, setpreload_forge_arr] = useState([
     "",
@@ -133,6 +157,11 @@ const Forge = (props: any) => {
           const userData = userDoc.data();
           setis_loading_allocation(false);
           setallocation_number(userData.allocations);
+          if (userData.allocations == 0) {
+            setcan_add(false);
+          } else {
+            setcan_add(true);
+          }
         } else {
         }
       })
@@ -141,10 +170,48 @@ const Forge = (props: any) => {
       });
   };
 
-  // get the allocation document
+  // // get the allocation document
+  // useEffect(() => {
+  //   if (uid.length > 1) {
+  //     logUserAllocation(uid);
+  //   }
+  // }, [uid]);
   useEffect(() => {
     if (uid.length > 1) {
-      logUserAllocation(uid);
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("userid", "==", uid));
+
+      // Set loading state initially
+      setis_loading_allocation(true);
+
+      // Real-time listener for user allocation
+      const unsubscribe = onSnapshot(
+        q,
+        (querySnapshot) => {
+          if (!querySnapshot.empty) {
+            // Assuming there's only one document with this userId
+            const userDoc = querySnapshot.docs[0];
+            const userData = userDoc.data();
+            setis_loading_allocation(false);
+            setallocation_number(userData.allocations);
+            if (userData.allocations < 1) {
+              setcan_add(false);
+            } else {
+              setcan_add(true);
+            }
+          } else {
+            // Handle the case where no matching document is found
+            // You might want to set allocation_number to some default value or handle it in another way
+          }
+        },
+        (error) => {
+          console.error("Error getting document:", error);
+        },
+      );
+
+      // Clean up the listener when the component unmounts
+      // This ensures that the listener is removed to avoid memory leaks
+      return () => unsubscribe();
     }
   }, [uid]);
 
@@ -153,15 +220,142 @@ const Forge = (props: any) => {
   // }, [items]);
 
   // Handler for deleting an item
-  const handleDelete = (itemId: any) => {
+  const handleDelete = (itemId: any, productid: any) => {
     const docRef = doc(db, "forge", itemId);
     deleteDoc(docRef)
-      .then(() => {})
+      .then(() => {
+        console.log("this is the id ", itemId);
+        return setselectedProducts((prevSelected: any) =>
+          prevSelected.filter((id: any) => id !== productid),
+        );
+      })
       .catch((error) => {
         console.error("Error deleting item: ", error);
       });
   };
 
+  const handleToggleSelection = (productId: string) => {
+    setselectedProducts((prevSelected: any) => {
+      if (prevSelected.includes(productId)) {
+        // If already selected, deselect
+        return prevSelected.filter((id: any) => id !== productId);
+      } else {
+        // If not selected, select
+        return [...prevSelected, productId];
+      }
+    });
+  };
+
+  // for deleting from the forge collection
+
+  const Add_to_libary_and_deleteDocumentFromForge = async (productId: any) => {
+    const lib_ref = collection(db, "libray");
+
+    try {
+      // Add document to library if
+      if (can_add) {
+        const libraryDocRef = await addDoc(lib_ref, {
+          downloaded: false,
+          month: currentMonthName,
+          productid: productId,
+          userid: uid,
+          createdAt: serverTimestamp(),
+        });
+
+        const q = query(
+          collection(db, "forge"),
+          where("productid", "==", productId),
+        );
+
+        // Get documents from forge
+        const snapshot = await getDocs(q);
+
+        // Check if there's a document to delete
+        if (!snapshot.empty) {
+          const documentToDelete = snapshot.docs[0];
+          console.log("exist " + documentToDelete.id);
+
+          // Delete document from forge
+          const deleteForgeDocPromise = deleteDoc(
+            doc(db, "forge", documentToDelete.id),
+          );
+
+          // Update user allocation
+          // const updateAllocationPromise = Update_User_Allocation(uid);
+
+          // Wait for all promises to complete
+          await Promise.all([deleteForgeDocPromise]);
+
+          setselectedProducts([]);
+        } else {
+          console.log("No document found with productId:", productId);
+          return null; // Return null or handle as appropriate if no document is found
+        }
+      } else {
+        setadding_forge_text("Allocations exhausted");
+        setTimeout(() => {
+          setadding_forge_text("Confirm to your forge library");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const Update_User_Allocation = (userUid: any) => {
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("userid", "==", userUid));
+
+    getDocs(q)
+      .then((querySnapshot) => {
+        if (!querySnapshot.empty) {
+          // Assuming there's only one document with this userId
+          const userDoc = querySnapshot.docs[0];
+          const userData = userDoc.data();
+          setis_loading_allocation(false);
+          const user_ref_persoanl = doc(db, "users", userDoc.id);
+          setallocation_number(userData.allocations);
+          updateDoc(user_ref_persoanl, {
+            allocations: userData.allocations - selectedProducts.length,
+          });
+        } else {
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting document:", error);
+      });
+  };
+
+  const handleAddForge = async () => {
+    // Iterate through selectedProducts and call the function for each product
+    if (selectedProducts.length > allocation_number) {
+      setadding_forge_text("Insufficient Allocations ");
+      setTimeout(() => {
+        setadding_forge_text("Confirm to your forge library");
+      }, 3000);
+    } else {
+      setadding_forge_text("Adding to libray");
+      const updatePromises = selectedProducts.map(async (product: any) => {
+        await Add_to_libary_and_deleteDocumentFromForge(product);
+      });
+      // Wait for all promises to complete
+      try {
+        await Promise.all(updatePromises);
+        setselectedProducts([]);
+        await Update_User_Allocation(uid);
+        setadding_forge_text("Successfully Added");
+
+        console.log("all is done now ");
+        // After processing all selected products, you might want to clear the selection
+        setselectedProducts([]);
+      } catch (error) {
+        console.error("Error:", error);
+        // Handle errors if needed
+      }
+    }
+
+    // After processing all selected products, you might want to clear the selection
+  };
   return (
     <>
       <div
@@ -223,11 +417,16 @@ const Forge = (props: any) => {
                         Total Selected
                       </p>
                       <p className="neuer text-white text-[1vw] opacity-[50%]">
-                        2
+                        {selectedProducts.length > 0
+                          ? selectedProducts.length
+                          : 0}
                       </p>
                     </div>
-                    <button className="w-full h-[3vw] neuer text-[1.1vw] rounded-[1.2vw] bg-[#CCFF00]">
-                      Confirm to your forge library
+                    <button
+                      className="w-full h-[3vw] neuer text-[1.1vw] rounded-[1.2vw] bg-[#CCFF00]"
+                      onClick={handleAddForge}
+                    >
+                      {adding_forge_text}
                     </button>
                   </div>
                 </div>
@@ -298,11 +497,23 @@ const Forge = (props: any) => {
                         <div className="flex items-center gap-[1vw]">
                           <div
                             className="text-[1.3vw] cursor-pointer opacity-[50%] text-white"
-                            onClick={() => handleDelete(e.id)}
+                            onClick={() => handleDelete(e.id, e.productid)}
                           >
                             <i className="bi bi-dash-lg"></i>
                           </div>
-                          <div className="w-[1vw] h-[1vw] cursor-pointer rounded-[100%] border-white border-opacity-[50%] border-[0.15vw]"></div>
+                          <div
+                            className="w-[1vw] h-[1vw] cursor-pointer rounded-[100%] border-white border-opacity-[50%] border-[0.15vw]"
+                            onClick={() => {
+                              handleToggleSelection(e.productid);
+                            }}
+                            style={{
+                              backgroundColor: selectedProducts.includes(
+                                e.productid,
+                              )
+                                ? "#CCFF00"
+                                : "",
+                            }}
+                          ></div>
                         </div>
                       </div>
                     );
