@@ -72,14 +72,15 @@ const Profile_dropdown = () => {
       {show ? (
         <>
           <div
-            className="fixed top-[8vw] right-[5%] w-[12vw] h-[13vw]   z-[999]"
+            className="fixed top-[8vw] right-[5%] w-[13vw] h-[13vw]   z-[999]"
             ref={ref}
           >
             <div className="bg-white h-full w-full rounded-[1vw] flex flex-col">
               <div className="border-b-[lightgrey] border-b items-end flex pb-[0.5vw] px-[1vw] h-[28%]">
-                <button className="neuem text-[1vw] hover:text-[lightgrey] font-[600]">
+                <button className="neuer text-[1vw] hover:text-[lightgrey] font-[600]">
                   {" "}
-                  <i className="bi bi-chat-dots"></i> Talk to us
+                  <i className="bi pr-[0.6vw] font-[900] bi-chat-dots"></i> Talk
+                  to us
                 </button>
               </div>
               <div className="border-b-[lightgrey] flex flex-col border-b h-[44%] px-[1vw] justify-between py-[0.7vw] items-start">
@@ -92,26 +93,27 @@ const Profile_dropdown = () => {
                       setpage_loader(true);
                     }
                   }}
-                  className="neuem text-[1vw] hover:text-[lightgrey] font-[600]"
+                  className="neuer text-[1vw] hover:text-[lightgrey] font-[600]"
                 >
                   {" "}
-                  <i className="bi bi-phone"></i> Libary
+                  <i className="bi pr-[0.6vw] font-[900] bi-phone"></i> Libary
                 </Link>
                 <button
-                  className="neuem text-[1vw] hover:text-[lightgrey] font-[600]"
+                  className="neuer text-[1vw] hover:text-[lightgrey] font-[600]"
                   onClick={() => {
                     setshow_setting_modal(true);
                   }}
                 >
-                  <i className="bi bi-gear"></i> Settings
+                  <i className="bi pr-[0.6vw] font-[900] bi-gear"></i> Settings
                 </button>
               </div>
               <div className="h-[28%] flex  px-[1vw]  pt-[0.6vw] items-start">
                 <button
-                  className="neuem text-[1vw] hover:text-[lightgrey] font-[600]"
+                  className="neuer text-[1vw] hover:text-[lightgrey] font-[600]"
                   onClick={handlelogout}
                 >
-                  <i className="bi bi-box-arrow-left"></i> Logout
+                  <i className="bi pr-[0.6vw] font-[900] bi-box-arrow-left"></i>{" "}
+                  Logout
                 </button>
               </div>
             </div>
