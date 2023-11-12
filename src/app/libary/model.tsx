@@ -186,7 +186,7 @@ const Models_in_libary = (props: any) => {
                 <div
                   key={index}
                   //   scroll={true}
-                  className="w-[20vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
+                  className="w-[19.7vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
                 >
                   <div className="w-full avater_bg h-[20vw] overflow-hidden">
                     <Image

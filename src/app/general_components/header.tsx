@@ -219,7 +219,7 @@ const Header = () => {
               className=" py-[0.7vw] text-[1.2vw] border-white text-white border neuem px-[0.9vw] rounded-[0.8vw]  hover:bg-[#CCFF00] hover:bg-opacity-[30%] transition duration-[0.3s] "
             >
               {" "}
-              dashboard
+              Dashboard
             </Link>
           )}
           <button

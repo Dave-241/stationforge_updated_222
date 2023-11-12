@@ -108,7 +108,7 @@ const Models_in_libary_prelaoder = (props: any) => {
         </div>
         <div className="h-[0.1vw] bg-white  bg-opacity-[10%] w-full"></div>
 
-        <div className="w-full flex flex-wrap justify-between px-[1.8vw] gap-[1.7vw]">
+        <div className="w-full flex flex-wrap justify-start px-[1.8vw] gap-[1.7vw]">
           {items.map((e: any, index: any) => {
             // if (index == 9 ) {
 
@@ -118,7 +118,7 @@ const Models_in_libary_prelaoder = (props: any) => {
                 <div
                   key={index}
                   //   scroll={true}
-                  className="w-[20vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
+                  className="w-[19.5vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
                 >
                   <div className="w-full bg-[#111111] animate-pulse avater_bg h-[20vw] overflow-hidden"></div>
                   <div className="w-full px-[1vw] flex justify-between  items-center">
