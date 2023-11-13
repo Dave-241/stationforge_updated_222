@@ -79,16 +79,25 @@ const Model_delivery = () => {
           </div>
         </div>
 
-        <div className="w-full pb-[4vw]">
-          <p className="text-white text-center text-[1vw]">
-            <span className="text-[#CCFF00] ">Note .</span>
+        <div className="w-full pb-[4vw] sm:px-[3vw]">
+          <p className="text-white text-center capitalize sm:leading-[5vw] sm:text-start sm:text-[3.5vw] text-[1vw]">
+            <span className="text-[#CCFF00] ">
+              Note <span className="sm:hidden ">.</span>{" "}
+              <div className="w-full hidden sm:block h-[2vw]"></div>
+            </span>
             The 3-5hrs wait time is a one-time occurrence for the new Patrons
             and will not happen with <br /> further uploads. For more
-            information on how to download the files, please click here.
+            information on how to download the files,{" "}
+            <Link
+              className="underline underline-offset-4 uppercase"
+              href={"https://www.patreon.com/posts/how-to-download-74396125"}
+            >
+              please click here
+            </Link>
           </p>
         </div>
       </div>
-      <div className="w-full h-[0.1vw] bg-opacity-[23%] bg-[#D9D9D9] "></div>
+      <div className="w-full h-[0.1vw] bg-opacity-[23%] sm:h-[0.35vw] sm:w-[95vw] sm:mx-auto bg-[#D9D9D9] sm:mt-[5vw]"></div>
     </>
   );
 };
