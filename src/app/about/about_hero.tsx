@@ -4,6 +4,7 @@ import React from "react";
 import bg_image from "../../../public/login/login.webp";
 import Image from "next/image";
 import About_hero_img from "../../../public/about/about_hero.webp";
+import mob_about_hero from "../../../public/about/mob_about_hero.webp";
 
 const About_hero = () => {
   return (
@@ -11,11 +12,18 @@ const About_hero = () => {
       <div className="w-full pt-[2vw] relative h-auto gap-[2vw] z-[9] pb-[5vw]">
         <div className="w-full h-auto  flex justify-center items-center  flex-col z-[9] border2 gap-[3vw] px-[2vw] ">
           <div className="w-full h-atuo pb-[5vw] gap-[3vw] flex justify-center items-center  flex-col z-[9]">
-            <p className="text-[3.2vw] neuem  text-white">StationForge</p>
+            <p className="text-[3.2vw] neuem  text-white  sm:text-[6vw]">
+              StationForge
+            </p>
             <Image
               src={About_hero_img}
               alt="about hero section image"
-              className=" w-full h-fit z-[9]"
+              className=" w-full sm:hidden h-fit z-[9]"
+            />
+            <Image
+              src={mob_about_hero}
+              alt="about hero section image"
+              className=" w-full h-fit z-[9] hidden sm:block"
             />
           </div>
 

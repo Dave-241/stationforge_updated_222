@@ -15,6 +15,7 @@ import Terms from "./terms";
 import Thanks from "./thanks";
 import { FadeInTransition } from "react-transitions-library";
 import Forge from "../general_components/forge";
+import Custom_subscription_Header from "../general_components/custom_header_subscription";
 
 export default function Home() {
   const {
@@ -34,8 +35,12 @@ export default function Home() {
       {page_loader && <Loader />}
       {forge_loader && <Forge />}
 
-      <div className="w-full h-fit z-[99]  fixed top-[1vw] ">
+      <div className="w-full h-fit z-[99] sm:hidden  fixed top-[0.9vw] ">
         <Header />
+      </div>
+
+      <div className="w-full h-fit z-[99] sm:block px-[3vw] hidden  fixed top-0 ">
+        <Custom_subscription_Header />
       </div>
       <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
