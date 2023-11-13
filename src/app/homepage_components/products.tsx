@@ -106,7 +106,7 @@ const Products = (props: any) => {
                   </div>
                 )}
                 {index === 7 && (
-                  <div className="w-full h-auto hidden sm:block">
+                  <div className="w-full h-auto hidden sm:my-[2.5vw] sm:block">
                     <Mob_Banner />
                   </div>
                 )}

@@ -51,7 +51,7 @@ const Showcase_header = () => {
             <Image src={logo} className="w-[12vw] h-fit" alt="logo" />
           </Link>
           <button
-            className=" text-white py-[0.7vw] border-white border neuem px-[0.9vw] rounded-[0.8vw]  hover:bg-[#CCFF00] hover:bg-opacity-[30%] transition duration-[0.3s] "
+            className=" text-white py-[0.7vw] text-[1vw] border-white border neuem px-[0.9vw] rounded-[0.8vw]  hover:bg-[#CCFF00] hover:bg-opacity-[30%] transition duration-[0.3s] "
             onClick={() => {
               setforge_loader(true);
             }}
