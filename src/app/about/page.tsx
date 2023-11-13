@@ -60,7 +60,7 @@ export default function Home() {
         <Terms />
         <Thanks />
       </FadeInTransition>
-      <div className="w-full h-[30vw] "></div>
+      <div className="w-full h-[30vw] sm:h-[15vw]"></div>
     </>
   );
 }
