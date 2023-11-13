@@ -8,7 +8,7 @@ const Fractions_preloader = () => {
   const { step }: any = useOnboarding_Context();
 
   return (
-    <div className="relative w-[32%] ">
+    <div className="relative w-[32%] sm:hidden ">
       <div className="w-full h-auto pb-[1vw]  pt-[2vw] px-[1vw] sticky top-[8vw] flex flex-col gap-[1vw]">
         <h3 className="neuer text-[2vw] mb-[0.6vw] text-white h-[4vw] rounded-[1.2vw] w-[15vw] bg-[#111111] animate-pulse"></h3>
 
