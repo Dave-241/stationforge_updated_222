@@ -7,12 +7,12 @@ import Image from "next/image";
 const Merchant_plan = () => {
   return (
     <>
-      <div className="w-[29vw]  h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] flex flex-col justify-center items-center  subscription_merchant_background_color rounded-[1.2vw] border-l-[0.5vw] gap-[2vw]  border-[#CCFF00]">
+      <div className="w-[29vw] sm:w-[90vw] sm:h-[120vw]   h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] flex flex-col justify-center items-center  subscription_merchant_background_color rounded-[1.2vw] border-l-[0.5vw] gap-[2vw]  border-[#CCFF00]">
         {/* first row div */}
         <div className="w-full flex justify-between items-center">
           <Image
             src={mer_1}
-            className="w-[3vw] h-fit"
+            className="w-[3vw] sm:w-[10vw] h-fit"
             alt="most popular image placeholder"
           />
         </div>

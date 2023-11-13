@@ -198,3 +198,15 @@ html.scroll-container {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
+
+.cover_scrollbar::-webkit-scrollbar {
+  width: 0.1em;
+}
+
+.cover_scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.cover_scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}

@@ -44,7 +44,7 @@ const Subscription_Hero = () => {
         />
       </div>
 
-      <div className="w-full justify-center flex items-center pb-[4vw]  ">
+      <div className="w-full justify-center flex items-center pb-[4vw] sm:pb-[8vw]  ">
         <div className="w-auto h-auto  gap-[2.7vw] sm:gap-[5vw]  flex-col justify-center flex items-center pt-[3vw] sm:pt-[6vw]">
           {/* members and post numbers */}
           <div className="w-auto gap-[3vw] sm:gap-[7vw]  relative h-auto flex justify-center items-center ">
@@ -71,11 +71,11 @@ const Subscription_Hero = () => {
             <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-upload "></i>
           </div>
 
-          <div className="w-fit py-[0.6vw] sm:py-[2vw] sm:px-[4vw] px-[1.2vw] neuem bg-white rounded-[2vw] flex justify-center sm:rounded-[5vw] items-center gap-[0.5vw]">
+          <div className="w-fit py-[0.6vw] sm:py-[2.2vw] sm:px-[5vw] px-[1.2vw] neuem bg-white rounded-[2vw] flex justify-center sm:rounded-[6vw] items-center gap-[0.5vw]">
             <Link
               href={"/subscriptions"}
               scroll={false}
-              className={`text-[1.2vw] sm:text-[3vw] sm:rounded-[3vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] sm:px-[2.3vw] ${
+              className={`text-[1.2vw] sm:text-[3.5vw] sm:rounded-[3.2vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] sm:px-[2.5vw] ${
                 page_path != 2 ? "text-white" : "text-black"
               }  py-[0.4vw] px-[1vw] ${page_path != 2 ? "bg-black" : ""} `}
               onClick={() => {
@@ -94,7 +94,7 @@ const Subscription_Hero = () => {
             <Link
               href={"/about"}
               scroll={false}
-              className={`text-[1.2vw] sm:text-[3vw] sm:rounded-[3vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] sm:px-[2.3vw]  py-[0.4vw] px-[1vw]  ${
+              className={`text-[1.2vw] sm:text-[3.5vw] sm:rounded-[3.2vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] sm:px-[2.5vw]  py-[0.4vw] px-[1vw]  ${
                 page_path == 2 ? "text-white" : "text-black"
               }  py-[0.4vw] px-[1vw] ${page_path == 2 ? "bg-black" : ""} `}
               onClick={() => {
