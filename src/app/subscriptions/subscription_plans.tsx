@@ -21,7 +21,7 @@ const Subscription_Plans = () => {
           </h2>
         </div>
         <div className="w-full  justify-center flex flex-col items-center z-[9]  sm:pt-[7vw] pt-[3vw]">
-          <p className="text-[3.2vw] neuem text-white sm:text-[6vw]">
+          <p className="text-[3.2vw] neuem text-white sm:text-[7vw]">
             StationForge
           </p>
 
