@@ -29,7 +29,7 @@ const StandardPlan = () => {
   ]);
   return (
     <>
-      <div className="w-[29vw] sm:w-[80vw] sm:h-[120vw]  h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] rounded-[1.2vw] sm:border-l-[1.6vw] border-l-[0.5vw] gap-[2vw] sm:gap-[4vw] sm:rounded-[3.5vw]   border-[#4C89E5]">
+      <div className="w-[29vw] sm:w-[80vw] sm:h-[130vw]  h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] rounded-[1.2vw] sm:border-l-[1.6vw] border-l-[0.5vw] gap-[2vw] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
         {/* first row div */}
         <div className="w-full flex justify-between items-center">
           <Image
@@ -64,7 +64,7 @@ const StandardPlan = () => {
         </div>
 
         {/* fourth div */}
-        <ul className="w-full h-auto flex-col flex gap-[1vw] pb-[1.5vw]">
+        <ul className="w-full h-auto flex-col flex gap-[1vw] sm:gap-[3vw] pb-[1.5vw]">
           {list.map((e: any, index: any) => {
             return (
               <li key={index} className="flex gap-[1.2vw] items-center">
@@ -82,7 +82,7 @@ const StandardPlan = () => {
         </ul>
 
         {/* fivth div  also known as button */}
-        <button className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[3.2vw] sm:h-[8vw] ">
+        <button className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] ">
           Join
         </button>
       </div>{" "}
