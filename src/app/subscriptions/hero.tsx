@@ -65,17 +65,17 @@ const Subscription_Hero = () => {
           <h3 className="neuem text-black bg-[#CCFF00] flex justify-center items-center text-[1.7vw] rounded-[1vw] sm:rounded-[3vw] w-full h-[4vw] sm:h-[10vw] sm:text-[3.2vw]">
             Become a member
           </h3>
-          <div className="w-full flex justify-center items-start gap-[2.5vw]  text-[1.3vw] ">
-            <i className="bi text-white cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] text-opacity-[40%] bi-discord "></i>
-            <i className="bi text-white cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] text-opacity-[40%] bi-instagram "></i>
-            <i className="bi text-white cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] text-opacity-[40%] bi-upload "></i>
+          <div className="w-full flex justify-center items-start gap-[2.5vw] sm:text-[5vw] text-[1.3vw] sm:gap-[4vw] sm:py-[1vw]">
+            <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-discord "></i>
+            <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-instagram "></i>
+            <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-upload "></i>
           </div>
 
-          <div className="w-fit py-[0.6vw] px-[1.2vw] neuem bg-white rounded-[2vw] flex justify-center items-center gap-[0.5vw]">
+          <div className="w-fit py-[0.6vw] sm:py-[2vw] sm:px-[4vw] px-[1.2vw] neuem bg-white rounded-[2vw] flex justify-center sm:rounded-[5vw] items-center gap-[0.5vw]">
             <Link
               href={"/subscriptions"}
               scroll={false}
-              className={`text-[1.2vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] ${
+              className={`text-[1.2vw] sm:text-[3vw] sm:rounded-[3vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] sm:px-[2.3vw] ${
                 page_path != 2 ? "text-white" : "text-black"
               }  py-[0.4vw] px-[1vw] ${page_path != 2 ? "bg-black" : ""} `}
               onClick={() => {
@@ -94,7 +94,7 @@ const Subscription_Hero = () => {
             <Link
               href={"/about"}
               scroll={false}
-              className={`text-[1.2vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw]  py-[0.4vw] px-[1vw]  ${
+              className={`text-[1.2vw] sm:text-[3vw] sm:rounded-[3vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] sm:px-[2.3vw]  py-[0.4vw] px-[1vw]  ${
                 page_path == 2 ? "text-white" : "text-black"
               }  py-[0.4vw] px-[1vw] ${page_path == 2 ? "bg-black" : ""} `}
               onClick={() => {
