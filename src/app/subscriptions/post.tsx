@@ -408,7 +408,7 @@ const Post = (props: any) => {
             })}
             {postdata.images.length > 4 && (
               <div
-                className="absolute sm:w-[44.6vw] sm:h-[36.1vw] sm:right-[0.79vw] right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
+                className="absolute sm:w-[44.7vw] sm:h-[36.1vw] sm:right-[0.67vw] right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
                 onClick={() => {
                   setimg_display_arr(postdata.images);
                   setimg_display(postdata.images[3].link);
