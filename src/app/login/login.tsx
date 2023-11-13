@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import img_bg from "../../../public/login/login.webp";
 import mob_img_bg from "../../../public/subscription/mob_bg_sub.webp";
 import img_right from "../../../public/login/right_login.webp";
+import mob_under from "../../../public/login/mob_under.webp";
 import img_left from "../../../public/login/left_login.webp";
 import { usePathname, useRouter, useSearchParams } from "next/navigation"; // Consider using "next/router" instead
 import { initializeApp } from "firebase/app";
@@ -29,6 +30,7 @@ import { useProfile_Context } from "../utils/profile_context";
 export default function Login_component() {
   const [left, setleft] = useState("-80vw");
   const [right, setright] = useState("80vw");
+  const [up, setup] = useState("80vw");
   const router = useRouter();
 
   const [name, setname] = useState("");
@@ -63,6 +65,7 @@ export default function Login_component() {
   useEffect(() => {
     setleft("0");
     setright("0");
+    setup("0");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -213,7 +216,7 @@ export default function Login_component() {
           className="w-[25vw] h-auto sm:w-full  z-[5] gap-[1.8vw] sm:gap-[5vw] flex flex-col justify-center"
         >
           {/* Title */}
-          <h1 className="capitalize neueb text-[2.7vw] text-center text-white mb-[1vw] font-[700] sm:text-[7vw] ">
+          <h1 className="capitalize neueb text-[2.7vw] text-center text-white mb-[1vw] font-[700] sm:text-[8vw] ">
             log in
           </h1>
           {/* Firebase error message */}
@@ -304,10 +307,22 @@ export default function Login_component() {
           alt="login background image"
           className=" w-[100%] h-fit hidden sm:block absolute  left-0 z-[2]"
         />
+
+        {/* for the image coming up on mobile devices  */}
+        <Image
+          src={mob_under}
+          alt="3d Right Page Illustration"
+          className=" w-[100vw] sm:block hidden h-fit absolute bottom-0 transition duration-[2.5s] right-0 z-[3]"
+          style={{
+            transform: `translateY(${up})`,
+          }}
+        />
+
+        {/* the desktiop images on there  */}
         <Image
           src={img_left}
           alt="3d Left Page Illustration"
-          className=" w-[30vw] h-fit absolute bottom-0 transition duration-[2.5s] left-0 z-[3]"
+          className=" w-[30vw] sm:hidden h-fit absolute bottom-0 transition duration-[2.5s] left-0 z-[3]"
           style={{
             transform: `translateX(${left})`,
           }}
@@ -315,7 +330,7 @@ export default function Login_component() {
         <Image
           src={img_right}
           alt="3d Right Page Illustration"
-          className=" w-[30vw] h-fit absolute bottom-0 transition duration-[2.5s] right-0 z-[3]"
+          className=" w-[30vw] sm:hidden h-fit absolute bottom-0 transition duration-[2.5s] right-0 z-[3]"
           style={{
             transform: `translateX(${right})`,
           }}
