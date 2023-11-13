@@ -68,12 +68,12 @@ const Products = (props: any) => {
           </div>
 
           {/* now this is for the search filter  */}
-          <div className="text-[white] text-opacity-[90%] hidden justify-center items-center sm:flex w-[35vw] text-[3.5vw] h-[10vw] bg-[#181515] rounded-[5vw] ">
+          <div className="text-[white] text-opacity-[90%] hidden justify-center items-center sm:flex w-[38vw] gap-[2vw] text-[3vw] h-[10vw] bg-[#181515] rounded-[5vw] ">
             <p className={`${inter.className}`}>Select categories</p>
             <Image
               src={mob_filter}
               alt="filter icon"
-              className="w-[8vw] h-fit"
+              className="w-[3vw] h-fit opacity-[90%]"
             />
           </div>
         </div>
