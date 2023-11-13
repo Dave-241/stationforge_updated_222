@@ -50,8 +50,8 @@ const Model_delivery = () => {
           mail you signed up with on Patreon to get your minis.
         </p>
         {/* display the items */}
-        <div className="w-full sm:h-[42vw]  flex justify-center overflow-x-scroll h-auto pb-[4vw] cover_scrollbar sm:relative ">
-          <div className="w-[85vw] sm:absolute sm:flex-wrap sm:w-[252vw]  sm:h-auto sm:top-0 sm:left-0 h-auto flex gap-[2.7vw] justify-center sm:justify-start sm:px-[3vw] sm:gap-[3.5vw]">
+        <div className="w-full sm:h-[45vw]  flex justify-center overflow-x-scroll h-auto pb-[4vw] cover_scrollbar sm:relative ">
+          <div className="w-[85vw] sm:absolute sm:flex-wrap sm:w-[255vw]  sm:h-auto sm:top-0 sm:left-0 h-auto flex gap-[2.7vw] justify-center sm:justify-start sm:px-[3vw] sm:gap-[3.5vw]">
             {welcome_items.map((e: any, index: any) => {
               return (
                 <div
