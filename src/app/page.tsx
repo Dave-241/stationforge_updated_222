@@ -24,6 +24,7 @@ import firebaseConfig from "./utils/fire_base_config";
 import Forge from "./general_components/forge";
 import Product_preloader from "./homepage_components/right_preloader";
 import Fractions_preloader from "./homepage_components/left_preloader";
+import Mobile_factions from "./homepage_components/mobile_factions";
 
 export default function Home() {
   const app = initializeApp(firebaseConfig);
@@ -47,6 +48,8 @@ export default function Home() {
     setpage_loader,
     forge_loader,
   }: any = useProfile_Context();
+
+  const [mobile_faction_active, setmobile_faction_active] = useState(false);
 
   const [faction_option, setfaction_option] = useState([
     { id: null, label: "New", sub: [] },
@@ -184,6 +187,20 @@ export default function Home() {
 
       <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
+      {mobile_faction_active && (
+        <div className="w-full h-full sm:block hidden relative">
+          <Mobile_factions
+            faction_option={faction_option}
+            setmobile_faction_active={setmobile_faction_active}
+            setactive_faction={setactive_faction}
+            active_faction={active_faction}
+            setfaction_data={setfaction_data}
+            sub_faction_arr={sub_faction_arr}
+            active_sub_faction={active_sub_faction}
+            setactive_sub_faction={setactive_sub_faction}
+          />
+        </div>
+      )}
 
       <Home_hero />
       <div className="w-full h-[4vw] sm:h-[25vw]"></div>
@@ -206,6 +223,7 @@ export default function Home() {
             />
             <Products
               products={copy_products}
+              setmobile_faction_active={setmobile_faction_active}
               setsearch_text={setsearch_text}
               search_text={search_text}
             />

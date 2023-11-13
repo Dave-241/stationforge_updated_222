@@ -17,7 +17,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 const Products = (props: any) => {
   const route = useRouter();
-  const { products, setsearch_text, search_text } = props;
+  const { products, setsearch_text, search_text, setmobile_faction_active } =
+    props;
   const [opacity, setopacity] = useState(0.5);
   const { toggleDropdown, setpage_loader }: any = useProfile_Context();
   const date = new Date();
@@ -68,7 +69,12 @@ const Products = (props: any) => {
           </div>
 
           {/* now this is for the search filter  */}
-          <div className="text-[white] text-opacity-[90%] hidden justify-center items-center sm:flex w-[38vw] gap-[2vw] text-[3vw] h-[10vw] bg-[#181515] rounded-[5vw] ">
+          <div
+            className="text-[white] text-opacity-[90%] hidden justify-center items-center sm:flex w-[38vw] gap-[2vw] text-[3vw] h-[10vw] bg-[#181515] rounded-[5vw] "
+            onClick={() => {
+              setmobile_faction_active(true);
+            }}
+          >
             <p className={`${inter.className}`}>Select categories</p>
             <Image
               src={mob_filter}
