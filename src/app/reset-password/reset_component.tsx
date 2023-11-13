@@ -135,18 +135,18 @@ const Reset_Component = () => {
   };
   return (
     <>
-      <div className="w-full relative h-[100vh] flex justify-center items-center neuem">
+      <div className="w-full relative h-[100vh] sm:px-[3vw] flex justify-center items-center neuem">
         <form
           onSubmit={handleReset}
-          className="w-[36vw]  h-[22vw] z-[3] bg-[#111111] border-[#434343] border px-[4vw] rounded-[2vw] bg-opacity-[50%] backdrop-blur-[4px] flex justify-center items-center flex-col gap-[2vw] relative"
+          className="w-[36vw] sm:w-full sm:px-[2vw]  sm:h-[80vw] sm:gap-[4vw]  h-[22vw] z-[3] bg-[#111111] border-[#434343] border px-[4vw] rounded-[2vw] bg-opacity-[50%] backdrop-blur-[4px] flex justify-center items-center flex-col gap-[2vw] relative"
         >
-          <p className=" text-[1vw] left-[4vw] text-white text-opacity-[70%] font-[400] neuer">
+          <p className=" text-[1vw] left-[4vw] text-white text-opacity-[70%] font-[400] neuer sm:text-[3.5vw]">
             {passwordMatch}
           </p>
-          <div className=" relative w-full h-[15%] ">
+          <div className=" relative  w-full h-[15%] sm:h-[15vw] ">
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full h-full rounded-[1.1vw] bg-[#262626] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] text-center "
+              className="w-full h-full rounded-[1.1vw] sm:text-[3.5vw] sm:rounded-[5vw] bg-[#262626] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] text-center "
               placeholder="New Password"
               autoComplete="password"
               onChange={(e) => {
@@ -156,7 +156,7 @@ const Reset_Component = () => {
             />{" "}
             {/* Toggle password visibility */}
             <span
-              className="absolute right-[0.7vw] top-[50%] text-[2vw] text-white opacity-[50%]"
+              className="absolute sm:text-[7vw] sm:right-[2vw] right-[0.7vw] top-[50%] text-[2vw] text-white opacity-[50%]"
               onClick={togglePasswordVisibility}
               style={{ cursor: "pointer", transform: "translateY(-50%)" }}
             >
@@ -167,10 +167,11 @@ const Reset_Component = () => {
               )}
             </span>
           </div>
-          <div className=" relative w-full h-[15%] ">
+
+          <div className=" relative w-full h-[15%]  sm:h-[15vw] ">
             <input
               type="password"
-              className="w-full h-full rounded-[1.1vw] bg-[#262626] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] text-center "
+              className="w-full sm:rounded-[5vw] h-full rounded-[1.1vw]  sm:text-[3.5vw] bg-[#262626] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] text-center "
               placeholder="Confirm New Password"
               autoComplete="password"
               onChange={(e) => {
@@ -182,11 +183,11 @@ const Reset_Component = () => {
 
           {/* Sign-in button */}
           <button
-            className="w-full h-[3.3vw] bg-[#CCFF00] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw] mt-[0.2vw] text-[1.06vw] flex justify-center items-center"
+            className="w-full h-[3.3vw] sm:rounded-[6vw] sm:h-[17vw] bg-[#CCFF00] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw] mt-[0.2vw] text-[1.06vw] flex justify-center items-center sm:text-[4vw]"
             type="submit"
           >
             {reset_is_loading ? (
-              <div className="rounded-[100%] h-[2vw] w-[2vw]  border-solid  border-t-[0.4vw] border-[black] animate-spin"></div>
+              <div className="rounded-[100%] h-[2vw] sm:h-[6vw] sm:w-[6vw] w-[2vw]  border-solid sm:border-t-[1vw] border-t-[0.4vw] border-[black] animate-spin"></div>
             ) : (
               "Change"
             )}

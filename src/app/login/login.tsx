@@ -322,7 +322,7 @@ export default function Login_component() {
         <Image
           src={img_left}
           alt="3d Left Page Illustration"
-          className=" w-[30vw] sm:hidden h-fit absolute bottom-0 transition duration-[2.5s] left-0 z-[3]"
+          className=" w-[35vw] sm:hidden h-fit absolute bottom-0 transition duration-[2.5s] left-0 z-[3]"
           style={{
             transform: `translateX(${left})`,
           }}
@@ -330,7 +330,7 @@ export default function Login_component() {
         <Image
           src={img_right}
           alt="3d Right Page Illustration"
-          className=" w-[30vw] sm:hidden h-fit absolute bottom-0 transition duration-[2.5s] right-0 z-[3]"
+          className=" w-[35vw] sm:hidden h-fit absolute bottom-0 transition duration-[2.5s] right-0 z-[3]"
           style={{
             transform: `translateX(${right})`,
           }}
