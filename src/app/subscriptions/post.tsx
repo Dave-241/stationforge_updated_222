@@ -471,7 +471,7 @@ const Post = (props: any) => {
                 }}
               >
                 <p
-                  className="text-[0.8vw] w-[4.5vw]  text-opacity-[70%] absolute bottom-[-0.8vw] right-[-1.8vw]"
+                  className="text-[0.8vw] w-[4.5vw] sm:text-[3vw]  text-opacity-[70%] absolute bottom-[-0.8vw] right-[-1.8vw]"
                   style={{ color: "white" }}
                 >
                   {copied}
@@ -484,16 +484,16 @@ const Post = (props: any) => {
             </div>
 
             <div className="w-auto flex gap-[1vw] justify-end items-center ">
-              <p className="text-[1vw] text-[#CCFF00] neuer">
+              <p className="text-[1vw] text-[#CCFF00] neuer sm:text-[3vw]">
                 {postdata.likesCount}{" "}
                 {postdata.likesCount < 2 ? "Like" : "Likes"}
               </p>
-              <i className="bi bi-bar-chart-fill text-white text-[1.3vw] hover:opacity-[100%] duration-[0.6s] transition opacity-[70%] cursor-pointer"></i>
+              <i className="bi bi-bar-chart-fill text-white text-[1.3vw] sm:text-[4vw] hover:opacity-[100%] duration-[0.6s] transition opacity-[70%] cursor-pointer"></i>
             </div>
           </div>
 
           <button
-            className="text-white bg-transparent neuer text-opacity-[50%]"
+            className="text-white bg-transparent neuer sm:text-[3vw] text-opacity-[50%]"
             onClick={() => {
               // setcomment_info_data(postdata.comments);
               setshowcomment(true);
@@ -505,11 +505,11 @@ const Post = (props: any) => {
           </button>
 
           {/* the form to handle comments  */}
-          <div className="w-full h-auto  mt-[0vw] relative text-[1vw]">
+          <div className="w-full h-auto  mt-[0vw] relative text-[1vw] sm:text-[3vw]">
             <input
               type="text"
               placeholder={err ? "Login to comment" : "Write a  comment"}
-              className="w-full h-[3.4vw] rounded-[2.5vw] text-white text-opacity-[80%] px-[2vw] neuer transition duration-[0.6s] bg-[#1B1B1B]"
+              className="w-full h-[3.4vw]  sm:h-[8vw] sm:rounded-[4vw] sm:px-[4vw] rounded-[2.5vw] text-white text-opacity-[80%] px-[2vw] neuer transition duration-[0.6s] bg-[#1B1B1B]"
               onChange={(e: any) => {
                 setcommentvalue(e.target.value);
               }}
@@ -519,7 +519,7 @@ const Post = (props: any) => {
             <button
               type="submit"
               disabled={disable}
-              className="text-[#CCFF00]  neuer text-[1.2vw]  absolute right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
+              className="text-[#CCFF00] sm:text-[3vw] neuer text-[1.2vw]  absolute sm:right-[4vw] right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
               onClick={() => {
                 handlecomment(postdata.postId);
               }}
