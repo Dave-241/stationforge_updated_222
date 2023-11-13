@@ -220,14 +220,14 @@ export default function Login_component() {
             log in
           </h1>
           {/* Firebase error message */}
-          <span className="text-[red] neuem text-[0.8vw]  mb-[-0.8vw]">
+          <span className="text-[red] neuem sm:text-[3.5vw] text-[0.8vw]  mb-[-0.8vw]">
             {errfirebase}
           </span>
           {/* Username input */}
           <div className="w-full h-auto ">
             <input
               type="text"
-              className="w-full h-[3.3vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[3vw] lowercase rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
+              className="w-full h-[3.3vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[4vw] lowercase rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
               placeholder="Username"
               autoComplete="name"
               onChange={(e) => {
@@ -235,7 +235,7 @@ export default function Login_component() {
               }}
             />
             {/* Error message for username */}
-            <span className="text-white sm:text-[3vw] neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
+            <span className="text-white sm:text-[3.5vw] neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
               {errusername}
             </span>
           </div>
@@ -243,7 +243,7 @@ export default function Login_component() {
           <div className="w-full h-auto relative ">
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full h-[3.3vw] rounded-[1.1vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[3vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
+              className="w-full h-[3.3vw] rounded-[1.1vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[4vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
               placeholder="Password"
               autoComplete="password"
               onChange={(e) => {
@@ -252,7 +252,7 @@ export default function Login_component() {
             />
             {/* Toggle password visibility */}
             <span
-              className="absolute sm:text-[7vw] sm:right-[3vw] right-[0.7vw] top-[50%] text-[2vw] text-white opacity-[50%]"
+              className="absolute sm:text-[7vw] sm:right-[3vw] right-[0.7vw] top-[50%] text-[2vw] h-full flex items-center  text-white opacity-[50%]"
               onClick={togglePasswordVisibility}
               style={{ cursor: "pointer", transform: "translateY(-50%)" }}
             >
@@ -263,7 +263,7 @@ export default function Login_component() {
               )}
             </span>
             {/* Error message for password */}
-            <span className="text-white neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
+            <span className="text-white sm:text-[3.5vw] neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
               {errpassword}
             </span>
           </div>
@@ -273,7 +273,7 @@ export default function Login_component() {
             type="submit"
           >
             {logging_in ? (
-              <div className="rounded-[100%] h-[2vw] w-[2vw]  border-solid  border-t-[0.4vw] border-[black] animate-spin"></div>
+              <div className="rounded-[100%] h-[2vw] sm:h-[9vw] sm:border-t-[1vw] sm:w-[9vw] w-[2vw]  border-solid  border-t-[0.4vw]  border-[black] animate-spin"></div>
             ) : (
               "Sign in"
             )}
