@@ -240,11 +240,13 @@ const Post_wrap = () => {
 
   return (
     <>
-      <h2 className="text-center neuem text-[3.2vw] text-white capitalize pt-[4vw] pb-[3vw]">
+      <h2 className="text-center neuem text-[3.2vw] sm:text-[9vw] text-white capitalize pt-[4vw] pb-[3vw]">
         Our Posts
       </h2>{" "}
-      <div className="w-full h-[0.1vw] bg-opacity-[23%] bg-[#D9D9D9] "></div>
-      <div className="w-full  flex flex-col gap-[6vw] justify-center pt-[4vw] items-center">
+      <div className="w-full h-[0.1vw] bg-opacity-[23%] bg-[#D9D9D9] sm:w-[90vw] sm:mx-auto sm:h-[0.5vw] "></div>
+      <div className="w-full h-auto sm:h-[5vw]"></div>
+      <div className="w-full sm:px-[4vw]  flex flex-col gap-[6vw] justify-center pt-[4vw] items-center">
+        <Post_preloader />
         {!post_loading
           ? posts.map((e: any, index: any) => {
               return (
@@ -260,7 +262,7 @@ const Post_wrap = () => {
           : null}
         {post_loading ? (
           <>
-            <Post_preloader /> <Post_preloader />
+            <Post_preloader /> <Post_preloader /> <Post_preloader />
           </>
         ) : null}
       </div>
