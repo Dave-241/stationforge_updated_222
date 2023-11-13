@@ -39,13 +39,14 @@ const Pre_support = () => {
   ]);
   return (
     <>
-      <div className="w-full flex justify-center items-center px-[2.5vw] gap-[3vw] flex-col pt-[4vw]">
-        <h2 className="text-center text-[3.2vw] text-[#CCFF00]  neuem leading-[3.3vw]">
+      <div className="w-full flex justify-center items-center px-[2.5vw] gap-[3vw] flex-col pt-[4vw] sm:pt-[10vw] sm:gap-[7vw]">
+        <h2 className="text-center text-[3.2vw] text-[#CCFF00]  neuem leading-[3.3vw] sm:text-[7vw] sm:leading-[6vw]">
           Pre Support
         </h2>
-        <p className="text-white  text-opacity-[40%] text-[1.2vw] neuer text-center capitalize">
-          ll of our models are fully supported by professionals on our team. If
-          you{"'"}re <br /> having trouble, join our{" "}
+        <p className="text-white  text-opacity-[40%] text-[1.2vw] neuer text-center font-[300] capitalize  sm:text-[3.5vw] sm:w-[90%]">
+          all of our models are fully supported by professionals on our team. If
+          you{"'"}re <br className="sm:hidden " /> having trouble, join our{" "}
+          <br className="sm:block hidden" />
           <Link
             href={"https://discord.com/invite/EMVhj7hS8B"}
             className="underline underline-offset-4"
