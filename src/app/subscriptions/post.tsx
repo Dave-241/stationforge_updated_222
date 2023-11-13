@@ -334,7 +334,7 @@ const Post = (props: any) => {
   return (
     <>
       <section
-        className={` w-[58vw] sm:w-full sm:gap-[5vw] sm:rounded-[3vw] h-auto flex flex-col py-[4vw] gap-[3vw]  bg-[#111111] rounded-[1.5vw]`}
+        className={` w-[58vw] sm:w-full sm:gap-[5vw] sm:rounded-[3vw] h-auto flex flex-col py-[4vw] gap-[3vw] sm:py-[10vw] bg-[#111111] rounded-[1.5vw]`}
         id={id}
         style={{ order: order }}
       >
@@ -362,7 +362,7 @@ const Post = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-[28vw]  sm:w-[44.5vw] sm:h-[34vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+                    className="w-[28vw]  sm:w-[44.5vw] sm:h-[36vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
                     style={{
                       backgroundImage: `url(/subscription/video_loader.webp)`,
                     }}
@@ -387,7 +387,7 @@ const Post = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-[28vw] sm:w-[44.5vw] sm:h-[34vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+                    className="w-[28vw] sm:w-[44.5vw] sm:h-[36vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
                     // style={{ backgroundImage: `url(${e.link})` }}
                     onClick={() => {
                       setvideo(false);
@@ -408,14 +408,14 @@ const Post = (props: any) => {
             })}
             {postdata.images.length > 4 && (
               <div
-                className="absolute sm:w-[44.5vw] sm:h-[34vw] sm:right-[1vw] right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
+                className="absolute sm:w-[44.5vw] sm:h-[36vw] sm:right-[0.8vw] right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
                 onClick={() => {
                   setimg_display_arr(postdata.images);
                   setimg_display(postdata.images[3].link);
                   setimg_display_show(true);
                 }}
               >
-                <p className="neuem text-[4vw] text-white text-center ">
+                <p className="neuem text-[4vw] sm:text-[10vw] text-white text-center ">
                   +{postdata.images.length - 4}
                 </p>
               </div>
@@ -423,7 +423,7 @@ const Post = (props: any) => {
           </div>
         )}
 
-        <div className="w-full px-[4vw] text-white text-opacity-[50%] text-[1.2vw] flex flex-col gap-[0.7vw] items-start ">
+        <div className="w-full px-[4vw] text-white sm:gap-[3vw] text-opacity-[50%] sm:text-[3.5vw] text-[1.2vw] flex flex-col gap-[0.7vw] items-start ">
           {showmore ? (
             <p
               className="w-[100%] neuer"
@@ -451,17 +451,17 @@ const Post = (props: any) => {
 
           {/* the icons */}
           <div className="w-full  py-[1vw]  h-auto  flex justify-between items-center">
-            <div className="w-auto flex justify-start gap-[2vw] ">
+            <div className="w-auto flex justify-start gap-[2vw] sm:gap-[4vw]">
               {" "}
               <i
-                className={`bi bi-heart-fill  text-[1.3vw] ${
+                className={`bi bi-heart-fill  text-[1.3vw] sm:text-[3vw] ${
                   liked ? "opacity-[100%]" : "opacity-[50%]"
                 } hover:opacity-[100%] duration-[0.6s] transition cursor-pointer`}
                 onClick={handlelike}
                 style={{ color: liked ? "#CCFF00" : "white" }}
               ></i>
               <i
-                className="bi relative bi-upload text-white text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
+                className="bi relative bi-upload text-white text-[1.3vw] sm:text-[3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
                 style={{ color: copied == "copied url" ? "#CCFF00" : "white" }}
                 onClick={() => {
                   navigator.clipboard.writeText(
