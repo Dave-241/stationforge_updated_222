@@ -17,7 +17,9 @@ export default function Login() {
   return (
     <>
       {page_loader && <Loader />}
-      <Header />
+      <div className="w-full h-fit z-[99] sm:h-[20vw]  fixed top-[0vw] ">
+        <Header />
+      </div>
       <Login_component />
     </>
   );
