@@ -50,26 +50,26 @@ const Model_delivery = () => {
           mail you signed up with on Patreon to get your minis.
         </p>
         {/* display the items */}
-        <div className="w-full flex justify-center h-auto pb-[4vw] ">
-          <div className="w-[85vw] h-auto flex gap-[2.7vw] justify-center">
+        <div className="w-full sm:h-[42vw]  flex justify-center overflow-x-scroll h-auto pb-[4vw] cover_scrollbar sm:relative ">
+          <div className="w-[85vw] sm:absolute sm:flex-wrap sm:w-[252vw]  sm:h-auto sm:top-0 sm:left-0 h-auto flex gap-[2.7vw] justify-center sm:justify-start sm:px-[3vw] sm:gap-[3.5vw]">
             {welcome_items.map((e: any, index: any) => {
               return (
                 <div
                   key={index}
-                  className=" w-full h-auto py-[1.5vw] px-[2vw] flex flex-col bg-[#111111] rounded-[2vw] gap-[2vw] items-start justify-center "
+                  className=" w-full sm:w-[80vw] sm:py-[6vw]  h-auto py-[1.5vw] px-[2vw] flex flex-col bg-[#111111] rounded-[2vw] gap-[2vw] items-start justify-center sm:gap-[10vw] sm:px-[5vw] sm:rounded-[3vw] "
                 >
                   <div className="w-full h-auto   overflow-hidden rounded-[3vw]">
-                    <p className="neuem text-[1.4vw] text-white capitalize ">
+                    <p className="neuem text-[1.4vw] sm:text-[4vw] text-white capitalize ">
                       {e.head}
                     </p>
                   </div>
-                  <div className="w-full h-auto flex items-center justify-start gap-[1vw]">
+                  <div className="w-full h-auto flex items-center justify-start gap-[1vw] sm:gap-[4vw]">
                     <Image
                       src={e.img}
                       alt={e.txt}
-                      className="w-[2.5vw] h-fit"
+                      className="w-[2.5vw] sm:w-[10vw] h-fit"
                     />
-                    <p className="text-[1.1vw] text-opacity-[80%] text-white neuer  leading-[2vw]">
+                    <p className="text-[1.1vw] sm:text-[3.1vw] text-opacity-[80%] text-white neuer sm:leading-[5vw] font-[300]  leading-[2vw]">
                       {e.txt} <br /> {e.t2}
                     </p>
                   </div>
