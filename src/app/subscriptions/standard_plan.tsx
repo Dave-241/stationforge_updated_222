@@ -29,7 +29,7 @@ const StandardPlan = () => {
   ]);
   return (
     <>
-      <div className="w-[29vw] sm:w-[85vw] sm:h-[120vw]  h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] rounded-[1.2vw] sm:border-l-[1.6vw] border-l-[0.5vw] gap-[2vw] sm:rounded-[3.5vw]   border-[#4C89E5]">
+      <div className="w-[29vw] sm:w-[80vw] sm:h-[120vw]  h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] rounded-[1.2vw] sm:border-l-[1.6vw] border-l-[0.5vw] gap-[2vw] sm:gap-[4vw] sm:rounded-[3.5vw]   border-[#4C89E5]">
         {/* first row div */}
         <div className="w-full flex justify-between items-center">
           <Image
@@ -44,7 +44,7 @@ const StandardPlan = () => {
         </div>
         {/* second row div */}
         <div className="w-full flex   flex-col gap-[0.4vw] sm:gap-[1vw] pb-[1vw] ">
-          <h2 className="text-[2.1vw] text-white neuem sm:text-[4vw]">
+          <h2 className="text-[2.1vw] text-white neuem sm:text-[6vw]">
             Standard Tier
           </h2>
           <h3 className="text-white neuer text-opacity-[40%] sm:text-[2.7vw] text-[1vw]">
@@ -55,9 +55,9 @@ const StandardPlan = () => {
 
         {/* thired div  */}
         <div className="w-full">
-          <h3 className="text-white text-[2.3vw] neuem ">
+          <h3 className="text-white text-[2.3vw] neuem sm:text-[4vw]">
             $10{" "}
-            <span className="text-opacity-[40%] text-white text-[1.2vw]">
+            <span className="text-opacity-[40%] text-white text-[1.2vw] sm:text-[3vw]">
               /Month
             </span>
           </h3>
@@ -82,7 +82,7 @@ const StandardPlan = () => {
         </ul>
 
         {/* fivth div  also known as button */}
-        <button className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[3vw]">
+        <button className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[3.2vw] sm:h-[8vw] ">
           Join
         </button>
       </div>{" "}

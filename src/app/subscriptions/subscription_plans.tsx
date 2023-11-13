@@ -27,7 +27,7 @@ const Subscription_Plans = () => {
 
           {/* this is where the pricing would be  */}
           <div className="h-auto sm:h-[140vw] cover_scrollbar w-full sm:relative sm:overflow-x-scroll ">
-            <div className="w-auto px-[2vw] pt-[3vw] sm:top-0 sm:left-0  sm:absolute justify-center items-center flex gap-[3vw]">
+            <div className="w-auto sm:px-[4vw] pt-[3vw] sm:top-0 sm:left-0  sm:absolute justify-center items-center flex gap-[3vw] sm:gap-[5vw]">
               <StandardPlan />
               <Merchant_plan />
             </div>
