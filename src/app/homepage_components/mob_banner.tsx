@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import banner from "../../../public/banner.webp";
+import mob_banner from "../../../public/mob_banner.webp";
 import Link from "next/link";
 import { useProfile_Context } from "../utils/profile_context";
 
@@ -11,19 +11,20 @@ const Mob_Banner = () => {
 
   return (
     <>
-      <div className="w-full h-[28vw] rounded-[2vw] bg-white overflow-hidden relative flex justify-center flex-col items-start px-[3vw] gap-[2vw]">
-        <h2 className="z-[999] neuem text-[3vw] leading-[3.5vw] text-[white]">
-          Join our community to <br /> get our latest updates
+      <div className="w-full h-[50vw] rounded-[2vw]  overflow-hidden relative flex justify-center flex-col items-start px-[3vw] gap-[5vw]">
+        <h2 className="z-[999] neuem text-[5vw] leading-[5vw] text-[white]">
+          Join our <br className="sm:block " /> community to get{" "}
+          <br className="sm:block " /> our latest updates
         </h2>
 
-        <p className="z-[999] neuer text-[1.5vw] leading-[1.8vw] text-[white]">
-          Keep in touch with all that{"'"}s happening in <br /> the forge
-          community
+        <p className="z-[999] neuer text-opacity-[60%] text-[3vw] leading-[3vw] text-[white]">
+          Keep in touch with all that{"'"}s <br className="sm:block " />{" "}
+          happening in the forge community
         </p>
 
         <Link
           href={"/about"}
-          className="bg-[#CCFF00] z-[99] rounded-[4vw] text-[1.3vw] neuer text-black py-[1vw] px-[3.5vw] hover:bg-opacity-[70%]"
+          className="bg-[#CCFF00] z-[99] rounded-[7vw] text-[3vw] neuer text-black py-[2.5vw] px-[5vw] hover:bg-opacity-[70%]"
           onClick={() => {
             setpage_loader(true);
           }}
@@ -32,7 +33,7 @@ const Mob_Banner = () => {
         </Link>
 
         <Image
-          src={banner}
+          src={mob_banner}
           alt="product banner image"
           className="w-full h-fit absolute top-0 left-0"
         />

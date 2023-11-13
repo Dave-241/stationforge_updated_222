@@ -11,7 +11,7 @@ const Banner = () => {
 
   return (
     <>
-      <div className="w-full h-[28vw] rounded-[2vw] bg-white overflow-hidden relative flex justify-center flex-col items-start px-[3vw] gap-[2vw]">
+      <div className="w-full h-[28vw] rounded-[2vw]  overflow-hidden relative flex justify-center flex-col items-start px-[3vw] gap-[2vw]">
         <h2 className="z-[999] neuem text-[3vw] leading-[3.5vw] text-[white]">
           Join our community to <br /> get our latest updates
         </h2>
