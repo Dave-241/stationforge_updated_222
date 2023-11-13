@@ -89,10 +89,10 @@ const Comments_modal = (props: any) => {
                       />{" "}
                     </div>
                     <div className="w-full h-auto ">
-                      <p className="text-[0.7vw] sm:text-[3vw] capitalize neuer text-white text-opacity-[90%]">
+                      <p className="text-[0.7vw] sm:text-[2.5vw] capitalize neuer text-white text-opacity-[90%]">
                         {e.name}
                       </p>
-                      <p className="text-[1vw] sm:text-[4vw] neuer text-white text-opacity-[50%]">
+                      <p className="text-[1vw] sm:text-[3vw] neuer text-white text-opacity-[50%]">
                         {e.text}
                       </p>
                     </div>
