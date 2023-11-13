@@ -25,7 +25,7 @@ const Mobile_factions = ({
     setgoup(false);
     setTimeout(() => {
       setmobile_faction_active(false);
-    }, 2200);
+    }, 700);
   };
 
   // Prevent click inside the modal content from closing the modal
