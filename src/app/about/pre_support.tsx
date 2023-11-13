@@ -40,7 +40,7 @@ const Pre_support = () => {
   ]);
   return (
     <>
-      <div className="w-full flex justify-center items-center px-[2.5vw] gap-[3vw] flex-col pt-[4vw] sm:pt-[10vw] sm:gap-[7vw]">
+      <div className="w-full flex justify-center items-center px-[2.5vw] gap-[3vw] flex-col pt-[4vw] sm:pt-[12vw] sm:gap-[7vw]">
         <h2 className="text-center text-[3.2vw] text-[#CCFF00]  neuem leading-[3.3vw] sm:text-[7vw] sm:leading-[6vw]">
           Pre Support
         </h2>
@@ -71,31 +71,31 @@ const Pre_support = () => {
           />
         </div>
 
-        <h2 className="text-white  text-opacity-[40%] text-[1.7vw] neuer text-center">
+        <h2 className="text-white  text-opacity-[40%] text-[1.7vw] neuer text-center sm:text-[4vw]">
           Extra benefits
         </h2>
 
         {/* display the items */}
-        <div className="w-full flex justify-center h-auto pb-[3vw] pt-[0.4vw]">
-          <div className="w-[65vw] h-auto flex gap-[2.7vw] justify-center">
+        <div className="w-full flex overflow-x-scroll sm:h-[45vw]  cover_scrollbar sm:relative justify-center h-auto pb-[3vw] pt-[0.4vw]">
+          <div className="w-[65vw] h-auto flex gap-[2.7vw] justify-center sm:justify-start sm:px-[3vw] sm:gap-[3.5vw] sm:absolute sm:flex-wrap sm:w-[175vw]  sm:h-auto sm:top-0 sm:left-0 ">
             {welcome_items.map((e: any, index: any) => {
               return (
                 <div
                   key={index}
-                  className=" w-full h-auto py-[2vw] px-[2vw] flex flex-col bg-[#111111] rounded-[2vw] gap-[3vw] items-start justify-center "
+                  className=" w-full sm:gap-[11vw] sm:w-[81.5vw] h-auto py-[2vw] sm:py-[6vw] sm:px-[5vw] px-[2vw] flex flex-col bg-[#111111] rounded-[2vw] gap-[3vw] items-start justify-center "
                 >
                   <div className="w-full h-auto   overflow-hidden rounded-[3vw]">
-                    <p className="neuem text-[1.5vw] text-white capitalize ">
+                    <p className="neuem sm:text-[4vw] text-[1.5vw] text-white capitalize ">
                       {e.head}
                     </p>
                   </div>
-                  <div className="w-full h-auto flex items-center justify-start gap-[1vw]">
+                  <div className="w-full h-auto flex items-center justify-start gap-[1vw] sm:gap-[4vw]">
                     <Image
                       src={e.img}
                       alt={e.txt}
-                      className="w-[2.5vw] h-fit"
+                      className="w-[2.5vw]  sm:w-[10vw] h-fit"
                     />
-                    <p className="text-[1.3vw] text-opacity-[80%] text-white neuer  leading-[2vw]">
+                    <p className="text-[1.3vw] text-opacity-[80%] text-white neuer  leading-[2vw]  sm:leading-[5vw] font-[300] sm:text-[3.1vw] ">
                       {e.txt} <br /> {e.t2}
                     </p>
                   </div>
