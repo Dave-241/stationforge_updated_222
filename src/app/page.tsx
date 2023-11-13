@@ -188,7 +188,7 @@ export default function Home() {
       <Home_hero />
       <div className="w-full h-[4vw] sm:h-[20vw]"></div>
       <div
-        className="w-full h-auto  flex transition duration-[2s] "
+        className="w-full h-auto sm:px-[3vw] flex transition duration-[2s] "
         style={{
           transform: `translateY(${left})`,
         }}

@@ -16,7 +16,7 @@ const Fractions = ({
   const { step }: any = useOnboarding_Context();
 
   return (
-    <div className="relative w-[32%] ">
+    <div className="relative w-[32%] sm:hidden">
       <div className="w-full h-auto pb-[1vw]  pt-[2vw] px-[1vw] sticky top-[8vw] flex flex-col gap-[1vw]">
         <h3 className="neuer text-[2vw] pb-[0.3vw] text-white">Factions</h3>
 
