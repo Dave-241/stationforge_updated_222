@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import img_bg from "../../../public/login/login.webp";
+import mob_img_bg from "../../../public/subscription/mob_bg_sub.webp";
 import img_right from "../../../public/login/right_login.webp";
 import img_left from "../../../public/login/left_login.webp";
 import { usePathname, useRouter, useSearchParams } from "next/navigation"; // Consider using "next/router" instead
@@ -206,13 +207,13 @@ export default function Login_component() {
 
   return (
     <>
-      <div className="w-full h-[100vh] bg-black relative overflow-hidden flex justify-center items-center">
+      <div className="w-full h-[100vh] sm:px-[3vw] bg-black relative overflow-hidden flex justify-center items-center">
         <form
           onSubmit={handlelogin}
-          className="w-[25vw] h-auto  z-[5] gap-[1.8vw] flex flex-col justify-center"
+          className="w-[25vw] h-auto sm:w-full  z-[5] gap-[1.8vw] sm:gap-[5vw] flex flex-col justify-center"
         >
           {/* Title */}
-          <h1 className="capitalize neueb text-[2.7vw] text-center text-white mb-[1vw] font-[700]">
+          <h1 className="capitalize neueb text-[2.7vw] text-center text-white mb-[1vw] font-[700] sm:text-[7vw] ">
             log in
           </h1>
           {/* Firebase error message */}
@@ -223,7 +224,7 @@ export default function Login_component() {
           <div className="w-full h-auto ">
             <input
               type="text"
-              className="w-full h-[3.3vw] lowercase rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
+              className="w-full h-[3.3vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[3vw] lowercase rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
               placeholder="Username"
               autoComplete="name"
               onChange={(e) => {
@@ -231,7 +232,7 @@ export default function Login_component() {
               }}
             />
             {/* Error message for username */}
-            <span className="text-white neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
+            <span className="text-white sm:text-[3vw] neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
               {errusername}
             </span>
           </div>
@@ -239,7 +240,7 @@ export default function Login_component() {
           <div className="w-full h-auto relative ">
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full h-[3.3vw] rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
+              className="w-full h-[3.3vw] rounded-[1.1vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[3vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
               placeholder="Password"
               autoComplete="password"
               onChange={(e) => {
@@ -248,7 +249,7 @@ export default function Login_component() {
             />
             {/* Toggle password visibility */}
             <span
-              className="absolute right-[0.7vw] top-[50%] text-[2vw] text-white opacity-[50%]"
+              className="absolute sm:text-[7vw] sm:right-[3vw] right-[0.7vw] top-[50%] text-[2vw] text-white opacity-[50%]"
               onClick={togglePasswordVisibility}
               style={{ cursor: "pointer", transform: "translateY(-50%)" }}
             >
@@ -265,7 +266,7 @@ export default function Login_component() {
           </div>
           {/* Sign-in button */}
           <button
-            className="w-full h-[3.3vw] bg-[#CCFF00] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw] mt-[0.2vw] text-[1.06vw] flex justify-center items-center"
+            className="w-full h-[3.3vw] bg-[#CCFF00] sm:h-[15vw] sm:rounded-[4vw] sm:text-[4vw] sm:px-[3vw] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw] mt-[0.2vw] text-[1.06vw] flex justify-center items-center"
             type="submit"
           >
             {logging_in ? (
@@ -275,8 +276,8 @@ export default function Login_component() {
             )}
           </button>
           {/* Link to sign-up */}
-          <p className="text-[1.3vw] neuem text-white text-center">
-            Dont have an account?{" "}
+          <p className="text-[1.3vw] neuem sm:text-[3.7vw] text-white text-center">
+            Dont have an account ?{" "}
             <Link
               href={"/signin"}
               onClick={() => {
@@ -296,7 +297,12 @@ export default function Login_component() {
         <Image
           src={img_bg}
           alt="login background image"
-          className=" w-[100%] h-full absolute top-0 left-0 z-[2]"
+          className=" w-[100%] sm:hidden h-full absolute top-0 left-0 z-[2]"
+        />
+        <Image
+          src={mob_img_bg}
+          alt="login background image"
+          className=" w-[100%] h-fit hidden sm:block absolute  left-0 z-[2]"
         />
         <Image
           src={img_left}
