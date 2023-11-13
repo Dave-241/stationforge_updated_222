@@ -265,7 +265,7 @@ const Post_wrap = () => {
           </>
         ) : null}
       </div>
-      <div className="w-full h-auto sm:h-[35vw]"></div>
+      <div className="w-full h-auto sm:h-[15vw]"></div>
     </>
   );
 };

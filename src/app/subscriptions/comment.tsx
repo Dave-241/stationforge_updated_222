@@ -40,20 +40,21 @@ const Comments_modal = (props: any) => {
           in={true}
           ref={ref}
           style={{
-            width: "auto",
+            width: "fit-content",
+            height: "fit-content",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
           onClick={handleModalClick}
         >
-          <div className="bg-black relative rounded-[2vw] pb-[2vw] w-[34vw] gap-[1vw] h-[34vw] flex items-start justify-start flex-col overflow-hidden ">
-            <div className="flex sticky top-0 justify-between border-b-[white] border-opacity-[20%] border-b-[0.1vw] items-center px-[2vw]  w-full  py-[1vw]  bg-black">
-              <p className="text-white neuer text-[1.2vw]">
+          <div className="bg-black relative rounded-[2vw] pb-[2vw] w-[34vw] sm:w-[80vw] sm:h-[130vw] gap-[1vw] h-[34vw] flex items-start justify-start flex-col overflow-hidden ">
+            <div className="flex sticky top-0 justify-between border-b-[white] border-opacity-[20%] border-b-[0.1vw] items-center px-[2vw]  w-full  py-[1vw] sm:py-[3vw] sm:px-[4vw] bg-black">
+              <p className="text-white neuer text-[1.2vw] sm:text-[3vw] ">
                 Viewing {commentwrap.length} Comments
               </p>
               <i
-                className="text-[1.6vw] hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] text-white bi bi-x-circle"
+                className="text-[1.6vw] hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] text-white bi bi-x-circle sm:text-[3.5vw]"
                 onClick={() => {
                   hide(false);
                 }}
@@ -61,15 +62,15 @@ const Comments_modal = (props: any) => {
             </div>
 
             {/* the main comment section */}
-            <div className="w-full  flex flex-col gap-[1.5vw]  overflow-y-scroll scroll-container px-[2vw] h-auto">
+            <div className="w-full  flex flex-col gap-[1.5vw] sm:gap-[5vw]  overflow-y-scroll scroll-container px-[2vw] sm:px-[4vw] h-auto">
               {commentwrap.map((e: any, index: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-full flex  gap-[1vw] items-center h-auto "
+                    className="w-full flex  gap-[1vw] items-center sm:gap-[3vw] h-auto "
                   >
                     <div
-                      className="w-[3.4vw] h-[3vw] overflow-hidden avater_bg  rounded-[100%] "
+                      className="w-[3.4vw] h-[3vw] sm:w-[12vw] sm:h-[10vw] overflow-hidden avater_bg  rounded-[100%] "
                       style={{
                         backgroundImage: `url(${
                           e.avatar == " "
@@ -81,17 +82,17 @@ const Comments_modal = (props: any) => {
                       <Image
                         src={e.avatar}
                         alt="comment images"
-                        className="w-fit h-full"
+                        className="w-full h-full"
                         unoptimized
                         width="0"
                         height="0"
                       />{" "}
                     </div>
                     <div className="w-full h-auto ">
-                      <p className="text-[0.7vw] capitalize neuer text-white text-opacity-[90%]">
+                      <p className="text-[0.7vw] sm:text-[3vw] capitalize neuer text-white text-opacity-[90%]">
                         {e.name}
                       </p>
-                      <p className="text-[1vw] neuer text-white text-opacity-[50%]">
+                      <p className="text-[1vw] sm:text-[4vw] neuer text-white text-opacity-[50%]">
                         {e.text}
                       </p>
                     </div>
