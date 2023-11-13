@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useProfile_Context } from "../utils/profile_context";
 import Link from "next/link";
 import Mob_Banner from "./mob_banner";
+import mob_filter from "../../../public/home/mob_filter.webp";
 import { Inter } from "next/font/google";
 
 // If loading a variable font, you don't need to specify the font weight
@@ -69,6 +70,11 @@ const Products = (props: any) => {
           {/* now this is for the search filter  */}
           <div className="text-[white] text-opacity-[90%] hidden justify-center items-center sm:flex w-[35vw] text-[3.5vw] h-[10vw] bg-[#181515] rounded-[5vw] ">
             <p className={`${inter.className}`}>Select categories</p>
+            <Image
+              src={mob_filter}
+              alt="filter icon"
+              className="w-[8vw] h-fit"
+            />
           </div>
         </div>
 
