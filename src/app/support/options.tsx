@@ -60,12 +60,12 @@ const Options_body = () => {
   };
   return (
     <>
-      <h3 className="neuer sm:block hidden text-center text-[4vw] text-white pt-[8vw]">
+      <h3 className="neuer sm:block hidden text-center text-[6vw] text-white text-opacity-[60%] pt-[8vw]">
         Quick Options
       </h3>
       <div className="w-full sm:py-[10vw] sm:px-[3vw]  py-[6vw] px-[2vw] flex justify-center items-center">
         {step == 0 && (
-          <div className="flex sm:w-full sm:gap-[2vw]   w-[45vw] flex-wrap h-auto sm:justify-center  justify-between gap-[1vw] ">
+          <div className="flex sm:w-full sm:gap-[3vw]   w-[45vw] flex-wrap h-auto sm:justify-center  justify-between gap-[1vw] ">
             {items.map((e: any, index: any) => {
               return (
                 <div
@@ -73,14 +73,14 @@ const Options_body = () => {
                   onClick={() => {
                     setstep(e.step);
                   }}
-                  className="h-[8vw] sm:rounded-[3vw] sm:w-[29.5vw] sm:h-[20vw] rounded-[1vw] bg-[#111111] cursor-pointer hover:bg-opacity-[70%] duration-[0.6s] transition flex-col w-[14vw] flex justify-center items-center gap-[1vw] "
+                  className="h-[8vw] sm:gap-[3vw] sm:rounded-[3vw] sm:w-[45.5vw] sm:h-[25vw] rounded-[1vw] bg-[#111111] cursor-pointer hover:bg-opacity-[70%] duration-[0.6s] transition flex-col w-[14vw] flex justify-center items-center gap-[1vw] "
                 >
                   <Image
                     src={e.img}
                     alt={e.text}
-                    className="w-[1.5vw] h-fit sm:w-[3.5vw]"
+                    className="w-[1.5vw] h-fit sm:w-[5vw]"
                   />
-                  <h3 className="neuer sm:text-[3.5vw] text-[1.2vw] text-[#CCFF00] capitalize">
+                  <h3 className="neuer sm:text-[4vw] text-[1.2vw] text-[#CCFF00] capitalize">
                     {e.text}
                   </h3>
                 </div>

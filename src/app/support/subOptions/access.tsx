@@ -38,9 +38,9 @@ const Access = (props: any) => {
       >
         <div className="w-full relative h-auto  flex flex-col items-center gap-[9vw]">
           {/* the back button */}
-          <div className="absolute left-0 top-0">
+          <div className="absolute sm:top-[20vw] left-0 top-0">
             <button
-              className=" text-white flex gap-[0.5vw] items-center text-[1.3vw] neuem "
+              className=" text-white sm:text-[4vw] flex gap-[0.5vw] items-center text-[1.3vw] neuem "
               onClick={() => {
                 goback();
               }}
@@ -48,23 +48,23 @@ const Access = (props: any) => {
               <Image
                 src={back}
                 alt="back text ctn"
-                className="text-white neue w-[0.8vw] h-fit "
+                className="text-white sm:w-[2vw] neue w-[0.8vw] h-fit "
               />
               Back
             </button>
           </div>
           {/* back button ends */}
-          <div className="h-[8vw] rounded-[1vw] bg-[#111111] cursor-pointer hover:bg-opacity-[70%] duration-[0.6s] transition flex-col w-[14vw] flex justify-center items-center gap-[1vw] ">
+          <div className="h-[8vw] sm:h-[25vw] sm:rounded-[3vw] sm:w-[50vw] sm:gap-[2vw] rounded-[1vw] bg-[#111111] cursor-pointer hover:bg-opacity-[70%] duration-[0.6s] transition flex-col w-[14vw] flex justify-center items-center gap-[1vw] ">
             <Image
               src={purchase_img}
               alt={"support purhcase img"}
-              className="w-[1.5vw] h-fit"
+              className="w-[1.5vw] sm:w-[5vw] h-fit"
             />
-            <h3 className="neuer text-[1.2vw] text-[#CCFF00] capitalize">
+            <h3 className="neuer text-[1.2vw] sm:text-[4vw] text-[#CCFF00] capitalize">
               Accessing{" "}
             </h3>
           </div>
-          <div className="w-full flex-col justify-center items-center gap-[3vw] flex">
+          <div className="w-full flex-col justify-center items-center gap-[3vw] flex sm:gap-[6vw]">
             {faq_array.map((e: any, index: any) => {
               return (
                 <FAQItem key={index} title={e.title} description={e.des} />
