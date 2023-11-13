@@ -454,14 +454,14 @@ const Post = (props: any) => {
             <div className="w-auto flex justify-start gap-[2vw] sm:gap-[4vw]">
               {" "}
               <i
-                className={`bi bi-heart-fill  text-[1.3vw] sm:text-[3vw] ${
+                className={`bi bi-heart-fill  text-[1.3vw] sm:text-[4vw] ${
                   liked ? "opacity-[100%]" : "opacity-[50%]"
                 } hover:opacity-[100%] duration-[0.6s] transition cursor-pointer`}
                 onClick={handlelike}
                 style={{ color: liked ? "#CCFF00" : "white" }}
               ></i>
               <i
-                className="bi relative bi-upload text-white text-[1.3vw] sm:text-[3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
+                className="bi relative bi-upload text-white text-[1.3vw] sm:text-[4vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
                 style={{ color: copied == "copied url" ? "#CCFF00" : "white" }}
                 onClick={() => {
                   navigator.clipboard.writeText(
@@ -471,7 +471,7 @@ const Post = (props: any) => {
                 }}
               >
                 <p
-                  className="text-[0.8vw] w-[4.5vw] sm:text-[3vw]  text-opacity-[70%] absolute bottom-[-0.8vw] right-[-1.8vw]"
+                  className="text-[0.8vw] w-[4.5vw] sm:text-[2vw] sm:bottom-[-2vw] sm:right-[-2vw] sm:w-[10vw]  text-opacity-[70%] absolute bottom-[-0.8vw] right-[-1.8vw]"
                   style={{ color: "white" }}
                 >
                   {copied}
