@@ -25,7 +25,7 @@ const Mobile_factions = ({
     setgoup(false);
     setTimeout(() => {
       setmobile_faction_active(false);
-    }, 700);
+    }, 400);
   };
 
   // Prevent click inside the modal content from closing the modal
@@ -45,7 +45,7 @@ const Mobile_factions = ({
           className={`relative w-full ${
             goup ? "translate-y-[0vw]" : "translate-y-[200vw]"
           } sm:block py-[8vw] hidden bg-black `}
-          style={{ transition: "1.5s ease" }}
+          style={{ transition: "1s ease" }}
           onClick={modalClick}
         >
           <div className="w-full h-auto pb-[1vw] px-[3vw]   sticky top-[8vw] flex flex-col gap-[6vw]">
