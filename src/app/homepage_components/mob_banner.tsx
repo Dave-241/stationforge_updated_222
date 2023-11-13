@@ -11,7 +11,7 @@ const Mob_Banner = () => {
 
   return (
     <>
-      <div className="w-full h-[50vw] rounded-[2vw]  overflow-hidden relative flex justify-center flex-col items-start px-[3vw] gap-[5vw]">
+      <div className="w-full h-[57vw] rounded-[2vw]  overflow-hidden relative flex justify-center flex-col items-start px-[3vw] gap-[5vw]">
         <h2 className="z-[999] neuem text-[5vw] leading-[5vw] text-[white]">
           Join our <br className="sm:block " /> community to get{" "}
           <br className="sm:block " /> our latest updates
