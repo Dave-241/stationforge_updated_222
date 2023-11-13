@@ -62,7 +62,7 @@ const Pre_support = () => {
           <Image
             src={main}
             alt="preload support main display image"
-            className="w-full hidden h-fit"
+            className="w-full sm:hidden h-fit"
           />
           <Image
             src={mob_main}
@@ -105,15 +105,15 @@ const Pre_support = () => {
           </div>
         </div>
 
-        <h3 className="text-center text-[2.4vw] text-[#CCFF00]  neuem  ">
+        <h3 className="text-center sm:text-[5vw] text-[2.4vw] text-[#CCFF00]  neuem  ">
           Let{"'"}s Chat! Join our community here
         </h3>
 
-        <div className="w-full flex justify-center gap-[2vw] items-center pb-[5vw]">
+        <div className="w-full flex justify-center gap-[2vw] sm:gap-[4vw] items-center pb-[5vw]">
           {community_icons.map((e: any, index: any) => {
             return (
               <div
-                className=" h-[3.7vw] w-[3.7vw] text-white border-opacity-[80%] cursor-pointer hover:border-opacity-[100%] hover:opacity-[100%] transition duration-[0.6vw] opacity-[80%] text-[1.7vw] font-[700] rounded-[100%] flex justify-center items-center  border-white border-[0.07vw]"
+                className=" h-[3.7vw] sm:h-[10vw]  sm:text-[4.5vw] sm:w-[10vw] w-[3.7vw] text-white border-opacity-[80%] cursor-pointer  hover:border-opacity-[100%] hover:opacity-[100%] transition duration-[0.6vw] opacity-[80%] text-[1.7vw] font-[700] rounded-[100%] flex justify-center items-center  border-white border-[0.07vw]"
                 key={index}
               >
                 <i className={`bi bi-${e.bi} w-fit h-fit`}></i>
@@ -122,7 +122,7 @@ const Pre_support = () => {
           })}
         </div>
       </div>
-      <div className="w-full h-[0.1vw] bg-opacity-[23%] bg-[#D9D9D9] "></div>
+      <div className="w-full h-[0.1vw] bg-opacity-[23%] sm:h-[0.35vw] sm:w-[95vw] sm:mx-auto bg-[#D9D9D9] sm:mt-[5vw]"></div>{" "}
     </>
   );
 };

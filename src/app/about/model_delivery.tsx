@@ -56,7 +56,7 @@ const Model_delivery = () => {
               return (
                 <div
                   key={index}
-                  className=" w-full sm:w-[80vw] sm:py-[6vw]  h-auto py-[1.5vw] px-[2vw] flex flex-col bg-[#111111] rounded-[2vw] gap-[2vw] items-start justify-center sm:gap-[10vw] sm:px-[5vw] sm:rounded-[3vw] "
+                  className=" w-full sm:w-[80vw] sm:py-[6vw]   h-auto py-[1.5vw] px-[2vw] flex flex-col bg-[#111111] rounded-[2vw] gap-[2vw] items-start justify-center sm:gap-[10vw] sm:px-[5vw] sm:rounded-[3vw] "
                 >
                   <div className="w-full h-auto   overflow-hidden rounded-[3vw]">
                     <p className="neuem text-[1.4vw] sm:text-[4vw] text-white capitalize ">
@@ -69,7 +69,7 @@ const Model_delivery = () => {
                       alt={e.txt}
                       className="w-[2.5vw] sm:w-[10vw] h-fit"
                     />
-                    <p className="text-[1.1vw] sm:text-[3.1vw] text-opacity-[80%] text-white neuer sm:leading-[5vw] font-[300]  leading-[2vw]">
+                    <p className="text-[1.1vw]  text-opacity-[80%] text-white neuer sm:leading-[5vw] font-[300] sm:text-[3.1vw]  leading-[2vw]">
                       {e.txt} <br /> {e.t2}
                     </p>
                   </div>
@@ -86,8 +86,8 @@ const Model_delivery = () => {
               <div className="w-full hidden sm:block h-[2vw]"></div>
             </span>
             The 3-5hrs wait time is a one-time occurrence for the new Patrons
-            and will not happen with <br /> further uploads. For more
-            information on how to download the files,{" "}
+            and will not happen with <br className="sm:hidden " /> further
+            uploads. For more information on how to download the files,{" "}
             <Link
               className="underline underline-offset-4 uppercase"
               href={"https://www.patreon.com/posts/how-to-download-74396125"}

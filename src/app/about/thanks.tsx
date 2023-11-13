@@ -9,14 +9,14 @@ const Thanks = () => {
   return (
     <>
       <div className="w-full flex justify-center items-center px-[1vw] gap-[3vw] flex-col pt-[7vw]">
-        <h2 className="text-center text-[3.5vw] text-[#CCFF00]  neuem leading-[3.3vw]">
+        <h2 className="text-center text-[3.5vw] sm:text-[5.4vw] text-[#CCFF00]  neuem leading-[3.3vw] sm:leading-[8vw]">
           THANK YOU FOR SUPPORTING US{" "}
         </h2>
-        <p className="text-white   text-opacity-[30%] text-[1.5vw] neuer text-center capitalize">
+        <p className="text-white   text-opacity-[30%] text-[1.5vw] neuer text-center capitalize sm:text-[4vw]">
           Our Stats
         </p>
 
-        <div className="w-[75vw]  h-[13vw] rounded-[1.2vw] bg-[#111111] flex justify-between px-[5.4vw] items-center">
+        <div className="w-[75vw] sm:w-full sm:h-[25vw] h-[13vw] rounded-[1.2vw] bg-[#111111] flex justify-between px-[5.4vw] items-center">
           <div className="w-auto h-auto  flex flex-col items-start gap-[1.2vw]">
             <p className="text-[1.8vw] neuem  text-white">Total Members</p>
             <span className="text-opacity-[80%] text-white neuer text-[1.3vw]">
