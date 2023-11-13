@@ -44,7 +44,7 @@ const Welcome_pack = () => {
           </div>
         </div>
 
-        <div className="w-[20vw] h-[7vw] sm:h-[15vw] sm:rounded-[3vw] sm:w-[50vw] border-[#767676] rounded-[1.3vw] border flex justify-center items-center mb-[6vw]">
+        <div className="w-[20vw] h-[7vw] sm:h-[15vw] sm:rounded-[3vw] sm:w-[50vw] border-[#767676] rounded-[1.3vw] border sm:mb-[12vw] flex justify-center items-center mb-[6vw]">
           {" "}
           <p className=" capitalize sm:text-[3vw] text-[1.2vw] text-white text-center ">
             a Total Of 30 <br />

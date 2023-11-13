@@ -30,11 +30,11 @@ const Model_delivery = () => {
   ]);
   return (
     <>
-      <div className="w-full flex justify-center items-center gap-[3vw] flex-col pt-[4vw]">
-        <h2 className="text-center text-[3.2vw] text-[#CCFF00] neuem leading-[3.3vw]">
+      <div className="w-full flex justify-center items-center gap-[3vw] sm:gap-[7vw] flex-col pt-[4vw] sm:pt-[10vw]">
+        <h2 className="text-center text-[3.2vw] text-[#CCFF00] neuem leading-[3.3vw] sm:text-[7vw] sm:leading-[6vw]">
           Model Delivery
         </h2>
-        <p className="text-white  text-opacity-[40%] text-[1.2vw] neuer text-center capitalize">
+        <p className="text-white sm:text-[3.5vw] sm:w-[90%] font-[400]  text-opacity-[30%] text-[1.2vw] neuer text-center capitalize">
           All of our models are delivered via{" "}
           <Link
             href={"https://printedwargames.com/partner/stationforge/"}
@@ -43,8 +43,10 @@ const Model_delivery = () => {
           >
             PWG
           </Link>
-          , where they will be saved in your library <br /> forever, even if you
-          unsubscribe. Simply create an account on PWG with the same e- <br />
+          , where they will be saved in your library{" "}
+          <br className="sm:hidden " /> forever, even if you unsubscribe. Simply
+          create an account on PWG with the same e-{" "}
+          <br className="sm:hidden " />
           mail you signed up with on Patreon to get your minis.
         </p>
         {/* display the items */}
