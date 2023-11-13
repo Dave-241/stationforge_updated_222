@@ -31,7 +31,7 @@ const Subscription_Hero = () => {
 
   return (
     <>
-      <div className="w-full h-auto px-[2vw] sm:px-[3vw] pt-[2vw]">
+      <div className="w-full h-auto px-[2vw]  pt-[2vw]">
         <Image
           src={hero_img}
           className="w-full sm:hidden h-fit"
@@ -45,7 +45,7 @@ const Subscription_Hero = () => {
       </div>
 
       <div className="w-full justify-center flex items-center pb-[4vw]  ">
-        <div className="w-auto h-auto  gap-[2.7vw] sm:gap-[5vw]  flex-col justify-center flex items-center pt-[3vw]">
+        <div className="w-auto h-auto  gap-[2.7vw] sm:gap-[5vw]  flex-col justify-center flex items-center pt-[3vw] sm:pt-[6vw]">
           {/* members and post numbers */}
           <div className="w-auto gap-[3vw] sm:gap-[7vw]  relative h-auto flex justify-center items-center ">
             {" "}
@@ -58,11 +58,11 @@ const Subscription_Hero = () => {
             <div className="border-b-[0.2vw] sm:w-[7vw] sm:border-b-[0.6vw] absolute left-[50%] translate-x-[-50%] border-white border-opacity-[20%] w-[3vw] border-dotted z-[4]"></div>
           </div>
 
-          <p className="neuer text-[1.2vw] capitalize text-white text-center">
+          <p className="neuer sm:text-[3vw] text-[1.2vw] capitalize text-white text-center">
             Creating 3D-Printable Tabletop Miniatures
           </p>
 
-          <h3 className="neuem text-black bg-[#CCFF00] flex justify-center items-center text-[1.7vw] rounded-[1vw] w-full h-[4vw] ">
+          <h3 className="neuem text-black bg-[#CCFF00] flex justify-center items-center text-[1.7vw] rounded-[1vw] sm:rounded-[3vw] w-full h-[4vw] sm:h-[10vw] sm:text-[3.2vw]">
             Become a member
           </h3>
           <div className="w-full flex justify-center items-start gap-[2.5vw]  text-[1.3vw] ">

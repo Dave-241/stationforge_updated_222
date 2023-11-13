@@ -115,7 +115,7 @@ const Custom_subscription_Header = () => {
   }, []);
 
   return (
-    <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute z-[99] top-[2.5vw] sm:top-0 flex justify-center left-0 px-[3vw] backdrop-blur-[3px]  ">
+    <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute z-[99] top-[2.5vw] sm:top-0 flex justify-center left-0 px-[2vw] backdrop-blur-[3px]  ">
       <nav className="w-full px-[1vw]  h-full  bg-transparent  rounded-[1.06vw] flex justify-between  items-center ">
         {/* mobile design */}
         {/* mobile design */}
