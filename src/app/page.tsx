@@ -186,7 +186,7 @@ export default function Home() {
       {show_setting_modal && <Settings_modal />}
 
       <Home_hero />
-      <div className="w-full h-[4vw] sm:h-[20vw]"></div>
+      <div className="w-full h-[4vw] sm:h-[25vw]"></div>
       <div
         className="w-full h-auto sm:px-[3vw] flex transition duration-[2s] "
         style={{

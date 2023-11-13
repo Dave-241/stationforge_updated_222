@@ -9,6 +9,10 @@ import { useRouter } from "next/navigation";
 import { useProfile_Context } from "../utils/profile_context";
 import Link from "next/link";
 import Mob_Banner from "./mob_banner";
+import { Inter } from "next/font/google";
+
+// If loading a variable font, you don't need to specify the font weight
+const inter = Inter({ subsets: ["latin"] });
 
 const Products = (props: any) => {
   const route = useRouter();
@@ -34,12 +38,13 @@ const Products = (props: any) => {
 
   return (
     <>
-      <div className="w-[68%] sm:w-full sm:border-none h-auto pb-[1vw] pt-[2vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw]">
+      <div className="w-[68%] sm:w-full sm:border-none h-auto pb-[1vw] pt-[2vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw] sm:gap-[8vw]">
         <div className="w-full flex justify-between items-center px-[2vw]">
-          <h3 className="neuer text-[2.2vw] text-white ">
-            All New Models ({currentMonthName})
+          <h3 className="neuer text-[2.2vw] text-white sm:text-[5vw] sm:leading-[6vw]">
+            All New Models <br className="sm:block hidden" /> (
+            {currentMonthName})
           </h3>
-          <div className="w-auto relative z-[999999999]">
+          <div className="w-auto relative sm:hidden z-[999999999]">
             <div className="absolute h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
               <Image
                 src={searchimg}
@@ -60,8 +65,37 @@ const Products = (props: any) => {
               className="h-[3vw] w-[23vw] placeholder:text-white text-white neuer text-[1.1vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] backdrop-blur-[15px] bg-[white] bg-opacity-[10%] "
             />
           </div>
+
+          {/* now this is for the search filter  */}
+          <div className="text-[white] text-opacity-[90%] hidden justify-center items-center sm:flex w-[35vw] text-[3.5vw] h-[10vw] bg-[#181515] rounded-[5vw] ">
+            <p className={`${inter.className}`}>Select categories</p>
+          </div>
         </div>
-        <div className="h-[0.1vw] bg-white  bg-opacity-[10%] w-full"></div>
+
+        {/* this is for the mobile input  */}
+
+        <div className="w-auto sm:block hidden relative z-[999999999]">
+          <div className="absolute h-full   w-[12vw]  flex justify-center items-center top-0 left-0 z-[13]">
+            <Image
+              src={searchimg}
+              unoptimized
+              width="0"
+              height="0"
+              alt="Search icon image"
+              className="w-[5vw]   h-fit"
+            />
+          </div>
+          <input
+            type="text"
+            placeholder="Search model"
+            onChange={(e) => {
+              setsearch_text(e.target.value);
+            }}
+            value={search_text || ""}
+            className="h-[12vw] w-full  sm:block hidden placeholder:text-white text-white neuer text-[3.5vw] outline-none focus:border transition duration-[0.8s] pl-[12vw] pr-[1vw]  rounded-[7vw] backdrop-blur-[15px] bg-[white] bg-opacity-[10%] "
+          />
+        </div>
+        <div className="h-[0.1vw] bg-white  bg-opacity-[10%] w-full sm:hidden"></div>
 
         <div className="w-full  flex flex-wrap justify-start px-[1.8vw] sm:px-0 gap-[1.7vw] sm:gap-[3vw] ">
           {products.map((e: any, index: any) => {
