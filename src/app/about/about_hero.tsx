@@ -10,7 +10,7 @@ import mob_bg_img from "../../../public/subscription/mob_bg_sub.webp";
 const About_hero = () => {
   return (
     <>
-      <div className="w-full pt-[2vw] relative h-auto gap-[2vw] z-[9] pb-[5vw] sm:pb-[14vw]">
+      <div className="w-full pt-[2vw] relative h-auto gap-[2vw] z-[9] pb-[5vw] sm:pb-[10vw]">
         <div className="w-full h-auto  flex justify-center items-center  flex-col z-[9]  gap-[3vw] px-[2vw] sm:px-[3vw] ">
           <div className="w-full h-atuo pb-[5vw] gap-[3vw] flex justify-center items-center  flex-col z-[9]">
             <p className="text-[3.2vw]  sm:pt-[6vw] sm:pb-[3vw] neuem  text-white  sm:text-[7vw]">
@@ -58,7 +58,7 @@ const About_hero = () => {
           className="absolute w-full h-full hidden sm:block  top-0 left-0 z-[4]"
         />
       </div>
-      <div className="w-full h-[0.1vw] bg-opacity-[23%] sm:h-[0.5vw] sm:w-[90vw] sm:mx-auto bg-[#D9D9D9] "></div>
+      <div className="w-full h-[0.1vw] bg-opacity-[23%] sm:h-[0.35vw] sm:w-[95vw] sm:mx-auto bg-[#D9D9D9] sm:mt-[5vw]"></div>
     </>
   );
 };

@@ -11,30 +11,31 @@ const Welcome_pack = () => {
   ]);
   return (
     <>
-      <div className="w-full flex justify-center items-center gap-[3vw] flex-col pt-[4vw]">
-        <h2 className="text-center text-[3.2vw] text-[#CCFF00] neuem leading-[3.3vw] sm:text-[7vw] sm:leading-[7vw]">
+      <div className="w-full flex justify-center items-center gap-[3vw] flex-col pt-[4vw] sm:pt-[10vw] sm:gap-[6vw]">
+        <h2 className="text-center text-[3.2vw] text-[#CCFF00] neuem leading-[3.3vw] sm:text-[7vw] sm:leading-[8vw]">
           Whats included each month? <br />
           Welcome Pack:
         </h2>
-        <p className="text-white  text-opacity-[40%] text-[1.2vw] neuer text-center">
-          When you first subscribe to our Patreon you are greeted <br /> with a
-          3-set welcome pack!
+        <p className="text-white sm:text-[4vw] sm:w-[90%]  text-opacity-[40%] text-[1.2vw] neuer text-center">
+          When you first subscribe to our Patreon you are{" "}
+          <br className="sm:block hidden " /> greeted{" "}
+          <br className="sm:hidden " /> with a 3-set welcome pack!
         </p>
         {/* display the items */}
-        <div className="w-full flex justify-center h-auto pb-[6vw] ">
-          <div className="w-[75vw] h-auto flex gap-[3vw] justify-center">
+        <div className="w-full flex justify-center sm:px-[3vw] h-auto pb-[6vw] ">
+          <div className="w-[75vw] sm:w-full sm:pt-[4vw] sm:flex-wrap sm:gap-[8%]   h-auto flex gap-[3vw] justify-center">
             {welcome_items.map((e: any, index: any) => {
               return (
                 <div
                   key={index}
                   className={` ${
-                    e.middle ? "translate-y-[5vw] " : " "
-                  } flex w-full h-auto flex-col  gap-[0.8vw]`}
+                    e.middle ? "translate-y-[5vw] sm:translate-y-0 " : " "
+                  } flex w-full sm:w-[46%] sm:pb-[5vw] h-auto flex-col  gap-[0.8vw]`}
                 >
                   <div className="w-full h-auto  overflow-hidden rounded-[3vw]">
                     <Image src={e.img} alt={e.txt} className="w-full h-fit" />
                   </div>
-                  <p className="text-[1.6vw] text-white neuer text-center leading-[2vw]">
+                  <p className="text-[1.6vw] text-white neuer text-center leading-[2vw] sm:text-[4vw] sm:leading-[5vw]">
                     {e.txt} <br /> {e.t2}
                   </p>
                 </div>
