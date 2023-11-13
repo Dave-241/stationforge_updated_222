@@ -30,7 +30,7 @@ const Comments_modal = (props: any) => {
   return (
     <>
       <div
-        className="w-full flex justify-center items-center h-full fixed  top-0 left-0 bg-black bg-opacity-[30%] comment_wrap  z-[9999]"
+        className="w-full flex justify-center items-center h-full fixed  top-0 left-0 bg-black  comment_wrap  z-[9999] bg-opacity-[70%]"
         onClick={() => hide(false)}
       >
         <FadeInTransition
@@ -48,8 +48,8 @@ const Comments_modal = (props: any) => {
           }}
           onClick={handleModalClick}
         >
-          <div className="bg-black relative rounded-[2vw] pb-[2vw] w-[34vw] sm:w-[80vw] sm:h-[130vw] gap-[1vw] h-[34vw] flex items-start justify-start flex-col overflow-hidden ">
-            <div className="flex sticky top-0 justify-between border-b-[white] border-opacity-[20%] border-b-[0.1vw] items-center px-[2vw]  w-full  py-[1vw] sm:py-[3vw] sm:px-[4vw] bg-black">
+          <div className="bg-[#111111] relative rounded-[2vw] sm:rounded-[4vw] pb-[2vw] w-[34vw] sm:w-[80vw] sm:h-[130vw] gap-[1vw] h-[34vw] flex items-start justify-start flex-col overflow-hidden ">
+            <div className="flex sticky top-0 justify-between border-b-[white] border-opacity-[20%] border-b-[0.1vw] items-center px-[2vw]  w-full  py-[1vw] sm:py-[3vw] sm:px-[4vw] bg-[#111111]">
               <p className="text-white neuer text-[1.2vw] sm:text-[3vw] ">
                 Viewing {commentwrap.length} Comments
               </p>
