@@ -22,7 +22,7 @@ const Welcome_pack = () => {
           <br className="sm:hidden " /> with a 3-set welcome pack!
         </p>
         {/* display the items */}
-        <div className="w-full flex justify-center sm:px-[3vw] h-auto pb-[6vw] ">
+        <div className="w-full flex justify-center sm:px-[3vw] h-auto sm:pb-[3vw] pb-[6vw] ">
           <div className="w-[75vw] sm:w-full sm:pt-[4vw] sm:flex-wrap sm:gap-[8%]   h-auto flex gap-[3vw] justify-center">
             {welcome_items.map((e: any, index: any) => {
               return (
@@ -44,9 +44,9 @@ const Welcome_pack = () => {
           </div>
         </div>
 
-        <div className="w-[20vw] h-[7vw]  border-[#767676] rounded-[1.3vw] border flex justify-center items-center mb-[6vw]">
+        <div className="w-[20vw] h-[7vw] sm:h-[15vw] sm:rounded-[3vw] sm:w-[50vw] border-[#767676] rounded-[1.3vw] border flex justify-center items-center mb-[6vw]">
           {" "}
-          <p className=" capitalize text-[1.2vw] text-white text-center ">
+          <p className=" capitalize sm:text-[3vw] text-[1.2vw] text-white text-center ">
             a Total Of 30 <br />
             Miniature Bonus
           </p>
