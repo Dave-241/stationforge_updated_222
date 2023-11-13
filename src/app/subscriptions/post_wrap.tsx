@@ -245,8 +245,7 @@ const Post_wrap = () => {
       </h2>{" "}
       <div className="w-full h-[0.1vw] bg-opacity-[23%] bg-[#D9D9D9] sm:w-[90vw] sm:mx-auto sm:h-[0.5vw] "></div>
       <div className="w-full h-auto sm:h-[5vw]"></div>
-      <div className="w-full sm:px-[4vw]  flex flex-col gap-[6vw] justify-center pt-[4vw] items-center">
-        <Post_preloader />
+      <div className="w-full sm:px-[4vw] sm:gap-[10vw]  flex flex-col gap-[6vw] justify-center pt-[4vw] items-center">
         {!post_loading
           ? posts.map((e: any, index: any) => {
               return (

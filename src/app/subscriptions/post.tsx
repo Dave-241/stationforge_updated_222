@@ -334,25 +334,25 @@ const Post = (props: any) => {
   return (
     <>
       <section
-        className={` w-[58vw] h-auto flex flex-col py-[4vw] gap-[3vw]  bg-[#111111] rounded-[1.5vw]`}
+        className={` w-[58vw] sm:w-full sm:gap-[5vw] sm:rounded-[3vw] h-auto flex flex-col py-[4vw] gap-[3vw]  bg-[#111111] rounded-[1.5vw]`}
         id={id}
         style={{ order: order }}
       >
         {/*the heading */}
 
         <div className="w-full px-[4vw] flex flex-col gap-[0.7vw]  items-start">
-          <div className="w-full flex items-center text-[1vw] gap-[0.5vw] text-opacity-[70%] text-white neuer">
+          <div className="w-full flex items-center text-[1vw] gap-[0.5vw] sm:gap-[1vw] sm:text-[2.6vw] text-opacity-[70%] text-white neuer">
             <p className="">{postdata.timeAgo}</p>
-            <div className="rounded-[100%] bg-white bg-opacity-[30%] h-[0.3vw] w-[0.3vw]"></div>{" "}
+            <div className="rounded-[100%] bg-white bg-opacity-[30%] h-[0.3vw] w-[0.3vw] sm:h-[0.9vw] sm:w-[0.9vw]"></div>{" "}
             <p>{postdata.exactTime}</p>
           </div>
-          <h2 className="text-white capitalize text-[2.2vw] neuem">
+          <h2 className="text-white capitalize text-[2.2vw] sm:text-[5vw] neuem">
             {postdata.postData.title}
           </h2>
         </div>
         {/* the images */}
         {postdata.images.length > 0 && (
-          <div className="w-full flex flex-wrap gap-[1vw] relative  justify-center items-center px-[0vw]">
+          <div className="w-full flex flex-wrap gap-[1vw] sm:gap-[1.5vw] relative  justify-center items-center px-[0vw]">
             {postdata.trimmedimages.map((e: any, index: any) => {
               const isVideoLink = videoExtensions.some((ext) =>
                 e.link.includes(`.${ext}`),
@@ -362,7 +362,7 @@ const Post = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-[28vw]   relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+                    className="w-[28vw]  sm:w-[44.5vw] sm:h-[34vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
                     style={{
                       backgroundImage: `url(/subscription/video_loader.webp)`,
                     }}
@@ -387,7 +387,7 @@ const Post = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-[28vw]   relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+                    className="w-[28vw] sm:w-[44.5vw] sm:h-[34vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
                     // style={{ backgroundImage: `url(${e.link})` }}
                     onClick={() => {
                       setvideo(false);
@@ -408,7 +408,7 @@ const Post = (props: any) => {
             })}
             {postdata.images.length > 4 && (
               <div
-                className="absolute right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
+                className="absolute sm:w-[44.5vw] sm:h-[34vw] sm:right-[1vw] right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
                 onClick={() => {
                   setimg_display_arr(postdata.images);
                   setimg_display(postdata.images[3].link);
