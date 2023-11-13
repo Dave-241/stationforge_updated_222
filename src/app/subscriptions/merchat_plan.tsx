@@ -21,7 +21,7 @@ const Merchant_plan = () => {
           <h2 className="text-[2.1vw] text-black neuem sm:text-[6vw]">
             Merchant Tier
           </h2>
-          <h3 className="text-[#000000] sm:text-[2.4vw] neuer text-opacity-[60%] text-[0.9vw]">
+          <h3 className="text-[#000000] sm:text-[2.6vw] neuer text-opacity-[60%] text-[0.9vw]">
             The merchant tier2 is a second wave of merchants that gives you
             commercial license to 3D prints and sell station forge models in
             physical forms only as long as subscribed this tier is only limited
@@ -40,7 +40,7 @@ const Merchant_plan = () => {
         </div>
 
         {/* fourthe div */}
-        <p className="text-[1vw] sm:text-[2.6vw]">
+        <p className="text-[1vw] neuer sm:text-[2.9vw]">
           Permission to print and distribute physical models (not the STL.
           files) through your website/marketplaces. Use the original pictures
           only from the page with the Station Forge logo. Re-rendering photos is
