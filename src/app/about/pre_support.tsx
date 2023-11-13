@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import main from "../../../public/about/pre_support.webp";
+import mob_main from "../../../public/about/mob_pre_support.webp";
 import ben_1 from "../../../public/about/ben_1.webp";
 import ben_2 from "../../../public/about/ben_2.webp";
 import Link from "next/link";
@@ -61,7 +62,12 @@ const Pre_support = () => {
           <Image
             src={main}
             alt="preload support main display image"
-            className="w-full h-fit"
+            className="w-full hidden h-fit"
+          />
+          <Image
+            src={mob_main}
+            alt="preload support main display image"
+            className="w-full sm:block hidden h-fit"
           />
         </div>
 
