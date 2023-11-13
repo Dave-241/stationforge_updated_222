@@ -12,7 +12,7 @@ const Welcome_pack = () => {
   return (
     <>
       <div className="w-full flex justify-center items-center gap-[3vw] flex-col pt-[4vw]">
-        <h2 className="text-center text-[3.2vw] text-[#CCFF00] neuem leading-[3.3vw]">
+        <h2 className="text-center text-[3.2vw] text-[#CCFF00] neuem leading-[3.3vw] sm:text-[7vw] sm:leading-[7vw]">
           Whats included each month? <br />
           Welcome Pack:
         </h2>
