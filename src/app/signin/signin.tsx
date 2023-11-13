@@ -4,7 +4,10 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import img_bg from "../../../public/login/login.webp";
 import img_right from "../../../public/login/right_login.webp";
+import mob_under from "../../../public/login/mob_under.webp";
+
 import img_left from "../../../public/login/left_login.webp";
+import mob_img_bg from "../../../public/subscription/mob_bg_sub.webp";
 import { usePathname, useRouter } from "next/navigation"; // Importing Next.js router
 import Link from "next/link";
 import { initializeApp } from "firebase/app"; // Importing Firebase modules
@@ -31,6 +34,8 @@ export default function Signin_component() {
 
   const [left, setleft] = useState("-80vw");
   const [right, setright] = useState("80vw");
+  const [up, setup] = useState("80vw");
+
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -49,6 +54,7 @@ export default function Signin_component() {
   useEffect(() => {
     setleft("0");
     setright("0");
+    setup("0");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -228,25 +234,25 @@ export default function Signin_component() {
       <div className="w-full h-[100vh] bg-black relative overflow-hidden flex justify-center items-center">
         <form
           onSubmit={handleRegister}
-          className="w-[25vw] h-auto  z-[5] gap-[1.2vw] flex flex-col justify-center"
+          className="w-[25vw] h-auto sm:w-full sm:px-[3vw]  z-[5] sm:gap-[5vw] gap-[1.2vw] flex flex-col justify-center"
         >
-          <h1 className="capitalize neueb text-[2.7vw] text-center text-white mb-[0.5vw]  font-[700]">
+          <h1 className="capitalize neueb text-[2.7vw] text-center text-white mb-[0.5vw]  font-[700] sm:text-[8vw]">
             Sign up
           </h1>
 
-          <div className="flex flex-col justify-center text-[0.7vw] mb-[-0.8vw]">
+          <div className="flex  flex-col justify-center text-[0.7vw] mb-[-0.8vw] sm:text-[3vw] sm:mb-[-3vw]">
             <ul className="text-white opacity-[30%]">
               <li>Username: 4 characters minimum </li>
               <li>Password: 6 characters, including a number (0-9)</li>
             </ul>
           </div>
-          <span className="text-[red] neuem text-[0.8vw]  mb-[-0.8vw]">
+          <span className="text-[red] sm:text-[3.5vw] neuem text-[0.8vw]  mb-[-0.8vw]">
             {errfirebase}
           </span>
           <div className="w-full h-auto ">
             <input
               type="text"
-              className="w-full h-[3.3vw] lowercase rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
+              className="  sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[4vw]  w-full h-[3.3vw] lowercase rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
               placeholder="Username"
               autoComplete="name"
               onChange={(e) => {
@@ -255,7 +261,7 @@ export default function Signin_component() {
                 seterrfirebase("");
               }}
             />
-            <span className="text-white neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
+            <span className="text-white sm:text-[3.5vw] sm:pt-[2vw] neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
               {errusername}
             </span>
           </div>
@@ -263,7 +269,7 @@ export default function Signin_component() {
           <div className="w-full h-auto ">
             <input
               type="email"
-              className="w-full h-[3.3vw] rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
+              className="  sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[4vw]  w-full h-[3.3vw] rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
               placeholder="Gmail"
               autoComplete="email"
               onChange={(e) => {
@@ -271,7 +277,7 @@ export default function Signin_component() {
                 seterrfirebase("");
               }}
             />
-            <span className="text-white neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
+            <span className="text-white sm:text-[3.5vw] sm:pt-[2vw]  neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
               {erremail}
             </span>
           </div>
@@ -279,7 +285,7 @@ export default function Signin_component() {
             {/* This section has a different implementation because of the password visibility toggle */}
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full h-[3.3vw] rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
+              className="  sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[4vw]  w-full h-[3.3vw] rounded-[1.1vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
               placeholder="Password"
               autoComplete="password"
               onChange={(e) => {
@@ -288,7 +294,7 @@ export default function Signin_component() {
               }}
             />
             <span
-              className="absolute right-[0.7vw] top-[0vw] text-[2vw] text-white opacity-[50%]"
+              className="absolute right-[0.7vw] sm:text-[7vw]  h-full flex items-center sm:right-[3vw] top-[0vw] text-[2vw] text-white opacity-[50%]"
               onClick={togglePasswordVisibility}
               style={{ cursor: "pointer" }}
             >
@@ -298,24 +304,24 @@ export default function Signin_component() {
                 <i className="bi bi-eye-fill"></i>
               )}
             </span>
-            <span className="text-white neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
+            <span className="text-white sm:text-[3.5vw] sm:pt-[2vw]  neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
               {errpassword}
             </span>
           </div>
 
           <button
-            className="w-full h-[3.3vw] bg-[#CCFF00] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw] mt-[0.2vw] text-[1.06vw] flex justify-center items-center"
+            className="w-full h-[3.3vw]  sm:h-[15vw] sm:rounded-[4vw] sm:text-[4vw] sm:px-[3vw] bg-[#CCFF00] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw] mt-[0.2vw] text-[1.06vw] flex justify-center items-center"
             type="submit"
           >
             {" "}
             {isLoading ? (
-              <div className="rounded-[100%] h-[2vw] w-[2vw]  border-solid  border-t-[0.4vw] border-[black] animate-spin"></div>
+              <div className="rounded-[100%] sm:h-[9vw] sm:border-t-[1vw] sm:w-[9vw] h-[2vw] w-[2vw]  border-solid  border-t-[0.4vw] border-[black] animate-spin"></div>
             ) : (
               "Sign up"
             )}
           </button>
 
-          <p className="text-[1.3vw] neuem text-white text-center">
+          <p className="text-[1.3vw] sm:text-[3.5vw] neuem text-white text-center">
             Don{"'"}t have an account?{" "}
             <Link
               href={"/login"}
@@ -332,15 +338,33 @@ export default function Signin_component() {
             </Link>
           </p>
         </form>
+        {/* Background images */}
         <Image
           src={img_bg}
           alt="login background image"
-          className=" w-[100%] h-full absolute top-0 left-0 z-[2]"
+          className=" w-[100%] sm:hidden h-full absolute top-0 left-0 z-[2]"
         />
+        <Image
+          src={mob_img_bg}
+          alt="login background image"
+          className=" w-[100%] h-fit hidden sm:block absolute  left-0 z-[2]"
+        />
+
+        {/* for the image coming up on mobile devices  */}
+        <Image
+          src={mob_under}
+          alt="3d Right Page Illustration"
+          className=" w-[100vw] sm:block hidden h-fit absolute bottom-0 transition duration-[2.5s] right-0 z-[3]"
+          style={{
+            transform: `translateY(${up})`,
+          }}
+        />
+
+        {/* the desktiop images on there  */}
         <Image
           src={img_left}
           alt="3d Left Page Illustration"
-          className=" w-[30vw] h-fit absolute bottom-0 transition duration-[2.5s] left-0 z-[3]"
+          className=" w-[30vw] sm:hidden h-fit absolute bottom-0 transition duration-[2.5s] left-0 z-[3]"
           style={{
             transform: `translateX(${left})`,
           }}
@@ -348,7 +372,7 @@ export default function Signin_component() {
         <Image
           src={img_right}
           alt="3d Right Page Illustration"
-          className=" w-[30vw] h-fit absolute bottom-0 transition duration-[2.5s] right-0 z-[3]"
+          className=" w-[30vw] sm:hidden h-fit absolute bottom-0 transition duration-[2.5s] right-0 z-[3]"
           style={{
             transform: `translateX(${right})`,
           }}
