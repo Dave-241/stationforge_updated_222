@@ -142,82 +142,88 @@ const Showcase_body = (props: any) => {
 
   return (
     <>
-      <main className="w-full h-auto px-[8.5vw]  flex justify-between items-start">
+      <main className="w-full h-auto px-[8.5vw] sm:gap-[6vw] sm:px-[3vw] sm:flex-col flex justify-between items-start">
         {/* for the images side  */}
-        <div className="w-[39vw] overflow-hidden  border-[white] border-[0.15vw] border-opacity-[31%] rounded-[2vw] flex flex-col h-[57vw]">
-          {/* main image */}
-          <div className="w-full h-[68%]  overflow-hidden">
-            <Image
-              src={cover_img_link}
-              unoptimized
-              width="0"
-              height="0"
-              alt="product cover images"
-              className="w-full h-full scale-[1.2]"
-            />
-          </div>
-          <div
-            className={`w-full h-[32%]  flex justify-around items-center relative overflow-hidden  `}
-          >
-            {/* Thumbnails */}
-            {currentIndex > 0 && (
-              <button
-                onClick={handleLeftClick}
-                className="absolute left-[0.8vw] z-[999]"
-              >
-                <Image
-                  src={prev_img}
-                  alt="prev icon"
-                  className="w-[2.6vw] h-fit"
-                />
-              </button>
-            )}
+        <div className="w-full h-auto">
+          <h1 className="neuem text-[6vw] w-[50%]   sm:block text-white mb-[3vw] hidden">
+            {product_arr.title}
+          </h1>
 
-            {currentIndex < product_images.length - 1 && (
-              <button
-                onClick={handleRightClick}
-                className="absolute right-[0.8vw] z-[999]"
-              >
-                <Image
-                  src={next_img}
-                  alt="prev icon"
-                  className="w-[2.6vw] h-fit"
-                />
-              </button>
-            )}
-
+          <div className="w-[39vw] sm:w-full overflow-hidden  sm:rounded-[5vw] border-[white] border-[0.15vw] sm:border-[0.5vw] sm:h-[140vw] border-opacity-[31%] rounded-[2vw] flex flex-col h-[57vw]">
+            {/* main image */}
+            <div className="w-full h-[68%] sm:h-[70%]  overflow-hidden">
+              <Image
+                src={cover_img_link}
+                unoptimized
+                width="0"
+                height="0"
+                alt="product cover images"
+                className="w-full h-full scale-[1.2]"
+              />
+            </div>
             <div
-              className="absolute flex h-full w-auto  items-center gap-[2vw] px-[2vw]  top-0 left-0 "
-              style={{
-                transform: `translateX(${translateX}%)`,
-                transition: "0.7s ease",
-              }}
+              className={`w-full h-[32%] sm:h-[30%] flex justify-around items-center relative overflow-hidden  `}
             >
-              {product_images.map((e: any, index: any) => {
-                return (
-                  <>
-                    <div
-                      className="w-[10vw] h-[10vw]"
-                      key={index}
-                      onClick={() => {
-                        setcover_img_link(e.link);
-                      }}
-                    >
-                      {" "}
-                      <Image
-                        src={e.link}
-                        unoptimized
-                        width="0"
-                        height="0"
-                        alt="product cover images"
-                        className="w-full h-full"
-                      />
-                    </div>
+              {/* Thumbnails */}
+              {currentIndex > 0 && (
+                <button
+                  onClick={handleLeftClick}
+                  className="absolute left-[0.8vw] sm:left-[2vw] z-[999]"
+                >
+                  <Image
+                    src={prev_img}
+                    alt="prev icon"
+                    className="w-[2.6vw] sm:w-[8.3vw] h-fit"
+                  />
+                </button>
+              )}
 
-                    <div className="h-full w-[0.15vw] bg-[white] bg-opacity-[31%]"></div>
-                  </>
-                );
-              })}
+              {currentIndex < product_images.length - 1 && (
+                <button
+                  onClick={handleRightClick}
+                  className="absolute right-[0.8vw] sm:right-[2vw] z-[999]"
+                >
+                  <Image
+                    src={next_img}
+                    alt="prev icon"
+                    className="w-[2.6vw] sm:w-[8.3vw] h-fit"
+                  />
+                </button>
+              )}
+
+              <div
+                className="absolute flex h-full w-auto  items-center gap-[2vw] px-[2vw] sm:gap-[3.5vw]  top-0 left-0 "
+                style={{
+                  transform: `translateX(${translateX}%)`,
+                  transition: "0.7s ease",
+                }}
+              >
+                {product_images.map((e: any, index: any) => {
+                  return (
+                    <>
+                      <div
+                        className="w-[10vw] sm:w-[20vw] sm:h-[20vw] h-[10vw]"
+                        key={index}
+                        onClick={() => {
+                          setcover_img_link(e.link);
+                        }}
+                      >
+                        {" "}
+                        <Image
+                          src={e.link}
+                          unoptimized
+                          width="0"
+                          height="0"
+                          alt="product cover images"
+                          className="w-full h-full"
+                        />
+                      </div>
+
+                      <div className="h-full w-[0.15vw] sm:w-[0.5vw] bg-[white] bg-opacity-[31%]"></div>
+                    </>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -230,11 +236,13 @@ const Showcase_body = (props: any) => {
         {/*  */}
 
         {/* for the text and description side */}
-        <div className="w-[36vw] flex flex-col text-white items-start justify-center gap-[3vw]  h-auto pt-[4vw]">
-          <h1 className="neuem text-[2.5vw] w-[80%] ">{product_arr.title}</h1>
-          <div className="flex gap-[3vw] items-center ">
+        <div className="w-[36vw] sm:w-full flex flex-col  text-white sm:gap-[7vw] items-start justify-center gap-[3vw]  h-auto pt-[4vw]">
+          <h1 className="neuem text-[2.5vw] w-[80%] sm:hidden">
+            {product_arr.title}
+          </h1>
+          <div className="flex gap-[3vw] sm:w-full sm:flex-col items-center ">
             <button
-              className="bg-[#CCFF00] text-black neuer text-[1.1vw] rounded-[3.2vw] w-[13vw] h-[3.4vw]"
+              className="bg-[#CCFF00] sm:text-[4vw] sm:font-[900] sm:rounded-[6vw] sm:w-full sm:h-[13vw] text-black neuer text-[1.1vw] rounded-[3.2vw] w-[13vw] h-[3.4vw]"
               onClick={() => {
                 handleAddToForge();
               }}
@@ -247,9 +255,11 @@ const Showcase_body = (props: any) => {
             </p>
           </div>
           <div className="w-full flex flex-col justify-center gap-[1.7vw]">
-            <h3 className="text-[1.3vw] neuer">DESCRIPTION</h3>
+            <h3 className="text-[1.3vw] neuer sm:text-[4vw]">DESCRIPTION</h3>
 
-            <p className="text-[1.2vw] neuer">{product_arr.description}</p>
+            <p className="text-[1.2vw] sm:text-[3.5vw] neuer">
+              {product_arr.description}
+            </p>
           </div>
         </div>
       </main>

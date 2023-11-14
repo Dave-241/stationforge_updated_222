@@ -30,7 +30,7 @@ const Showcase_header = () => {
   }, []);
   return (
     <>
-      <div className="w-full h-[7vw] backdrop-blur-[14px] bg-opacity-[30%] z-[99999] bg-black flex justify-center items-end fixed top-0 left-0">
+      <div className="w-full sm:hidden h-[7vw] backdrop-blur-[14px] bg-opacity-[30%] z-[99999] bg-black flex justify-center items-end fixed top-0 left-0">
         <nav className="w-[95%] h-full  pr-[1.3vw]   flex justify-between items-center ">
           <button
             className="text-white text-[1.4vw] neuer bg-transparent"

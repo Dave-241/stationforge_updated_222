@@ -246,6 +246,11 @@ export default function Home() {
       {forge_loader && <Forge />}
 
       <Showcase_header />
+
+      <div className="w-full h-fit z-[99] sm:h-[20vw] hidden sm:block fixed top-[0vw] ">
+        <Header />
+      </div>
+      <div className="w-full hidden sm:block h-[15vw]"></div>
       <div className="w-full h-[9vw] "></div>
       <FadeInTransition
         timeout={1500}
