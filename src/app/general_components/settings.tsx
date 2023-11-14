@@ -36,7 +36,7 @@ const Settings_modal = () => {
   const [settings_is_opac, setsettings_is_opac] = useState("bg-opacity-[0%]");
   const [loading, setloading] = useState(false);
   const [shift_modal, setshift_modal] = useState("translate-x-[40vw]");
-  const [up_modal, setup_modal] = useState("translate-y-[100vw]");
+  const [up_modal, setup_modal] = useState("translate-y-[200vw]");
   const { show_setting_modal, setshow_setting_modal }: any =
     useProfile_Context();
   const [start_hiding, setstart_hiding] = useState(false);
@@ -51,7 +51,7 @@ const Settings_modal = () => {
   const [user_birthday, setUser_birthday] = useState("");
   const [user_billingAddress, setUser_billingAddress] = useState("");
   const [user_username, setUser_username] = useState("");
-  const [user_subscription, setUser_subscription] = useState("");
+  const [user_subscription, setUser_subscription] = useState<any>("");
   const [confirmPassordModal, setconfirmPassordModal] = useState(false);
   const [confirmButtonIsLoading, setconfirmButtonIsLoading] = useState(false);
   const [saveButtonIsLoading, setsaveButtonIsLoading] = useState(false);
@@ -210,7 +210,7 @@ const Settings_modal = () => {
           const birthday = user_data.birthday;
           const country = user_data.country;
           const description = user_data.description;
-          const subscription = user_data.subscription;
+          const step = user_data.step;
           const name = user_data.name;
           const avatar_url = user_data.avatar_url;
 
@@ -222,7 +222,20 @@ const Settings_modal = () => {
           setUser_country(country);
           setUser_description(description);
           setUser_name(name);
-          setUser_subscription(subscription);
+          setUser_subscription(() => {
+            switch (step) {
+              case 0:
+                return "Public";
+              case 1:
+                return "Subscribers";
+              case 2:
+                return "Standard Tier Subscribers";
+              case 3:
+                return "Merchant Tier Subscribers";
+              default:
+                return "Unknown Subscription";
+            }
+          });
           setSelectedImage(avatar_url);
           // finally set the user id
           setuser_id(user.uid);
@@ -489,7 +502,7 @@ const Settings_modal = () => {
         // Delay hiding the component by 2000 milliseconds (2 seconds)
         setstart_hiding(true);
         setshift_modal("translate-x-[40vw]");
-        setup_modal("translate-y-[100vw]");
+        setup_modal("translate-y-[200vw]");
         setsettings_is_opac("bg-opacity-[0%]");
       }
     }
@@ -551,7 +564,7 @@ const Settings_modal = () => {
         className={`w-full min-h-full bg-black ${settings_is_opac} fixed top-0 left-0 z-[9999] transition duration-[1s] setting_modal sm:items-end flex justify-end items-center overflow-hidden`}
       >
         <div
-          className={`w-[35vw] sm:w-full h-auto py-[2vw] relative rounded-l-[2.2vw] bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+          className={`w-[35vw] sm:w-full  h-auto py-[2vw] sm:py-[8vw] sm:px-[2vw] relative sm:gap-[6vw] rounded-l-[2.2vw] bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
             globalThis.innerWidth > 650 ? shift_modal : up_modal
           } border transition duration-[1.5s]`}
           ref={ref_modal}
@@ -561,9 +574,9 @@ const Settings_modal = () => {
             <>
               {/* first dive section */}
               <div className="w-full h-auto px-[2vw] flex justify-between items-center">
-                <div className="w-auto h-auto flex items-center gap-[0.5vw]">
+                <div className="w-auto h-auto flex items-center gap-[0.5vw] sm:gap-[3vw]">
                   <div
-                    className=" h-[4.9vw] avater_bg w-[4.9vw]  rounded-[100%] overflow-hidden relative "
+                    className=" h-[4.9vw] avater_bg w-[4.9vw] sm:w-[14vw] sm:h-[14vw]  rounded-[100%] overflow-hidden relative "
                     style={{
                       backgroundImage: `url('${selectedImage}')`,
                     }}
@@ -580,7 +593,7 @@ const Settings_modal = () => {
                   <div className="w-auto h-auto flex-col flex gap-[0.1vw]">
                     <label
                       htmlFor="avatar-upload"
-                      className="cursor-pointer hover:underline  text-[0.9vw] text-[#CCFF00]"
+                      className="cursor-pointer hover:underline  text-[0.9vw] sm:text-[3.2vw] text-[#CCFF00]"
                     >
                       <i className="bi bi-pencil-square"></i> Edit Avatar
                     </label>
@@ -592,7 +605,7 @@ const Settings_modal = () => {
                       onChange={handleFileChange}
                     />
                     <p
-                      className=" cursor-pointer hover:text-opacity-[100%] duration-[0.9] transition text-white text-opacity-[70%]  hover:underline hover:underline-offset-4 text-[0.9vw]"
+                      className=" cursor-pointer hover:text-opacity-[100%] duration-[0.9] transition text-white text-opacity-[70%]  hover:underline hover:underline-offset-4 text-[0.9vw] sm:text-[3.2vw]"
                       onClick={() => {
                         setSelectedImage(load_reset);
                         setimg_size_error("");
@@ -606,22 +619,22 @@ const Settings_modal = () => {
                     </p>
                   </div>
                 </div>
-                <p className="neuem text-[1.06vw] text-white">
+                <p className="neuem text-[1.06vw] sm:text-[3.2vw] text-white">
                   Tap any box to edit
                 </p>
               </div>
               {/* second section and its a button */}
               <div className="w-full px-[2vw]">
-                <p className="bg-[#CCFF00] text-[0.8vw] font-[600] w-fit py-[0.6vw] px-[0.6vw] rounded-[2.3vw] neuem capitalize">
+                <p className="bg-[#CCFF00] text-[0.8vw] sm:py-[3vw] sm:px-[6vw] sm:text-[3vw] font-[600] w-fit py-[0.6vw] px-[0.6vw] rounded-[2.3vw] neuem capitalize">
                   {user_subscription}
                 </p>
               </div>
               {/* third section that contains all the names*/}
-              <div className="w-full flex    px-[2vw] justify-start gap-[1vw] flex-wrap">
-                <div className="flex flex-col gap-[0.5vw] w-[40%]">
+              <div className="w-full flex sm:gap-[5vw]    px-[2vw] justify-start gap-[1vw] flex-wrap">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[40%]">
                   <label
                     htmlFor=""
-                    className="neuem text-[0.8vw] text-white opacity-[70%] capitalize"
+                    className="neuem text-[0.8vw] sm:text-[3vw] text-white opacity-[70%] capitalize"
                   >
                     Public name
                   </label>
@@ -634,15 +647,15 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_name(e.target.value);
                     }}
-                    className="py-[0.7vw] text-[0.9vw] text-white bg-[#212121] rounded-[2.2vw] capitalize px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3.2vw] text-white bg-[#212121] rounded-[2.2vw] capitalize px-[1.7vw]"
                     value={user_name == "" ? "" : user_name}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-[55%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] sm:w-[50%] w-[55%]">
                   <label
                     htmlFor=""
-                    className="neuem text-[0.8vw] text-white opacity-[70%]"
+                    className="neuem text-[0.8vw] sm:text-[3vw] text-white opacity-[70%]"
                   >
                     Public description
                   </label>
@@ -655,15 +668,15 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_description(e.target.value);
                     }}
-                    className="py-[0.7vw] text-[0.9vw]  text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3.2vw]  text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                     value={user_description == "" ? "" : user_description}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-[40%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[40%]">
                   <label
                     htmlFor=""
-                    className="neuem text-[0.8vw] text-white opacity-[70%]"
+                    className="neuem text-[0.8vw] sm:text-[3vw] text-white opacity-[70%]"
                   >
                     Username
                   </label>
@@ -676,15 +689,15 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_username(e.target.value);
                     }}
-                    className="py-[0.7vw] text-[0.9vw] lowercase text-white bg-[#212121] rounded-[2.2vw]  px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3.2vw] lowercase text-white bg-[#212121] rounded-[2.2vw]  px-[1.7vw]"
                     value={user_username == "" ? "" : user_username}
                   />
                 </div>
 
-                <div className="flex  flex-col gap-[0.5vw] w-[45%]">
+                <div className="flex  flex-col gap-[0.5vw] sm:gap-[2vw] w-[45%]">
                   <label
                     htmlFor=""
-                    className="neuem text-[0.8vw] text-white opacity-[70%]"
+                    className="neuem text-[0.8vw] sm:text-[3vw] text-white opacity-[70%]"
                   >
                     Email
                   </label>
@@ -698,15 +711,15 @@ const Settings_modal = () => {
                       setsave("Save");
                       // setUser_email(e.target.value);
                     }}
-                    className="py-[0.7vw] text-[0.9vw] text-white bg-[#212121] rounded-[2.2vw] opacity-[30%] px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3.2vw] text-white bg-[#212121] rounded-[2.2vw] opacity-[30%] px-[1.7vw]"
                     value={user_email == "" ? "" : user_email}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-[40%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[40%]">
                   <label
                     htmlFor=""
-                    className="neuem text-[0.8vw] text-white opacity-[70%]"
+                    className="neuem text-[0.8vw] sm:text-[3vw] text-white opacity-[70%]"
                   >
                     Birthday
                   </label>
@@ -719,15 +732,15 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_birthday(e.target.value);
                     }}
-                    className="py-[0.7vw] capitalize text-[0.9vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] capitalize text-[0.9vw] sm:text-[3.2vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                     value={user_birthday == "" ? "" : user_birthday}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-[40%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[40%]">
                   <label
                     htmlFor=""
-                    className="neuem text-[0.8vw] text-white opacity-[70%]"
+                    className="neuem text-[0.8vw] sm:text-[3vw] text-white opacity-[70%]"
                   >
                     Country
                   </label>
@@ -740,15 +753,15 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_country(e.target.value);
                     }}
-                    className="py-[0.7vw] capitalize text-[0.9vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] capitalize text-[0.9vw] sm:text-[3.2vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                     value={user_country == "" ? "" : user_country}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-[100%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[100%]">
                   <label
                     htmlFor=""
-                    className="neuem text-[0.8vw] text-white opacity-[70%]"
+                    className="neuem text-[0.8vw] sm:text-[3vw] text-white opacity-[70%]"
                   >
                     Billing address
                   </label>
@@ -763,7 +776,7 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_billingAddress(e.target.value);
                     }}
-                    className="py-[2vw] text-[0.9vw] capitalize text-center text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw] "
+                    className="py-[2vw] sm:py-[7vw] sm:rounded-[5vw] text-[0.9vw] sm:text-[3.2vw] capitalize text-center text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw] "
                     value={user_billingAddress == "" ? "" : user_billingAddress}
                   />
                 </div>
@@ -775,9 +788,9 @@ const Settings_modal = () => {
               <p className="absolute top-[0.4vw] left-[3vw]  text-[0.7vw] text-[lightgray] capitalize">
                 {errInfoModule}
               </p>
-              <div className="w-full h-[3.5vw]  px-[2vw]  flex justify-between items-center">
+              <div className="w-full h-[3.5vw]  px-[2vw] sm:h-[15vw]  flex justify-between items-center">
                 <button
-                  className="h-full w-[49%] bg-[#262626] text-white text-[1vw] neuem rounded-[1.3vw] hover:bg-[#131312] hover:border  transition duration-[0.3s]:text-white hover:bg-opacity-[30%] flex justify-center items-center"
+                  className="h-full w-[49%] sm:text-[3.5vw] sm:rounded-[4vw] bg-[#262626] text-white text-[1vw] neuem rounded-[1.3vw] hover:bg-[#131312] hover:border  transition duration-[0.3s]:text-white hover:bg-opacity-[30%] flex justify-center items-center"
                   onClick={handlePasswordReset}
                 >
                   {paswordResetIsLoading ? (
@@ -788,7 +801,7 @@ const Settings_modal = () => {
                 </button>
 
                 <button
-                  className="h-full w-[49%] bg-[#CCFF00] text-black text-[1vw] neuem rounded-[1.3vw] hover:bg-[#CCFF00] hover:text-white  hover:border hover:bg-opacity-[30%] transition duration-[0.3s] flex justify-center items-center"
+                  className="h-full w-[49%] sm:text-[3.5vw] sm:rounded-[4vw] bg-[#CCFF00] text-black text-[1vw] neuem rounded-[1.3vw] hover:bg-[#CCFF00] hover:text-white  hover:border hover:bg-opacity-[30%] transition duration-[0.3s] flex justify-center items-center"
                   onClick={ShowPasswordModal}
                 >
                   {saveButtonIsLoading ? (
@@ -808,7 +821,7 @@ const Settings_modal = () => {
                     <p className="opacity-[70%] text-[1vw]">
                       Please confirm your password
                     </p>
-                    <div className="w-full flex flex-col gap-[0.5vw]  justify-center h-auto ">
+                    <div className="w-full flex flex-col gap-[0.5vw] sm:gap-[2vw]  justify-center h-auto ">
                       <div className="w-full h-auto relative">
                         <input
                           type={showPassword ? "text" : "password"}
@@ -818,7 +831,7 @@ const Settings_modal = () => {
                             seterrPasswordModule("");
                           }}
                           autoFocus
-                          className="py-[0.7vw] w-full text-[0.9vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                          className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] w-full text-[0.9vw] sm:text-[3.2vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                         />{" "}
                         <span
                           className="absolute right-[0.7vw] top-[50%] text-[2vw] text-white opacity-[50%]"
@@ -835,7 +848,7 @@ const Settings_modal = () => {
                           )}
                         </span>
                       </div>
-                      <p className="text-[text-white] neuer text-[0.8vw] pl-[0.5vw] opacity-[60%] ">
+                      <p className="text-[text-white] neuer text-[0.8vw] sm:text-[3vw] pl-[0.5vw] opacity-[60%] ">
                         {errPasswordModule}
                       </p>
                     </div>
@@ -873,15 +886,15 @@ const Settings_modal = () => {
               {/* first dive section */}
               <div className="w-full animate-pulse h-auto px-[2vw] flex justify-between items-center">
                 <div className=" h-[4.9vw] w-[4.9vw] bg-[#6a6a6a] rounded-[100%]"></div>
-                <p className="neuem text-[1.06vw] text-white rounded-[2.2vw] h-[2vw] w-[50%] bg-[#6a6a6a]"></p>
+                <p className="neuem text-[1.06vw] sm:text-[3.2vw] text-white rounded-[2.2vw] h-[2vw] w-[50%] bg-[#6a6a6a]"></p>
               </div>
               {/* second section and its a button */}
               <div className="w-full px-[2vw] animate-pulse ">
-                <p className="  h-[2.5vw] w-[30%] bg-[#CCFF00] text-[0.8vw] font-[600]  py-[0.6vw] px-[0.6vw] rounded-[2.3vw] neuem"></p>
+                <p className="  h-[2.5vw] w-[30%] bg-[#CCFF00] text-[0.8vw] sm:text-[3vw] font-[600]  py-[0.6vw] px-[0.6vw] rounded-[2.3vw] neuem"></p>
               </div>
               {/* third section that contains all the names*/}
               <div className="w-full flex animate-pulse   px-[2vw] justify-between gap-[2vw] flex-wrap">
-                <div className="flex flex-col gap-[0.5vw] w-[48%]">
+                <div className="flex flex-col gap-[0.5vw]  w-[48%]">
                   <label
                     htmlFor=""
                     className="h-[1.1vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
