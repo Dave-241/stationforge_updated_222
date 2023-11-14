@@ -788,7 +788,7 @@ const Settings_modal = () => {
               <p className="absolute top-[0.4vw] left-[3vw]  text-[0.7vw] text-[lightgray] capitalize">
                 {errInfoModule}
               </p>
-              <div className="w-full h-[3.5vw]  px-[2vw] sm:h-[15vw]  flex justify-between items-center">
+              <div className="w-full h-[3.5vw]  px-[2vw] sm:h-[13vw]  flex justify-between items-center">
                 <button
                   className="h-full w-[49%] sm:text-[3.5vw] sm:rounded-[4vw] bg-[#262626] text-white text-[1vw] neuem rounded-[1.3vw] hover:bg-[#131312] hover:border  transition duration-[0.3s]:text-white hover:bg-opacity-[30%] flex justify-center items-center"
                   onClick={handlePasswordReset}
