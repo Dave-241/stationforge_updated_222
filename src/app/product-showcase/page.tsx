@@ -263,7 +263,7 @@ export default function Home() {
         in={true}
         style={{ width: "100%" }}
       >
-        {is_loading ? (
+        {!is_loading ? (
           <Showcase_body
             product_arr={product_arr}
             cover_img_link={cover_img_link}
@@ -295,7 +295,7 @@ export default function Home() {
         )}
       </FadeInTransition>
 
-      <div className="w-full h-[5vw]  sm:hidden"></div>
+      <div className="w-full h-[5vw]  sm:h-[10vw]"></div>
     </>
   );
 }

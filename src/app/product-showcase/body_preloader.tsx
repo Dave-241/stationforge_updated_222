@@ -47,15 +47,15 @@ const Showcase_preloader = (props: any) => {
         {/*  */}
 
         {/* for the text and description side */}
-        <div className="w-[36vw] flex flex-col text-white items-start justify-center gap-[3vw]  h-auto pt-[4vw]">
+        <div className="w-[36vw] flex flex-col text-white sm:w-full sm:mt-[6vw] items-start justify-center gap-[3vw]  h-auto pt-[4vw]">
           <div className="neuem text-[2.5vw] w-[80%] h-[3vw] animate-pulse bg-[#2a2828] rounded-[3.2vw] sm:hidden"></div>
 
-          <div className="bg-[#CCFF00] animate-pulse text-black neuer text-[1.1vw] rounded-[3.2vw] py-[1.4vw] px-[6vw]"></div>
+          <div className="bg-[#CCFF00] animate-pulse text-black neuer text-[1.1vw] rounded-[3.2vw] py-[1.4vw] px-[6vw] sm:w-fit sm:w-full sm:h-[12vw]"></div>
 
-          <div className="w-full flex flex-col justify-center gap-[1.7vw] ">
-            <h3 className="text-[1.3vw] neuer animate-pulse bg-[#2a2828] w-[50%] h-[2vw] rounded-[3.2vw]"></h3>
+          <div className="w-full flex flex-col sm:gap-[5vw] sm:mt-[6vw] justify-center gap-[1.7vw] ">
+            <h3 className="text-[1.3vw] neuer animate-pulse bg-[#2a2828] w-[50%] h-[2vw] rounded-[3.2vw] sm:w-[35vw] sm:h-[10vw]"></h3>
 
-            <div className="text-[1.2vw] neuer w-full h-[20vw] animate-pulse bg-[#2a2828] rounded-[2vw]"></div>
+            <div className="text-[1.2vw] neuer w-full sm:h-[50vw] h-[20vw] animate-pulse bg-[#2a2828] rounded-[2vw]"></div>
           </div>
         </div>
       </main>

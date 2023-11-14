@@ -124,13 +124,13 @@ const Review = (props: any) => {
               </div>
             )}
           </div>
-          <div className="w-full h-[5vw] hidden sm:h-[10vw]"></div>
+
           {trimmedReviews.length < 5 && trimmedReviews.length != 0 && (
             <button
               onClick={() => {
                 seeall_review();
               }}
-              className="bg-[#CCFF00] relative top-0 sm:sticky sm:bottom-[3vw] sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              className="bg-[#CCFF00]  sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
               // style={{
               //   position: globalThis.innerWidth < 650 ? "sticky" : "relative",
               //   bottom: "5vw",
@@ -145,7 +145,7 @@ const Review = (props: any) => {
               onClick={() => {
                 seeless_review();
               }}
-              className="bg-[#CCFF00] relative sm:mt-[2vw] sm:sticky sm:bottom-[3vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              className="bg-[#CCFF00] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
             >
               See Less
             </button>
