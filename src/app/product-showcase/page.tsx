@@ -58,6 +58,7 @@ export default function Home() {
   const [product_images, setproduct_images] = useState([{}]);
   const [cover_img_link, setcover_img_link] = useState("");
   const [disable, setdisable] = useState(true);
+  const [hackdisable, sethackdisable] = useState(true);
   const [is_loading, setis_loading] = useState(true);
   const [uuid, setuuid] = useState("");
   const [reviewsWithUserDetails, setReviewsWithUserDetails] = useState<any>([]);
@@ -145,9 +146,11 @@ export default function Home() {
         // router.push("/"); // Replace with your protected routef
         setuuid(user.uid);
         setdisable(false);
+        sethackdisable(false);
         logUserRole(user.uid);
       } else {
         setdisable(true);
+        sethackdisable(true);
       }
     });
 
@@ -278,7 +281,9 @@ export default function Home() {
         {!reviewisloading ? (
           <Review
             disable={disable}
+            hackdisable={hackdisable}
             setdisable={setdisable}
+            sethackdisable={sethackdisable}
             trimmedReviews={trimmedReviews}
             uuid={uuid}
             seeall_review={seeall_review}
@@ -289,8 +294,6 @@ export default function Home() {
           <Review_preloader />
         )}
       </FadeInTransition>
-
-      <div className="w-full h-[5vw] "></div>
     </>
   );
 }

@@ -19,6 +19,8 @@ const Review = (props: any) => {
     trimmedReviews,
     seeall_review,
     seeless_review,
+    hackdisable,
+    sethackdisable,
     size,
   } = props;
   const app = initializeApp(firebaseConfig);
@@ -32,6 +34,7 @@ const Review = (props: any) => {
   const [review_text, setreview_text] = useState("");
 
   const handleSubmit = (event: any) => {
+    sethackdisable(true);
     event.preventDefault(); // Prevent the default form submit action
     if (review_text != "") {
       // Add a new document with a generated id to the "reviews" collection
@@ -42,8 +45,7 @@ const Review = (props: any) => {
         createdAt: serverTimestamp(),
       })
         .then((docRef) => {
-          console.log("Document written with ID: ", docRef.id); // The auto-generated id for the document
-
+          sethackdisable(false);
           setreview_text("");
         })
         .catch((e) => {
@@ -77,7 +79,7 @@ const Review = (props: any) => {
               />
               <button
                 type="submit"
-                disabled={disable}
+                disabled={hackdisable}
                 className="text-[#CCFF00]  neuer text-[1.2vw] sm:text-[3.5vw]  sm:right-[3vw] absolute right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
                 onClick={() => {
                   //   handlecomment(postdata.postId);
@@ -99,11 +101,11 @@ const Review = (props: any) => {
                     className="w-[4vw] h-[4vw] sm:w-[10vw] sm:h-[10vw] avater_bg  rounded-[100%]"
                     style={{ backgroundImage: `url(${e.avatar})` }}
                   ></div>
-                  <div className=" flex flex-col gap-[0.7vw] sm:gap-[2vw] ">
+                  <div className=" flex flex-col gap-[0.7vw] sm:gap-[2vw] flex-wrap h-auto ">
                     <p className="text-white neuer capitalize sm:text-[2.8vw] opacity-[60%] text-[1.1vw]">
                       {e.name}
                     </p>
-                    <p className="text-white neuer text-[0.9vw] sm:text-[3vw]">
+                    <p className="text-white neuer  overflow-hidden w-full text-[0.9vw] sm:text-[3vw]">
                       {e.text}
                     </p>
                   </div>
@@ -122,12 +124,13 @@ const Review = (props: any) => {
               </div>
             )}
           </div>
+          <div className="w-full h-[5vw] sm:h-[10vw]"></div>
           {trimmedReviews.length < 5 && trimmedReviews.length != 0 && (
             <button
               onClick={() => {
                 seeall_review();
               }}
-              className="bg-[#CCFF00] sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[4vw] sm:rounded-[4vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              className="bg-[#CCFF00] sm:sticky sm:bottom-[3vw] sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
             >
               See All
             </button>
@@ -138,7 +141,7 @@ const Review = (props: any) => {
               onClick={() => {
                 seeless_review();
               }}
-              className="bg-[#CCFF00] sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[4vw] sm:rounded-[4vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              className="bg-[#CCFF00] sm:mt-[2vw] sm:sticky sm:bottom-[3vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
             >
               See Less
             </button>
