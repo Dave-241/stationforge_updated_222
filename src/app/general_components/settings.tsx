@@ -36,6 +36,7 @@ const Settings_modal = () => {
   const [settings_is_opac, setsettings_is_opac] = useState("bg-opacity-[0%]");
   const [loading, setloading] = useState(false);
   const [shift_modal, setshift_modal] = useState("translate-x-[40vw]");
+  const [up_modal, setup_modal] = useState("translate-y-[100vw]");
   const { show_setting_modal, setshow_setting_modal }: any =
     useProfile_Context();
   const [start_hiding, setstart_hiding] = useState(false);
@@ -191,6 +192,7 @@ const Settings_modal = () => {
 
   useEffect(() => {
     setshift_modal("translate-x-[0]");
+    setup_modal("translate-y-[0]");
     setsettings_is_opac("bg-opacity-[50%]");
     const user = auth.currentUser;
 
@@ -487,7 +489,7 @@ const Settings_modal = () => {
         // Delay hiding the component by 2000 milliseconds (2 seconds)
         setstart_hiding(true);
         setshift_modal("translate-x-[40vw]");
-
+        setup_modal("translate-y-[100vw]");
         setsettings_is_opac("bg-opacity-[0%]");
       }
     }
@@ -546,10 +548,12 @@ const Settings_modal = () => {
         <meta name="googlebot" content="noindex,nofollow" />
       </Head>
       <div
-        className={`w-full min-h-full bg-black ${settings_is_opac} fixed top-0 left-0 z-[9999] transition duration-[1s] setting_modal flex justify-end items-center overflow-hidden`}
+        className={`w-full min-h-full bg-black ${settings_is_opac} fixed top-0 left-0 z-[9999] transition duration-[1s] setting_modal sm:items-end flex justify-end items-center overflow-hidden`}
       >
         <div
-          className={`w-[35vw] h-auto py-[2vw] relative rounded-l-[2.2vw] bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${shift_modal} border transition duration-[1.5s]`}
+          className={`w-[35vw] sm:w-full h-auto py-[2vw] relative rounded-l-[2.2vw] bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+            globalThis.innerWidth > 650 ? shift_modal : up_modal
+          } border transition duration-[1.5s]`}
           ref={ref_modal}
         >
           {" "}

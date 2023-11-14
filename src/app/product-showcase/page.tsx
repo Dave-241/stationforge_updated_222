@@ -190,9 +190,6 @@ export default function Home() {
     );
 
     const unsubscribe = onSnapshot(colQuery, (reviewsSnapshot) => {
-      setreviewisloading(true);
-      console.log(reviewsSnapshot);
-
       const userDetailsPromises = reviewsSnapshot.docs.map((reviewDoc) => {
         const reviewData = reviewDoc.data();
         const usersCollectionRef = collection(db, "users");

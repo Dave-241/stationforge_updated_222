@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { useOnboarding_Context } from "../utils/onboarding_context";
+import { useRouter } from "next/navigation";
 
 const Step_four = () => {
   const [speed, setspeed] = useState(2);
+  const router = useRouter();
 
   const { step, setstep }: any = useOnboarding_Context();
   return (
@@ -29,6 +31,7 @@ const Step_four = () => {
             onClick={() => {
               setstep(4);
               setspeed(0);
+              router.push("/");
             }}
             style={{
               backgroundColor: step != 4 ? "transparent" : "#CCFF00",

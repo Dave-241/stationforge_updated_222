@@ -110,6 +110,13 @@ const Products = (props: any) => {
         <div className="h-[0.1vw] bg-white  bg-opacity-[10%] w-full sm:hidden"></div>
 
         <div className="w-full  flex flex-wrap justify-start px-[1.8vw] sm:px-0 gap-[1.7vw] sm:gap-[3vw] ">
+          {products.length == 0 && (
+            <div className=" w-full sm:h-[40vw] h-[25vw] flex justify-center items-center ">
+              <p className="text-white text-[1.2vw] sm:text-[4vw] neuer text-opacity-[70%]">
+                Something went wrong. Please refresh page
+              </p>
+            </div>
+          )}
           {products.map((e: any, index: any) => {
             // if (index == 9 ) {
 

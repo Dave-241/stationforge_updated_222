@@ -8,7 +8,9 @@ import { useProfile_Context } from "../utils/profile_context";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import logo from "../../../public/logo.webp";
 import mob_ham from "../../../public/mob_ham.png";
+import mob_ham_exit from "../../../public/mob_ham_exit.webp";
 import mob_cart from "../../../public/mob_cart.png";
+
 import { initializeApp } from "firebase/app";
 
 import {
@@ -19,6 +21,7 @@ import {
 } from "firebase/auth";
 import firebaseConfig from "../utils/fire_base_config";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Mobile_header from "./mobile_header";
 
 initializeApp(firebaseConfig);
 
@@ -27,9 +30,11 @@ const auth = getAuth();
 
 const Header = () => {
   const [loggedin, setloggedin] = useState(false);
+  const [comedown, setcomedown] = useState(false);
   const [admin_loggedin, setadmin_loggedin] = useState(false);
   const [track_hide_download, settrack_hide_download] = useState(true);
   const [track_progress, settrack_progress] = useState<any>("0");
+  const [mobile_bg_changer, setmobile_bg_changer] = useState<any>(false);
   const {
     toggleDropdown,
     downloadProgress,
@@ -116,7 +121,23 @@ const Header = () => {
 
   return (
     <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute z-[99] top-[2.5vw] sm:top-0 flex justify-center ">
-      <nav className="w-[90%] sm:w-[100%] sm:px-[5%] h-full pr-[1.3vw] bg-[#0A0B0B] sm:bg-[black] border-[#CCFF00] sm:bg-opacity-[50%] border-opacity-[5%] sm:border-none border rounded-[1.06vw] flex justify-between  items-center backdrop-blur-[14px]  bg-opacity-[30%]">
+      {mobile_bg_changer && (
+        <Mobile_header
+          setmobile_bg_changer={setmobile_bg_changer}
+          comedown={comedown}
+          setcomedown={setcomedown}
+          links={links}
+          loggedin={loggedin}
+        />
+      )}
+      <nav
+        className="w-[90%] sm:w-[100%] sm:px-[5%] h-full pr-[1.3vw] bg-[#0A0B0B] sm:bg-[black] border-[#CCFF00] sm:bg-opacity-[50%] border-opacity-[5%] sm:border-none border rounded-[1.06vw] flex justify-between  items-center backdrop-blur-[14px]  bg-opacity-[30%]"
+        style={{
+          backgroundColor: mobile_bg_changer ? "#181818" : "",
+          transition: "0.6s ease",
+          opacity: mobile_bg_changer ? 1 : "",
+        }}
+      >
         {/* mobile design */}
         {/* mobile design */}
         {/* mobile design */}
@@ -125,18 +146,27 @@ const Header = () => {
         <div className="sm:block sm:w-fit  hidden">
           <button
             className="= w-[10vw] h-auto flex"
-            // onClick={() => {
-            //   if (pathname == "/") {
-            //     setpage_loader(false);
-            //   } else {
-            //     setpage_loader(true);
-            //   }
-            // }}
+            onClick={() => {
+              // if (pathname == "/") {
+              //   setpage_loader(false);
+              // } else {
+              //   setpage_loader(true);
+              // }
+              if (mobile_bg_changer) {
+                setcomedown(false);
+                setTimeout(() => {
+                  setmobile_bg_changer(false);
+                }, 800);
+              } else {
+                setmobile_bg_changer(!mobile_bg_changer);
+              }
+            }}
           >
             <Image
-              src={mob_ham}
+              src={mobile_bg_changer ? mob_ham_exit : mob_ham}
               alt="StationForge Logo"
               className="w-full h-fit"
+              style={{ transition: "2s ease" }}
             />
           </button>
         </div>
