@@ -121,7 +121,7 @@ const Custom_subscription_Header = () => {
   }, []);
 
   return (
-    <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute z-[99] top-[2.5vw] sm:top-0 flex justify-center left-0 px-[2vw] backdrop-blur-[3px]  ">
+    <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute  top-[2.5vw] sm:top-0 flex justify-center left-0 px-[2vw] backdrop-blur-[3px]  ">
       {mobile_bg_changer && (
         <Mobile_header
           setmobile_bg_changer={setmobile_bg_changer}
@@ -132,7 +132,7 @@ const Custom_subscription_Header = () => {
         />
       )}
       <nav
-        className="w-full px-[1vw]  h-full  bg-transparent  rounded-[1.06vw] flex justify-between  items-center "
+        className="w-full px-[1vw]  h-full  bg-transparent z-[99]  rounded-[1.06vw] flex justify-between  items-center  "
         style={{
           backgroundColor: mobile_bg_changer ? "#181818" : "",
           transition: "0.6s ease",
