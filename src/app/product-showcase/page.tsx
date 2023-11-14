@@ -250,6 +250,8 @@ export default function Home() {
       <div className="w-full h-fit z-[99] sm:h-[20vw] hidden sm:block fixed top-[0vw] ">
         <Header />
       </div>
+
+      {show_setting_modal && <Settings_modal />}
       <div className="w-full hidden sm:block h-[15vw]"></div>
       <div className="w-full h-[9vw] "></div>
       <FadeInTransition

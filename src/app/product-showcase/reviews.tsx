@@ -53,20 +53,22 @@ const Review = (props: any) => {
   };
   return (
     <>
-      <div className="w-full h-auto px-[4vw] ">
+      <div className="w-full h-auto px-[4vw] sm:mt-[4vw]">
         <div className="w-full h-full gap-[5vw] flex flex-col ">
           {/* the reivew count and the input field */}
-          <div className="w-full flex justify-between items-center">
-            <p className="neuer text-[1.3vw] text-white">REVIEWS ( {size} )</p>
+          <div className="w-full flex justify-between items-center sm:items-start sm:flex-col sm:gap-[7vw]">
+            <p className="neuer text-[1.3vw] text-white sm:text-[4.5vw]">
+              REVIEWS ( {size} )
+            </p>
             {/* the form to handle comments  */}
             <form
-              className="w-[40vw] h-auto   relative text-[1vw]"
+              className="w-[40vw] h-auto sm:w-full  relative text-[1vw]"
               onSubmit={handleSubmit}
             >
               <input
                 type="text"
                 placeholder={disable ? "Login to comment" : "Write a  comment"}
-                className="w-full h-[3.4vw] rounded-[2.5vw] text-white text-opacity-[80%] px-[2vw] neuer transition duration-[0.6s] bg-transparent border-[0.1vw] border-white border-opacity-[40%]"
+                className="w-full h-[3.4vw] rounded-[2.5vw] sm:h-[13vw] sm:rounded-[6vw] outline-none focus:border-opacity-[100%] sm:text-[3.5vw] sm:pl-[4vw] sm:pr-[12vw] text-white text-opacity-[80%] pl-[2vw] pr-[5vw] neuer transition duration-[0.6s] bg-transparent border-[0.1vw] border-white border-opacity-[40%]"
                 onChange={(e: any) => {
                   setreview_text(e.target.value);
                 }}
@@ -76,7 +78,7 @@ const Review = (props: any) => {
               <button
                 type="submit"
                 disabled={disable}
-                className="text-[#CCFF00]  neuer text-[1.2vw]  absolute right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
+                className="text-[#CCFF00]  neuer text-[1.2vw] sm:text-[3.5vw]  sm:right-[3vw] absolute right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
                 onClick={() => {
                   //   handlecomment(postdata.postId);
                 }}
@@ -86,26 +88,29 @@ const Review = (props: any) => {
             </form>
           </div>
           {/* now this is for the reviews  */}
-          <div className=" h-auto w-full flex justify-start flex-wrap items-center gap-[1.2vw]">
+          <div className=" h-auto w-full sm:gap-[5vw] flex justify-start flex-wrap items-center gap-[1.2vw]">
             {trimmedReviews.map((e: any, index: any) => {
               return (
                 <div
-                  className=" p-[2.5vw] relative w-[21.7vw] border-[white] border-opacity-[40%] border-[0.1vw] rounded-[2vw] flex flex-col gap-[1.2vw] justify-center "
+                  className=" p-[2.5vw] sm:w-[43.2vw]  sm:gap-[5vw] sm:rounded-[6vw] relative  sm:py-[5vw] w-[21.7vw] border-[white] border-opacity-[40%] border-[0.1vw] rounded-[2vw] flex flex-col gap-[1.2vw] justify-center "
                   key={index}
                 >
                   <div
-                    className="w-[4vw] h-[4vw] avater_bg  rounded-[100%]"
+                    className="w-[4vw] h-[4vw] sm:w-[10vw] sm:h-[10vw] avater_bg  rounded-[100%]"
                     style={{ backgroundImage: `url(${e.avatar})` }}
                   ></div>
-                  <p className="text-white neuer capitalize opacity-[60%] text-[1.1vw]">
-                    {e.name}
-                  </p>
-                  <p className="text-white neuer text-[0.9vw]">{e.text}</p>
-
+                  <div className=" flex flex-col gap-[0.7vw] sm:gap-[2vw] ">
+                    <p className="text-white neuer capitalize sm:text-[2.8vw] opacity-[60%] text-[1.1vw]">
+                      {e.name}
+                    </p>
+                    <p className="text-white neuer text-[0.9vw] sm:text-[3vw]">
+                      {e.text}
+                    </p>
+                  </div>
                   {/* the three small boxes */}
-                  <div className="w-[0.5vw] absolute top-[1.7vw] right-[1.7vw] h-[0.5vw] bg-white rounded-[100%] bg-opacity-[50%]"></div>
-                  <div className="w-[0.5vw] absolute bottom-[1.7vw] right-[1.7vw] h-[0.5vw] bg-white rounded-[100%] bg-opacity-[50%]"></div>
-                  <div className="w-[0.5vw] absolute bottom-[1.7vw] left-[1.7vw] h-[0.5vw] bg-white rounded-[100%] bg-opacity-[50%]"></div>
+                  <div className="w-[0.5vw] sm:w-[1.3vw] sm:top-[3vw] sm:right-[4vw] sm:h-[1.3vw] absolute top-[1.7vw] right-[1.7vw] h-[0.5vw] bg-white rounded-[100%] bg-opacity-[50%]"></div>
+                  <div className="w-[0.5vw] sm:w-[1.3vw] sm:bottom-[3vw] sm:right-[4vw] sm:h-[1.3vw] absolute bottom-[1.7vw] right-[1.7vw] h-[0.5vw] bg-white rounded-[100%] bg-opacity-[50%]"></div>
+                  <div className="w-[0.5vw] sm:w-[1.3vw] sm:bottom-[3vw] sm:left-[4vw] sm:h-[1.3vw] absolute bottom-[1.7vw] left-[1.7vw] h-[0.5vw] bg-white rounded-[100%] bg-opacity-[50%]"></div>
                 </div>
               );
             })}
@@ -122,7 +127,7 @@ const Review = (props: any) => {
               onClick={() => {
                 seeall_review();
               }}
-              className="bg-[#CCFF00] py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              className="bg-[#CCFF00] sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[4vw] sm:rounded-[4vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
             >
               See All
             </button>
@@ -133,7 +138,7 @@ const Review = (props: any) => {
               onClick={() => {
                 seeless_review();
               }}
-              className="bg-[#CCFF00] py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              className="bg-[#CCFF00] sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[4vw] sm:rounded-[4vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
             >
               See Less
             </button>

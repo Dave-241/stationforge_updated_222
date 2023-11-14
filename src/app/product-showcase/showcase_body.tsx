@@ -168,7 +168,7 @@ const Showcase_body = (props: any) => {
               {currentIndex > 0 && (
                 <button
                   onClick={handleLeftClick}
-                  className="absolute left-[0.8vw] sm:left-[2vw] z-[999]"
+                  className="absolute left-[0.8vw] sm:left-[2vw] z-[9]"
                 >
                   <Image
                     src={prev_img}
@@ -181,7 +181,7 @@ const Showcase_body = (props: any) => {
               {currentIndex < product_images.length - 1 && (
                 <button
                   onClick={handleRightClick}
-                  className="absolute right-[0.8vw] sm:right-[2vw] z-[999]"
+                  className="absolute right-[0.8vw] sm:right-[2vw] z-[9]"
                 >
                   <Image
                     src={next_img}
