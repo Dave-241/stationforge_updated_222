@@ -275,6 +275,7 @@ export default function Home() {
         ) : (
           <Showcase_preloader />
         )}
+        <div className="w-full h-[5vw] sm:block hidden"></div>
         <div className="w-full h-[10vw] "></div>
         {!reviewisloading ? (
           <Review
