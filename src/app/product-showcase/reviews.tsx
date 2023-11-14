@@ -68,7 +68,7 @@ const Review = (props: any) => {
               <input
                 type="text"
                 placeholder={disable ? "Login to comment" : "Write a  comment"}
-                className="w-full h-[3.4vw] rounded-[2.5vw] sm:h-[13vw] sm:rounded-[6vw] outline-none focus:border-opacity-[100%] sm:text-[3.5vw] sm:pl-[4vw] sm:pr-[12vw] text-white text-opacity-[80%] pl-[2vw] pr-[5vw] neuer transition duration-[0.6s] bg-transparent border-[0.1vw] border-white border-opacity-[40%]"
+                className="w-full h-[3.4vw] rounded-[2.5vw] sm:h-[13vw] sm:rounded-[6vw] outline-none focus:border-opacity-[100%] sm:text-[3.5vw] sm:pl-[4vw] sm:pr-[12vw] text-white text-opacity-[80%] pl-[2vw] pr-[4.2vw] neuer transition duration-[0.6s] bg-transparent border-[0.1vw] border-white border-opacity-[40%]"
                 onChange={(e: any) => {
                   setreview_text(e.target.value);
                 }}

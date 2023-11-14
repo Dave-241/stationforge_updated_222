@@ -252,8 +252,7 @@ export default function Home() {
       </div>
 
       {show_setting_modal && <Settings_modal />}
-      <div className="w-full hidden sm:block h-[15vw]"></div>
-      <div className="w-full h-[9vw] "></div>
+      <div className="w-full h-[9vw] sm:h-[30vw] "></div>
       <FadeInTransition
         timeout={1500}
         from={0}
@@ -275,8 +274,7 @@ export default function Home() {
         ) : (
           <Showcase_preloader />
         )}
-        <div className="w-full h-[5vw] sm:block hidden"></div>
-        <div className="w-full h-[10vw] "></div>
+        <div className="w-full h-[10vw] sm:h-[15vw] "></div>
         {!reviewisloading ? (
           <Review
             disable={disable}

@@ -38,7 +38,7 @@ export default function Home() {
         <Header />
       </div>
 
-      <div className="w-full h-auto z-[99] sm:block px-[3vw] border2 hidden  fixed top-0 ">
+      <div className="w-full h-auto z-[99] sm:block px-[3vw]  hidden  fixed top-0 ">
         <Custom_subscription_Header />
       </div>
 

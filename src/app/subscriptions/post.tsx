@@ -509,7 +509,7 @@ const Post = (props: any) => {
             <input
               type="text"
               placeholder={err ? "Login to comment" : "Write a  comment"}
-              className="w-full h-[3.4vw]  sm:h-[8vw] sm:rounded-[4vw] sm:px-[4vw] rounded-[2.5vw] text-white text-opacity-[80%] px-[2vw] neuer transition duration-[0.6s] bg-[#1B1B1B]"
+              className="w-full h-[3.4vw]  sm:h-[9vw] outline-none focus:border-opacity-[100%] sm:border-[0.3vw] border-[0.1vw] border-white border-opacity-[50%] sm:rounded-[5vw] sm:pl-[4vw] sm:pr-[12vw]  pr-[4.5vw] rounded-[2.5vw] text-white text-opacity-[80%] pl-[2vw] neuer transition duration-[0.6s] bg-[#1B1B1B]"
               onChange={(e: any) => {
                 setcommentvalue(e.target.value);
               }}
