@@ -278,7 +278,7 @@ export default function Home() {
           <Showcase_preloader />
         )}
         <div className="w-full h-[10vw] sm:h-[15vw] "></div>
-        {!reviewisloading ? (
+        {reviewisloading ? (
           <Review
             disable={disable}
             hackdisable={hackdisable}
