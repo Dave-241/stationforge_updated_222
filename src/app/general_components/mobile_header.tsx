@@ -80,7 +80,7 @@ const Mobile_header = ({
                     }}
                     href={e.link}
                     key={index}
-                    className={` border-[0.3vw] flex justify-center items-center text-[3.5vw] h-[10vw] capitalize rounded-[4vw] border-white border-opacity-[40%] text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] w-[28vw] mb-[3vw] ${
+                    className={` border-[0.3vw] flex justify-center items-center text-[3.1vw] h-[10vw] capitalize rounded-[4vw] border-white border-opacity-[40%] text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] w-[28vw] mb-[3vw] ${
                       pathname == e.link
                         ? "text-black bg-white py-[0.5vw] px-[1vw] rounded-[1.2vw] text-opacity-[100%]"
                         : "text-white"

@@ -243,7 +243,7 @@ export default function Login_component() {
           <div className="w-full h-auto relative ">
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full h-[3.3vw] rounded-[1.1vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[4vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
+              className="w-full h-[3.3vw] rounded-[1.1vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:pl-[4vw] sm:pr-[10vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
               placeholder="Password"
               autoComplete="password"
               onChange={(e) => {

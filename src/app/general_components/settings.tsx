@@ -589,7 +589,7 @@ const Settings_modal = () => {
           ref={ref_modal}
         >
           {" "}
-          {loading ? (
+          {!loading ? (
             <>
               {/* first dive section */}
               <div className="w-full h-auto px-[2vw] flex justify-between items-center">
@@ -813,7 +813,7 @@ const Settings_modal = () => {
                   onClick={handlePasswordReset}
                 >
                   {paswordResetIsLoading ? (
-                    <div className="rounded-[100%] h-[2vw] w-[2vw]  border-solid  border-t-[0.4vw] border-[lightgray] animate-spin"></div>
+                    <div className="rounded-[100%] h-[2vw] w-[2vw] sm:w-[5vw] sm:h-[5vw] sm:border-t-[0.8vw]  border-solid  border-t-[0.4vw] border-[lightgray] animate-spin"></div>
                   ) : (
                     passwordResetValue
                   )}
@@ -824,7 +824,7 @@ const Settings_modal = () => {
                   onClick={ShowPasswordModal}
                 >
                   {saveButtonIsLoading ? (
-                    <div className="rounded-[100%] h-[2vw] w-[2vw]  border-solid  border-t-[0.4vw] border-[black] animate-spin"></div>
+                    <div className="rounded-[100%] h-[2vw] w-[2vw] sm:w-[5vw] sm:h-[5vw] sm:border-t-[0.8vw]  border-solid  border-t-[0.4vw] border-[black] animate-spin"></div>
                   ) : (
                     save
                   )}
@@ -835,8 +835,18 @@ const Settings_modal = () => {
               {/*  */}
               {/* this is for the password verifiation */}
               {confirmPassordModal ? (
-                <div className="w-full bg-black bg-opacity-[70%] flex justify-center items-center absolute top-0 left-0 h-full ">
-                  <div className="w-[70%] sm:w-[90vw] bg-[#353535] rounded-[1vw] sm:gap-[5vw] sm:py-[6vw] sm:rounded-[10vw] gap-[1vw] h-auto py-[1.6vw] flex justify-center items-center flex-col text-white px-[1.4vw]">
+                <div
+                  className="w-full bg-black bg-opacity-[70%] flex justify-center items-center absolute top-0 left-0 h-full "
+                  onClick={() => {
+                    setconfirmPassordModal(false);
+                  }}
+                >
+                  <div
+                    className="w-[70%] sm:w-[90vw] bg-[#353535] sm:px-[5vw] rounded-[1vw] sm:gap-[5vw] sm:py-[6vw] sm:rounded-[5vw] gap-[1vw] h-auto py-[1.6vw] flex justify-center items-center flex-col text-white px-[1.4vw]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
                     <p className="opacity-[70%] text-[1vw] sm:text-[3.5vw]">
                       Please confirm your password
                     </p>
@@ -850,10 +860,10 @@ const Settings_modal = () => {
                             seterrPasswordModule("");
                           }}
                           autoFocus
-                          className="py-[0.7vw] sm:py-[3vw] sm:rounded-[4vw] sm:px-[3vw] w-full text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                          className="py-[0.7vw]  sm:py-[4vw] outline-none focus:border-white focus:border-[0.1vw] sm:focus:border-[0.4vw] border-white border-opacity-[60%] sm:rounded-[4vw] sm:pl-[3vw] sm:pr-[10vw] w-full text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                         />{" "}
                         <span
-                          className="absolute right-[0.7vw] top-[50%] text-[2vw] text-white opacity-[50%]"
+                          className="absolute right-[0.7vw] top-[50%] sm:text-[7vw]  sm:right-[3vw] text-[2vw] text-white opacity-[50%]"
                           onClick={togglePasswordVisibility}
                           style={{
                             cursor: "pointer",
@@ -874,7 +884,7 @@ const Settings_modal = () => {
                     <div className="w-full flex justify-between gap-[1vw] h-auto  items-center">
                       {" "}
                       <button
-                        className="h-full w-[49%] py-[0.6vw] border-none bg-[#262626] text-white text-[1vw] neuem rounded-[1.3vw] hover:bg-[#131312] hover:border  transition duration-[0.3s]:text-white hover:bg-opacity-[90%] "
+                        className="h-full w-[49%] sm:rounded-[4vw] sm:py-[4vw] sm:text-[3.5vw] py-[0.6vw] border-none bg-[#262626]  text-white text-[1vw] neuem rounded-[1.3vw] hover:bg-[#131312] hover:border  transition duration-[0.3s]:text-white hover:bg-opacity-[90%] "
                         onClick={() => {
                           setconfirmPassordModal(false);
                           setconfirmButtonIsLoading(false);
@@ -885,12 +895,12 @@ const Settings_modal = () => {
                         Cancel
                       </button>
                       <button
-                        className="h-full w-[49%] py-[0.6vw] border-none bg-[#CCFF00] text-black text-[1vw] neuem rounded-[1.3vw] hover:bg-[#CCFF00] hover:text-white  hover:border hover:bg-opacity-[30%] transition duration-[0.3s] flex justify-center items-center"
+                        className="h-full w-[49%] sm:rounded-[4vw] sm:py-[4vw] sm:text-[3.5vw] py-[0.6vw] border-none bg-[#CCFF00] text-black text-[1vw] neuem rounded-[1.3vw] hover:bg-[#CCFF00] hover:text-white  hover:border hover:bg-opacity-[30%] transition duration-[0.3s] flex justify-center items-center"
                         onClick={UpdateForm}
                       >
                         {" "}
                         {confirmButtonIsLoading ? (
-                          <div className="rounded-[100%] h-[2vw] w-[2vw]  border-solid  border-t-[0.4vw] border-[black] animate-spin"></div>
+                          <div className="rounded-[100%] h-[2vw] w-[2vw]  sm:w-[5vw] sm:h-[5vw] sm:border-t-[0.8vw] border-solid  border-t-[0.4vw] border-[black] animate-spin"></div>
                         ) : (
                           "Confirm"
                         )}
@@ -904,76 +914,76 @@ const Settings_modal = () => {
             <>
               {/* first dive section */}
               <div className="w-full animate-pulse h-auto px-[2vw] flex justify-between items-center">
-                <div className=" h-[4.9vw] w-[4.9vw] bg-[#6a6a6a] rounded-[100%]"></div>
-                <p className="neuem text-[1.06vw] sm:text-[3vw] text-white rounded-[2.2vw] h-[2vw] w-[50%] bg-[#6a6a6a]"></p>
+                <div className=" h-[4.9vw] w-[4.9vw] sm:w-[10vw] sm:h-[10vw] bg-[#6a6a6a] rounded-[100%]"></div>
+                <p className="neuem text-[1.06vw] sm:text-[3vw] text-white rounded-[2.2vw] h-[2vw] w-[50%] sm:h-[5vw] bg-[#6a6a6a]"></p>
               </div>
               {/* second section and its a button */}
               <div className="w-full px-[2vw] animate-pulse ">
-                <p className="  h-[2.5vw] w-[30%] bg-[#CCFF00] text-[0.8vw] sm:text-[2.8vw] font-[600]  py-[0.6vw] px-[0.6vw] rounded-[2.3vw] neuem"></p>
+                <p className="  h-[2.5vw] w-[30%] bg-[#CCFF00] text-[0.8vw] sm:py-[3vw] sm:text-[2.8vw] font-[600]  py-[0.6vw] px-[0.6vw] rounded-[2.3vw] neuem"></p>
               </div>
               {/* third section that contains all the names*/}
-              <div className="w-full flex animate-pulse   px-[2vw] justify-between gap-[2vw] flex-wrap">
-                <div className="flex flex-col gap-[0.5vw]  w-[48%]">
+              <div className="w-full flex animate-pulse sm:gap-[6vw]  px-[2vw] justify-between gap-[2vw] flex-wrap">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw]  w-[48%]">
                   <label
                     htmlFor=""
-                    className="h-[1.1vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
+                    className="h-[1.1vw] sm:h-[3vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
                   ></label>
-                  <div className="w-[95%] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
+                  <div className="w-[95%] sm:h-[8vw] sm:rounded-[8vw] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-[45%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[45%]">
                   <label
                     htmlFor=""
-                    className="h-[1.1vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
+                    className="h-[1.1vw] sm:h-[3vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
                   ></label>
-                  <div className="w-[95%] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
+                  <div className="w-[95%] sm:h-[8vw] sm:rounded-[8vw] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-[45%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[45%]">
                   <label
                     htmlFor=""
-                    className="h-[1.1vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
+                    className="h-[1.1vw] sm:h-[3vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
                   ></label>
-                  <div className="w-[95%] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
+                  <div className="w-[95%] sm:h-[8vw] sm:rounded-[8vw] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-[45%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[45%]">
                   <label
                     htmlFor=""
-                    className="h-[1.1vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
+                    className="h-[1.1vw] sm:h-[3vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
                   ></label>
-                  <div className="w-[95%] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
+                  <div className="w-[95%] sm:h-[8vw] sm:rounded-[8vw] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
                 </div>
-                <div className="flex flex-col gap-[0.5vw] w-[45%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[45%]">
                   <label
                     htmlFor=""
-                    className="h-[1.1vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
+                    className="h-[1.1vw] sm:h-[3vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
                   ></label>
-                  <div className="w-[95%] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
+                  <div className="w-[95%] sm:h-[8vw] sm:rounded-[8vw] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
                 </div>
-                <div className="flex flex-col gap-[0.5vw] w-[45%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[45%]">
                   <label
                     htmlFor=""
-                    className="h-[1.1vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
+                    className="h-[1.1vw] sm:h-[3vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
                   ></label>
-                  <div className="w-[95%] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
+                  <div className="w-[95%] sm:h-[8vw] sm:rounded-[8vw] rounded-[2.2vw]  bg-[#6a6a6a] h-[2vw] "></div>
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] w-full">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-full">
                   <label
                     htmlFor=""
-                    className="h-[1.1vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
+                    className="h-[1.1vw] sm:h-[3vw] rounded-[2.2vw] w-[60%] bg-[#6a6a6a] "
                   ></label>
-                  <div className="w-[95%] rounded-[2.2vw]  bg-[#6a6a6a] h-[5vw] "></div>
+                  <div className="w-[95%] sm:h-[20vw] sm:rounded-[8vw] rounded-[2.2vw]  bg-[#6a6a6a] h-[5vw] "></div>
                 </div>
               </div>
               {/* cross bar */}
               <div className="w-full h-[0.1vw] bg-[#353535] border-b-[#353535] ">
                 {" "}
               </div>
-              <div className="w-full h-[3.5vw] animate-pulse    px-[2vw]  flex justify-between items-center">
-                <button className="h-full w-[49%] bg-[#262626] text-white text-[1vw] neuem rounded-[1.3vw]"></button>
-                <button className="h-full w-[49%] bg-[#CCFF00] text-black text-[1vw] neuem rounded-[1.3vw]"></button>
+              <div className="w-full h-[3.5vw] animate-pulse  sm:h-[13vw]  sm:px-[3vw]  px-[2vw]  flex justify-between items-center">
+                <button className="h-full w-[49%] bg-[#262626] text-white text-[1vw] neuem rounded-[1.3vw] sm:rounded-[3vw]"></button>
+                <button className="h-full w-[49%] bg-[#CCFF00] text-black text-[1vw] neuem rounded-[1.3vw] sm:rounded-[3vw]"></button>
               </div>{" "}
             </>
           )}
