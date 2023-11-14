@@ -61,41 +61,11 @@ const Product_preloader = (props: any) => {
       txt: "Orkaz Strappaz Side",
       price: "343",
     },
-    {
-      img: "/onboarding/7.webp",
-      txt: "Orkaz Strappaz Face",
-      price: "343",
-    },
-    {
-      img: "/onboarding/8.webp",
-      txt: "Vaskar Orkaz Hunter Front",
-      price: "343",
-    },
-    {
-      img: "/onboarding/9.webp",
-      txt: "Vaskar Orkaz Hunter Back",
-      price: "343",
-    },
-    {
-      img: "/onboarding/9.webp",
-      txt: "Vaskar Orkaz Hunter Back",
-      price: "343",
-    },
-    {
-      img: "/onboarding/5.webp",
-      txt: "Orkaz Strappaz Sideback",
-      price: "343",
-    },
-    {
-      img: "/onboarding/6.webp",
-      txt: "Orkaz Strappaz Side",
-      price: "343",
-    },
   ]);
 
   return (
     <>
-      <div className="w-[68%] sm:w-full sm:px-[3vw]  h-auto pb-[1vw] pt-[2.26vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw] sm:gap-[7vw]">
+      <div className="w-[68%] sm:w-full sm:px-[3vw]  sm:h-[100vh]  h-auto pb-[1vw] pt-[2.26vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw] sm:gap-[7vw]">
         <div className="w-full flex justify-between items-center  px-[2vw] sm:px-0">
           <h3 className="neuer text-[2.2vw] text-white bg-[#111111] sm:h-[8vw]       sm:w-[40vw] h-[4vw] w-[20vw] animate-pulse rounded-[1.5vw] "></h3>
           <div className="w-auto relative z-[999999999]">

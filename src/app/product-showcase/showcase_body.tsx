@@ -258,7 +258,7 @@ const Showcase_body = (props: any) => {
               {forge_text}{" "}
             </button>
 
-            <p className="text-[red] text-[0.9vw] w-[20vw] neuer capitalize">
+            <p className="text-[red] sm:text-[3.5vw] sm:w-full text-[0.9vw] w-[20vw] neuer capitalize">
               {forgeerr}
             </p>
           </div>

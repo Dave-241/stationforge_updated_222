@@ -21,6 +21,7 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from "../utils/fire_base_config";
 import { initializeApp } from "firebase/app";
+import Head from "next/head";
 const Forge = (props: any) => {
   const { setforge_loader, forge_loader }: any = useProfile_Context();
   const [comeup, setcomeup] = useState(false);

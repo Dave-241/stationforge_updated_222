@@ -27,7 +27,7 @@ const Allocations_preloader = () => {
   };
 
   return (
-    <div className="relative w-[32%] ">
+    <div className="relative w-[32%] sm:hidden ">
       <div className="w-full h-auto pb-[1vw]  pt-[2vw] px-[1vw] sticky top-[8vw] flex flex-col gap-[1vw]">
         <h3 className="neuer bg-[#111111] text-[1.6vw] h-[4vw] mb-[0.4vw] w-[20vw] animate-pulse text-white"></h3>
         <div className="h-[0.1vw] bg-white bg-opacity-[10%] w-full"></div>
