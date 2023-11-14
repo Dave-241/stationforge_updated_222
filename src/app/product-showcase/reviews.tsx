@@ -115,8 +115,8 @@ const Review = (props: any) => {
               );
             })}
             {trimmedReviews.length == 0 && (
-              <div className="w-full  h-[5vw] flex justify-center items-center ">
-                <p className="text-[1.2vw] text-white text-opacity-[70%] neuer">
+              <div className="w-full sm:h-[30vw]  h-[5vw] flex justify-center items-center ">
+                <p className="text-[1.2vw] text-white text-opacity-[70%] capitalize neuer sm:text-[3.5vw] ">
                   There are no reviews for this product yet
                 </p>
               </div>
