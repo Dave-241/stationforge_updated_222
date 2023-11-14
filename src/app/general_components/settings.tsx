@@ -576,7 +576,7 @@ const Settings_modal = () => {
               <div className="w-full h-auto px-[2vw] flex justify-between items-center">
                 <div className="w-auto h-auto flex items-center gap-[0.5vw] sm:gap-[3vw]">
                   <div
-                    className=" h-[4.9vw] avater_bg w-[4.9vw] sm:w-[14vw] sm:h-[14vw]  rounded-[100%] overflow-hidden relative "
+                    className=" h-[4.9vw] avater_bg w-[4.9vw] sm:w-[11vw] sm:h-[11vw]  rounded-[100%] overflow-hidden relative "
                     style={{
                       backgroundImage: `url('${selectedImage}')`,
                     }}
