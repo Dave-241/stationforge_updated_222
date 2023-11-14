@@ -203,7 +203,7 @@ const Settings_modal = () => {
       if (width_oh >= 650) {
         return "bg-opacity-[60%]";
       } else if (width_oh < 650) {
-        return "bg-opacity-[80%]";
+        return "bg-opacity-[90%]";
       }
     });
     const user = auth.currentUser;
@@ -589,7 +589,7 @@ const Settings_modal = () => {
           ref={ref_modal}
         >
           {" "}
-          {!loading ? (
+          {loading ? (
             <>
               {/* first dive section */}
               <div className="w-full h-auto px-[2vw] flex justify-between items-center">
