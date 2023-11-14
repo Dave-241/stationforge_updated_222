@@ -203,7 +203,7 @@ const Settings_modal = () => {
       if (width_oh >= 650) {
         return "bg-opacity-[60%]";
       } else if (width_oh < 650) {
-        return "bg-opacity-[90%]";
+        return "bg-opacity-[95%]";
       }
     });
     const user = auth.currentUser;
