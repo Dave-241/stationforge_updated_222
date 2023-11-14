@@ -564,7 +564,7 @@ const Settings_modal = () => {
         className={`w-full min-h-full bg-black ${settings_is_opac} fixed top-0 left-0 z-[9999] transition duration-[1s] setting_modal sm:items-end flex justify-end items-center overflow-hidden`}
       >
         <div
-          className={`w-[35vw] sm:w-full  h-auto py-[2vw] sm:py-[8vw] sm:px-[2vw] relative sm:gap-[4vw] rounded-l-[2.2vw] bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+          className={`w-[35vw] sm:w-full  h-auto py-[2vw] sm:py-[5vw] sm:px-[2vw] relative sm:gap-[4vw] rounded-l-[2.2vw] bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
             globalThis.innerWidth > 650 ? shift_modal : up_modal
           } border transition duration-[1.5s]`}
           ref={ref_modal}
@@ -631,7 +631,7 @@ const Settings_modal = () => {
               </div>
               {/* third section that contains all the names*/}
               <div className="w-full flex sm:gap-[3vw]    px-[2vw] justify-start gap-[1vw] flex-wrap">
-                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[40%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[1.5vw] w-[40%]">
                   <label
                     htmlFor=""
                     className="neuem text-[0.8vw] sm:text-[2.8vw] text-white opacity-[70%] capitalize"
@@ -647,12 +647,12 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_name(e.target.value);
                     }}
-                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] capitalize px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[3vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] capitalize px-[1.7vw]"
                     value={user_name == "" ? "" : user_name}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] sm:w-[50%] w-[55%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[1.5vw] sm:w-[50%] w-[55%]">
                   <label
                     htmlFor=""
                     className="neuem text-[0.8vw] sm:text-[2.8vw] text-white opacity-[70%]"
@@ -668,12 +668,12 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_description(e.target.value);
                     }}
-                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3vw]  text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[3vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3vw]  text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                     value={user_description == "" ? "" : user_description}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[40%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[1.5vw] w-[40%]">
                   <label
                     htmlFor=""
                     className="neuem text-[0.8vw] sm:text-[2.8vw] text-white opacity-[70%]"
@@ -689,12 +689,12 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_username(e.target.value);
                     }}
-                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3vw] lowercase text-white bg-[#212121] rounded-[2.2vw]  px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[3vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3vw] lowercase text-white bg-[#212121] rounded-[2.2vw]  px-[1.7vw]"
                     value={user_username == "" ? "" : user_username}
                   />
                 </div>
 
-                <div className="flex  flex-col gap-[0.5vw] sm:gap-[2vw] w-[45%]">
+                <div className="flex  flex-col gap-[0.5vw] sm:gap-[1.5vw] w-[45%]">
                   <label
                     htmlFor=""
                     className="neuem text-[0.8vw] sm:text-[2.8vw] text-white opacity-[70%]"
@@ -711,12 +711,12 @@ const Settings_modal = () => {
                       setsave("Save");
                       // setUser_email(e.target.value);
                     }}
-                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] opacity-[30%] px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[3vw] sm:rounded-[4vw] sm:px-[3vw] text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] opacity-[30%] px-[1.7vw]"
                     value={user_email == "" ? "" : user_email}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[40%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[1.5vw] w-[40%]">
                   <label
                     htmlFor=""
                     className="neuem text-[0.8vw] sm:text-[2.8vw] text-white opacity-[70%]"
@@ -732,12 +732,12 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_birthday(e.target.value);
                     }}
-                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] capitalize text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[3vw] sm:rounded-[4vw] sm:px-[3vw] capitalize text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                     value={user_birthday == "" ? "" : user_birthday}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[40%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[1.5vw] w-[40%]">
                   <label
                     htmlFor=""
                     className="neuem text-[0.8vw] sm:text-[2.8vw] text-white opacity-[70%]"
@@ -753,12 +753,12 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_country(e.target.value);
                     }}
-                    className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] capitalize text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                    className="py-[0.7vw] sm:py-[3vw] sm:rounded-[4vw] sm:px-[3vw] capitalize text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                     value={user_country == "" ? "" : user_country}
                   />
                 </div>
 
-                <div className="flex flex-col gap-[0.5vw] sm:gap-[2vw] w-[100%]">
+                <div className="flex flex-col gap-[0.5vw] sm:gap-[1.5vw] w-[100%]">
                   <label
                     htmlFor=""
                     className="neuem text-[0.8vw] sm:text-[2.8vw] text-white opacity-[70%]"
@@ -776,7 +776,7 @@ const Settings_modal = () => {
                       setsave("Save");
                       setUser_billingAddress(e.target.value);
                     }}
-                    className="py-[2vw] sm:py-[7vw] sm:rounded-[5vw] text-[0.9vw] sm:text-[3vw] capitalize text-center text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw] "
+                    className="py-[2vw] sm:py-[5vw] sm:rounded-[5vw] text-[0.9vw] sm:text-[3vw] capitalize text-center text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw] "
                     value={user_billingAddress == "" ? "" : user_billingAddress}
                   />
                 </div>
@@ -788,7 +788,7 @@ const Settings_modal = () => {
               <p className="absolute top-[0.4vw] left-[3vw]  text-[0.7vw] text-[lightgray] capitalize">
                 {errInfoModule}
               </p>
-              <div className="w-full h-[3.5vw]  px-[2vw] sm:h-[13vw]  flex justify-between items-center">
+              <div className="w-full h-[3.5vw]  px-[2vw] sm:h-[12vw]  flex justify-between items-center">
                 <button
                   className="h-full w-[49%] sm:text-[3.5vw] sm:rounded-[4vw] bg-[#262626] text-white text-[1vw] neuem rounded-[1.3vw] hover:bg-[#131312] hover:border  transition duration-[0.3s]:text-white hover:bg-opacity-[30%] flex justify-center items-center"
                   onClick={handlePasswordReset}
@@ -821,7 +821,7 @@ const Settings_modal = () => {
                     <p className="opacity-[70%] text-[1vw] sm:text-[3.5vw]">
                       Please confirm your password
                     </p>
-                    <div className="w-full flex flex-col gap-[0.5vw] sm:gap-[2vw]  justify-center h-auto ">
+                    <div className="w-full flex flex-col gap-[0.5vw] sm:gap-[1.5vw]  justify-center h-auto ">
                       <div className="w-full h-auto relative">
                         <input
                           type={showPassword ? "text" : "password"}
@@ -831,7 +831,7 @@ const Settings_modal = () => {
                             seterrPasswordModule("");
                           }}
                           autoFocus
-                          className="py-[0.7vw] sm:py-[4vw] sm:rounded-[4vw] sm:px-[3vw] w-full text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
+                          className="py-[0.7vw] sm:py-[3vw] sm:rounded-[4vw] sm:px-[3vw] w-full text-[0.9vw] sm:text-[3vw] text-white bg-[#212121] rounded-[2.2vw] px-[1.7vw]"
                         />{" "}
                         <span
                           className="absolute right-[0.7vw] top-[50%] text-[2vw] text-white opacity-[50%]"
