@@ -142,10 +142,18 @@ const Showcase_body = (props: any) => {
 
   return (
     <>
-      <main className="w-full h-auto px-[8.5vw] sm:gap-[6vw] sm:px-[3vw] sm:flex-col flex justify-between items-start">
+      <main className="w-full h-auto px-[8.5vw] sm:relative sm:gap-[6vw] sm:px-[3vw] sm:flex-col flex justify-between items-start">
         {/* for the images side  */}
+        <button
+          className="text-white text-[4.5vw] absolute top-[-10vw] left-[3vw] neuer sm:block hidden  bg-transparent"
+          onClick={() => {
+            router.back();
+          }}
+        >
+          <i className="bi bi-chevron-left"> </i> Back
+        </button>
         <div className="w-full h-auto">
-          <h1 className="neuem text-[6vw] w-[50%]   sm:block text-white mb-[3vw] hidden">
+          <h1 className="neuem text-[6.7vw] w-[70%]   sm:block text-white mb-[3vw] hidden">
             {product_arr.title}
           </h1>
 

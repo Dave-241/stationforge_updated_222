@@ -56,7 +56,7 @@ const Review = (props: any) => {
   return (
     <>
       <div className="w-full h-auto px-[4vw] sm:mt-[4vw]">
-        <div className="w-full h-full gap-[5vw] flex flex-col ">
+        <div className="w-full h-full gap-[3vw] sm:gap-[8vw] flex flex-col ">
           {/* the reivew count and the input field */}
           <div className="w-full flex justify-between items-center sm:items-start sm:flex-col sm:gap-[7vw]">
             <p className="neuer text-[1.3vw] text-white sm:text-[4.5vw]">
@@ -124,13 +124,17 @@ const Review = (props: any) => {
               </div>
             )}
           </div>
-          <div className="w-full h-[5vw] sm:h-[10vw]"></div>
+          <div className="w-full h-[5vw] hidden sm:h-[10vw]"></div>
           {trimmedReviews.length < 5 && trimmedReviews.length != 0 && (
             <button
               onClick={() => {
                 seeall_review();
               }}
-              className="bg-[#CCFF00] sm:sticky sm:bottom-[3vw] sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              className="bg-[#CCFF00] relative top-0 sm:sticky sm:bottom-[3vw] sm:mt-[2vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              // style={{
+              //   position: globalThis.innerWidth < 650 ? "sticky" : "relative",
+              //   bottom: "5vw",
+              // }}
             >
               See All
             </button>
@@ -141,7 +145,7 @@ const Review = (props: any) => {
               onClick={() => {
                 seeless_review();
               }}
-              className="bg-[#CCFF00] sm:mt-[2vw] sm:sticky sm:bottom-[3vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
+              className="bg-[#CCFF00] relative sm:mt-[2vw] sm:sticky sm:bottom-[3vw] sm:w-full sm:text-[4vw] sm:py-[3vw] sm:rounded-[5vw]  py-[1.1vw] px-[5vw] hover:bg-opacity-[70%] rounded-[2vw] w-fit neuem text-[1.2vw]"
             >
               See Less
             </button>
