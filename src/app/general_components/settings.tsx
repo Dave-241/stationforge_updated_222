@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useProfile_Context } from "../utils/profile_context";
 import { initializeApp } from "firebase/app";
+import exit_modal from "../../../public/mob_ham_exit.webp";
 import firebaseConfig from "../utils/fire_base_config";
 import { v4 as uuidv4 } from "uuid"; // Import the v4 function from the uuid module
 
@@ -33,7 +34,9 @@ import Image from "next/image";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const Settings_modal = () => {
-  const [settings_is_opac, setsettings_is_opac] = useState("bg-opacity-[0%]");
+  const [settings_is_opac, setsettings_is_opac] =
+    useState<any>("bg-opacity-[0%]");
+  const [mob_ham_opac, setmob_ham_opac] = useState(false);
   const [loading, setloading] = useState(false);
   const [shift_modal, setshift_modal] = useState("translate-x-[40vw]");
   const [up_modal, setup_modal] = useState("translate-y-[200vw]");
@@ -192,8 +195,17 @@ const Settings_modal = () => {
 
   useEffect(() => {
     setshift_modal("translate-x-[0]");
+    setmob_ham_opac(true);
     setup_modal("translate-y-[0]");
-    setsettings_is_opac("bg-opacity-[50%]");
+    setsettings_is_opac(() => {
+      const width_oh = globalThis.innerWidth;
+
+      if (width_oh >= 650) {
+        return "bg-opacity-[60%]";
+      } else if (width_oh < 650) {
+        return "bg-opacity-[80%]";
+      }
+    });
     const user = auth.currentUser;
 
     if (user) {
@@ -501,6 +513,7 @@ const Settings_modal = () => {
       if (ref_modal.current && !ref_modal.current.contains(event.target)) {
         // Delay hiding the component by 2000 milliseconds (2 seconds)
         setstart_hiding(true);
+        setmob_ham_opac(false);
         setshift_modal("translate-x-[40vw]");
         setup_modal("translate-y-[200vw]");
         setsettings_is_opac("bg-opacity-[0%]");
@@ -563,6 +576,12 @@ const Settings_modal = () => {
       <div
         className={`w-full min-h-full bg-black ${settings_is_opac} fixed top-0 left-0 z-[9999] transition duration-[1s] setting_modal sm:items-end flex justify-end items-center overflow-hidden`}
       >
+        <Image
+          src={exit_modal}
+          alt="exit ham"
+          className="sm:block hidden w-[10vw] h-fit absolute top-[5vw] right-[3vw] "
+          style={{ opacity: mob_ham_opac ? 1 : 0, transition: "1s ease" }}
+        />
         <div
           className={`w-[35vw] sm:w-full  h-auto py-[2vw] sm:py-[5vw] sm:px-[2vw] relative sm:gap-[4vw] rounded-l-[2.2vw] bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
             globalThis.innerWidth > 650 ? shift_modal : up_modal
@@ -817,7 +836,7 @@ const Settings_modal = () => {
               {/* this is for the password verifiation */}
               {confirmPassordModal ? (
                 <div className="w-full bg-black bg-opacity-[70%] flex justify-center items-center absolute top-0 left-0 h-full ">
-                  <div className="w-[70%] sm:w-[90vw] bg-[#353535] rounded-[1vw] gap-[1vw] h-auto py-[1.6vw] flex justify-center items-center flex-col text-white px-[1.4vw]">
+                  <div className="w-[70%] sm:w-[90vw] bg-[#353535] rounded-[1vw] sm:gap-[5vw] sm:py-[6vw] sm:rounded-[10vw] gap-[1vw] h-auto py-[1.6vw] flex justify-center items-center flex-col text-white px-[1.4vw]">
                     <p className="opacity-[70%] text-[1vw] sm:text-[3.5vw]">
                       Please confirm your password
                     </p>
