@@ -10,6 +10,7 @@ import mob_filter from "../../../public/home/mob_filter.webp";
 import Link from "next/link";
 import Download_modal from "./download_modal";
 import { Inter } from "next/font/google";
+import Mobile_Allocations from "./mob_allocations";
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({ subsets: ["latin"] });
@@ -18,6 +19,7 @@ const Models_in_libary = (props: any) => {
   const route = useRouter();
   const {
     products,
+    setshow_mobile_filter_allocation,
     setshow_download_modal,
     setdownloadmodal_png_link,
     setdownloadmodal_pngwith_model,
@@ -34,8 +36,13 @@ const Models_in_libary = (props: any) => {
     localStorage.setItem("downloadid", "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const { toggleDropdown, setpage_loade, download_product_id }: any =
-    useProfile_Context();
+  const {
+    toggleDropdown,
+    setpage_loade,
+    download_product_id,
+    settrimmed_text,
+    trimmed_text,
+  }: any = useProfile_Context();
   const date = new Date();
   const monthNames = [
     "January",
@@ -193,7 +200,7 @@ const Models_in_libary = (props: any) => {
           <div
             className="text-[white] text-opacity-[90%] hidden justify-center items-center sm:flex w-[38vw] gap-[2vw] text-[3vw] h-[10vw] bg-[#181515] rounded-[5vw] "
             onClick={() => {
-              // setmobile_faction_active(true);
+              setshow_mobile_filter_allocation(true);
             }}
           >
             <p className={`${inter.className}`}>Monthly Filter</p>

@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import Allocations_preloader from "./left_preloader";
 import Models_in_libary_prelaoder from "./right_prelaoder";
 import Download_modal from "./download_modal";
+import Mobile_Allocations from "./mob_allocations";
 
 export default function Home() {
   const app = initializeApp(firebaseConfig);
@@ -53,6 +54,8 @@ export default function Home() {
   const [show_download_modal, setshow_download_modal] = useState(false);
   const [is_network_err, setis_network_err] = useState(false);
   const [is_libary_empty, setis_libary_empty] = useState(false);
+  const [show_mobile_filter_allocation, setshow_mobile_filter_allocation] =
+    useState(false);
 
   const [uid, setuid] = useState("");
   // Use useEffect to check if the user is already authenticated
@@ -188,6 +191,13 @@ export default function Home() {
       <div className="w-full h-fit z-[99]  fixed top-[0vw] ">
         <Header />
       </div>
+      {show_mobile_filter_allocation && (
+        <Mobile_Allocations
+          settrimmed_text={settrimmed_text}
+          setshow_mobile_filter_allocation={setshow_mobile_filter_allocation}
+          trimmed_text={trimmed_text}
+        />
+      )}
 
       <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
@@ -226,6 +236,11 @@ export default function Home() {
               setcurrently_downloading_id={setcurrently_downloading_id}
               setsearch_text={setsearch_text}
               search_text={search_text}
+              settrimmed_text={settrimmed_text}
+              setshow_mobile_filter_allocation={
+                setshow_mobile_filter_allocation
+              }
+              trimmed_text={trimmed_text}
             />
           </>
         ) : (
