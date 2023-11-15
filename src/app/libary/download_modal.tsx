@@ -70,8 +70,6 @@ const Download_modal = (props: any) => {
   }, []);
 
   const downloadpng = () => {
-    console.log(pnglink);
-
     handle_download(
       pnglink,
       `${download_text}_png`,
@@ -80,8 +78,6 @@ const Download_modal = (props: any) => {
     );
   };
   const downloadpngWithModel = () => {
-    console.log(modellink);
-
     handle_download(
       modellink,
       `${download_text}_png_With_Model`,
