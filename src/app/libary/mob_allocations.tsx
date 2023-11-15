@@ -92,7 +92,16 @@ const Mobile_Allocations = ({
                     transition: "0.5s ease",
                   }}
                 >
-                  <p className="sm:text-opacity-[70%] text-white">{e}</p>
+                  <p
+                    style={{
+                      color: trimmed_text == e ? "black" : "white",
+                      opacity: trimmed_text == e ? 1 : 0.7,
+                      transition: "0.5s ease",
+                    }}
+                    className="sm:text-opacity-[70%] text-white"
+                  >
+                    {e}
+                  </p>
                 </div>
               );
             })}
