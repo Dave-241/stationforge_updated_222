@@ -14,10 +14,18 @@ const AddForgeModal = (props: any) => {
   // Function to hide the forge
   const hideaddedForge = () => {
     // setforge_loader(false);
-    setcomeup(false);
-    setTimeout(() => {
-      setaddForge_modal(false);
-    }, 400);
+
+    if (globalThis.innerWidth > 650) {
+      setcomeup(false);
+      setTimeout(() => {
+        setaddForge_modal(false);
+      }, 400);
+    } else if (globalThis.innerWidth < 650) {
+      setcomeup(false);
+      setTimeout(() => {
+        setaddForge_modal(false);
+      }, 400);
+    }
   };
 
   // Prevent click inside the modal content from closing the modal
@@ -30,33 +38,35 @@ const AddForgeModal = (props: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   // Set up the timeout
-  //   const timer = setTimeout(() => {
-  //     setaddForge_modal(false);
-  //   }, 6000); // Delay in milliseconds
-  //   const comeup_timer = setTimeout(() => {
-  //     setcomeup(false);
-  //   }, 5500); // Delay in milliseconds
+  useEffect(() => {
+    // Set up the timeout
+    const timer = setTimeout(() => {
+      setaddForge_modal(false);
+    }, 6000); // Delay in milliseconds
+    const comeup_timer = setTimeout(() => {
+      setcomeup(false);
+    }, 5500); // Delay in milliseconds
 
-  //   // Clean up function
-  //   return () => {
-  //     // Clear the timeout to prevent it from running if the component unmounts
-  //     clearTimeout(comeup_timer);
-  //     clearTimeout(timer);
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+    // Clean up function
+    return () => {
+      // Clear the timeout to prevent it from running if the component unmounts
+      clearTimeout(comeup_timer);
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
       <div
-        className="w-full h-full fixed top-0 left-0 bg-black bg-opacity-[50%] sm:bg-opacity-[80%] sm:pb-0 sm:pr-0 flex  sm:justify-center z-[999999] justify-end items-end  pr-[8vw] pb-[4vw] "
+        className="w-full h-full fixed top-0 left-0 bg-black bg-opacity-[50%] sm:bg-opacity-[70%] sm:pb-0 sm:pr-0 flex  sm:justify-center z-[999999] justify-end items-end  pr-[8vw] pb-[4vw] "
         onClick={hideaddedForge} // Hide forge when clicking on the background
       >
         <div
           className={`  z-[1000] sm:relative sm:w-full sm:bottom-0 sm:py-[7vw]  sm:rounded-[4vw] h-auto px-[2vw] py-[3vw] w-[25vw] absolute bg-[#111111]  ${
-            comeup ? "translate-y-[0vw]" : "translate-y-[30vw]"
+            comeup
+              ? "translate-y-[0vw] sm:translate-y-[0vw]"
+              : "translate-y-[30vw] sm:translate-y-[60vw]"
           }  overflow-hidden flex flex-wrap flex-col gap-[2vw] sm:px-[3vw] relative sm:gap-[4vw] rounded-[1vw] justify-center items-center`}
           onClick={modalClick}
           style={{ transition: "0.8s ease" }}
