@@ -15,7 +15,7 @@ const Similar_models = ({ similarArr, check_empty, check_network }: any) => {
       </h1>
       <div
         className={`w-full  h-auto  cover_scrollbar overflow-x-scroll ${
-          similarArr.length > 0 ? "sm:h-[90vw]" : "sm:h-[40vw]"
+          similarArr.length > 0 ? "sm:h-[78vw]" : "sm:h-[40vw]"
         }  flex flex-col gap-[2vw] sm:relative`}
       >
         {" "}
