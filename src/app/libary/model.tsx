@@ -229,12 +229,10 @@ const Models_in_libary = (props: any) => {
         </div>
         <div className="h-[0.1vw] bg-white sm:hidden bg-opacity-[10%] w-full"></div>
 
-        <div className="w-full flex flex-wrap justify-start px-[1.8vw] gap-[1.7vw]">
-          {libraryItems.length == 0 && (
+        <div className="w-full sm:gap-[3vw] sm:px-0  flex flex-wrap justify-start px-[1.8vw] gap-[1.7vw]">
+          {is_network_err && (
             <div className="w-full h-[23vw] sm:text-[3.5vw]  flex justify-center items-center text-[white] neuer text-opacity-[70%] text-[1.4vw]">
-              {is_network_err
-                ? " Something went wrong, Kindly refresh this page"
-                : "There are no items in your libray"}
+              Something went wrong, Kindly refresh this page
             </div>
           )}
           {libraryItems.map((e: any, index: any) => {
@@ -246,9 +244,9 @@ const Models_in_libary = (props: any) => {
                 <div
                   key={index}
                   //   scroll={true}
-                  className="w-[19.7vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
+                  className="w-[19.7vw] sm:w-[45.5vw]  sm:gap-[3vw] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
                 >
-                  <div className="w-full avater_bg h-[20vw] overflow-hidden">
+                  <div className="w-full sm:h-[45vw]  avater_bg h-[20vw] overflow-hidden">
                     <Image
                       src={e.coverImage}
                       alt={e.title}
@@ -258,12 +256,14 @@ const Models_in_libary = (props: any) => {
                       className="w-full h-full scale-[1.2]"
                     />
                   </div>
-                  <div className="w-full px-[1vw] flex justify-between  items-center">
-                    <p className="neuem text-[1.2vw] text-white">{e.title}</p>
+                  <div className="w-full sm:px-[2vw] px-[1vw] flex justify-between  items-center">
+                    <p className="neuem text-[1.2vw] text-white sm:text-[3vw]">
+                      {e.title}
+                    </p>
                   </div>
                   <div className="w-full  flex px-[1vw]  mb-[1vw] justify-between items-center ">
                     <button
-                      className="bg-[#CCFF00] hover:bg-opacity-[70%]   rounded-[1.2vw] py-[0.5vw] px-[1.8vw] neuer text-black w-fit h-fit  text-[1vw]"
+                      className="bg-[#CCFF00] sm:text-[3vw] hover:bg-opacity-[70%] sm:ml-[2vw] sm:py-[1.2vw] sm:px-[5vw] sm:rounded-[3vw] sm:mb-[2vw]   rounded-[1.2vw] py-[0.5vw] px-[1.8vw] neuer text-black w-fit h-fit  text-[1vw]"
                       style={{
                         backgroundColor: e.downloaded ? "#111111" : "#CCFF00",
                         color: e.downloaded ? "#B7B7B7" : "black",
@@ -291,7 +291,7 @@ const Models_in_libary = (props: any) => {
                         : "Download"}
                     </button>
 
-                    <p className="text-[1vw] text-white text-opacity-[50%] neuer">
+                    <p className="text-[1vw] sm:text-[2.7vw] sm:mr-[1vw] text-white text-opacity-[50%] neuer">
                       In Library
                     </p>
                   </div>

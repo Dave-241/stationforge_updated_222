@@ -105,8 +105,8 @@ export default function Home() {
               downloaded: libraryData.downloaded,
             };
             postArray.push(libray_collections);
-          } else {
             setis_network_err(false);
+          } else {
             console.log("No matching product found");
           }
         } catch (error) {
@@ -230,6 +230,7 @@ export default function Home() {
           </>
         )}
       </div>
+      <div className="w-full hidden sm:block h-[8vw]"></div>
     </>
   );
 }
