@@ -21,6 +21,7 @@ const Review = (props: any) => {
     seeless_review,
     hackdisable,
     sethackdisable,
+    review_empty,
     size,
   } = props;
   const app = initializeApp(firebaseConfig);
@@ -79,7 +80,7 @@ const Review = (props: any) => {
               />
               <button
                 type="submit"
-                disabled={hackdisable}
+                disabled={disable}
                 className="text-[#CCFF00]  neuer text-[1.2vw] sm:text-[3.5vw]  sm:right-[3vw] absolute right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
                 onClick={() => {
                   //   handlecomment(postdata.postId);
@@ -116,7 +117,7 @@ const Review = (props: any) => {
                 </div>
               );
             })}
-            {trimmedReviews.length == 0 && (
+            {trimmedReviews.length == 0 && review_empty && (
               <div className="w-full sm:h-[30vw]  h-[5vw] flex justify-center items-center ">
                 <p className="text-[1.2vw] text-white text-opacity-[70%] capitalize neuer sm:text-[3.5vw] ">
                   There are no reviews for this product yet

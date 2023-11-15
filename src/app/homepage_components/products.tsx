@@ -134,9 +134,8 @@ const Products = (props: any) => {
             return (
               <>
                 <Link
-                  href={`/product-showcase?product_id=${e.id}`}
+                  href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
                   key={index}
-                  //   scroll={true}
                   className="w-[19.6vw] sm:w-[45.5vw]  sm:gap-[3vw] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
                   onClick={() => {
                     setpage_loader(true);

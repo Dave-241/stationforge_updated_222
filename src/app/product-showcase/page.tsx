@@ -18,6 +18,7 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  limit,
   onSnapshot,
   orderBy,
   query,
@@ -29,6 +30,8 @@ import Review from "./reviews";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Review_preloader from "./review_preloader";
 import Forge from "../general_components/forge";
+import Similar_models from "./similar_model";
+import Preloader_for_Similar_models_preloader from "./similar_model_preloader";
 
 export default function Home() {
   // Initialize Firebase
@@ -53,7 +56,10 @@ export default function Home() {
   const searchParams = useSearchParams();
 
   const product_id = searchParams.get("product_id");
+  const faction = searchParams.get("faction");
 
+  // the search param is above
+  console.log(faction);
   const [product_arr, setproduct_arr] = useState<any>({});
   const [product_images, setproduct_images] = useState([{}]);
   const [cover_img_link, setcover_img_link] = useState("");
@@ -63,14 +69,20 @@ export default function Home() {
   const [uuid, setuuid] = useState("");
   const [reviewsWithUserDetails, setReviewsWithUserDetails] = useState<any>([]);
   const [reviewisloading, setreviewisloading] = useState(true);
+  const [review_empty, setreview_empty] = useState(false);
   const [trimmedReviews, setTrimmedReviews] = useState<any>([]);
+
+  // for the similar models
+
+  const [similarArr, setsimilarArr] = useState<any>([]);
+  const [similarArrIsLoading, setsimilarArrIsLoading] = useState(true);
+  const [check_network, setcheck_network] = useState(false);
+  const [check_empty, setcheck_empty] = useState(false);
 
   // for the user step
   const [userSTep, setuserStep] = useState("");
   useEffect(() => {
     if (product_id) {
-      // Check if productId is not null or undefined
-      console.log(product_id);
       const docRef = doc(db, "products", product_id); // "products" is the collection, productId is the ID
       getDoc(docRef)
         .then((docSnap) => {
@@ -193,6 +205,11 @@ export default function Home() {
     );
 
     const unsubscribe = onSnapshot(colQuery, (reviewsSnapshot) => {
+      if (reviewsSnapshot.empty) {
+        setreview_empty(true);
+      } else {
+        setreview_empty(false);
+      }
       const userDetailsPromises = reviewsSnapshot.docs.map((reviewDoc) => {
         const reviewData = reviewDoc.data();
         const usersCollectionRef = collection(db, "users");
@@ -231,6 +248,56 @@ export default function Home() {
     // Clean up the listener on component unmount
     return () => unsubscribe();
   }, [product_id]); // Depend on product_id if the reviews are specific to a product
+
+  useEffect(() => {
+    const fetchSimilarModels = async () => {
+      try {
+        const productsRef = collection(db, "products");
+        const productsQuery = query(
+          productsRef,
+          where("cover_png", "!=", product_arr.cover_png),
+          where("factions", "==", faction),
+          orderBy("cover_png", "desc"),
+          limit(4),
+        );
+
+        const productsSnapshot = await getDocs(productsQuery);
+
+        if (!productsSnapshot.empty) {
+          const similarModels = productsSnapshot.docs.map((productDoc) => {
+            const { id } = productDoc;
+            const { title, factions, cover_png } = productDoc.data();
+            return {
+              title,
+              id,
+              cover_png,
+              factions,
+
+              // Assuming 'coverImage' is the field name for the cover image in your document
+            };
+          });
+
+          setsimilarArr(similarModels);
+          setcheck_network(false);
+          setcheck_empty(false);
+        } else {
+          console.log("No matching documents for similar models found");
+          setcheck_network(true);
+          setcheck_empty(false);
+        }
+        setsimilarArrIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching similar models:", error);
+        setsimilarArrIsLoading(false);
+        setcheck_network(false);
+        setcheck_empty(true);
+      }
+    };
+
+    if (product_arr?.cover_png) {
+      fetchSimilarModels();
+    }
+  }, [db, product_id, product_arr, faction]);
 
   useEffect(() => {
     setTrimmedReviews(reviewsWithUserDetails.slice(0, 4));
@@ -278,6 +345,17 @@ export default function Home() {
           <Showcase_preloader />
         )}
         <div className="w-full h-[10vw] sm:h-[15vw] "></div>
+        {!similarArrIsLoading ? (
+          <Similar_models
+            similarArr={similarArr}
+            check_empty={check_empty}
+            check_network={check_network}
+          />
+        ) : (
+          <Preloader_for_Similar_models_preloader />
+        )}
+
+        <div className="w-full h-[5vw] sm:h-[12vw] "></div>
         {!reviewisloading ? (
           <Review
             disable={disable}
@@ -285,6 +363,7 @@ export default function Home() {
             setdisable={setdisable}
             sethackdisable={sethackdisable}
             trimmedReviews={trimmedReviews}
+            review_empty={review_empty}
             uuid={uuid}
             seeall_review={seeall_review}
             seeless_review={seeless_review}
