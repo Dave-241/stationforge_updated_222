@@ -49,7 +49,14 @@ const Download_modal = (props: any) => {
   // const {} = props
   // Function to hide the forge
   const hideForge = () => {
-    setshow_download_modal(false);
+    if (globalThis.innerWidth > 650) {
+      setshow_download_modal(false);
+    } else if (globalThis.innerWidth < 650) {
+      setcomeup(false);
+      setTimeout(() => {
+        setshow_download_modal(false);
+      }, 500);
+    }
   };
 
   // Prevent click inside the modal content from closing the modal
@@ -122,21 +129,21 @@ const Download_modal = (props: any) => {
   return (
     <>
       <div
-        className="w-full h-full fixed top-0 left-0 bg-black bg-opacity-[50%] flex  z-[999999] justify-center items-center "
+        className="w-full h-full fixed top-0 left-0 bg-black sm:bg-opacity-[80%] bg-opacity-[50%] flex  z-[999999] justify-center items-center sm:items-end"
         onClick={hideForge} // Hide forge when clicking on the background
       >
         <div
-          className={` w-[32vw] bg-[#111111] z-[1000] h-[20vw]  ${
+          className={` w-[32vw] sm:w-[99vw] sm:gap-[3vw] sm:h-[60vw] bg-[#111111] z-[1000] h-[20vw]  ${
             comeup ? "translate-y-[0vw]" : "translate-y-[100vw]"
           }  overflow-hidden flex-col justify-center items-center gap-[1.6vw] px-[3vw] flex flex-wrap relative rounded-[2vw]`}
           onClick={modalClick}
           style={{ transition: "1s ease" }}
         >
-          <p className="neuer text-[2vw] text-white mb-[1vw]">
+          <p className="neuer text-[2vw] sm:text-[5vw] text-white mb-[1vw]">
             Choose download option
           </p>
           {is_downloading2 && (
-            <p className="neuer text-[1.3vw] opacity-[70%] text-white text-center">
+            <p className="neuer text-[1.3vw] sm:text-[3.5vw] opacity-[70%] text-white text-center">
               Please wait. Your current download is in progress
             </p>
           )}
@@ -144,13 +151,13 @@ const Download_modal = (props: any) => {
             <>
               {" "}
               <button
-                className="neuer text-[1.1vw] text-[#CCFF00] border-[#CCFF00] border-[0.1vw] rounded-[1.2vw] hover:text-black hover:bg-[#CCFF00] transition duration-[0.3s] w-full h-[4.5vw]"
+                className="neuer text-[1.1vw] sm:text-[3.5vw] sm:h-[14vw] sm:rounded-[4vw] text-[#CCFF00] border-[#CCFF00] border-[0.1vw] rounded-[1.2vw] hover:text-black hover:bg-[#CCFF00] transition duration-[0.3s] w-full h-[4.5vw]"
                 onClick={downloadpng}
               >
                 Download PNG
               </button>
               <button
-                className="neuer text-[1.1vw] text-[#CCFF00] border-[#CCFF00] border-[0.1vw] rounded-[1.2vw]  hover:text-black hover:bg-[#CCFF00] transition duration-[0.3s] w-full h-[4.5vw]"
+                className="neuer text-[1.1vw] sm:text-[3.5vw] sm:h-[14vw] sm:rounded-[4vw] text-[#CCFF00] border-[#CCFF00] border-[0.1vw] rounded-[1.2vw]  hover:text-black hover:bg-[#CCFF00] transition duration-[0.3s] w-full h-[4.5vw]"
                 onClick={downloadpngWithModel}
               >
                 Download PNG with model
