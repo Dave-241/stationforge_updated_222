@@ -70,6 +70,10 @@ const Download_modal = (props: any) => {
   }, []);
 
   const downloadpng = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
+    });
     handle_download(
       pnglink,
       `${download_text}_png`,
@@ -78,6 +82,10 @@ const Download_modal = (props: any) => {
     );
   };
   const downloadpngWithModel = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
+    });
     handle_download(
       modellink,
       `${download_text}_png_With_Model`,

@@ -33,7 +33,6 @@ const Models_in_libary = (props: any) => {
     is_network_err,
   } = props;
   const [opacity, setopacity] = useState(0.5);
-  const [track_hide_download, settrack_hide_download] = useState(true);
 
   useEffect(() => {
     localStorage.setItem("downloadid", "");
@@ -173,12 +172,7 @@ const Models_in_libary = (props: any) => {
   return (
     <>
       <div className="w-[68%]  sm:w-full sm:px-[3vw] sm:border-none sm:gap-[8vw]  h-auto pb-[1vw] pt-[2.26vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw]">
-        {!track_hide_download && (
-          <Mob_download_track
-            track_hide_download={track_hide_download}
-            settrack_hide_download={settrack_hide_download}
-          />
-        )}
+        <Mob_download_track />
         <div className="w-full flex justify-between items-center pb-[1vw] px-[2vw]">
           <h3 className="neuer text-[2.2vw]  text-white  sm:text-[7vw]">
             All Models <p className="sm:block hidden">In Libary</p>

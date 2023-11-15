@@ -74,6 +74,7 @@ export const Profile_Context_Dropdown = (props: any) => {
         setdownload_product_id("");
         localStorage.removeItem("downloadProgress");
         localStorage.removeItem("downloadid");
+        localStorage.removeItem("title");
         setdownloadProgress("");
       })
       .catch((error: any) => {
@@ -97,6 +98,7 @@ export const Profile_Context_Dropdown = (props: any) => {
         // Save download progress to local storage
         localStorage.setItem("downloadProgress", percentComplete.toFixed(2));
         localStorage.setItem("downloadid", id);
+        localStorage.setItem("title", title);
         if (hide_download) {
           setTimeout(() => {
             sethide_download(false);
