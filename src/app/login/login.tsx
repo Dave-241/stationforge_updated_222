@@ -232,9 +232,6 @@ export default function Login_component() {
               autoComplete="name"
               onChange={(e) => {
                 setname(e.target.value.toLowerCase());
-
-                console.log(e.target.value);
-                console.log(e.target.value.toLowerCase());
               }}
             />
             {/* Error message for username */}

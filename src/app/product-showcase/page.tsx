@@ -59,7 +59,6 @@ export default function Home() {
   const faction = searchParams.get("faction");
 
   // the search param is above
-  console.log(faction);
   const [product_arr, setproduct_arr] = useState<any>({});
   const [product_images, setproduct_images] = useState([{}]);
   const [cover_img_link, setcover_img_link] = useState("");
@@ -281,7 +280,6 @@ export default function Home() {
           setcheck_network(false);
           setcheck_empty(false);
         } else {
-          console.log("No matching documents for similar models found");
           setcheck_network(true);
           setcheck_empty(false);
         }
@@ -344,7 +342,7 @@ export default function Home() {
         ) : (
           <Showcase_preloader />
         )}
-        <div className="w-full h-[10vw] sm:h-[15vw] "></div>
+        <div className="w-full h-[10vw] sm:h-[12vw] "></div>
         {!similarArrIsLoading ? (
           <Similar_models
             similarArr={similarArr}
@@ -355,7 +353,7 @@ export default function Home() {
           <Preloader_for_Similar_models_preloader />
         )}
 
-        <div className="w-full h-[5vw] sm:h-[12vw] "></div>
+        <div className="w-full h-[5vw] sm:h-[5vw] "></div>
         {!reviewisloading ? (
           <Review
             disable={disable}
