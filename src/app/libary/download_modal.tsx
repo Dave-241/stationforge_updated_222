@@ -133,7 +133,7 @@ const Download_modal = (props: any) => {
         onClick={hideForge} // Hide forge when clicking on the background
       >
         <div
-          className={` w-[32vw] sm:w-[99vw] sm:gap-[3vw] sm:h-[60vw] bg-[#111111] z-[1000] h-[20vw]  ${
+          className={` w-[32vw] sm:w-[99vw] sm:bg-[black] sm:gap-[3vw] sm:h-[60vw] bg-[#111111] z-[1000] h-[20vw]  ${
             comeup ? "translate-y-[0vw]" : "translate-y-[100vw]"
           }  overflow-hidden flex-col justify-center items-center gap-[1.6vw] px-[3vw] flex flex-wrap relative rounded-[2vw]`}
           onClick={modalClick}
