@@ -63,6 +63,7 @@ const Showcase_body = (props: any) => {
   };
 
   const handleAddToForge = () => {
+    console.log(userSTep, product_arr.role);
     if (disable) {
       setpage_loader(true);
       setforgeerr("");

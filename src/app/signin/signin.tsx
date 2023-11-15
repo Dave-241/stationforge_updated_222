@@ -202,7 +202,7 @@ export default function Signin_component() {
             birthday: "",
             country: "",
             description: "",
-            step: 0,
+            step: 1,
             subscription: "Public",
             name: "",
             avatar_url:
