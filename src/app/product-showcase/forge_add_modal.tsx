@@ -24,7 +24,7 @@ const AddForgeModal = (props: any) => {
       setcomeup(false);
       setTimeout(() => {
         setaddForge_modal(false);
-      }, 400);
+      }, 800);
     }
   };
 
@@ -40,9 +40,12 @@ const AddForgeModal = (props: any) => {
 
   useEffect(() => {
     // Set up the timeout
-    const timer = setTimeout(() => {
-      setaddForge_modal(false);
-    }, 6000); // Delay in milliseconds
+    const timer = setTimeout(
+      () => {
+        setaddForge_modal(false);
+      },
+      globalThis.innerWidth > 650 ? 6000 : 6300,
+    ); // Delay in milliseconds
     const comeup_timer = setTimeout(() => {
       setcomeup(false);
     }, 5500); // Delay in milliseconds
@@ -65,11 +68,13 @@ const AddForgeModal = (props: any) => {
         <div
           className={`  z-[1000] sm:relative sm:w-full sm:bottom-0 sm:py-[7vw]  sm:rounded-[4vw] h-auto px-[2vw] py-[3vw] w-[25vw] absolute bg-[#111111]  ${
             comeup
-              ? "translate-y-[0vw] sm:translate-y-[0vw]"
+              ? "translate-y-[0vw] "
               : "translate-y-[30vw] sm:translate-y-[60vw]"
           }  overflow-hidden flex flex-wrap flex-col gap-[2vw] sm:px-[3vw] relative sm:gap-[4vw] rounded-[1vw] justify-center items-center`}
           onClick={modalClick}
-          style={{ transition: "0.8s ease" }}
+          style={{
+            transition: globalThis.innerWidth > 650 ? "0.8s ease" : "1.5s ease",
+          }}
         >
           {/* model added to forge section */}
           <div className="flex justify-between w-full items-center">
