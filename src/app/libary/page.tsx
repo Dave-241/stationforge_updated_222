@@ -52,6 +52,7 @@ export default function Home() {
   const [currently_downloading_id, setcurrently_downloading_id] = useState("");
   const [show_download_modal, setshow_download_modal] = useState(false);
   const [is_network_err, setis_network_err] = useState(false);
+  const [is_libary_empty, setis_libary_empty] = useState(false);
 
   const [uid, setuid] = useState("");
   // Use useEffect to check if the user is already authenticated
@@ -82,13 +83,14 @@ export default function Home() {
     setlibary_is_loading(true);
 
     // Real-time listener for the user's library
+    setis_network_err(true);
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       const postArray = [];
 
       for (const change of querySnapshot.docs) {
         const libraryData = change.data();
         const productRef = doc(db, "products", libraryData.productid);
-        setis_network_err(true);
+
         try {
           // Fetch product data
           const productDoc = await getDoc(productRef);
@@ -106,8 +108,10 @@ export default function Home() {
             };
             postArray.push(libray_collections);
             setis_network_err(false);
+            setis_libary_empty(false);
           } else {
-            console.log("No matching product found");
+            setis_libary_empty(true);
+            setis_network_err(false);
           }
         } catch (error) {
           console.error("Error fetching product data:", error);
@@ -213,6 +217,7 @@ export default function Home() {
             <Models_in_libary
               products={trimmed_product}
               is_network_err={is_network_err}
+              is_libary_empty={is_libary_empty}
               setshow_download_modal={setshow_download_modal}
               libraryItems={trimmed_product}
               setdownload_text={setdownload_text}

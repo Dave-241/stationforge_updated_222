@@ -40,6 +40,7 @@ export default function Home() {
   const [sub_faction_arr, setsub_faction_arr] = useState([]);
   const [active_sub_faction, setactive_sub_faction] = useState(null);
   const [search_text, setsearch_text] = useState("");
+  const [is_network_err, setis_network_err] = useState(false);
   // Use useEffect to set the animation
   const {
     show_setting_modal,
@@ -157,11 +158,12 @@ export default function Home() {
     const db = getFirestore();
     const productsRef = collection(db, "products");
     const col_qery = query(productsRef, orderBy("createdAt", "desc"));
-
+    setis_network_err(true);
     const unsubscribe = onSnapshot(col_qery, (querySnapshot) => {
       setproduct_is_loading(true);
       const productsArray = querySnapshot.docs.map((doc) => {
         const { cover_png, title, factions, subfactions } = doc.data();
+        setis_network_err(false);
         return {
           id: doc.id,
           cover_png,
@@ -225,6 +227,7 @@ export default function Home() {
               products={copy_products}
               setmobile_faction_active={setmobile_faction_active}
               setsearch_text={setsearch_text}
+              is_network_err={is_network_err}
               search_text={search_text}
             />
           </>

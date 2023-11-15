@@ -17,8 +17,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 const Products = (props: any) => {
   const route = useRouter();
-  const { products, setsearch_text, search_text, setmobile_faction_active } =
-    props;
+  const {
+    products,
+    setsearch_text,
+    is_network_err,
+    search_text,
+    setmobile_faction_active,
+  } = props;
   const [opacity, setopacity] = useState(0.5);
   const { toggleDropdown, setpage_loader }: any = useProfile_Context();
   const date = new Date();
@@ -110,10 +115,15 @@ const Products = (props: any) => {
         <div className="h-[0.1vw] bg-white  bg-opacity-[10%] w-full sm:hidden"></div>
 
         <div className="w-full  flex flex-wrap justify-start px-[1.8vw] sm:px-0 gap-[1.7vw] sm:gap-[3vw] ">
-          {products.length == 0 && (
+          {is_network_err && (
+            <div className="w-full h-[23vw] sm:text-[3.5vw]  flex justify-center items-center text-[white] neuer text-opacity-[70%] text-[1.4vw]">
+              Something went wrong, Kindly refresh this page
+            </div>
+          )}
+          {products.length == 0 && !is_network_err && (
             <div className=" w-full sm:h-[40vw] h-[25vw] flex justify-center items-center ">
               <p className="text-white text-[1.2vw] sm:text-[4vw] neuer text-opacity-[70%]">
-                Something went wrong. Please refresh page
+                No item matches your search
               </p>
             </div>
           )}

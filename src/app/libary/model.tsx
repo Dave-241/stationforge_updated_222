@@ -25,6 +25,7 @@ const Models_in_libary = (props: any) => {
     setdownload_text,
     setcurrently_downloading_id,
     setsearch_text,
+    is_libary_empty,
     search_text,
     is_network_err,
   } = props;
@@ -235,6 +236,16 @@ const Models_in_libary = (props: any) => {
               Something went wrong, Kindly refresh this page
             </div>
           )}
+          {is_libary_empty && (
+            <div className="w-full h-[23vw] sm:text-[3.5vw]  flex justify-center items-center text-[white] neuer text-opacity-[70%] text-[1.4vw]">
+              There are no Items in your libary
+            </div>
+          )}
+          {libraryItems.length == 0 && !is_libary_empty && !is_network_err && (
+            <div className="w-full h-[23vw] sm:text-[3.5vw]  flex justify-center items-center text-[white] neuer text-opacity-[70%] text-[1.4vw]">
+              No item matches your search
+            </div>
+          )}
           {libraryItems.map((e: any, index: any) => {
             // if (index == 9 ) {
 
@@ -244,7 +255,7 @@ const Models_in_libary = (props: any) => {
                 <div
                   key={index}
                   //   scroll={true}
-                  className="w-[19.7vw] sm:w-[45.5vw]  sm:gap-[3vw] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
+                  className="w-[19.7vw] sm:w-[45.5vw]  sm:gap-[3.5vw] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
                 >
                   <div className="w-full sm:h-[45vw]  avater_bg h-[20vw] overflow-hidden">
                     <Image
