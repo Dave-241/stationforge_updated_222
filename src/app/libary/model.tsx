@@ -6,8 +6,13 @@ import searchimg from "../../../public/support/search_icon.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useProfile_Context } from "../utils/profile_context";
+import mob_filter from "../../../public/home/mob_filter.webp";
 import Link from "next/link";
 import Download_modal from "./download_modal";
+import { Inter } from "next/font/google";
+
+// If loading a variable font, you don't need to specify the font weight
+const inter = Inter({ subsets: ["latin"] });
 
 const Models_in_libary = (props: any) => {
   const route = useRouter();
@@ -156,10 +161,12 @@ const Models_in_libary = (props: any) => {
 
   return (
     <>
-      <div className="w-[68%]  h-auto pb-[1vw] pt-[2.26vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw]">
+      <div className="w-[68%]  sm:w-full sm:px-[3vw] sm:border-none sm:gap-[8vw]  h-auto pb-[1vw] pt-[2.26vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw]">
         <div className="w-full flex justify-between items-center pb-[1vw] px-[2vw]">
-          <h3 className="neuer text-[2.2vw] text-white ">All Models</h3>
-          <div className="w-auto relative z-[999999999]">
+          <h3 className="neuer text-[2.2vw]  text-white  sm:text-[7vw]">
+            All Models <p className="sm:block hidden">In Libary</p>
+          </h3>
+          <div className="w-auto relative sm:hidden  z-[999999999]">
             <div className="absolute h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
               <Image
                 src={searchimg}
@@ -180,12 +187,51 @@ const Models_in_libary = (props: any) => {
               value={search_text || ""}
             />
           </div>
+
+          {/* now this is for the search filter  */}
+          <div
+            className="text-[white] text-opacity-[90%] hidden justify-center items-center sm:flex w-[38vw] gap-[2vw] text-[3vw] h-[10vw] bg-[#181515] rounded-[5vw] "
+            onClick={() => {
+              // setmobile_faction_active(true);
+            }}
+          >
+            <p className={`${inter.className}`}>Monthly Filter</p>
+            <Image
+              src={mob_filter}
+              alt="filter icon"
+              className="w-[3vw] h-fit opacity-[90%]"
+            />
+          </div>
         </div>
-        <div className="h-[0.1vw] bg-white  bg-opacity-[10%] w-full"></div>
+
+        {/* this is for the mobile input  */}
+
+        <div className="w-auto sm:block hidden relative z-[999999999]">
+          <div className="absolute h-full   w-[12vw]  flex justify-center items-center top-0 left-0 z-[13]">
+            <Image
+              src={searchimg}
+              unoptimized
+              width="0"
+              height="0"
+              alt="Search icon image"
+              className="w-[5vw]   h-fit"
+            />
+          </div>
+          <input
+            type="text"
+            placeholder="Search model"
+            onChange={(e) => {
+              setsearch_text(e.target.value);
+            }}
+            value={search_text || ""}
+            className="h-[12vw] w-full  sm:block hidden placeholder:text-white text-white neuer text-[3.5vw] outline-none focus:border transition duration-[0.8s] pl-[12vw] pr-[1vw]  rounded-[7vw] backdrop-blur-[15px] bg-[white] bg-opacity-[10%] "
+          />
+        </div>
+        <div className="h-[0.1vw] bg-white sm:hidden bg-opacity-[10%] w-full"></div>
 
         <div className="w-full flex flex-wrap justify-start px-[1.8vw] gap-[1.7vw]">
           {libraryItems.length == 0 && (
-            <div className="w-full h-[23vw]  flex justify-center items-center text-[white] neuer text-opacity-[70%] text-[1.4vw]">
+            <div className="w-full h-[23vw] sm:text-[3.5vw]  flex justify-center items-center text-[white] neuer text-opacity-[70%] text-[1.4vw]">
               {is_network_err
                 ? " Something went wrong, Kindly refresh this page"
                 : "There are no items in your libray"}

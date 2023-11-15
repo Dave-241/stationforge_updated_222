@@ -28,7 +28,7 @@ const Allocations = ({ settrimmed_text, trimmed_text }: any) => {
   };
 
   return (
-    <div className="relative w-[32%] ">
+    <div className="relative w-[32%] sm:hidden ">
       <div className="w-full h-auto pb-[1vw]  pt-[2vw] px-[1vw] sticky top-[8vw] flex flex-col gap-[1vw]">
         <h3 className="neuem text-[3vw] pb-[0vw] text-white">Library</h3>
 

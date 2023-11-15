@@ -196,7 +196,7 @@ export default function Home() {
           currently_downloading_id={currently_downloading_id}
         />
       )}
-      <div className="w-full h-[10vw] sm:h-[30vw]"></div>
+      <div className="w-full h-[10vw] sm:h-[26vw]"></div>
       <div
         className="w-full h-auto  flex transition duration-[2s] "
         style={{
