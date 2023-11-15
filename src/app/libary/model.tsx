@@ -21,6 +21,7 @@ const Models_in_libary = (props: any) => {
     setcurrently_downloading_id,
     setsearch_text,
     search_text,
+    is_network_err,
   } = props;
   const [opacity, setopacity] = useState(0.5);
   useEffect(() => {
@@ -185,7 +186,9 @@ const Models_in_libary = (props: any) => {
         <div className="w-full flex flex-wrap justify-start px-[1.8vw] gap-[1.7vw]">
           {libraryItems.length == 0 && (
             <div className="w-full h-[23vw]  flex justify-center items-center text-[white] neuer text-opacity-[70%] text-[1.4vw]">
-              There are no items in your libray
+              {is_network_err
+                ? " Something went wrong, Kindly refresh this page"
+                : "There are no items in your libray"}
             </div>
           )}
           {libraryItems.map((e: any, index: any) => {
