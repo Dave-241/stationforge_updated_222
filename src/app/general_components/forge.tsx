@@ -379,7 +379,7 @@ const Forge = (props: any) => {
       >
         <div className="w-auto sm:w-full sm:px-[3vw] sm:pt-[10vw] h-auto sm:bg-black">
           <div
-            className={` bg-[#111111]  ${
+            className={` bg-[#111111] sm:bg[#131212] ${
               go_width ? "w-[46vw] sm:w-full" : "w-[21vw] sm:w-full"
             } z-[1000] h-[30vw]  sm:h-[150vw] sm:py-[3vw]  ${
               comeup
@@ -416,7 +416,7 @@ const Forge = (props: any) => {
                   <div className="w-full h-auto flex flex-col gap-[4vw] ">
                     {/* holde the first two  */}
                     <div className="w-full  h-auto flex flex-col gap-[1vw] sm:gap-[1vw]">
-                      <div className="w-full border2 p-[1vw] sm:p-0 sm:py-[2vw] sm:border-none sm:px-[3vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]">
+                      <div className="w-full  p-[1vw] sm:p-0 sm:py-[2vw] sm:border-none sm:px-[3vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]">
                         <p className="neuer text-white text-[1vw] sm:text-[3.5vw]">
                           This months allocation
                         </p>
@@ -459,13 +459,13 @@ const Forge = (props: any) => {
                 </>
               ) : (
                 <>
-                  <div className="w-[12vw] h-[4vw] mt-[1vw] rounded-[1vw] bg-black animate-pulse"></div>
+                  <div className="w-[12vw] h-[4vw] mt-[1vw] rounded-[1vw] bg-black animate-pulse sm:hidden"></div>
 
                   {/* the allocation information */}
                   {/* monthly allocations */}
-                  <div className="w-full h-auto flex flex-col gap-[4vw]">
+                  <div className="w-full h-auto  sm:hidden flex flex-col gap-[4vw]">
                     {/* holde the first two  */}
-                    <div className="w-full h-auto flex flex-col gap-[1vw]">
+                    <div className="w-full h-auto  flex flex-col gap-[1vw]">
                       <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
                       <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
                     </div>
@@ -475,6 +475,24 @@ const Forge = (props: any) => {
                       <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
                       <button className="w-full h-[3vw] neuer text-[1.1vw] rounded-[1.2vw] bg-[#CCFF00] animate-pulse"></button>
                     </div>
+                  </div>
+
+                  <div className="w-full hidden sm:flex flex-col gap-[4vw]">
+                    {/* individaul items */}
+                    <div className="flex justify-between ">
+                      <div className="h-[10vw] w-[40vw] bg-black animate-pulse"></div>
+                      <div className="h-[10vw] w-[20vw] bg-black animate-pulse"></div>
+                    </div>
+                    <div className="flex justify-between ">
+                      <div className="h-[10vw] w-[40vw] bg-black animate-pulse"></div>
+                      <div className="h-[10vw] w-[20vw] bg-black animate-pulse"></div>
+                    </div>
+                    <div className="flex justify-between ">
+                      <div className="h-[10vw] w-[40vw] bg-black animate-pulse"></div>
+                      <div className="h-[10vw] w-[20vw] bg-black animate-pulse"></div>
+                    </div>
+
+                    <div className="w-full h-[11.5vw] rounded-[3vw] bg-[#CCFF00] animate-pulse "></div>
                   </div>
                 </>
               )}
@@ -520,7 +538,7 @@ const Forge = (props: any) => {
                       return (
                         <div
                           key={index}
-                          className="w-full sm:py-[3vw] sm:px-[3vw]  p-[1vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"
+                          className="w-full sm:rounded-[3vw] sm:bg[#111111] sm:py-[3vw] sm:pr-[3vw] sm:pl-[4vw]   p-[1vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"
                         >
                           <div className=" flex items-center sm:gap-[2.5vw] gap-[1vw]">
                             <div
@@ -571,14 +589,19 @@ const Forge = (props: any) => {
                 <>
                   <h2 className="neuem text-[2vw] text-white mx-[1vw] w-[14vw] rounded-[1vw] h-[3vw] bg-[#111111]  animate-pulse"></h2>
 
-                  <div className="w-full flex flex-col px-[1vw] justify-start gap-[1.6vw] scroll-container overflow-y-scroll">
+                  <div className="w-full py-[4vw] gap-[10vw] hidden sm:flex ">
+                    <div className="w-[20%] h-[10vw] rounded-[2vw]  bg-[black]  animate-pulse"></div>
+                    <div className="w-[40%] h-[10vw] rounded-[2vw]  bg-[black]  animate-pulse"></div>
+                    <div className="w-[20%] h-[10vw] rounded-[2vw]  bg-[black]  animate-pulse"></div>
+                  </div>
+
+                  <div className="w-full flex flex-col px-[1vw] justify-start gap-[1.6vw] scroll-container sm:gap-[6vw] overflow-y-scroll">
                     {" "}
                     {preload_forge_arr.map((e: any, index: any) => {
                       return (
-                        <div
-                          key={index}
-                          className="w-full py-[2vw] flex border-[0.1vw] bg-[#111111]  animate-pulse border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"
-                        ></div>
+                        <div key={index}>
+                          <div className="w-full sm:rounded-[4vw] py-[2vw] flex border-[0.1vw] bg-[#111111] sm:bg-black  animate-pulse border-white border-opacity-[30%] sm:py-[8vw] justify-between items-center rounded-[1.2vw]"></div>
+                        </div>
                       );
                     })}
                   </div>
