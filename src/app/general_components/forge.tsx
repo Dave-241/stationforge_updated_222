@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useProfile_Context } from "../utils/profile_context";
 import Image from "next/image";
+import exit_modal from "../../../public/mob_ham_exit.webp";
+
 import logo from "../../../public/logo.webp";
 import test from "../../../public/subscription/post_1.webp";
 import {
@@ -379,6 +381,13 @@ const Forge = (props: any) => {
         className="w-full h-full fixed top-0 left-0 bg-black  sm:bg-opacity-[90%] bg-opacity-[50%] flex sm:items-end  z-[999999] justify-center items-center "
         onClick={hideForge} // Hide forge when clicking on the background
       >
+        {/* this is for exsiting  */}
+        <Image
+          src={exit_modal}
+          alt="exit ham"
+          className="sm:block hidden w-[10vw] h-fit absolute top-[5vw] right-[3vw] "
+          style={{ opacity: comeup ? 1 : 0, transition: "1s ease" }}
+        />
         <div className="w-auto sm:w-full sm:px-[3vw] sm:pt-[10vw] h-auto sm:bg-black">
           <div
             className={` bg-[#111111] sm:bg[#131212] ${
