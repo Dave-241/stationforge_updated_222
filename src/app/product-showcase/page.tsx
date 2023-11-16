@@ -78,6 +78,9 @@ export default function Home() {
   const [check_network, setcheck_network] = useState(false);
   const [check_empty, setcheck_empty] = useState(false);
 
+  // this is for the gorge text . it is outside so we can monitor it form the similar model state
+  const [forge_text, setforge_text] = useState("Add to forge");
+
   // for the user step
   const [userSTep, setuserStep] = useState("");
   useEffect(() => {
@@ -361,6 +364,8 @@ export default function Home() {
             userSTep={userSTep}
             uuid={uuid}
             product_id={product_id}
+            forge_text={forge_text}
+            setforge_text={setforge_text}
           />
         ) : (
           <Showcase_preloader />
@@ -371,6 +376,7 @@ export default function Home() {
             similarArr={similarArr}
             check_empty={check_empty}
             check_network={check_network}
+            setforge_text={setforge_text}
           />
         ) : (
           <Preloader_for_Similar_models_preloader />

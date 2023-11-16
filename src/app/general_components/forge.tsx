@@ -43,7 +43,14 @@ const Forge = (props: any) => {
   // const {} = props
   // Function to hide the forge
   const hideForge = () => {
-    setforge_loader(false);
+    if (globalThis.innerWidth > 650) {
+      setforge_loader(false);
+    } else if (globalThis.innerWidth < 650) {
+      setcomeup(false);
+      setTimeout(() => {
+        setforge_loader(false);
+      }, 700);
+    }
   };
 
   // Use useEffect to check if the user is already authenticated
@@ -367,189 +374,217 @@ const Forge = (props: any) => {
   return (
     <>
       <div
-        className="w-full h-full fixed top-0 left-0 bg-black bg-opacity-[50%] flex  z-[999999] justify-center items-center "
+        className="w-full h-full fixed top-0 left-0 bg-black  sm:bg-opacity-[90%] bg-opacity-[50%] flex sm:items-end  z-[999999] justify-center items-center "
         onClick={hideForge} // Hide forge when clicking on the background
       >
-        <div
-          className={` ${
-            go_width ? "w-[46vw]" : "w-[21vw]"
-          } z-[1000] h-[30vw]  ${
-            comeup ? "translate-y-[0vw]" : "translate-y-[100vw]"
-          }  overflow-hidden flex flex-wrap relative rounded-[2vw]`}
-          onClick={modalClick}
-          style={{ transition: "1s ease" }}
-        >
-          {/* the first section */}
-
-          <div className="w-[21vw] z-[700] h-full bg-[#111111] flex justify-between items-center flex-col py-[2vw] px-[1vw] gap-[1.8vw]">
-            {uid.length < 5 && (
-              <p className="absolute top-[0.5vw] capitalize neuer text-white text-[1vw]">
-                login to view forge
-              </p>
-            )}
-
-            {/* the logo */}
-            {!is_loading_allocation ? (
-              <>
-                <Image
-                  src={logo}
-                  alt="station forge logo"
-                  className="w-[12vw] h-fit"
-                />
-
-                {/* the allocation information */}
-                {/* monthly allocations */}
-                <div className="w-full h-auto flex flex-col gap-[4vw]">
-                  {/* holde the first two  */}
-                  <div className="w-full h-auto flex flex-col gap-[1vw]">
-                    <div className="w-full p-[1vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]">
-                      <p className="neuer text-white text-[1vw]">
-                        This months allocation
-                      </p>
-                      <p className="neuer text-white text-[1vw] opacity-[50%]">
-                        30
-                      </p>
-                    </div>
-                    <div className="w-full p-[1vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]">
-                      <p className="neuer text-white text-[1vw]">Remaining</p>
-                      <p className="neuer text-white text-[1vw] opacity-[50%]">
-                        {allocation_number}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* hold the last two  */}
-                  <div className="w-full h-auto flex flex-col gap-[1vw]">
-                    <div className="w-full p-[1vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]">
-                      <p className="neuer text-white text-[1vw]">
-                        Total Selected
-                      </p>
-                      <p className="neuer text-white text-[1vw] opacity-[50%]">
-                        {selectedProducts.length > 0
-                          ? selectedProducts.length
-                          : 0}
-                      </p>
-                    </div>
-                    <button
-                      className="w-full h-[3vw] neuer text-[1.1vw] rounded-[1.2vw] bg-[#CCFF00]"
-                      onClick={handleAddForge}
-                    >
-                      {adding_forge_text}
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="w-[12vw] h-[4vw] mt-[1vw] rounded-[1vw] bg-black animate-pulse"></div>
-
-                {/* the allocation information */}
-                {/* monthly allocations */}
-                <div className="w-full h-auto flex flex-col gap-[4vw]">
-                  {/* holde the first two  */}
-                  <div className="w-full h-auto flex flex-col gap-[1vw]">
-                    <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
-                    <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
-                  </div>
-
-                  {/* hold the last two  */}
-                  <div className="w-full h-auto flex flex-col gap-[1vw]">
-                    <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
-                    <button className="w-full h-[3vw] neuer text-[1.1vw] rounded-[1.2vw] bg-[#CCFF00] animate-pulse"></button>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* now this is the second section  */}
+        <div className="w-auto sm:w-full sm:px-[3vw] sm:pt-[10vw] h-auto sm:bg-black">
           <div
-            className={`w-[25vw] absolute top-0 py-[2vw]   gap-[1.8vw] flex flex-col justify-start items-start right-0 h-full ${
-              go_right ? "translate-x-[0vw]" : "translate-x-[-30vw]"
-            }  bg-[black]`}
+            className={` bg-[#111111]  ${
+              go_width ? "w-[46vw] sm:w-full" : "w-[21vw] sm:w-full"
+            } z-[1000] h-[30vw]  sm:h-[150vw] sm:py-[3vw]  ${
+              comeup
+                ? "translate-y-[0vw] sm:translate-y-[0vw]"
+                : "translate-y-[100vw] sm:translate-y-[220vw]"
+            }  overflow-hidden flex flex-wrap sm:items-end relative rounded-[2vw] `}
+            onClick={modalClick}
             style={{
-              transition: "1s ease",
+              transition: globalThis.innerWidth > 650 ? "1s ease" : "1.5s ease",
             }}
           >
-            {!is_loading_forge ? (
-              <>
-                <h2 className="neuem text-[2vw] text-white px-[1vw]">Forge</h2>
+            {/* the first section */}
 
-                {!items.length && (
-                  <p className="neuem text-[1.3vw] opacity-[70%] text-white px-[1vw]">
-                    There are no items in your forge
-                  </p>
-                )}
-                <div className="w-full flex flex-col px-[1vw] justify-start gap-[1.6vw] scroll-container overflow-y-scroll">
-                  {" "}
-                  {items.map((e: any, index: any) => {
-                    return (
-                      <div
-                        key={index}
-                        className="w-full p-[1vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"
-                      >
-                        <div className=" flex items-center gap-[1vw]">
-                          <div
-                            className="w-[3vw] h-[3vw] avater_bg "
-                            style={{ backgroundImage: "url(/cover.webp)" }}
-                          >
-                            <Image
-                              src={e.image}
-                              unoptimized
-                              width="0"
-                              height="0"
-                              alt="Forge iamges"
-                              className="w-full h-full"
-                            />
-                          </div>
-                          <p className="neuer text-white text-[1vw]">
-                            {e.title}
-                          </p>
-                        </div>
+            <div className="w-[21vw] z-[700] sm:w-full sm:h-[45%]  h-full bg-[#111111] flex justify-between items-center flex-col py-[2vw] px-[1vw] gap-[1.8vw] sm:px-[3vw]">
+              {/* this is the line that is usually there only on mobile */}
+              <div className="hidden mt-[4vw] sm:block w-[80vw] mx-auto h-[0.2vw] bg-white bg-opacity-[30%]"></div>
+              {uid.length < 5 && (
+                <p className="absolute top-[0.5vw] capitalize neuer text-white text-[1vw] sm:text-[3.5vw]">
+                  login to view forge
+                </p>
+              )}
 
-                        <div className="flex items-center gap-[1vw]">
-                          <div
-                            className="text-[1.3vw] cursor-pointer opacity-[50%] text-white"
-                            onClick={() => handleDelete(e.id, e.productid)}
-                          >
-                            <i className="bi bi-dash-lg"></i>
-                          </div>
-                          <div
-                            className="w-[1vw] h-[1vw] cursor-pointer rounded-[100%] border-white border-opacity-[50%] border-[0.15vw]"
-                            onClick={() => {
-                              handleToggleSelection(e.productid);
-                            }}
-                            style={{
-                              backgroundColor: selectedProducts.includes(
-                                e.productid,
-                              )
-                                ? "#CCFF00"
-                                : "",
-                            }}
-                          ></div>
-                        </div>
+              {/* the logo */}
+              {!is_loading_allocation ? (
+                <>
+                  <Image
+                    src={logo}
+                    alt="station forge logo"
+                    className="w-[12vw] sm:hidden h-fit"
+                  />
+
+                  {/* the allocation information */}
+                  {/* monthly allocations */}
+                  <div className="w-full h-auto flex flex-col gap-[4vw] ">
+                    {/* holde the first two  */}
+                    <div className="w-full  h-auto flex flex-col gap-[1vw] sm:gap-[1vw]">
+                      <div className="w-full border2 p-[1vw] sm:p-0 sm:py-[2vw] sm:border-none sm:px-[3vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]">
+                        <p className="neuer text-white text-[1vw] sm:text-[3.5vw]">
+                          This months allocation
+                        </p>
+                        <p className="neuer text-white text-[1vw] sm:text-[3.5vw] opacity-[50%]">
+                          30
+                        </p>
                       </div>
-                    );
-                  })}
-                </div>
-              </>
-            ) : (
-              <>
-                <h2 className="neuem text-[2vw] text-white mx-[1vw] w-[14vw] rounded-[1vw] h-[3vw] bg-[#111111]  animate-pulse"></h2>
+                      {/* this is the line that is usually there only on mobile */}
 
-                <div className="w-full flex flex-col px-[1vw] justify-start gap-[1.6vw] scroll-container overflow-y-scroll">
-                  {" "}
-                  {preload_forge_arr.map((e: any, index: any) => {
-                    return (
-                      <div
-                        key={index}
-                        className="w-full py-[2vw] flex border-[0.1vw] bg-[#111111]  animate-pulse border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"
-                      ></div>
-                    );
-                  })}
-                </div>
-              </>
-            )}
+                      <div className="w-full p-[1vw] sm:py-[2vw] sm:border-none sm:px-[3vw]  flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]">
+                        <p className="neuer text-white text-[1vw] sm:text-[3.5vw]">
+                          Remaining
+                        </p>
+                        <p className="neuer text-white text-[1vw] sm:text-[3.5vw] opacity-[50%]">
+                          {allocation_number}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="hidden sm:block w-[80vw] mx-auto h-[0.2vw] bg-white bg-opacity-[30%]"></div>
+                    {/* hold the last two  */}
+                    <div className="w-full h-auto flex flex-col gap-[1vw]">
+                      <div className="w-full p-[1vw] sm:py-[2vw] sm:border-none sm:px-[3vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]">
+                        <p className="neuer text-white text-[1vw] sm:text-[3.5vw]">
+                          Total Selected
+                        </p>
+                        <p className="neuer text-white text-[1vw] sm:text-[3.5vw] opacity-[50%]">
+                          {selectedProducts.length > 0
+                            ? selectedProducts.length
+                            : 0}
+                        </p>
+                      </div>
+                      <button
+                        className="w-full sm:h-[10vw] sm:text-[4vw] sm:rounded-[4vw] h-[3vw] neuer text-[1.1vw] rounded-[1.2vw] bg-[#CCFF00]"
+                        onClick={handleAddForge}
+                      >
+                        {adding_forge_text}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="w-[12vw] h-[4vw] mt-[1vw] rounded-[1vw] bg-black animate-pulse"></div>
+
+                  {/* the allocation information */}
+                  {/* monthly allocations */}
+                  <div className="w-full h-auto flex flex-col gap-[4vw]">
+                    {/* holde the first two  */}
+                    <div className="w-full h-auto flex flex-col gap-[1vw]">
+                      <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
+                      <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
+                    </div>
+
+                    {/* hold the last two  */}
+                    <div className="w-full h-auto flex flex-col gap-[1vw]">
+                      <div className="w-full h-[3.2vw] bg-black animate-pulse flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"></div>
+                      <button className="w-full h-[3vw] neuer text-[1.1vw] rounded-[1.2vw] bg-[#CCFF00] animate-pulse"></button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            {/* now this is the second section  */}
+
+            <div
+              className={`w-[25vw] absolute sm:px-[3vw] top-0 py-[2vw] sm:w-full sm:bg-[#111111] sm:h-[55%]    gap-[1.8vw] flex flex-col justify-start items-start right-0 h-full ${
+                go_right
+                  ? "translate-x-[0vw] sm:translate-x-[0vw]"
+                  : "translate-x-[-30vw] sm:translate-x-[0vw]"
+              }  bg-[black]`}
+              style={{
+                transition: "1s ease",
+              }}
+            >
+              {!is_loading_forge ? (
+                <>
+                  <h2 className="neuem text-[2vw]  text-white px-[1vw] sm:hidden">
+                    Forge
+                  </h2>
+
+                  <div className="w-full hidden py-[4vw] pb-[10vw] sm:flex  justify-between items-center">
+                    <h1 className="neuer text-[5vw] text-white">Forge</h1>
+                    <Image
+                      src={logo}
+                      alt="station forge logo"
+                      className="w-[30vw]  h-fit"
+                    />
+                    <h1 className="neuer text-[3.5vw] underline underline-offset-4 text-opacity-[80%] text-white">
+                      Wishlist
+                    </h1>
+                  </div>
+
+                  {!items.length && (
+                    <p className="neuem text-[1.3vw] sm:text-[4vw] opacity-[70%] text-white px-[1vw]">
+                      There are no items in your forge
+                    </p>
+                  )}
+                  <div className="w-full flex sm:gap-[5vw] flex-col px-[1vw] justify-start gap-[1.6vw] scroll-container overflow-y-scroll">
+                    {" "}
+                    {items.map((e: any, index: any) => {
+                      return (
+                        <div
+                          key={index}
+                          className="w-full sm:py-[3vw] sm:px-[3vw]  p-[1vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"
+                        >
+                          <div className=" flex items-center sm:gap-[2.5vw] gap-[1vw]">
+                            <div
+                              className="w-[3vw] sm:h-[12vw] sm:w-[12vw] h-[3vw] avater_bg "
+                              style={{ backgroundImage: "url(/cover.webp)" }}
+                            >
+                              <Image
+                                src={e.image}
+                                unoptimized
+                                width="0"
+                                height="0"
+                                alt="Forge iamges"
+                                className="w-full h-full"
+                              />
+                            </div>
+                            <p className="neuer text-white text-[1vw] sm:text-[3vw]">
+                              {e.title}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center sm:gap-[3vw] gap-[1vw]">
+                            <div
+                              className="text-[1.3vw] sm:text-[4vw] cursor-pointer opacity-[50%] text-white"
+                              onClick={() => handleDelete(e.id, e.productid)}
+                            >
+                              <i className="bi bi-dash-lg"></i>
+                            </div>
+                            <div
+                              className="w-[1vw] h-[1vw] sm:w-[4.5vw] sm:h-[4.5vw] cursor-pointer rounded-[100%] border-white border-opacity-[50%] border-[0.15vw]"
+                              onClick={() => {
+                                handleToggleSelection(e.productid);
+                              }}
+                              style={{
+                                backgroundColor: selectedProducts.includes(
+                                  e.productid,
+                                )
+                                  ? "#CCFF00"
+                                  : "",
+                              }}
+                            ></div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h2 className="neuem text-[2vw] text-white mx-[1vw] w-[14vw] rounded-[1vw] h-[3vw] bg-[#111111]  animate-pulse"></h2>
+
+                  <div className="w-full flex flex-col px-[1vw] justify-start gap-[1.6vw] scroll-container overflow-y-scroll">
+                    {" "}
+                    {preload_forge_arr.map((e: any, index: any) => {
+                      return (
+                        <div
+                          key={index}
+                          className="w-full py-[2vw] flex border-[0.1vw] bg-[#111111]  animate-pulse border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"
+                        ></div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

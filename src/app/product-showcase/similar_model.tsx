@@ -6,7 +6,12 @@ import { useProfile_Context } from "../utils/profile_context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const Similar_models = ({ similarArr, check_empty, check_network }: any) => {
+const Similar_models = ({
+  similarArr,
+  setforge_text,
+  check_empty,
+  check_network,
+}: any) => {
   const items = ["", "", "", ""];
   const { toggleDropdown, setpage_loader }: any = useProfile_Context();
   const router = useRouter();
@@ -53,6 +58,7 @@ const Similar_models = ({ similarArr, check_empty, check_network }: any) => {
                   //   router.push(
                   //     `/product-showcase?product_id=${e.id}&faction=${e.factions}`,
                   //   );
+                  setforge_text("Add to forge");
                   setTimeout(() => {
                     window.scrollTo({
                       top: 0,

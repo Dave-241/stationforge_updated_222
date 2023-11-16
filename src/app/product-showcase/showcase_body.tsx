@@ -31,6 +31,8 @@ const Showcase_body = (props: any) => {
     userSTep,
     uuid,
     product_id,
+    forge_text,
+    setforge_text,
   } = props;
   //   const [items, setitems] = useState(["", "", "", "", "", "", ""]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -38,7 +40,6 @@ const Showcase_body = (props: any) => {
   const { page_loader, setpage_loader }: any = useProfile_Context();
   const router = useRouter();
   const [forgeerr, setforgeerr] = useState("");
-  const [forge_text, setforge_text] = useState("Add to forge");
   const [addForge_modal, setaddForge_modal] = useState(false);
   const [already_exist, setalready_exist] = useState(false);
   const [forgeTitle, setforgeTitle] = useState("");

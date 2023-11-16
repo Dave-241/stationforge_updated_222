@@ -36,7 +36,9 @@ const Image_display = (props: any) => {
       {" "}
       <div
         className="w-full flex justify-center items-center h-full fixed  top-0 left-0 bg-black bg-opacity-[97%]  gap-[3vw] comment_wrap  z-[9999] py-[10vw]  "
-        // onClick={() => hide(false)}
+        onClick={() => {
+          setimg_display_show(false);
+        }}
       >
         <div className="w-full h-[6vw] absolute px-[3vw] flex justify-between items-center   top-0 left-0">
           <Image
@@ -69,7 +71,12 @@ const Image_display = (props: any) => {
           }}
           //   onClick={handleModalClick}
         >
-          <div className="w-[40vw] h-full  overflow-hidden flex justify-center items-center">
+          <div
+            className="w-[40vw] h-full  overflow-hidden flex justify-center items-center"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             {video ? (
               <video
                 src={img_display}
@@ -89,7 +96,12 @@ const Image_display = (props: any) => {
             )}
           </div>
 
-          <div className="w-[30vw] border-white border-opacity-[20%] rounded-[1.2vw] border-[0.1vw]  h-full overflow-y-scroll scroll-container flex flex-wrap justify-center gap-[1vw] py-[2vw] px-[3vw] items-center ">
+          <div
+            className="w-[30vw] border-white border-opacity-[20%] rounded-[1.2vw] border-[0.1vw]  h-full overflow-y-scroll scroll-container flex flex-wrap justify-center gap-[1vw] py-[2vw] px-[3vw] items-center "
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             {img_display_arr.map((e: any, index: any) => {
               const isVideoLink = videoExtensions.some((ext) =>
                 e.link.includes(`.${ext}`),
