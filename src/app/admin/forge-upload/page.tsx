@@ -204,6 +204,7 @@ export default function Home() {
     const storage = getStorage();
     abortControllerRef.current = new AbortController();
     const year = new Date().getFullYear();
+    const randomNumber = Math.floor(Math.random() * 9) + 1;
     addDoc(collection(db, "products"), {
       cover_png: "",
       description: selected_descrption,
@@ -214,6 +215,7 @@ export default function Home() {
       subfactions: selected_sub_faction,
       title: selected_text,
       year: year,
+      // random: randomNumber,
       createdAt: serverTimestamp(),
     })
       .then(async (res) => {

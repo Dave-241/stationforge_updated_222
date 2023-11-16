@@ -488,15 +488,20 @@ const Forge = (props: any) => {
                         key={index}
                         className="w-full p-[1vw] flex border-[0.1vw]  border-white border-opacity-[30%] justify-between items-center rounded-[1.2vw]"
                       >
-                        <div className="w-auto flex items-center gap-[1vw]">
-                          <Image
-                            src={e.image}
-                            unoptimized
-                            width="0"
-                            height="0"
-                            alt="Forge iamges"
-                            className="w-[3vw] h-[3vw]"
-                          />
+                        <div className=" flex items-center gap-[1vw]">
+                          <div
+                            className="w-[3vw] h-[3vw] avater_bg "
+                            style={{ backgroundImage: "url(/cover.webp)" }}
+                          >
+                            <Image
+                              src={e.image}
+                              unoptimized
+                              width="0"
+                              height="0"
+                              alt="Forge iamges"
+                              className="w-full h-full"
+                            />
+                          </div>
                           <p className="neuer text-white text-[1vw]">
                             {e.title}
                           </p>

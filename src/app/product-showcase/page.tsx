@@ -57,6 +57,14 @@ export default function Home() {
 
   const product_id = searchParams.get("product_id");
   const faction = searchParams.get("faction");
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
+      });
+    }, 1500);
+  }, [faction, product_id]);
 
   // the search param is above
   const [product_arr, setproduct_arr] = useState<any>({});
@@ -275,14 +283,12 @@ export default function Home() {
           productsRef,
           where("cover_png", "!=", product_arr.cover_png),
           where("factions", "==", faction),
-          orderBy("cover_png", "desc"),
-          limit(4),
         );
 
         const productsSnapshot = await getDocs(productsQuery);
 
         if (!productsSnapshot.empty) {
-          const similarModels = productsSnapshot.docs.map((productDoc) => {
+          const allSimilarModels = productsSnapshot.docs.map((productDoc) => {
             const { id } = productDoc;
             const { title, factions, cover_png } = productDoc.data();
             return {
@@ -290,12 +296,18 @@ export default function Home() {
               id,
               cover_png,
               factions,
-
-              // Assuming 'coverImage' is the field name for the cover image in your document
             };
           });
 
-          setsimilarArr(similarModels);
+          // Shuffle the array to get a random order
+          const shuffledModels = allSimilarModels.sort(
+            () => Math.random() - 0.5,
+          );
+
+          // Take the first 4 elements from the shuffled array
+          const selectedModels = shuffledModels.slice(0, 4);
+
+          setsimilarArr(selectedModels);
           setcheck_network(false);
           setcheck_empty(false);
         } else {
@@ -361,7 +373,7 @@ export default function Home() {
         ) : (
           <Showcase_preloader />
         )}
-        <div className="w-full h-[10vw] sm:h-[12vw] "></div>
+        <div className="w-full h-[7vw] sm:h-[12vw] "></div>
         {!similarArrIsLoading ? (
           <Similar_models
             similarArr={similarArr}

@@ -14,6 +14,7 @@ const Similar_models = ({ similarArr, check_empty, check_network }: any) => {
     setpage_loader(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <>
       <h1 className="neuem  sm:text-[6vw] text-[2.5vw] px-[3vw] text-white text-opacity-[80%] sm:mb-0 mb-[1vw]">
@@ -43,7 +44,8 @@ const Similar_models = ({ similarArr, check_empty, check_network }: any) => {
           {similarArr.map((e: any, index: any) => {
             return (
               <Link
-                target="_blank"
+                // target="_blank"
+                scroll={false}
                 href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
                 key={index}
                 className=" w-full cursor-pointer hover:scale-[1.04] transition duration-[0.6s] sm:w-[60vw] flex flex-col gap-[2vw] sm:gap-[4vw]"
@@ -52,10 +54,10 @@ const Similar_models = ({ similarArr, check_empty, check_network }: any) => {
                   //     `/product-showcase?product_id=${e.id}&faction=${e.factions}`,
                   //   );
                   //   setTimeout(() => {
-                  //     window.scrollTo({
-                  //       top: 0,
-                  //       behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
-                  //     });
+                  // window.scrollTo({
+                  //   top: 0,
+                  //   behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
+                  // });
                   //   }, 1500);
                   // route.push(``);
                 }}

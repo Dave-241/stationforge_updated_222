@@ -192,7 +192,12 @@ const Custom_subscription_Header = () => {
           </Link>
         </div>
 
-        <div className="sm:block sm:w-fit  hidden">
+        <div
+          className="sm:block sm:w-fit  hidden"
+          onClick={() => {
+            setforge_loader(true);
+          }}
+        >
           <button
             className="= w-[10vw] h-auto flex"
             // onClick={() => {
