@@ -25,11 +25,20 @@ const Mobile_header = ({
     setshow_setting_modal,
   }: any = useProfile_Context();
 
+  const [profile_comeup, setprofile_comeup] = useState(false);
   const hide_mob_header = () => {
-    setcomedown(false);
-    setTimeout(() => {
-      setmobile_bg_changer(false);
-    }, 800);
+    setprofile_comeup(false);
+    if (profile_comeup) {
+      setcomedown(false);
+      setTimeout(() => {
+        setmobile_bg_changer(false);
+      }, 900);
+    } else if (!profile_comeup) {
+      setcomedown(false);
+      setTimeout(() => {
+        setmobile_bg_changer(false);
+      }, 800);
+    }
   };
 
   // Prevent click inside the modal content from closing the modal
@@ -59,9 +68,15 @@ const Mobile_header = ({
         onClick={hide_mob_header}
       >
         <div
-          className={`w-full h-[100vw]  bg-[#181818] rounded-[6vw]  ${
-            comedown ? "translate-y-[0vw]" : "translate-y-[-100vw]"
-          } flex flex-col justify-end pb-[13vw] gap-[6vw]`}
+          className={`w-full ${
+            !profile_comeup ? " h-[100vw]" : "h-[155vw] "
+          }   bg-[#181818] rounded-[6vw]  ${
+            comedown
+              ? "translate-y-[0vw]"
+              : profile_comeup
+              ? "translate-y-[-180vw]"
+              : "translate-y-[-100vw]"
+          } flex flex-col justify-start pt-[30vw] pb-[10vw] gap-[6vw]`}
           style={{ transition: "1.5s ease" }}
           onClick={modalClick}
         >
@@ -130,14 +145,36 @@ const Mobile_header = ({
                 </Link>
               </>
             ) : (
-              <button
-                onClick={() => {
-                  setshow_setting_modal(true);
-                }}
-                className="w-full neuer flex justify-center items-center text-[4vw] bg-white rounded-[3vw] h-[14vw] hover:bg-opacity-[80%] transition duration-[0.3s]"
-              >
-                Profile
-              </button>
+              <>
+                {/* <button
+                  onClick={() => {
+                    setshow_setting_modal(true);
+                  }}
+                  className="w-full neuer flex justify-center items-center text-[4vw] bg-white rounded-[3vw] h-[14vw] hover:bg-opacity-[80%] transition duration-[0.3s]"
+                >
+                  Profile
+                </button> */}
+
+                <div
+                  className={`bg-white w-full ${
+                    !profile_comeup ? "h-[14vw]" : "h-[65vw] "
+                  } rounded-[2vw]`}
+                  style={{ transition: "1.5s ease" }}
+                  onClick={() => {
+                    setprofile_comeup(!profile_comeup);
+                  }}
+                >
+                  {/* this is the option that sticks  */}
+                  <div className="w-full h-[14vw] neuer text-[4vw] gap-[3vw] flex justify-center items-center">
+                    Profile{" "}
+                    <i
+                      className={`bi ${
+                        !profile_comeup ? "bi-chevron-down " : "bi-chevron-up"
+                      }  `}
+                    ></i>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </div>
