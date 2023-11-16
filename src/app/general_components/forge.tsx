@@ -22,8 +22,10 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from "../utils/fire_base_config";
 import { initializeApp } from "firebase/app";
 import Head from "next/head";
+import Link from "next/link";
 const Forge = (props: any) => {
-  const { setforge_loader, forge_loader }: any = useProfile_Context();
+  const { setforge_loader, forge_loader, setpage_loader }: any =
+    useProfile_Context();
   const [comeup, setcomeup] = useState(false);
   const [go_right, setgo_right] = useState(false);
   const [go_width, setgo_width] = useState(false);
@@ -397,7 +399,7 @@ const Forge = (props: any) => {
               {/* this is the line that is usually there only on mobile */}
               <div className="hidden mt-[4vw] sm:block w-[80vw] mx-auto h-[0.2vw] bg-white bg-opacity-[30%]"></div>
               {uid.length < 5 && (
-                <p className="absolute top-[0.5vw] capitalize neuer text-white text-[1vw] sm:text-[3.5vw]">
+                <p className=" capitalize neuer text-white text-[1vw] sm:text-[3.5vw] sm:hidden">
                   login to view forge
                 </p>
               )}
@@ -528,10 +530,22 @@ const Forge = (props: any) => {
                   </div>
 
                   {!items.length && (
-                    <p className="neuem text-[1.3vw] sm:text-[4vw] opacity-[70%] text-white px-[1vw]">
+                    <p className="neuem text-[1.3vw] sm:text-[4vw] opacity-[70%] text-white  px-[1vw]">
                       There are no items in your forge
                     </p>
                   )}
+                  {uid.length < 5 && (
+                    <Link
+                      href={"/login"}
+                      onClick={() => {
+                        setpage_loader(true);
+                      }}
+                      className="text-[#CCFF00] top-[0.5vw] sm:block capitalize neuer  text-[1vw] sm:text-[3.5vw] hidden"
+                    >
+                      login to view forge
+                    </Link>
+                  )}
+
                   <div className="w-full flex sm:gap-[5vw] flex-col px-[1vw] justify-start gap-[1.6vw] scroll-container overflow-y-scroll">
                     {" "}
                     {items.map((e: any, index: any) => {
