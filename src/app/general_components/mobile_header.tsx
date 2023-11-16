@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useProfile_Context } from "../utils/profile_context";
+import chat from "../../../public/mobile_header/chat.webp";
+import libary from "../../../public/mobile_header/libary.webp";
+import logout from "../../../public/mobile_header/logout.webp";
+import profile from "../../../public/mobile_header/profile.webp";
+import Image from "next/image";
+import firebaseConfig from "../utils/fire_base_config";
+import { getAuth, signOut } from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
 const Mobile_header = ({
   setmobile_bg_changer,
@@ -25,6 +33,10 @@ const Mobile_header = ({
     setshow_setting_modal,
   }: any = useProfile_Context();
 
+  initializeApp(firebaseConfig);
+
+  // init authentication
+  const auth = getAuth();
   const [profile_comeup, setprofile_comeup] = useState(false);
   const hide_mob_header = () => {
     setprofile_comeup(false);
@@ -61,6 +73,12 @@ const Mobile_header = ({
     setcomedown(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handlelogout = () => {
+    signOut(auth).then(() => {
+      setprofile_comeup(false);
+    });
+  };
   return (
     <>
       <div
@@ -156,22 +174,82 @@ const Mobile_header = ({
                 </button> */}
 
                 <div
-                  className={`bg-white w-full ${
-                    !profile_comeup ? "h-[14vw]" : "h-[65vw] "
-                  } rounded-[2vw]`}
+                  className={`bg-white w-full    px-[5vw] overflow-hidden flex flex-col ${
+                    !profile_comeup ? "h-[14vw]" : "h-[70vw] "
+                  }  ${!profile_comeup ? "rounded-[3vw]" : "rounded-[8vw] "}`}
                   style={{ transition: "1.5s ease" }}
-                  onClick={() => {
-                    setprofile_comeup(!profile_comeup);
-                  }}
                 >
                   {/* this is the option that sticks  */}
-                  <div className="w-full h-[14vw] neuer text-[4vw] gap-[3vw] flex justify-center items-center">
-                    Profile{" "}
+                  <div
+                    className="w-full h-[14vw]  neuer text-[4vw] gap-[3vw] flex justify-center items-center"
+                    onClick={() => {
+                      setprofile_comeup(!profile_comeup);
+                    }}
+                  >
+                    {!profile_comeup ? "Profile" : "Close "}
                     <i
                       className={`bi ${
                         !profile_comeup ? "bi-chevron-down " : "bi-chevron-up"
                       }  `}
                     ></i>
+                  </div>
+                  <div
+                    className={`w-full  ${
+                      profile_comeup ? "h-[55vw] " : "h-[0vw] "
+                    }  overflow-hidden  flex flex-col  gap-[3.2vw]`}
+                    style={{ transition: "1.5s ease" }}
+                  >
+                    {/* this is for the row elements */}
+                    <div
+                      className="w-full py-[0vw] pt-[3vw]  justify-start items-center flex gap-[4vw]"
+                      onClick={() => {
+                        setshow_setting_modal(true);
+                      }}
+                    >
+                      <Image
+                        src={profile}
+                        alt="profile img"
+                        className="h-fit w-[5vw]"
+                      />
+                      <p className="neuem text-[4vw] ">Profile</p>
+                    </div>
+
+                    <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
+                    {/* this is for the row elements */}
+                    <div className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]">
+                      <Image
+                        src={chat}
+                        alt="profile img"
+                        className="h-fit w-[5vw]"
+                      />
+                      <p className="neuem text-[4vw] ">Talk to us</p>
+                    </div>
+                    <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
+
+                    <Link
+                      href={"/libary"}
+                      className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]"
+                    >
+                      <Image
+                        src={libary}
+                        alt="profile img"
+                        className="h-fit w-[5vw]"
+                      />
+                      <p className="neuem text-[4vw] ">Library</p>
+                    </Link>
+                    <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
+
+                    <div
+                      className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]"
+                      onClick={handlelogout}
+                    >
+                      <Image
+                        src={logout}
+                        alt="profile img"
+                        className="h-fit w-[5vw]"
+                      />
+                      <p className="neuem text-[4vw] ">Logout</p>
+                    </div>
                   </div>
                 </div>
               </>
