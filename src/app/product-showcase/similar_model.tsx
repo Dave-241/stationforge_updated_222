@@ -42,21 +42,21 @@ const Similar_models = ({ similarArr, check_empty, check_network }: any) => {
         <div className="w-full sm:pr-[5vw] sm:w-auto h-auto sm:gap-[6vw]  sm:absolute sm:top-[3vw] sm:left-0 px-[3vw] py-[1vw]   items-center flex justify-start gap-[3vw]">
           {similarArr.map((e: any, index: any) => {
             return (
-              <div
-                // scroll={true}
-                // href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
+              <Link
+                target="_blank"
+                href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
                 key={index}
                 className=" w-full cursor-pointer hover:scale-[1.04] transition duration-[0.6s] sm:w-[60vw] flex flex-col gap-[2vw] sm:gap-[4vw]"
                 onClick={() => {
-                  router.push(
-                    `/product-showcase?product_id=${e.id}&faction=${e.factions}`,
-                  );
-                  setTimeout(() => {
-                    window.scrollTo({
-                      top: 0,
-                      behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
-                    });
-                  }, 1500);
+                  //   router.push(
+                  //     `/product-showcase?product_id=${e.id}&faction=${e.factions}`,
+                  //   );
+                  //   setTimeout(() => {
+                  //     window.scrollTo({
+                  //       top: 0,
+                  //       behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
+                  //     });
+                  //   }, 1500);
                   // route.push(``);
                 }}
               >
@@ -74,7 +74,7 @@ const Similar_models = ({ similarArr, check_empty, check_network }: any) => {
                 <h1 className=" text-[1.5vw] capitalize sm:text-[4vw] text-white neuer ">
                   {e.title}
                 </h1>
-              </div>
+              </Link>
             );
           })}
         </div>
