@@ -160,7 +160,10 @@ const Showcase_body = (props: any) => {
 
           <div className="w-[39vw] sm:w-full overflow-hidden  sm:rounded-[5vw] border-[white] border-[0.15vw] sm:border-[0.5vw] sm:h-[140vw] border-opacity-[31%] rounded-[2vw] flex flex-col h-[57vw]">
             {/* main image */}
-            <div className="w-full h-[68%] sm:h-[70%]  overflow-hidden">
+            <div
+              className="w-full h-[68%] sm:h-[70%] avater_bg overflow-hidden"
+              style={{ backgroundImage: "url(/cover.webp)" }}
+            >
               <Image
                 src={cover_img_link}
                 unoptimized
@@ -211,8 +214,9 @@ const Showcase_body = (props: any) => {
                   return (
                     <>
                       <div
-                        className="w-[10vw] sm:w-[20vw] sm:h-[20vw] h-[10vw]"
+                        className="w-[10vw] sm:w-[20vw] avater_bg sm:h-[20vw] h-[10vw]"
                         key={index}
+                        style={{ backgroundImage: "url(/cover.webp)" }}
                         onClick={() => {
                           setcover_img_link(e.link);
                         }}

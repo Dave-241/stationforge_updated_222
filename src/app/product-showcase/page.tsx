@@ -57,14 +57,6 @@ export default function Home() {
 
   const product_id = searchParams.get("product_id");
   const faction = searchParams.get("faction");
-  useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
-      });
-    }, 1500);
-  }, [faction, product_id]);
 
   // the search param is above
   const [product_arr, setproduct_arr] = useState<any>({});
