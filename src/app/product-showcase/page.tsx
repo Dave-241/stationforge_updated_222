@@ -193,9 +193,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // const colRef = collection(db, "reviews");
-    // const colQuery = query(colRef, orderBy("createdAt", "desc"));
-
     const colRef = collection(db, "reviews");
     const colQuery = query(
       colRef,
@@ -203,50 +200,72 @@ export default function Home() {
       orderBy("createdAt", "desc"),
     );
 
-    const unsubscribe = onSnapshot(colQuery, (reviewsSnapshot) => {
-      if (reviewsSnapshot.empty) {
-        setreview_empty(true);
-      } else {
-        setreview_empty(false);
-      }
-      const userDetailsPromises = reviewsSnapshot.docs.map((reviewDoc) => {
-        const reviewData = reviewDoc.data();
-        const usersCollectionRef = collection(db, "users");
-        const userQuery = query(
-          usersCollectionRef,
-          where("userid", "==", reviewData.userId),
-        );
-        return getDocs(userQuery).then((userDocSnapshot) => {
-          if (!userDocSnapshot.empty) {
-            const userCommentInfo = userDocSnapshot.docs[0].data();
-            return {
-              avatar:
-                userCommentInfo.avatar_url &&
-                userCommentInfo.avatar_url.length > 2
-                  ? userCommentInfo.avatar_url
-                  : "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193",
-              name:
-                userCommentInfo.name && userCommentInfo.name.length > 1
-                  ? userCommentInfo.name
-                  : "User***** ",
-              text: reviewData.text,
-            };
-          }
-          return null; // Return null if the user is not found, we will filter out nulls later.
-        });
-      });
+    const unsubscribe = onSnapshot(
+      colQuery,
+      (reviewsSnapshot) => {
+        if (reviewsSnapshot.empty) {
+          setreview_empty(true);
+        } else {
+          setreview_empty(false);
+        }
 
-      // Wait for all promises to resolve and then update the state
-      Promise.all(userDetailsPromises).then((reviewsWithUsers) => {
-        const filteredReviewsWithUsers = reviewsWithUsers.filter(Boolean); // Filter out null values
-        setReviewsWithUserDetails(filteredReviewsWithUsers);
+        const userDetailsPromises = reviewsSnapshot.docs.map((reviewDoc) => {
+          const reviewData = reviewDoc.data();
+          const usersCollectionRef = collection(db, "users");
+          const userQuery = query(
+            usersCollectionRef,
+            where("userid", "==", reviewData.userId),
+          );
+
+          return getDocs(userQuery).then((userDocSnapshot) => {
+            if (!userDocSnapshot.empty) {
+              const userCommentInfo = userDocSnapshot.docs[0].data();
+              return {
+                avatar:
+                  userCommentInfo.avatar_url &&
+                  userCommentInfo.avatar_url.length > 2
+                    ? userCommentInfo.avatar_url
+                    : "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193",
+                name:
+                  userCommentInfo.name && userCommentInfo.name.length > 1
+                    ? userCommentInfo.name
+                    : "User***** ",
+                text: reviewData.text,
+              };
+            }
+            return null; // Return null if the user is not found, we will filter out nulls later.
+          });
+        });
+
+        Promise.all(userDetailsPromises)
+          .then((reviewsWithUsers) => {
+            const filteredReviewsWithUsers = reviewsWithUsers.filter(Boolean);
+            console.log("Data loaded successfully.");
+            setReviewsWithUserDetails(filteredReviewsWithUsers);
+          })
+          .catch((error) => {
+            console.error("Error loading data:", error);
+            // Handle the error, e.g., show an error message to the user
+          })
+          .finally(() => {
+            setreviewisloading(false);
+          });
+      },
+      (error) => {
+        console.error("Error in snapshot listener:", error);
+        // Handle the error, e.g., show an error message to the user
         setreviewisloading(false);
-      });
-    });
+      },
+    );
 
     // Clean up the listener on component unmount
     return () => unsubscribe();
-  }, [product_id]); // Depend on product_id if the reviews are specific to a product
+  }, [
+    product_id,
+    setreview_empty,
+    setreviewisloading,
+    setReviewsWithUserDetails,
+  ]);
 
   useEffect(() => {
     const fetchSimilarModels = async () => {
