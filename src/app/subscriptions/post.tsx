@@ -387,8 +387,8 @@ const Post = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-[28vw] sm:w-[44.5vw] sm:h-[36vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
-                    // style={{ backgroundImage: `url(${e.link})` }}
+                    className="w-[28vw] sm:w-[44.5vw] sm:h-[36vw] avater_bg  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+                    style={{ backgroundImage: "url(/cover.webp)" }}
                     onClick={() => {
                       setvideo(false);
                       setimg_display_arr(postdata.images);

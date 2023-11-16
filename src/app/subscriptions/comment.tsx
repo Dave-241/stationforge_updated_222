@@ -71,13 +71,7 @@ const Comments_modal = (props: any) => {
                   >
                     <div
                       className="w-[3.4vw] h-[3vw] sm:w-[12vw] sm:h-[10vw] overflow-hidden avater_bg  rounded-[100%] "
-                      style={{
-                        backgroundImage: `url(${
-                          e.avatar == " "
-                            ? "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*1fp3284*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODA5NzgyNC4zOC4xLjE2OTgxMDYzNjguMTcuMC4w"
-                            : e.avatar
-                        })`,
-                      }}
+                      style={{ backgroundImage: "url(/cover.webp)" }}
                     >
                       <Image
                         src={e.avatar}
