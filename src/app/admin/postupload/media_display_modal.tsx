@@ -81,7 +81,8 @@ const Media_display = (props: any) => {
           </div>
           <button
             className="text-[#FF0000] neuem text-[1.1vw] sm:text-[3.5vw]  text-center bottom-[-1vw] left-0 w-full"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               deleteMedia(maindata);
             }}
           >
