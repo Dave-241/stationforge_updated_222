@@ -40,15 +40,15 @@ const Image_display = (props: any) => {
           setimg_display_show(false);
         }}
       >
-        <div className="w-full h-[6vw] absolute px-[3vw] flex justify-between items-center   top-0 left-0">
+        <div className="w-full h-[6vw] absolute px-[3vw] flex sm:top-[5vw] justify-between items-center sm:justify-end  top-0 left-0">
           <Image
             src={logo}
             alt="Station forge logo"
-            className="w-[10vw] h-fit"
+            className="w-[10vw] sm:hidden h-fit"
           />
 
           <i
-            className="text-[2vw] hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] text-white bi bi-x-circle"
+            className="text-[2vw] sm:text-[7vw] h-fit hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] text-white bi bi-x-circle"
             onClick={() => {
               setimg_display_show(false);
             }}
@@ -63,16 +63,16 @@ const Image_display = (props: any) => {
           //   ref={ref}
           style={{
             width: "auto",
-            gap: "3vw",
+            gap: globalThis.innerWidth > 650 ? "3vw" : "8vw",
             display: "flex",
             justifyContent: "center",
-            flexDirection: "row",
+            flexDirection: globalThis.innerWidth > 650 ? "row" : "column",
             alignItems: "center",
           }}
           //   onClick={handleModalClick}
         >
           <div
-            className="w-[40vw] h-full  overflow-hidden flex justify-center items-center"
+            className="w-[40vw] max-h-[95vh] sm:max-h-[70vh]  sm:w-[80vw] h-full  overflow-hidden flex justify-center items-center"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -97,7 +97,7 @@ const Image_display = (props: any) => {
           </div>
 
           <div
-            className="w-[30vw] border-white border-opacity-[20%] rounded-[1.2vw] border-[0.1vw]  h-full overflow-y-scroll scroll-container flex flex-wrap justify-center gap-[1vw] py-[2vw] px-[3vw] items-center "
+            className="w-[30vw] sm:w-[90vw] sm:max-h-[40vw] sm:py-[5vw] border-white border-opacity-[20%] rounded-[1.2vw] border-[0.1vw]  h-full overflow-y-scroll scroll-container flex flex-wrap justify-center gap-[1vw] py-[2vw] px-[3vw] items-center "
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -110,7 +110,7 @@ const Image_display = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className={`w-[5vw] h-[5vw]  hover:scale-[1.07] transition duration-[0.6s]
+                    className={`w-[5vw] h-[5vw] sm:w-[15vw] sm:h-[15vw] hover:scale-[1.07] transition duration-[0.6s]
                     ${
                       e.link == img_display
                         ? "border-[0.3vw]  border-opacity-[80%] border-[#CCFF00] "
@@ -137,10 +137,10 @@ const Image_display = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className={`w-[5vw] h-[5vw]  hover:scale-[1.07] transition duration-[0.6s] 
+                    className={`w-[5vw] h-[5vw] sm:w-[15vw] sm:h-[15vw]  hover:scale-[1.07] transition duration-[0.6s] 
                      ${
                        e.link == img_display
-                         ? "border-[0.3vw]  border-opacity-[80%] border-[#CCFF00] "
+                         ? "border-[0.3vw] sm:border-[1vw] border-opacity-[80%] border-[#CCFF00] "
                          : " border-[0.1vw]  border-opacity-[20%] border-white "
                      } cursor-pointer avater_bg rounded-[0.8vw] overflow-hidden `}
                     onClick={() => {

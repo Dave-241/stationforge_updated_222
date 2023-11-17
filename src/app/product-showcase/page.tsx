@@ -130,9 +130,7 @@ export default function Home() {
       .then((querySnapshot) => {
         // Process the querySnapshot to get image data
 
-        const imagesData = firstele.cover_png
-          ? [{ link: firstele.cover_png }]
-          : [{}];
+        const imagesData: any = [];
 
         // Add the rest of the images from the product_images collection to the array
         querySnapshot.forEach((doc) => {

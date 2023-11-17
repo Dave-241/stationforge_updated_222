@@ -215,7 +215,7 @@ const Showcase_body = (props: any) => {
                   return (
                     <>
                       <div
-                        className="w-[10vw] sm:w-[20vw] avater_bg sm:h-[20vw] h-[10vw]"
+                        className={`w-[10vw] cursor-pointer sm:w-[20vw]  avater_bg sm:h-[20vw] h-[10vw]`}
                         key={index}
                         style={{ backgroundImage: "url(/cover.webp)" }}
                         onClick={() => {
@@ -229,7 +229,11 @@ const Showcase_body = (props: any) => {
                           width="0"
                           height="0"
                           alt="product cover images"
-                          className="w-full h-full"
+                          className={`${
+                            e.link == cover_img_link
+                              ? "border-[0.5vw] sm:border-[1vw] border-[#CCFF00]"
+                              : ""
+                          } w-full h-full`}
                         />
                       </div>
 

@@ -49,22 +49,22 @@ const Similar_models = ({
           {similarArr.map((e: any, index: any) => {
             return (
               <Link
-                // target="_blank"
-                scroll={false}
+                target="_blank"
+                scroll={true}
                 href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
                 key={index}
                 className=" w-[21vw]  cursor-pointer hover:scale-[1.04] transition duration-[0.6s] sm:w-[60vw] flex flex-col gap-[2vw] sm:gap-[4vw]"
                 onClick={() => {
                   //   router.push(
                   //     `/product-showcase?product_id=${e.id}&faction=${e.factions}`,
-                  //   );
-                  setforge_text("Add to forge");
-                  setTimeout(() => {
-                    window.scrollTo({
-                      top: 0,
-                      behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
-                    });
-                  }, 1200);
+                  // //   );
+                  // setforge_text("Add to forge");
+                  // setTimeout(() => {
+                  //   window.scrollTo({
+                  //     top: 0,
+                  //     behavior: "smooth", // You can use 'auto' instead of 'smooth' for an instant scroll
+                  //   });
+                  // }, 1200);
                   // route.push(``);
                 }}
               >
