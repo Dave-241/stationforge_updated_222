@@ -75,7 +75,7 @@ const Text_upload = (props: any) => {
           Post
         </button>
 
-        <p className="absolute sm:w-full sm:text-[2.5vw] neuer w-[30vw] text-[#FF0000]  text-[1vw]  left-[3vw] bottom-[3vw]">
+        <p className="absolute sm:w-full sm:text-[3vw] neuer w-[30vw] text-[#FF0000]  text-[1vw]  left-[3vw] bottom-[3vw]">
           {local_post_err}
         </p>
       </div>
