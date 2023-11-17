@@ -88,7 +88,7 @@ const Media_display = (props: any) => {
             <i className="bi bi-trash3"></i> Discard post
           </button>{" "}
         </div>
-        <div className="w-[30vw] sm:w-[90vw]   sm:h-fit h-full  flex justify-center items-center gap-[1vw]">
+        <div className="w-[30vw] sm:w-[90vw]   sm:h-[40vw] h-full  flex justify-center items-center gap-[1vw]">
           <div
             className=" w-full rounded-[1vw] sm:py-[5vw] max-h-full  relative flex flex-wrap scroll-container justify-center py-[2vw] px-[1vw] overflow-y-scroll border-white border-opacity-[20%] border-[0.1vw] sm:gap-[3vw]  gap-[1.5vw]"
             onClick={(e) => {
@@ -106,7 +106,7 @@ const Media_display = (props: any) => {
                 style={{}}
               >
                 <i
-                  className="text-[1vw] sm:text-[4.3vw] sm:top-[-0.7vw] absolute top-[-0.2vw] right-[-0vw] font-[800] z-[9999] hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition  text-[red] bi bi-x-circle"
+                  className="text-[1vw] sm:text-[4vw] sm:top-[-0.7vw] absolute top-[-0.2vw] right-[-0vw] font-[800] z-[9999] hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition  text-[red] bi bi-x-circle"
                   onClick={() => {
                     deleteMedia(file);
                   }}
