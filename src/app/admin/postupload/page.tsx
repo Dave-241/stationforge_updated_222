@@ -567,22 +567,24 @@ export default function Home() {
 
           {/* this is the upload progress */}
           {uploading_moda && (
-            <div className="w-full h-full fixed top-0  left-0 z-[99999] flex justify-center items-center bg-black bg-opacity-[60%]">
-              <div className="bg-white rounded-[1.4vw] relative flex-col w-[28vw] px-[1.5vw] h-[19vw] flex justify-center items-center gap-[2vw]">
-                <p className="text-[1.2vw] neuer">{uploading_text}</p>
+            <div className="w-full h-full fixed top-0 sm:px-[4vw] left-0 z-[99999] flex justify-center items-center bg-black bg-opacity-[60%]">
+              <div className="bg-white rounded-[1.4vw] relative sm:gap-[3vw] flex-col w-[28vw] px-[1.5vw] h-[19vw] flex justify-center sm:px-[4vw] sm:rounded-[6vw] sm:w-[90%] sm:h-[50vw] items-center gap-[2vw]">
+                <p className="text-[1.2vw] neuer sm:text-[4vw]">
+                  {uploading_text}
+                </p>
                 {!done && (
-                  <span className="text-[#CCFF00] absolute capitalize top-[0.7vw] right-[1.5vw]">
+                  <span className="text-[#CCFF00] sm:text-[3.5vw] absolute capitalize top-[0.7vw] right-[1.5vw]">
                     {upload_number}
                   </span>
                 )}
                 {done && (
                   <i
-                    className="text-[1.6vw] hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] absolute capitalize top-[0.7vw] right-[1.5vw] text-[#FF0000] bi bi-x-circle"
+                    className="text-[1.6vw] sm:text-[7vw] sm:right-[3vw] sm:top-[2vw] hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] absolute capitalize top-[0.7vw] right-[1.5vw] text-[#FF0000] bi bi-x-circle"
                     onClick={refresh}
                   ></i>
                 )}
                 {!done && (
-                  <div className="w-full h-[1.1vw] overflow-hidden flex bg-[#D9D9D9] rounded-[1vw]">
+                  <div className="w-full h-[1.1vw] sm:h-[3vw] overflow-hidden flex bg-[#D9D9D9] rounded-[1vw]">
                     <div
                       className="h-full bg-[#CCFF00] transition duration-[3s]"
                       style={{
@@ -597,13 +599,13 @@ export default function Home() {
                   <Image
                     src={success}
                     alt="success image"
-                    className="w-[5.5vw] h-fit"
+                    className="w-[5.5vw] sm:w-[15vw] h-fit"
                   />
                 )}
 
                 {!done && (
                   <button
-                    className=" py-[1vw] px-[2.2vw] text-[1vw] hover:bg-[#CCFF00]  transition duration-[0.6s] border-black border-[0.1vw] rounded-[1.2vw] "
+                    className=" py-[1vw] sm:py-[3vw] sm:text-[4vw] sm:px-[10vw] px-[2.2vw] text-[1vw] hover:bg-[#CCFF00]  transition duration-[0.6s] border-black border-[0.1vw] rounded-[1.2vw] "
                     id="cancelUploadButton"
                     onClick={() => {
                       setuploading_text("Beginning Cancel ...");
@@ -617,7 +619,7 @@ export default function Home() {
                   <Link
                     href={final_post_data}
                     target="_blank"
-                    className=" py-[1vw] px-[3.2vw] text-[1vw] bg-[#CCFF00]  transition duration-[0.6s] hover:bg-transparent hover:border-black hover:border-[0.1vw] border-[#CCFF00] border-[0.1vw] rounded-[1.2vw] "
+                    className=" py-[1vw] px-[3.2vw]  sm:py-[3vw] sm:text-[4vw] sm:px-[10vw] text-[1vw] bg-[#CCFF00]  transition duration-[0.6s] hover:bg-transparent hover:border-black hover:border-[0.1vw] border-[#CCFF00] border-[0.1vw] rounded-[1.2vw] "
                     id="cancelUploadButton"
                     // onClick={() => {
                     //   handleCancelUpload();
