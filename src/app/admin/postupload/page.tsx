@@ -407,7 +407,7 @@ export default function Home() {
       {showdash ? (
         <>
           {select_modal && (
-            <div className="w-full fixed z-[99999] h-full bg-black bg-opacity-[60%] top-0 left-0 flex justify-center items-center">
+            <div className="w-full fixed z-[99999] sm:px-[3vw] h-full bg-black bg-opacity-[60%] top-0 left-0 flex justify-center items-center">
               <FadeInTransition
                 timeout={1200}
                 from={0}
@@ -420,41 +420,43 @@ export default function Home() {
                   itemsCenter: "center",
                 }}
               >
-                <div className="w-[27vw] relative px-[2vw] flex-col flex justify-center items-center gap-[2vw] bg-white h-auto py-[3vw] rounded-[1.2vw]">
+                <div className="w-[27vw] sm:rounded-[4vw] sm:gap-[4vw] sm:py-[6vw] sm:px-[4vw] sm:w-full relative px-[2vw] flex-col flex justify-center items-center gap-[2vw] bg-white h-auto py-[3vw] rounded-[1.2vw]">
                   <Link
                     href={"/admin/dashboard"}
                     onClick={() => {
                       setpage_loader(true);
                     }}
-                    className="text-[#FF0000] neuem text-[1.1vw] absolute w-fit text-center top-[0.7vw]  hover:text-[black] transition duration-[0.6s "
+                    className="text-[#FF0000] sm:top-[2vw] neuem text-[1.1vw] sm:text-[3.5vw]  absolute w-fit text-center top-[0.7vw]  hover:text-[black] transition duration-[0.6s "
                   >
                     <i className="bi bi-speedometer"> </i>
                     Go to Dashboard
                   </Link>
-                  <p className="text-[1.2vw]  neuem text-center">
+                  <p className="text-[1.2vw] sm:pt-[5vw] sm:text-[4vw] neuem text-center">
                     Select post type
                   </p>
 
                   {/* the options */}
                   <div
-                    className="w-full h-auto py-[1vw] bg-[#F5F5F5] rounded-[1.2vw]  cursor-pointer transition duration-[0.6s] hover:bg-[#cbcbcb]  flex flex-col"
+                    className="w-full h-auto py-[1vw] sm:py-[6vw] sm:rounded-[5vw] bg-[#F5F5F5] rounded-[1.2vw]  cursor-pointer transition duration-[0.6s] hover:bg-[#cbcbcb]  flex flex-col"
                     onClick={() => {
                       setmedia(true);
                       setselect_modal(false);
                       setupdated_media([]);
                     }}
                   >
-                    <div className="w-full h-fit  flex justify-center items-center gap-[0.4vw]">
-                      <i className="text-[1.6vw] bi bi-card-image"></i>
-                      <div className="w-[0.3vw]  h-[0.3vw] rounded-[100%] bg-black"></div>
-                      <i className="text-[1.6vw] bi bi-play-circle"></i>
+                    <div className="w-full h-fit  flex justify-center items-center sm:gap-[2vw] gap-[0.4vw]">
+                      <i className="text-[1.6vw] sm:text-[4vw] bi bi-card-image"></i>
+                      <div className="w-[0.3vw]  h-[0.3vw] sm:h-[1vw] sm:w-[1vw] rounded-[100%] bg-black"></div>
+                      <i className="text-[1.6vw] sm:text-[4vw]  bi bi-play-circle"></i>
                     </div>
-                    <p className="neuem text-center text-[1.2vw]">Media</p>
+                    <p className="neuem text-center text-[1.2vw] sm:text-[4vw] ">
+                      Media
+                    </p>
                   </div>
 
                   {/* options */}
                   <div
-                    className="w-full h-auto py-[1vw] bg-[#F5F5F5] rounded-[1.2vw] cursor-pointer transition duration-[0.6s] hover:bg-[#cbcbcb]  flex flex-col"
+                    className="w-full h-auto py-[1vw] sm:py-[6vw] sm:rounded-[5vw] bg-[#F5F5F5] rounded-[1.2vw] cursor-pointer transition duration-[0.6s] hover:bg-[#cbcbcb]  flex flex-col"
                     onClick={() => {
                       setmedia(false);
                       setselect_modal(false);
@@ -462,9 +464,11 @@ export default function Home() {
                     }}
                   >
                     <div className="w-full h-fit  flex justify-center items-center gap-[0.4vw]">
-                      <i className="text-[1.6vw] bi bi-pencil-square"></i>
+                      <i className="text-[1.6vw] bi bi-pencil-square sm:text-[4vw]"></i>
                     </div>
-                    <p className="neuem text-center text-[1.2vw]">Text</p>
+                    <p className="neuem text-center text-[1.2vw] sm:text-[4vw]">
+                      Text
+                    </p>
                   </div>
                 </div>
               </FadeInTransition>
@@ -475,10 +479,10 @@ export default function Home() {
             from={0}
             to={1}
             in={true}
-            style={{ width: "100%" }}
+            style={{ width: globalThis.innerWidth < 650 ? "100vw" : "100%" }}
           >
-            <div className="w-full h-auto px-[3.5vw] flex justify-start py-[5vw]  relative">
-              <div className="w-[60vw] gap-[3vw] flex flex-col justify-center h-auto ">
+            <div className="w-full h-auto px-[3.5vw] sm:py-[10vw]  flex justify-start sm:justify-center  sm:gap-[3vw] py-[5vw] sm:flex-col  relative">
+              <div className="w-[60vw] gap-[3vw] flex flex-col sm:gap-[7vw] justify-center sm:w-full h-auto ">
                 {" "}
                 {media && (
                   <Media_post
@@ -502,36 +506,38 @@ export default function Home() {
 
               {/*  */}
               {/* this is the is stciky bar  */}
-
-              <div className="w-[30vw] z-[99] py-[2vw] px-[2vw] bg-white h-[35vw] rounded-[2vw] fixed right-[3.5vw] top-[5vw] flex flex-col justify-start ">
-                <h2 className="text-[1.4vw] pb-[2vw] neuem">
+              <h2 className="text-[1.4vw] hidden sm:block sm:mt-[4vw]  sm:text-[4vw] neuem">
+                Who can see this post?
+              </h2>
+              <div className="w-[30vw] sm:w-full sm:py-[5vw] sm:px-[5vw] sm:rounded-[4vw] sm:top-0 sm:h-[60vw] sm:gap-[3vw] sm:right-0   z-[99] py-[2vw] px-[2vw] bg-white h-[35vw] rounded-[2vw] sm:relative fixed right-[3.5vw] top-[5vw] flex flex-col justify-start ">
+                <h2 className="text-[1.4vw] sm:hidden pb-[2vw] sm:text-[4vw] neuem">
                   Who can see this post?
                 </h2>
-                <ul className=" flex flex-col gap-[2vw] ">
+                <ul className=" flex flex-col gap-[2vw] sm:gap-[4vw] ">
                   {options.map((option) => (
                     <li
                       key={option.id}
                       onClick={() => {
                         handleRadioChange(option.id);
                       }}
-                      className="flex justify-start cursor-pointer  py-[0.2vw] gap-[2vw] items-center"
+                      className="flex justify-start cursor-pointer sm:gap-[4vw] py-[0.2vw] gap-[2vw] items-center"
                     >
                       <div
-                        className="w-[2vw] flex justify-center items-center  h-[2vw] border-[#B7B7B7] border-[0.1vw] rounded-[0.4vw]"
+                        className="w-[2vw] sm:w-[5vw] sm:h-[5vw] flex justify-center items-center  h-[2vw] border-[#B7B7B7] border-[0.1vw] rounded-[0.4vw]"
                         style={{
                           backgroundColor:
                             selectedOption == option.id ? "#CCFF00" : "",
                         }}
                       >
                         <i
-                          className="bi text-[2vw] bi-check-lg"
+                          className="bi text-[2vw] sm:text-[4vw] bi-check-lg"
                           style={{
                             display:
                               selectedOption == option.id ? "block" : "none",
                           }}
                         ></i>
                       </div>
-                      <p className="neuem text-[1.4vw] cursor-pointer">
+                      <p className="neuem text-[1.4vw] sm:text-[3.5vw] cursor-pointer">
                         {option.label}
                       </p>
                     </li>
@@ -539,7 +545,7 @@ export default function Home() {
                 </ul>
 
                 <button
-                  className="text-[#FF0000] neuem text-[1.1vw] absolute w-fit text-center bottom-[-3vw] left-[50%] translate-x-[-50%] hover:text-[black] transition duration-[0.6s"
+                  className="text-[#FF0000] neuem text-[1.1vw] sm:text-[3.5vw] absolute sm:bottom-[2vw] w-fit text-center bottom-[-3vw] left-[50%] translate-x-[-50%] hover:text-[black] transition duration-[0.6s]"
                   onClick={refresh}
                 >
                   <i className="bi bi-trash3"></i> Discard post
@@ -549,7 +555,7 @@ export default function Home() {
           </FadeInTransition>
 
           <button
-            className="fixed top-[1.6vw] left-[2.5vw] text-[1.5vw] neuem "
+            className="fixed top-[1.6vw] sm:text-[4vw] sm:top-[2.5vw] left-[2.5vw] text-[1.5vw] neuem "
             onClick={() => {
               setselect_modal(true);
               refresh();

@@ -71,7 +71,7 @@ const Media_post = (props: any) => {
   return (
     <>
       <div
-        className="w-full h-[35vw] px-[5vw] flex flex-col gap-[1.5vw] justify-center items-center bg-white rounded-[2vw]"
+        className="w-full h-[35vw] sm:h-[100vw] sm:rounded-[4vw]  px-[5vw] flex flex-col gap-[1.5vw] justify-center items-center bg-white rounded-[2vw]"
         onDrop={handleDrop}
         onDragOver={(e) => {
           e.preventDefault();
@@ -155,17 +155,17 @@ const Media_post = (props: any) => {
           </FadeInTransition>
         )}
 
-        <div className=" flex justify-center items-center flex-col gap-[2vw] ">
+        <div className=" flex justify-center sm:gap-[4vw] items-center flex-col gap-[2vw] ">
           {!isfilelaoded && (
             <Image
               src={cloud}
               alt="cloud upload image"
-              className="w-[15vw] h-fit"
+              className="w-[15vw] sm:w-[30vw] h-fit"
             />
           )}
           <label
             htmlFor="mediaInput"
-            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] neuer py-[1vw] px-[2vw] rounded-[1.2vw]"
+            className="cursor-pointer bg-[#F3F3F3] sm:py-[4vw] sm:px-[9vw] sm:rounded-[5vw] text-[#688200] text-[1vw] sm:text-[4vw] neuer py-[1vw] px-[2vw] rounded-[1.2vw]"
           >
             Add Media (Images & Videos)
           </label>
@@ -179,7 +179,7 @@ const Media_post = (props: any) => {
           />
 
           {!isfilelaoded && (
-            <p className="text-[1.2vw] text-center neuer w-[80%]">
+            <p className="text-[1.2vw] text-center neuer w-[80%] sm:w-full sm:text-[3.5vw]">
               Upload or simply drag and drop your media files. You can upload up
               to 20 media items, including both images and videos{" "}
             </p>
