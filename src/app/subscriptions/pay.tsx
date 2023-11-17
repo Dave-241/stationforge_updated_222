@@ -1,10 +1,14 @@
 // pages/yourPage.tsx
+import { CardElement } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useState, ChangeEvent, useRef } from "react";
+import { useStripe } from "@stripe/react-stripe-js";
 
 const Pay = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCVV] = useState("");
+  const stripe = useStripe();
 
   const cvvInputRef = useRef<HTMLInputElement>(null);
   const expiryDateInputRef = useRef<HTMLInputElement>(null);
@@ -53,13 +57,41 @@ const Pay = () => {
     formatExpiryDate(numericInput);
   };
 
+  // this is to handle stripe
+  const stripe_promise = loadStripe(
+    `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
+  );
+
   const handleCVVChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const numericInput: string = e.target.value.replace(/\D/g, "");
     formatCVV(numericInput);
   };
 
-  const handlepayment = () => {
+  const handlepayment = async () => {
     console.log("we are about paying now ");
+
+    if (!stripe) {
+      console.log(
+        "Stripe.js has not loaded yet. Make sure to disable form submission until Stripe.js has loaded.",
+      );
+      return;
+    }
+
+    // const { token, error } = await stripe.createToken({
+    //     {
+    //     number: cardNumber,
+    //     cvc: cvv,
+    //     exp_month: parseInt(expiryDate.slice(0, 2), 10),
+    //     exp_year: parseInt(expiryDate.slice(5), 10),
+    //   } ,
+    // });
+
+    // if (error) {
+    //   console.log(error.message);
+    // } else {
+    //   // Handle the token (e.g., send it to your server)
+    //   console.log(token);
+    // }
   };
   return (
     <>
