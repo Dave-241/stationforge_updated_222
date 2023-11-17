@@ -113,7 +113,7 @@ const Image_display = (props: any) => {
                     className={`w-[5vw] h-[5vw] sm:w-[15vw] sm:h-[15vw] hover:scale-[1.07] transition duration-[0.6s]
                     ${
                       e.link == img_display
-                        ? "border-[0.3vw]  border-opacity-[80%] border-[#CCFF00] "
+                        ? "border-[0.3vw] sm:border-[1vw] border-opacity-[80%] border-[#CCFF00] "
                         : " border-[0.1vw]  border-opacity-[20%] border-white "
                     } 
                     overflow-hidden  cursor-pointer avater_bg rounded-[0.8vw]`}
