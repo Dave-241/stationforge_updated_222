@@ -84,6 +84,30 @@ input[type="number"] {
   overflow: hidden;
 }
 
+.less_scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.less_scrollbar::-webkit-scrollbar-track {
+  border-radius: 50%;
+  background: #cf0;
+}
+
+.less_scrollbar::-webkit-scrollbar-thumb {
+  background: #cf0;
+  width: 10px;
+  height: 10px;
+  /* border-radius: 100vh;
+    border: 3px solid #f6f7ed; */
+}
+
+.less_scrollbar::-webkit-scrollbar-thumb:hover {
+  width: 1px;
+  height: 1px;
+  background: #cf0;
+}
+
 @keyframes next_1 {
   0% {
     bottom: -15vw;

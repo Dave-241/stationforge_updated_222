@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
-  title: "StationForge Control Center ",
+  title: "StationForge Control Center | Digital Sales ",
   description:
     "Welcome, Supreme Commander! Your Galactic Empire is thriving and sales are soaring through the stars!",
 };
@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ backgroundColor: "white" }}>
+      <body style={{ backgroundColor: "#E7E6E8" }}>
         <Profile_Context_Dropdown>
           <Admin_context_Info>{children}</Admin_context_Info>
         </Profile_Context_Dropdown>

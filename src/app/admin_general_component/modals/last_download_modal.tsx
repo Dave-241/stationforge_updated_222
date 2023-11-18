@@ -1,13 +1,14 @@
 import React from "react";
 import Image from "next/image";
+import { ModalPropsTypes } from "@/app/types/modalPropTypes";
 
-export default function LastDownloadModal({ name, handleModalPopUp }) {
+export default function LastDownloadModal({ name, handleModalPopUp }: ModalPropsTypes) {
   return (
     <dialog
       id="last_download"
       className="modal bg-[rgba(0,0,0,0.80)] overflow-y-auto"
     >
-      <div className="relative gap-4 bg-[#fff] mb-[2rem] w-[95%] sm:w-[80%] md:w-[50%] lg:w-[40%] h-auto rounded-[30px] flex flex-col items-center p-[20px] sm:p-[43px] lg:p-[70px] pt-[70px] pb-3 sm:pb-3 lg:pb-3">
+      <div className="relative gap-4 bg-[#fff] mb-[2rem] w-[95%] dsm:w-[80%] md:w-[50%] lg:w-[40%] h-auto rounded-[30px] flex flex-col items-center p-[20px] dsm:p-[43px] lg:p-[70px] pt-[70px] pb-3 dsm:pb-3 lg:pb-3">
         <div className="w-full flex items-center justify-between">
           <p className="nueum font-medium text-[10px] lg:text-[20px] text-[#000]">
             Last download
