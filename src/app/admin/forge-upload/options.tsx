@@ -27,7 +27,7 @@ const Option_select = ({ options, handleRadioChange, selectedOption }: any) => {
                 }}
               >
                 <i
-                  className="bi text-[2vw] bi-check-lg"
+                  className="bi text-[2vw] bi-check-lg sm:text-[5vw]"
                   style={{
                     display: selectedOption == option.id ? "block" : "none",
                   }}

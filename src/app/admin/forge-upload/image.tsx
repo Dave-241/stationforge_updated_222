@@ -90,7 +90,7 @@ const Image_upload = ({
               itemsAlign: "center",
             }}
           >
-            <div className=" w-[60%]  h-[15vw] relative flex flex-wrap justify-center  items-center gap-[0.4vw]">
+            <div className=" w-[60%] sm:w-[90%] sm:h-[50vw]  h-[15vw] relative flex flex-wrap justify-center  items-center gap-[0.4vw] sm:gap-[2vw]">
               {trimmedMediaFiles.map((file: any, index: any) => (
                 <div
                   key={index}
@@ -116,14 +116,14 @@ const Image_upload = ({
               ))}
               {mediaFiles.length > 4 && (
                 <div
-                  className="rounded-[0.5vw] absolute bottom-0 right-[1.7%] bg-black bg-opacity-[75%] w-[48%] flex justify-center items-center  h-[49%] cursor-pointer"
+                  className="rounded-[0.5vw] sm:bottom-[-1vw] sm:right-[1.2%] absolute bottom-0 right-[1.7%] bg-black bg-opacity-[75%] w-[48%] flex justify-center items-center  h-[49%] cursor-pointer"
                   onClick={() => {
                     setmaindata(mediaFiles[4]);
                     setdata(mediaFiles);
                     setdisplay_modal(true);
                   }}
                 >
-                  <span className="text-white text-[3vw] neuem">
+                  <span className="text-white sm:text-[7vw] text-[3vw] neuem">
                     +{mediaFiles.length - 4}{" "}
                   </span>
                 </div>
@@ -142,7 +142,7 @@ const Image_upload = ({
           )}
           <label
             htmlFor="mediaInput"
-            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] sm:text-[4vw] sm:px-[6vw] sm:py-[3vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
+            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] sm:text-[4vw] sm:px-[13vw] sm:py-[3vw] sm:rounded-[3vw]  sm:mt-[5vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
           >
             Add Supporting images
           </label>

@@ -537,13 +537,13 @@ export default function Home() {
 
         {/* now this is for the search filter  */}
         <div
-          className="text-[black] text-opacity-[90%] hidden justify-center items-center sm:flex w-[38vw] gap-[2vw] text-[3vw] h-[10vw] bg-[#D2D1D3] rounded-[5vw] "
+          className="text-[black] text-opacity-[90%] hidden justify-center items-center sm:flex w-[45vw] gap-[2vw] text-[3vw] h-[10vw] bg-[#D2D1D3] rounded-[5vw] "
           onClick={() => {
             // setmobile_faction_active(true);
             setmobile_filter(true);
           }}
         >
-          <p className={`${inter.className}`}>Select categories</p>
+          <p className={`${inter.className}`}>Select forge category</p>
           <Image
             src={mob_filter}
             alt="filter icon"
