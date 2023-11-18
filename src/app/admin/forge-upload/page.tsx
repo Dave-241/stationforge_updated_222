@@ -510,9 +510,9 @@ export default function Home() {
   return (
     <>
       {page_loader && <Loader />}
-      <div className=" flex justify-between  z-[99] items-center h-[4vw] px-[3vw] w-full">
+      <div className=" flex justify-between  fixed top-0 border-opacity-[10%] backdrop-blur-[15px] z-[999] sm:h-[13vw] z-[99] items-center h-[4vw] px-[3vw] w-full">
         <button
-          className="text-[1.5vw] neuem "
+          className="text-[1.5vw] sm:text-[5vw] neuem "
           onClick={() => {
             router.back();
           }}
@@ -521,17 +521,20 @@ export default function Home() {
           <i className="bi bi-chevron-left"></i> Back
         </button>
 
-        <button className="text-[1.2vw] text-[#FF0000] neuer " onClick={reset}>
+        <button
+          className="text-[1.2vw] sm:text-[4vw] text-[#FF0000] neuer "
+          onClick={reset}
+        >
           {" "}
           <i className="bi bi-trash3"></i> Discard Post
         </button>
       </div>
-      <div className="w-full  h-[2vw]"></div>
+      <div className="w-full  h-[5vw] sm:h-[17vw]"></div>
       {showdash ? (
         <>
-          <div className="w-full px-[3vw] flex justify-between items-start ">
+          <div className="w-full px-[3vw] flex justify-between  sm:flex-col items-start ">
             {/* this is for the left section  */}
-            <div className="w-auto flex-col gap-[4vw] flex h-auto ">
+            <div className="w-auto sm:w-full flex-col gap-[4vw] sm:gap-[15vw] flex h-auto ">
               <Three_d
                 setzipfile_with_model={setzipfile_with_model}
                 setzipfile_only_png={setzipfile_only_png}
@@ -552,7 +555,7 @@ export default function Home() {
             </div>
 
             {/* this is for the right section  */}
-            <div className="w-auto flex-col gap-[4vw] flex h-auto ">
+            <div className="w-auto sm:w-full border2 flex-col gap-[4vw] flex h-auto ">
               <Option_select
                 options={options}
                 handleRadioChange={handleRadioChange}

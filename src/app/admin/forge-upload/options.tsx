@@ -4,7 +4,7 @@ const Option_select = ({ options, handleRadioChange, selectedOption }: any) => {
   return (
     <>
       {" "}
-      <div className="w-[30vw] z-[99] py-[2vw] px-[2vw] bg-white h-[30vw] rounded-[2vw]  flex flex-col justify-start ">
+      <div className="w-[30vw]  py-[2vw] px-[2vw] bg-white h-[30vw] rounded-[2vw]  flex flex-col justify-start ">
         <h2 className="text-[1.4vw] pb-[2vw] neuem">Who can see this post?</h2>
         <ul className=" flex flex-col gap-[2vw] ">
           {options.map((option: any, index: any) => (
