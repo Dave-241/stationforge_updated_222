@@ -67,7 +67,7 @@ const Image_upload = ({
   return (
     <>
       <div
-        className="w-[55vw] h-[22vw]   px-[3vw] flex flex-col gap-[1.4vw] justify-center items-center bg-white rounded-[2vw]"
+        className="w-[55vw] h-[22vw]  sm:rounded-[3vw] sm:w-full sm:h-[80vw]   px-[3vw] flex flex-col gap-[1.4vw] justify-center items-center bg-white rounded-[2vw]"
         onDrop={handleDrop}
         onDragOver={(e) => {
           e.preventDefault();
@@ -132,17 +132,17 @@ const Image_upload = ({
           </FadeInTransition>
         )}
 
-        <div className=" flex justify-center items-center flex-col gap-[1vw] ">
+        <div className=" flex justify-center sm:gap-[4vw] items-center flex-col gap-[1vw] ">
           {trimmedMediaFiles.length == 0 && (
             <Image
               src={cloud}
               alt="cloud upload image"
-              className="w-[10vw] h-fit"
+              className="w-[10vw] sm:w-[20vw] h-fit"
             />
           )}
           <label
             htmlFor="mediaInput"
-            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
+            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] sm:text-[4vw] sm:px-[6vw] sm:py-[3vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
           >
             Add Supporting images
           </label>
@@ -156,7 +156,7 @@ const Image_upload = ({
           />
 
           {trimmedMediaFiles.length == 0 && (
-            <p className="text-[1.2vw] text-center neuer w-[80%] ">
+            <p className="text-[1.2vw] text-center sm:text-[4vw] neuer w-[80%] ">
               Add supporting images for this product. The first image you upload
               will be used as the cover image.
             </p>

@@ -11,6 +11,7 @@ import JsonSearch from "search-array";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import { useRouter } from "next/navigation";
+import mob_filter from "../../../../public/admin_section/forge_upload/filter.webp";
 import { FadeInTransition } from "react-transitions-library";
 import success from "../../../../public/admin_section/post_upload/success.webp";
 import Link from "next/link";
@@ -44,6 +45,10 @@ import Option_select from "./options";
 import Text_upload from "./text";
 import JSZip from "jszip";
 import StartUpload from "./start_upload";
+import { Inter } from "next/font/google";
+import Mobile_Factions_forge_upload from "./mobile_factions";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [options, setoptions] = useState([
@@ -82,6 +87,7 @@ export default function Home() {
   const [selected_text, setselected_text] = useState("");
   const [selected_descrption, setselected_descrption] = useState("");
   const [isLoadingUploadModal, setisLoadingUploadModal] = useState(false);
+  const [mobile_filter, setmobile_filter] = useState(false);
   const [doneUploading, setdoneUploading] = useState(false);
   const [uploading_text, setuploading_text] = useState(
     "Uploading forge allocation",
@@ -510,7 +516,7 @@ export default function Home() {
   return (
     <>
       {page_loader && <Loader />}
-      <div className=" flex justify-between  fixed top-0 border-opacity-[10%] backdrop-blur-[15px] z-[999] sm:h-[13vw] z-[99] items-center h-[4vw] px-[3vw] w-full">
+      <div className=" flex justify-between  fixed top-0 border-opacity-[10%] backdrop-blur-[15px] z-[999] sm:h-[15vw]  items-center h-[4vw] px-[3vw] w-full">
         <button
           className="text-[1.5vw] sm:text-[5vw] neuem "
           onClick={() => {
@@ -522,19 +528,35 @@ export default function Home() {
         </button>
 
         <button
-          className="text-[1.2vw] sm:text-[4vw] text-[#FF0000] neuer "
+          className="text-[1.2vw] sm:hidden sm:text-[4vw] text-[#FF0000] neuer "
           onClick={reset}
         >
           {" "}
           <i className="bi bi-trash3"></i> Discard Post
         </button>
+
+        {/* now this is for the search filter  */}
+        <div
+          className="text-[black] text-opacity-[90%] hidden justify-center items-center sm:flex w-[38vw] gap-[2vw] text-[3vw] h-[10vw] bg-[#D2D1D3] rounded-[5vw] "
+          onClick={() => {
+            // setmobile_faction_active(true);
+            setmobile_filter(true);
+          }}
+        >
+          <p className={`${inter.className}`}>Select categories</p>
+          <Image
+            src={mob_filter}
+            alt="filter icon"
+            className="w-[3vw] h-fit opacity-[90%]"
+          />
+        </div>
       </div>
       <div className="w-full  h-[5vw] sm:h-[17vw]"></div>
       {showdash ? (
         <>
           <div className="w-full px-[3vw] flex justify-between  sm:flex-col items-start ">
             {/* this is for the left section  */}
-            <div className="w-auto sm:w-full flex-col gap-[4vw] sm:gap-[15vw] flex h-auto ">
+            <div className="w-auto sm:w-full flex-col gap-[4vw] sm:gap-[10vw] flex h-auto ">
               <Three_d
                 setzipfile_with_model={setzipfile_with_model}
                 setzipfile_only_png={setzipfile_only_png}
@@ -551,11 +573,12 @@ export default function Home() {
                 selected_text={selected_text}
                 selected_descrption={selected_descrption}
                 handleUpload={handleUpload}
+                reset={reset}
               />
             </div>
 
             {/* this is for the right section  */}
-            <div className="w-auto sm:w-full border2 flex-col gap-[4vw] flex h-auto ">
+            <div className="w-auto sm:w-full  flex-col gap-[4vw] flex h-auto ">
               <Option_select
                 options={options}
                 handleRadioChange={handleRadioChange}
@@ -573,6 +596,22 @@ export default function Home() {
                 selected_faction={selected_faction}
                 selected_sub_faction={selected_sub_faction}
               />
+
+              {mobile_filter && (
+                <Mobile_Factions_forge_upload
+                  faction_option={faction_option}
+                  active_faction={active_faction}
+                  setactive_faction={setactive_faction}
+                  sub_faction_arr={sub_faction_arr}
+                  active_sub_faction={active_sub_faction}
+                  setactive_sub_faction={setactive_sub_faction}
+                  setselected_faction={setselected_faction}
+                  setselected_sub_faction={setselected_sub_faction}
+                  selected_faction={selected_faction}
+                  selected_sub_faction={selected_sub_faction}
+                  setmobile_filter={setmobile_filter}
+                />
+              )}
             </div>
           </div>
 
@@ -588,6 +627,8 @@ export default function Home() {
           )}
         </>
       ) : null}
+
+      <div className="w-full h-[5vw] sm:h-[12vw]"></div>
     </>
   );
 }

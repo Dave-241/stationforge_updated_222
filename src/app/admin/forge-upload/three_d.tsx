@@ -77,7 +77,7 @@ const Three_d = ({ setzipfile_with_model, setzipfile_only_png }: any) => {
   return (
     <>
       <div
-        className="w-[55vw] sm:w-full sm:flex-col sm:h-[140vw] sm:px-[5vw] h-[22vw] sm:gap-[10vw]   px-[3vw] flex  gap-[1.4vw] justify-center items-center bg-white rounded-[2vw]"
+        className="w-[55vw] sm:rounded-[3vw] sm:w-full sm:flex-col sm:h-[140vw] sm:px-[5vw] h-[22vw] sm:gap-[10vw]   px-[3vw] flex  gap-[1.4vw] justify-center items-center bg-white rounded-[2vw]"
         style={{ backgroundColor: isDragOver ? "#CCFF00" : "" }}
       >
         <div className=" flex justify-center w-full sm:gap-[4vw]  items-center flex-col gap-[1vw] ">
