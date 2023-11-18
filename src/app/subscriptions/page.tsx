@@ -37,7 +37,7 @@ export default function Home() {
       <div className="w-full h-fit z-[99] sm:hidden  fixed top-[0.9vw] ">
         <Header />
       </div>
-      <Pay />
+      {/* <Pay /> */}
       <div className="w-full h-auto z-[99] sm:block px-[3vw]  hidden  fixed top-0 ">
         <Custom_subscription_Header />
       </div>
