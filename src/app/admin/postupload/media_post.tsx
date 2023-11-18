@@ -71,7 +71,7 @@ const Media_post = (props: any) => {
   return (
     <>
       <div
-        className="w-full h-[35vw] px-[5vw] flex flex-col gap-[1.5vw] justify-center items-center bg-white rounded-[2vw]"
+        className="w-full h-[35vw] sm:h-[100vw] sm:gap-[3vw] sm:rounded-[4vw]  px-[5vw] flex flex-col gap-[1.5vw] justify-center items-center bg-white rounded-[2vw]"
         onDrop={handleDrop}
         onDragOver={(e) => {
           e.preventDefault();
@@ -89,11 +89,11 @@ const Media_post = (props: any) => {
             in={true}
             style={{ width: "100%" }}
           >
-            <div className=" w-full h-[25vw] relative flex flex-wrap justify-center items-center gap-[0.4vw]">
+            <div className=" w-full h-[25vw] sm:h-[60vw] sm:gap-[2vw] relative flex flex-wrap justify-center items-center gap-[0.4vw]">
               {trimmedMediaFiles.map((file: any, index: any) => (
                 <div
                   key={index}
-                  className="overflow-hidden avater_bg rounded-[0.5vw] w-[48%]  h-[49%]"
+                  className="overflow-hidden avater_bg rounded-[0.5vw]  w-[48%]  h-[49%]"
                   //   style={{
                   //     backgroundImage: `url(${URL.createObjectURL(file)})`,
                   //   }}
@@ -139,14 +139,14 @@ const Media_post = (props: any) => {
               ))}
               {mediaFiles.length > 4 && (
                 <div
-                  className="rounded-[0.5vw] absolute bottom-0 right-[1.7%] bg-black bg-opacity-[90%] w-[48%] flex justify-center items-center  h-[49%] cursor-pointer"
+                  className="rounded-[0.5vw] sm:bottom-[-1vw] absolute bottom-0 right-[1.7%] bg-black bg-opacity-[90%] w-[48%] flex justify-center items-center  h-[49%] cursor-pointer"
                   onClick={() => {
                     setmaindata(mediaFiles[4]);
                     setdata(mediaFiles);
                     setdisplay_modal(true);
                   }}
                 >
-                  <span className="text-white text-[4vw] neuem">
+                  <span className="text-white sm:text-[8vw] text-[4vw] neuem">
                     +{mediaFiles.length - 4}{" "}
                   </span>
                 </div>
@@ -155,17 +155,17 @@ const Media_post = (props: any) => {
           </FadeInTransition>
         )}
 
-        <div className=" flex justify-center items-center flex-col gap-[2vw] ">
+        <div className=" flex justify-center sm:gap-[4vw] items-center flex-col gap-[2vw] ">
           {!isfilelaoded && (
             <Image
               src={cloud}
               alt="cloud upload image"
-              className="w-[15vw] h-fit"
+              className="w-[15vw] sm:w-[30vw] h-fit"
             />
           )}
           <label
             htmlFor="mediaInput"
-            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] neuer py-[1vw] px-[2vw] rounded-[1.2vw]"
+            className="cursor-pointer bg-[#F3F3F3] sm:py-[4vw] sm:px-[9vw] sm:rounded-[5vw] text-[#688200] text-[1vw] sm:text-[4vw] neuer py-[1vw] px-[2vw] rounded-[1.2vw]"
           >
             Add Media (Images & Videos)
           </label>
@@ -179,7 +179,7 @@ const Media_post = (props: any) => {
           />
 
           {!isfilelaoded && (
-            <p className="text-[1.2vw] text-center neuer w-[80%]">
+            <p className="text-[1.2vw] text-center neuer w-[80%] sm:w-full sm:text-[3.5vw]">
               Upload or simply drag and drop your media files. You can upload up
               to 20 media items, including both images and videos{" "}
             </p>

@@ -77,32 +77,32 @@ const Three_d = ({ setzipfile_with_model, setzipfile_only_png }: any) => {
   return (
     <>
       <div
-        className="w-[55vw] h-[22vw]   px-[3vw] flex  gap-[1.4vw] justify-center items-center bg-white rounded-[2vw]"
+        className="w-[55vw] sm:rounded-[3vw] sm:w-full sm:flex-col sm:h-[140vw] sm:px-[5vw] h-[22vw] sm:gap-[10vw]   px-[3vw] flex  gap-[1.4vw] justify-center items-center bg-white rounded-[2vw]"
         style={{ backgroundColor: isDragOver ? "#CCFF00" : "" }}
       >
-        <div className=" flex justify-center w-full items-center flex-col gap-[1vw] ">
+        <div className=" flex justify-center w-full sm:gap-[4vw]  items-center flex-col gap-[1vw] ">
           {!isfilelaoded && (
             <Image
               src={cloud}
               alt="cloud upload image"
-              className="w-[10vw] h-fit"
+              className="w-[10vw] sm:w-[20vw] h-fit"
             />
           )}
 
           {isfilelaoded && (
-            <p className="text-[7vw]  translate-y-[2.5vw] text-center neuer  ">
+            <p className="text-[7vw]  sm:text-[15vw] translate-y-[2.5vw] text-center neuer  ">
               <i className="bi bi-badge-3d-fill"></i>
             </p>
           )}
           {isfilelaoded && (
-            <p className="text-[1.2vw] text-center neuer  ">
+            <p className="text-[1.2vw] sm:text-[4vw] text-center neuer  ">
               <span className="text-[#688200]"> {filename}</span> file
               containing 3D models and images uploaded successfully.
             </p>
           )}
           <label
             htmlFor="Zipinput"
-            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
+            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] sm:text-[3.5vw] sm:py-[1vw] sm:px-[5vw] sm:rounded-[2vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
           >
             {isfilelaoded ? "  Relace zip file" : "  Add zip file"}
           </label>
@@ -115,36 +115,38 @@ const Three_d = ({ setzipfile_with_model, setzipfile_only_png }: any) => {
           />
 
           {!isfilelaoded && (
-            <p className="text-[1.2vw] text-center neuer  ">
+            <p className="text-[1.2vw] sm:text-[4vw] text-center neuer  ">
               Please upload a ZIP file containing your 3D models and PNG images.
             </p>
           )}
         </div>
 
+        {/* just some border lines  */}
+        <div className="w-full h-[0.5vw] sm:block hidden bg-black bg-opacity-[50%]"></div>
         {/* image wihthout model  */}
-        <div className=" flex justify-center w-full items-center flex-col gap-[1vw] ">
+        <div className=" flex justify-center w-full sm:gap-[4vw] items-center flex-col gap-[1vw] ">
           {!isfilelaoded_only_png && (
             <Image
               src={cloud}
               alt="cloud upload image"
-              className="w-[10vw] h-fit"
+              className="w-[10vw] sm:w-[20vw] h-fit"
             />
           )}
 
           {isfilelaoded_only_png && (
-            <p className="text-[7vw]  translate-y-[2vw] text-center neuer  ">
+            <p className="text-[7vw]  sm:text-[15vw] translate-y-[2vw] text-center neuer  ">
               <i className="bi bi-filetype-png"></i>
             </p>
           )}
           {isfilelaoded_only_png && (
-            <p className="text-[1.2vw] text-center neuer  ">
+            <p className="text-[1.2vw] sm:text-[4vw] text-center neuer  ">
               <span className="text-[#688200]"> {filename_only_png}</span> file
               containing 3D images uploaded successfully.
             </p>
           )}
           <label
             htmlFor="Zipinput_only_png"
-            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
+            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] sm:text-[3.5vw] sm:py-[1vw] sm:px-[5vw] sm:rounded-[2vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
           >
             {isfilelaoded_only_png ? "  Relace zip file" : "  Add zip file"}
           </label>
@@ -157,7 +159,7 @@ const Three_d = ({ setzipfile_with_model, setzipfile_only_png }: any) => {
           />
 
           {!isfilelaoded_only_png && (
-            <p className="text-[1.2vw] text-center neuer  ">
+            <p className="text-[1.2vw] sm:text-[4vw] text-center neuer  ">
               Please upload a ZIP file containing only your PNG images.
             </p>
           )}

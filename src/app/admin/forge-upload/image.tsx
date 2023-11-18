@@ -67,7 +67,7 @@ const Image_upload = ({
   return (
     <>
       <div
-        className="w-[55vw] h-[22vw]   px-[3vw] flex flex-col gap-[1.4vw] justify-center items-center bg-white rounded-[2vw]"
+        className="w-[55vw] h-[22vw]  sm:rounded-[3vw] sm:w-full sm:h-[80vw]   px-[3vw] flex flex-col gap-[1.4vw] justify-center items-center bg-white rounded-[2vw]"
         onDrop={handleDrop}
         onDragOver={(e) => {
           e.preventDefault();
@@ -90,7 +90,7 @@ const Image_upload = ({
               itemsAlign: "center",
             }}
           >
-            <div className=" w-[60%]  h-[15vw] relative flex flex-wrap justify-center  items-center gap-[0.4vw]">
+            <div className=" w-[60%] sm:w-[90%] sm:h-[50vw]  h-[15vw] relative flex flex-wrap justify-center  items-center gap-[0.4vw] sm:gap-[2vw]">
               {trimmedMediaFiles.map((file: any, index: any) => (
                 <div
                   key={index}
@@ -116,14 +116,14 @@ const Image_upload = ({
               ))}
               {mediaFiles.length > 4 && (
                 <div
-                  className="rounded-[0.5vw] absolute bottom-0 right-[1.7%] bg-black bg-opacity-[75%] w-[48%] flex justify-center items-center  h-[49%] cursor-pointer"
+                  className="rounded-[0.5vw] sm:bottom-[-1vw] sm:right-[1.2%] absolute bottom-0 right-[1.7%] bg-black bg-opacity-[75%] w-[48%] flex justify-center items-center  h-[49%] cursor-pointer"
                   onClick={() => {
                     setmaindata(mediaFiles[4]);
                     setdata(mediaFiles);
                     setdisplay_modal(true);
                   }}
                 >
-                  <span className="text-white text-[3vw] neuem">
+                  <span className="text-white sm:text-[7vw] text-[3vw] neuem">
                     +{mediaFiles.length - 4}{" "}
                   </span>
                 </div>
@@ -132,17 +132,17 @@ const Image_upload = ({
           </FadeInTransition>
         )}
 
-        <div className=" flex justify-center items-center flex-col gap-[1vw] ">
+        <div className=" flex justify-center sm:gap-[4vw] items-center flex-col gap-[1vw] ">
           {trimmedMediaFiles.length == 0 && (
             <Image
               src={cloud}
               alt="cloud upload image"
-              className="w-[10vw] h-fit"
+              className="w-[10vw] sm:w-[20vw] h-fit"
             />
           )}
           <label
             htmlFor="mediaInput"
-            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
+            className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] sm:text-[4vw] sm:px-[13vw] sm:py-[3vw] sm:rounded-[3vw]  sm:mt-[5vw] neuer py-[0.5vw] px-[2vw] rounded-[1.2vw]"
           >
             Add Supporting images
           </label>
@@ -156,7 +156,7 @@ const Image_upload = ({
           />
 
           {trimmedMediaFiles.length == 0 && (
-            <p className="text-[1.2vw] text-center neuer w-[80%] ">
+            <p className="text-[1.2vw] text-center sm:text-[4vw] neuer w-[80%] ">
               Add supporting images for this product. The first image you upload
               will be used as the cover image.
             </p>

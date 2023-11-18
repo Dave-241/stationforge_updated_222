@@ -18,6 +18,7 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  limit,
   onSnapshot,
   orderBy,
   query,
@@ -29,6 +30,8 @@ import Review from "./reviews";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Review_preloader from "./review_preloader";
 import Forge from "../general_components/forge";
+import Similar_models from "./similar_model";
+import Preloader_for_Similar_models_preloader from "./similar_model_preloader";
 
 export default function Home() {
   // Initialize Firebase
@@ -53,7 +56,9 @@ export default function Home() {
   const searchParams = useSearchParams();
 
   const product_id = searchParams.get("product_id");
+  const faction = searchParams.get("faction");
 
+  // the search param is above
   const [product_arr, setproduct_arr] = useState<any>({});
   const [product_images, setproduct_images] = useState([{}]);
   const [cover_img_link, setcover_img_link] = useState("");
@@ -63,14 +68,23 @@ export default function Home() {
   const [uuid, setuuid] = useState("");
   const [reviewsWithUserDetails, setReviewsWithUserDetails] = useState<any>([]);
   const [reviewisloading, setreviewisloading] = useState(true);
+  const [review_empty, setreview_empty] = useState(false);
   const [trimmedReviews, setTrimmedReviews] = useState<any>([]);
+
+  // for the similar models
+
+  const [similarArr, setsimilarArr] = useState<any>([]);
+  const [similarArrIsLoading, setsimilarArrIsLoading] = useState(true);
+  const [check_network, setcheck_network] = useState(false);
+  const [check_empty, setcheck_empty] = useState(false);
+
+  // this is for the gorge text . it is outside so we can monitor it form the similar model state
+  const [forge_text, setforge_text] = useState("Add to forge");
 
   // for the user step
   const [userSTep, setuserStep] = useState("");
   useEffect(() => {
     if (product_id) {
-      // Check if productId is not null or undefined
-      console.log(product_id);
       const docRef = doc(db, "products", product_id); // "products" is the collection, productId is the ID
       getDoc(docRef)
         .then((docSnap) => {
@@ -116,9 +130,7 @@ export default function Home() {
       .then((querySnapshot) => {
         // Process the querySnapshot to get image data
 
-        const imagesData = firstele.cover_png
-          ? [{ link: firstele.cover_png }]
-          : [{}];
+        const imagesData: any = [];
 
         // Add the rest of the images from the product_images collection to the array
         querySnapshot.forEach((doc) => {
@@ -182,9 +194,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // const colRef = collection(db, "reviews");
-    // const colQuery = query(colRef, orderBy("createdAt", "desc"));
-
     const colRef = collection(db, "reviews");
     const colQuery = query(
       colRef,
@@ -192,45 +201,125 @@ export default function Home() {
       orderBy("createdAt", "desc"),
     );
 
-    const unsubscribe = onSnapshot(colQuery, (reviewsSnapshot) => {
-      const userDetailsPromises = reviewsSnapshot.docs.map((reviewDoc) => {
-        const reviewData = reviewDoc.data();
-        const usersCollectionRef = collection(db, "users");
-        const userQuery = query(
-          usersCollectionRef,
-          where("userid", "==", reviewData.userId),
-        );
-        return getDocs(userQuery).then((userDocSnapshot) => {
-          if (!userDocSnapshot.empty) {
-            const userCommentInfo = userDocSnapshot.docs[0].data();
-            return {
-              avatar:
-                userCommentInfo.avatar_url &&
-                userCommentInfo.avatar_url.length > 2
-                  ? userCommentInfo.avatar_url
-                  : "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193",
-              name:
-                userCommentInfo.name && userCommentInfo.name.length > 1
-                  ? userCommentInfo.name
-                  : "User***** ",
-              text: reviewData.text,
-            };
-          }
-          return null; // Return null if the user is not found, we will filter out nulls later.
-        });
-      });
+    const unsubscribe = onSnapshot(
+      colQuery,
+      (reviewsSnapshot) => {
+        if (reviewsSnapshot.empty) {
+          setreview_empty(true);
+        } else {
+          setreview_empty(false);
+        }
 
-      // Wait for all promises to resolve and then update the state
-      Promise.all(userDetailsPromises).then((reviewsWithUsers) => {
-        const filteredReviewsWithUsers = reviewsWithUsers.filter(Boolean); // Filter out null values
-        setReviewsWithUserDetails(filteredReviewsWithUsers);
+        const userDetailsPromises = reviewsSnapshot.docs.map((reviewDoc) => {
+          const reviewData = reviewDoc.data();
+          const usersCollectionRef = collection(db, "users");
+          const userQuery = query(
+            usersCollectionRef,
+            where("userid", "==", reviewData.userId),
+          );
+
+          return getDocs(userQuery).then((userDocSnapshot) => {
+            if (!userDocSnapshot.empty) {
+              const userCommentInfo = userDocSnapshot.docs[0].data();
+              return {
+                avatar:
+                  userCommentInfo.avatar_url &&
+                  userCommentInfo.avatar_url.length > 2
+                    ? userCommentInfo.avatar_url
+                    : "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193",
+                name:
+                  userCommentInfo.name && userCommentInfo.name.length > 1
+                    ? userCommentInfo.name
+                    : "User***** ",
+                text: reviewData.text,
+              };
+            }
+            return null; // Return null if the user is not found, we will filter out nulls later.
+          });
+        });
+
+        Promise.all(userDetailsPromises)
+          .then((reviewsWithUsers) => {
+            const filteredReviewsWithUsers = reviewsWithUsers.filter(Boolean);
+            console.log("Data loaded successfully.");
+            setReviewsWithUserDetails(filteredReviewsWithUsers);
+          })
+          .catch((error) => {
+            console.error("Error loading data:", error);
+            // Handle the error, e.g., show an error message to the user
+          })
+          .finally(() => {
+            setreviewisloading(false);
+          });
+      },
+      (error) => {
+        console.error("Error in snapshot listener:", error);
+        // Handle the error, e.g., show an error message to the user
         setreviewisloading(false);
-      });
-    });
+      },
+    );
 
     // Clean up the listener on component unmount
     return () => unsubscribe();
-  }, [product_id]); // Depend on product_id if the reviews are specific to a product
+  }, [
+    product_id,
+    setreview_empty,
+    setreviewisloading,
+    setReviewsWithUserDetails,
+  ]);
+
+  useEffect(() => {
+    const fetchSimilarModels = async () => {
+      try {
+        const productsRef = collection(db, "products");
+        const productsQuery = query(
+          productsRef,
+          where("cover_png", "!=", product_arr.cover_png),
+          where("factions", "==", faction),
+        );
+
+        const productsSnapshot = await getDocs(productsQuery);
+
+        if (!productsSnapshot.empty) {
+          const allSimilarModels = productsSnapshot.docs.map((productDoc) => {
+            const { id } = productDoc;
+            const { title, factions, cover_png } = productDoc.data();
+            return {
+              title,
+              id,
+              cover_png,
+              factions,
+            };
+          });
+
+          // Shuffle the array to get a random order
+          const shuffledModels = allSimilarModels.sort(
+            () => Math.random() - 0.5,
+          );
+
+          // Take the first 4 elements from the shuffled array
+          const selectedModels = shuffledModels.slice(0, 4);
+
+          setsimilarArr(selectedModels);
+          setcheck_network(false);
+          setcheck_empty(false);
+        } else {
+          setcheck_network(true);
+          setcheck_empty(false);
+        }
+        setsimilarArrIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching similar models:", error);
+        setsimilarArrIsLoading(false);
+        setcheck_network(false);
+        setcheck_empty(true);
+      }
+    };
+
+    if (product_arr?.cover_png) {
+      fetchSimilarModels();
+    }
+  }, [db, product_id, product_arr, faction]);
 
   useEffect(() => {
     setTrimmedReviews(reviewsWithUserDetails.slice(0, 4));
@@ -273,11 +362,25 @@ export default function Home() {
             userSTep={userSTep}
             uuid={uuid}
             product_id={product_id}
+            forge_text={forge_text}
+            setforge_text={setforge_text}
           />
         ) : (
           <Showcase_preloader />
         )}
-        <div className="w-full h-[10vw] sm:h-[15vw] "></div>
+        <div className="w-full h-[7vw] sm:h-[12vw] "></div>
+        {!similarArrIsLoading ? (
+          <Similar_models
+            similarArr={similarArr}
+            check_empty={check_empty}
+            check_network={check_network}
+            setforge_text={setforge_text}
+          />
+        ) : (
+          <Preloader_for_Similar_models_preloader />
+        )}
+
+        <div className="w-full h-[5vw] sm:h-[5vw] "></div>
         {!reviewisloading ? (
           <Review
             disable={disable}
@@ -285,6 +388,7 @@ export default function Home() {
             setdisable={setdisable}
             sethackdisable={sethackdisable}
             trimmedReviews={trimmedReviews}
+            review_empty={review_empty}
             uuid={uuid}
             seeall_review={seeall_review}
             seeless_review={seeless_review}

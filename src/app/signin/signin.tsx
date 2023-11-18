@@ -202,7 +202,7 @@ export default function Signin_component() {
             birthday: "",
             country: "",
             description: "",
-            step: 0,
+            step: 1,
             subscription: "Public",
             name: "",
             avatar_url:
@@ -256,8 +256,8 @@ export default function Signin_component() {
               placeholder="Username"
               autoComplete="name"
               onChange={(e) => {
-                setname(e.target.value);
-                handleUsernameChange(e.target.value);
+                setname(e.target.value.toLowerCase());
+                handleUsernameChange(e.target.value.toLowerCase());
                 seterrfirebase("");
               }}
             />
@@ -273,7 +273,7 @@ export default function Signin_component() {
               placeholder="Gmail"
               autoComplete="email"
               onChange={(e) => {
-                setemail(e.target.value);
+                setemail(e.target.value.toLowerCase());
                 seterrfirebase("");
               }}
             />

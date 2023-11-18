@@ -231,7 +231,7 @@ export default function Login_component() {
               placeholder="Username"
               autoComplete="name"
               onChange={(e) => {
-                setname(e.target.value);
+                setname(e.target.value.toLowerCase());
               }}
             />
             {/* Error message for username */}

@@ -14,7 +14,7 @@ const Factions_forge_upload = ({
 }: any) => {
   return (
     <>
-      <div className="w-[30vw]  h-auto flex flex-col gap-[1.2vw] ">
+      <div className="w-[30vw] sm:hidden h-auto flex flex-col gap-[1.2vw] ">
         <h3 className="text-[1.2vw] neuem">Select Forge category</h3>
 
         <div className="w-full h-auto rounded-[2.2vw] py-[2vw] px-[2vw]  bg-white flex flex-col gap-[2vw]">

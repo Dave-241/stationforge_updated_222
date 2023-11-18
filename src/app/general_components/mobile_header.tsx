@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useProfile_Context } from "../utils/profile_context";
+import chat from "../../../public/mobile_header/chat.webp";
+import libary from "../../../public/mobile_header/libary.webp";
+import logout from "../../../public/mobile_header/logout.webp";
+import profile from "../../../public/mobile_header/profile.webp";
+import Image from "next/image";
+import firebaseConfig from "../utils/fire_base_config";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
 const Mobile_header = ({
   setmobile_bg_changer,
@@ -15,7 +23,10 @@ const Mobile_header = ({
   const pathname = usePathname();
   const route = useRouter();
 
+  const [admin_loggedin, setadmin_loggedin] = useState(false);
+
   //   profile context
+
   const {
     toggleDropdown,
     downloadProgress,
@@ -25,11 +36,48 @@ const Mobile_header = ({
     setshow_setting_modal,
   }: any = useProfile_Context();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is authenticated, redirect to a protected route
+
+        user.getIdTokenResult().then((idTokenResult) => {
+          const isAdmin = idTokenResult.claims.admin === true;
+          if (isAdmin) {
+            setadmin_loggedin(true);
+          } else {
+            setadmin_loggedin(false);
+          }
+        });
+      } else {
+        setadmin_loggedin(false);
+        // User is not authenticated, you can keep them on the current page or redirect them to a login page
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  initializeApp(firebaseConfig);
+
+  // init authentication
+  const auth = getAuth();
+  const [profile_comeup, setprofile_comeup] = useState(false);
   const hide_mob_header = () => {
-    setcomedown(false);
-    setTimeout(() => {
-      setmobile_bg_changer(false);
-    }, 800);
+    setprofile_comeup(false);
+    if (profile_comeup) {
+      setcomedown(false);
+      setTimeout(() => {
+        setmobile_bg_changer(false);
+      }, 900);
+    } else if (!profile_comeup) {
+      setcomedown(false);
+      setTimeout(() => {
+        setmobile_bg_changer(false);
+      }, 800);
+    }
   };
 
   // Prevent click inside the modal content from closing the modal
@@ -52,6 +100,12 @@ const Mobile_header = ({
     setcomedown(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handlelogout = () => {
+    signOut(auth).then(() => {
+      setprofile_comeup(false);
+    });
+  };
   return (
     <>
       <div
@@ -59,9 +113,15 @@ const Mobile_header = ({
         onClick={hide_mob_header}
       >
         <div
-          className={`w-full h-[100vw]  bg-[#181818] rounded-[6vw]  ${
-            comedown ? "translate-y-[0vw]" : "translate-y-[-100vw]"
-          } flex flex-col justify-end pb-[13vw] gap-[6vw]`}
+          className={`w-full ${
+            !profile_comeup ? " h-[100vw]" : "h-[155vw] "
+          }   bg-[#181818] rounded-[6vw]  ${
+            comedown
+              ? "translate-y-[0vw]"
+              : profile_comeup
+              ? "translate-y-[-180vw]"
+              : "translate-y-[-100vw]"
+          } flex flex-col justify-start pt-[30vw] pb-[10vw] gap-[6vw]`}
           style={{ transition: "1.5s ease" }}
           onClick={modalClick}
         >
@@ -92,6 +152,21 @@ const Mobile_header = ({
                 </>
               );
             })}
+
+            {/* this is specially for dashborad  */}
+            {admin_loggedin && (
+              <Link
+                onClick={() => {
+                  setpage_loader(true);
+                }}
+                href={"/admin/dashboard"}
+                className={` border-[0.3vw] flex justify-center items-center text-[3.1vw] h-[10vw] capitalize rounded-[4vw] border-white border-opacity-[40%] text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] w-[28vw] mb-[3vw] text-white
+              `}
+                style={{ transition: "1s ease" }}
+              >
+                Admin dash
+              </Link>
+            )}
           </div>
           <div className="w-full h-[0.1vw] bg-opacity-[23%] sm:h-[0.35vw] sm:w-[90vw] sm:mx-auto bg-[#D9D9D9] "></div>{" "}
           {/* this is for the login and sign up section */}
@@ -130,14 +205,96 @@ const Mobile_header = ({
                 </Link>
               </>
             ) : (
-              <button
-                onClick={() => {
-                  setshow_setting_modal(true);
-                }}
-                className="w-full neuer flex justify-center items-center text-[4vw] bg-white rounded-[3vw] h-[14vw] hover:bg-opacity-[80%] transition duration-[0.3s]"
-              >
-                Profile
-              </button>
+              <>
+                {/* <button
+                  onClick={() => {
+                    setshow_setting_modal(true);
+                  }}
+                  className="w-full neuer flex justify-center items-center text-[4vw] bg-white rounded-[3vw] h-[14vw] hover:bg-opacity-[80%] transition duration-[0.3s]"
+                >
+                  Profile
+                </button> */}
+
+                <div
+                  className={`bg-white w-full    px-[5vw] overflow-hidden flex flex-col ${
+                    !profile_comeup ? "h-[14vw]" : "h-[70vw] "
+                  }  ${!profile_comeup ? "rounded-[3vw]" : "rounded-[8vw] "}`}
+                  style={{ transition: "1.5s ease" }}
+                >
+                  {/* this is the option that sticks  */}
+                  <div
+                    className="w-full h-[14vw]  neuer text-[4vw] gap-[3vw] flex justify-center items-center"
+                    onClick={() => {
+                      setprofile_comeup(!profile_comeup);
+                    }}
+                  >
+                    {!profile_comeup ? "Profile" : "Close "}
+                    <i
+                      className={`bi ${
+                        !profile_comeup ? "bi-chevron-down " : "bi-chevron-up"
+                      }  `}
+                    ></i>
+                  </div>
+                  <div
+                    className={`w-full  ${
+                      profile_comeup ? "h-[55vw] " : "h-[0vw] "
+                    }  overflow-hidden  flex flex-col  gap-[3.2vw]`}
+                    style={{ transition: "1.5s ease" }}
+                  >
+                    {/* this is for the row elements */}
+                    <div
+                      className="w-full py-[0vw] pt-[3vw]  justify-start items-center flex gap-[4vw]"
+                      onClick={() => {
+                        setshow_setting_modal(true);
+                      }}
+                    >
+                      <Image
+                        src={profile}
+                        alt="profile img"
+                        className="h-fit w-[5vw]"
+                      />
+                      <p className="neuem text-[4vw] ">Profile</p>
+                    </div>
+
+                    <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
+                    {/* this is for the row elements */}
+                    <div className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]">
+                      <Image
+                        src={chat}
+                        alt="profile img"
+                        className="h-fit w-[5vw]"
+                      />
+                      <p className="neuem text-[4vw] ">Talk to us</p>
+                    </div>
+                    <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
+
+                    <Link
+                      href={"/libary"}
+                      className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]"
+                    >
+                      <Image
+                        src={libary}
+                        alt="profile img"
+                        className="h-fit w-[5vw]"
+                      />
+                      <p className="neuem text-[4vw] ">Library</p>
+                    </Link>
+                    <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
+
+                    <div
+                      className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]"
+                      onClick={handlelogout}
+                    >
+                      <Image
+                        src={logout}
+                        alt="profile img"
+                        className="h-fit w-[5vw]"
+                      />
+                      <p className="neuem text-[4vw] ">Logout</p>
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </div>

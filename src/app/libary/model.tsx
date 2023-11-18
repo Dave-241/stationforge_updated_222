@@ -267,7 +267,10 @@ const Models_in_libary = (props: any) => {
                   //   scroll={true}
                   className="w-[19.7vw] sm:w-[45.5vw]  sm:gap-[3.5vw] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
                 >
-                  <div className="w-full sm:h-[45vw]  avater_bg h-[20vw] overflow-hidden">
+                  <div
+                    className="w-full sm:h-[45vw]  avater_bg h-[20vw] overflow-hidden"
+                    style={{ backgroundImage: "url(/cover.webp)" }}
+                  >
                     <Image
                       src={e.coverImage}
                       alt={e.title}

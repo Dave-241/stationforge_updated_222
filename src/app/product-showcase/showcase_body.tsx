@@ -31,6 +31,8 @@ const Showcase_body = (props: any) => {
     userSTep,
     uuid,
     product_id,
+    forge_text,
+    setforge_text,
   } = props;
   //   const [items, setitems] = useState(["", "", "", "", "", "", ""]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -38,7 +40,6 @@ const Showcase_body = (props: any) => {
   const { page_loader, setpage_loader }: any = useProfile_Context();
   const router = useRouter();
   const [forgeerr, setforgeerr] = useState("");
-  const [forge_text, setforge_text] = useState("Add to forge");
   const [addForge_modal, setaddForge_modal] = useState(false);
   const [already_exist, setalready_exist] = useState(false);
   const [forgeTitle, setforgeTitle] = useState("");
@@ -63,6 +64,7 @@ const Showcase_body = (props: any) => {
   };
 
   const handleAddToForge = () => {
+    console.log(userSTep, product_arr.role);
     if (disable) {
       setpage_loader(true);
       setforgeerr("");
@@ -159,7 +161,10 @@ const Showcase_body = (props: any) => {
 
           <div className="w-[39vw] sm:w-full overflow-hidden  sm:rounded-[5vw] border-[white] border-[0.15vw] sm:border-[0.5vw] sm:h-[140vw] border-opacity-[31%] rounded-[2vw] flex flex-col h-[57vw]">
             {/* main image */}
-            <div className="w-full h-[68%] sm:h-[70%]  overflow-hidden">
+            <div
+              className="w-full h-[68%] sm:h-[70%] avater_bg overflow-hidden"
+              style={{ backgroundImage: "url(/cover.webp)" }}
+            >
               <Image
                 src={cover_img_link}
                 unoptimized
@@ -210,8 +215,9 @@ const Showcase_body = (props: any) => {
                   return (
                     <>
                       <div
-                        className="w-[10vw] sm:w-[20vw] sm:h-[20vw] h-[10vw]"
+                        className={`w-[10vw] cursor-pointer sm:w-[20vw]  avater_bg sm:h-[20vw] h-[10vw]`}
                         key={index}
+                        style={{ backgroundImage: "url(/cover.webp)" }}
                         onClick={() => {
                           setcover_img_link(e.link);
                         }}
@@ -223,7 +229,11 @@ const Showcase_body = (props: any) => {
                           width="0"
                           height="0"
                           alt="product cover images"
-                          className="w-full h-full"
+                          className={`${
+                            e.link == cover_img_link
+                              ? "border-[0.5vw] sm:border-[1vw] border-[#CCFF00]"
+                              : ""
+                          } w-full h-full`}
                         />
                       </div>
 

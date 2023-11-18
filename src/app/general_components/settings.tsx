@@ -236,13 +236,13 @@ const Settings_modal = () => {
           setUser_name(name);
           setUser_subscription(() => {
             switch (step) {
-              case 0:
-                return "Public";
               case 1:
-                return "Subscribers";
+                return "Public";
               case 2:
-                return "Standard Tier Subscribers";
+                return "Subscribers";
               case 3:
+                return "Standard Tier Subscribers";
+              case 4:
                 return "Merchant Tier Subscribers";
               default:
                 return "Unknown Subscription";
