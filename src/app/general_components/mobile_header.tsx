@@ -10,7 +10,7 @@ import logout from "../../../public/mobile_header/logout.webp";
 import profile from "../../../public/mobile_header/profile.webp";
 import Image from "next/image";
 import firebaseConfig from "../utils/fire_base_config";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 const Mobile_header = ({
@@ -23,7 +23,10 @@ const Mobile_header = ({
   const pathname = usePathname();
   const route = useRouter();
 
+  const [admin_loggedin, setadmin_loggedin] = useState(false);
+
   //   profile context
+
   const {
     toggleDropdown,
     downloadProgress,
@@ -32,6 +35,30 @@ const Mobile_header = ({
     hide_download,
     setshow_setting_modal,
   }: any = useProfile_Context();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is authenticated, redirect to a protected route
+
+        user.getIdTokenResult().then((idTokenResult) => {
+          const isAdmin = idTokenResult.claims.admin === true;
+          if (isAdmin) {
+            setadmin_loggedin(true);
+          } else {
+            setadmin_loggedin(false);
+          }
+        });
+      } else {
+        setadmin_loggedin(false);
+        // User is not authenticated, you can keep them on the current page or redirect them to a login page
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   initializeApp(firebaseConfig);
 
@@ -125,6 +152,21 @@ const Mobile_header = ({
                 </>
               );
             })}
+
+            {/* this is specially for dashborad  */}
+            {admin_loggedin && (
+              <Link
+                onClick={() => {
+                  setpage_loader(true);
+                }}
+                href={"/admin/dashboard"}
+                className={` border-[0.3vw] flex justify-center items-center text-[3.1vw] h-[10vw] capitalize rounded-[4vw] border-white border-opacity-[40%] text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] w-[28vw] mb-[3vw] text-white
+              `}
+                style={{ transition: "1s ease" }}
+              >
+                Admin dash
+              </Link>
+            )}
           </div>
           <div className="w-full h-[0.1vw] bg-opacity-[23%] sm:h-[0.35vw] sm:w-[90vw] sm:mx-auto bg-[#D9D9D9] "></div>{" "}
           {/* this is for the login and sign up section */}
