@@ -25,6 +25,7 @@ import Forge from "./general_components/forge";
 import Product_preloader from "./homepage_components/right_preloader";
 import Fractions_preloader from "./homepage_components/left_preloader";
 import Mobile_factions from "./homepage_components/mobile_factions";
+import Chats_modal from "./general_components/chat";
 
 export default function Home() {
   const app = initializeApp(firebaseConfig);
@@ -48,6 +49,8 @@ export default function Home() {
     page_loader,
     setpage_loader,
     forge_loader,
+    show_chat_modal,
+    setshow_chat_modal,
   }: any = useProfile_Context();
 
   const [mobile_faction_active, setmobile_faction_active] = useState(false);
@@ -77,7 +80,6 @@ export default function Home() {
 
     if (active_faction == null) {
       setcopy_products(products);
-      console.log("full");
       return;
     }
 
@@ -189,6 +191,7 @@ export default function Home() {
 
       <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
+      <Chats_modal />
       {mobile_faction_active && (
         <div className="w-full h-full sm:block hidden relative">
           <Mobile_factions

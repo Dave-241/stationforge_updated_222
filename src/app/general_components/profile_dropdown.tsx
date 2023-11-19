@@ -22,8 +22,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Profile_dropdown = () => {
-  const { show, setshow, setshow_setting_modal, setpage_loader }: any =
-    useProfile_Context();
+  const {
+    show,
+    setshow,
+    setshow_setting_modal,
+    setpage_loader,
+    show_chat_modal,
+    setshow_chat_modal,
+  }: any = useProfile_Context();
   //   const [opacity, setopacity] = useState(0);
   const ref = useRef<any>(null);
 
@@ -77,7 +83,12 @@ const Profile_dropdown = () => {
           >
             <div className="bg-white h-full w-full rounded-[1vw] flex flex-col">
               <div className="border-b-[lightgrey] border-b items-end flex pb-[0.5vw] px-[1vw] h-[28%]">
-                <button className="neuer text-[1vw] hover:text-[lightgrey] font-[600]">
+                <button
+                  className="neuer text-[1vw] hover:text-[lightgrey] font-[600]"
+                  onClick={() => {
+                    setshow_chat_modal(true);
+                  }}
+                >
                   {" "}
                   <i className="bi pr-[0.6vw] font-[900] bi-chat-dots"></i> Talk
                   to us

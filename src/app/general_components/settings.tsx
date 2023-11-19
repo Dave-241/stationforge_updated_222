@@ -127,10 +127,11 @@ const Settings_modal = () => {
   // Use useEffect to check if the user is already authenticated
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+      if (user) {
         // User is authenticated, redirect to a protected route
-        router.push("/login"); // Replace with your protected route
+        // Replace with your protected route
       } else {
+        router.push("/login");
         // User is not authenticated, you can keep them on the current page or redirect them to a login page
       }
     });

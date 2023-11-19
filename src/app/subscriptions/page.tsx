@@ -13,6 +13,7 @@ import Post_wrap from "./post_wrap";
 import Forge from "../general_components/forge";
 import Pay from "./pay";
 import Custom_subscription_Header from "../general_components/custom_header_subscription";
+import Chats_modal from "../general_components/chat";
 
 export default function Home() {
   const {
@@ -44,6 +45,7 @@ export default function Home() {
 
       <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
+      <Chats_modal />
 
       <Subscription_Hero />
       <FadeInTransition

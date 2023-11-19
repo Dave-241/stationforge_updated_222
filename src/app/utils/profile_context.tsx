@@ -3,16 +3,20 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
+  addDoc,
   collection,
   doc,
   getDocs,
   getFirestore,
   query,
+  serverTimestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 import firebaseConfig from "./fire_base_config";
+
+// Initialize the data base connection
 
 const Profile_Context = createContext({});
 
@@ -22,6 +26,7 @@ export const Profile_Context_Dropdown = (props: any) => {
   const [forge_loader, setforge_loader] = useState(false);
   const [hide_download, sethide_download] = useState(true);
   const [loggedIn_id, setloggedIn_id] = useState("");
+  const [show_chat_modal, setshow_chat_modal] = useState(false);
   const [from, setfrom] = useState("");
 
   const [downloadProgress, setdownloadProgress] = useState("");
@@ -148,6 +153,24 @@ export const Profile_Context_Dropdown = (props: any) => {
 
   // this is for the settings context
   const [show_setting_modal, setshow_setting_modal] = useState(false);
+
+  // lets handle the chat system here
+  const [sess_id, setsess_id] = useState("");
+  const session_ref = collection(db, "chat_sessions");
+  const create_chat_session = (user_id: any) => {
+    addDoc(session_ref, {
+      createdAt: serverTimestamp(),
+      joined: false,
+      session_ongoing: true,
+      user_id: user_id,
+    })
+      .then((res) => {
+        console.log(res.id);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
   return (
     <Profile_Context.Provider
       value={{
@@ -166,6 +189,10 @@ export const Profile_Context_Dropdown = (props: any) => {
         downloadProgress,
         download_product_id,
         hide_download,
+        show_chat_modal,
+        setshow_chat_modal,
+        create_chat_session,
+        sess_id,
       }}
     >
       {children}
