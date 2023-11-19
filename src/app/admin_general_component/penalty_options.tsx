@@ -2,9 +2,12 @@
 
 import Penalty_kickout from "./penalty_kickout";
 import React, { useState } from "react";
+import Reduce_forge_options from "./reduce_forge_options";
 
-const Penalty_options = ({ sethide_penalty_options }: any) => {
+const Penalty_options = ({ sethide_penalty_options, user_doc_id }: any) => {
   const [hide_penalty_kickout, sethide_penalty_kickout] = useState(true);
+  const [hide_limit_forge_options, sethide_limit_forge_options] =
+    useState(true);
   return (
     <>
       <div
@@ -32,7 +35,12 @@ const Penalty_options = ({ sethide_penalty_options }: any) => {
             >
               Kick out of platform
             </button>
-            <button className="h-[3.5vw] sm:h-[13vw] sm:text-[3.5vw] w-full bg-[#CCFF00] neuer text-black hover:bg-opacity-[80%] text-[0.9vw] rounded-[1vw] sm:rounded-[3vw]">
+            <button
+              className="h-[3.5vw] sm:h-[13vw] sm:text-[3.5vw] w-full bg-[#CCFF00] neuer text-black hover:bg-opacity-[80%] text-[0.9vw] rounded-[1vw] sm:rounded-[3vw]"
+              onClick={() => {
+                sethide_limit_forge_options(false);
+              }}
+            >
               Limit forge allocation
             </button>
           </div>
@@ -40,7 +48,17 @@ const Penalty_options = ({ sethide_penalty_options }: any) => {
       </div>
 
       {!hide_penalty_kickout && (
-        <Penalty_kickout sethide_penalty_kickout={sethide_penalty_kickout} />
+        <Penalty_kickout
+          user_doc_id={user_doc_id}
+          sethide_penalty_kickout={sethide_penalty_kickout}
+        />
+      )}
+
+      {!hide_limit_forge_options && (
+        <Reduce_forge_options
+          user_doc_id={user_doc_id}
+          sethide_limit_forge_options={sethide_limit_forge_options}
+        />
       )}
     </>
   );

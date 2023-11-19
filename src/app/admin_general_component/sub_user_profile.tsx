@@ -32,7 +32,7 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
   const [lastdownload_time, setlastdownload_time] = useState<any>("");
   const [download_libary_arr, setdownload_libary_arr] = useState<any>([]);
   const [profile_data, setprofile_data] = useState<any>({});
-
+  const [user_doc_id, setuser_doc_id] = useState("");
   const app = initializeApp(firebaseConfig);
 
   // Initialize Firestore
@@ -47,7 +47,7 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
           where("userid", "==", uuid),
         );
         const usersSnapshot = await getDocs(usersQuery);
-
+        setuser_doc_id(usersSnapshot.docs[0].id);
         const userData = usersSnapshot.docs.map((doc) => doc.data());
 
         // Assuming setprofile_data and setrole are state-setting functions
@@ -148,8 +148,16 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
   }, [uuid]); // Include uuid as a dependency to refetch data if it changes
   return (
     <>
-      <div className="w-full h-full sm:px-[3vw] bg-opacity-[70%] z-[999] bg-black fixed top-0 left-0 flex justify-center items-center">
-        <div className="w-[45vw] sm:w-full sm:h-[120vw] sm:gap-[4vw] h-[40vw] max-h-[96vh] gap-[2vw] bg-white sm:rounded-[5vw] rounded-[3vw] flex flex-col px-[2vw] items-center justify-center">
+      <div
+        className="w-full h-full sm:px-[3vw] bg-opacity-[70%] z-[999] bg-black fixed top-0 left-0 flex justify-center items-center"
+        onClick={hide_modal}
+      >
+        <div
+          className="w-[45vw] sm:w-full sm:h-[120vw] sm:gap-[4vw] h-[40vw] max-h-[96vh] gap-[2vw] bg-white sm:rounded-[5vw] rounded-[3vw] flex flex-col px-[2vw] items-center justify-center"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           {/* the first section */}
 
           <div className="w-full h-auto flex flex-col sm:gap-[3vw]  gap-[0.75vw]   justify-center  items-center ">
@@ -322,7 +330,10 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
         </div>
       </div>
       {!hide_penalty_options && (
-        <Penalty_options sethide_penalty_options={sethide_penalty_options} />
+        <Penalty_options
+          user_doc_id={user_doc_id}
+          sethide_penalty_options={sethide_penalty_options}
+        />
       )}
     </>
   );

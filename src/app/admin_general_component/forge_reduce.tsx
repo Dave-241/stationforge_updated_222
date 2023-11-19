@@ -1,34 +1,51 @@
 "use client";
 
 import { initializeApp } from "firebase/app";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import firebaseConfig from "../utils/fire_base_config";
-import { collection, deleteDoc, doc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
 
-const Penalty_kickout = ({ sethide_penalty_kickout, user_doc_id }: any) => {
+const Forge_Reduction_Confirmation = ({
+  sethide_forge_reduction_confirmation,
+  user_doc_id,
+  selected_option,
+}: any) => {
   const router = useRouter();
 
   const app = initializeApp(firebaseConfig);
 
   // Initialize Firestore
   const db = getFirestore(app);
-  const deleteuser = () => {
+  const [button_text, setbutton_text] = useState("Yes");
+  const update_forge_allocation = () => {
     const user_ref = doc(db, "users", user_doc_id);
-    deleteDoc(user_ref)
+    updateDoc(user_ref, {
+      allocations: selected_option,
+    })
       .then(() => {
-        window?.location?.reload();
+        setbutton_text("Updated Successfully");
+
+        setTimeout(() => {
+          setbutton_text("Yes");
+        }, 5000);
       })
       .catch((err) => {
         console.log("Error deleting user" + err);
       });
-    // router.replace();
   };
   return (
     <>
       <div
         className="w-full h-full sm:px-[5vw] bg-black bg-opacity-[80%] fixed top-0 left-0 z-[999] flex justify-center items-center"
         onClick={() => {
-          sethide_penalty_kickout(true);
+          sethide_forge_reduction_confirmation(true);
         }}
       >
         <div
@@ -38,22 +55,22 @@ const Penalty_kickout = ({ sethide_penalty_kickout, user_doc_id }: any) => {
           }}
         >
           <h1 className="text-[1.2vw] sm:text-[4.5vw] text-center neuem">
-            Are you sure you want to <br /> kick this user out
+            Are you sure you want to Limit <br /> this users allocation to 20
           </h1>
 
           <div className="w-full flex justify-between gap-[1.5vw] items-center">
             <button
               className="h-[3.5vw] sm:h-[13vw] sm:text-[3.5vw] w-full bg-[#FF0000] neuer text-white hover:bg-opacity-[80%] text-[0.9vw] rounded-[1vw] sm:rounded-[3vw]"
               onClick={() => {
-                deleteuser();
+                update_forge_allocation();
               }}
             >
-              Kick out
+              {button_text}
             </button>
             <button
               className="h-[3.5vw] sm:h-[13vw] sm:text-[3.5vw] w-full bg-[#CCFF00] neuer text-black hover:bg-opacity-[80%] text-[0.9vw] rounded-[1vw] sm:rounded-[3vw]"
               onClick={() => {
-                sethide_penalty_kickout(true);
+                sethide_forge_reduction_confirmation(true);
               }}
             >
               Cancel
@@ -65,4 +82,4 @@ const Penalty_kickout = ({ sethide_penalty_kickout, user_doc_id }: any) => {
   );
 };
 
-export default Penalty_kickout;
+export default Forge_Reduction_Confirmation;
