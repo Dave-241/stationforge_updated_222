@@ -13,11 +13,30 @@ import {
   where,
 } from "firebase/firestore";
 import Sub_user_profile from "@/app/admin_general_component/sub_user_profile";
+import Subscription_statistics from "./sub_statistics";
 const Subscribers_wrap = () => {
   const items = ["", "", "", ""];
-
+  const subscribe_filter = [
+    {
+      step: 0,
+      msg: "Users",
+    },
+    {
+      step: 3,
+      msg: "Standard ",
+    },
+    {
+      step: 4,
+      msg: "Merchant ",
+    },
+  ];
   const [allusers, setallusers] = useState<any>([]);
+  const [allusers_copy, setallusers_copy] = useState<any>([]);
   const [hideProfile, sethideProfile] = useState(true);
+  const [selected_filer, setselected_filer] = useState(0);
+  const [subscriber_stats, setsubscriber_stats] = useState({});
+  const [subscriber_stats_is_loading, setsubscriber_stats_is_loading] =
+    useState(true);
   const [uuid, setuuid] = useState("");
   const app = initializeApp(firebaseConfig);
 
@@ -38,6 +57,7 @@ const Subscribers_wrap = () => {
           const avater = data.avatar_url;
           const username = data.Username;
           const name = data.name;
+          const step = data.step;
           const createdAt = data.createdAt;
           const timestampFromFirebase = new Date(createdAt.toMillis()); // Convert to JavaScript Date object
 
@@ -61,6 +81,7 @@ const Subscribers_wrap = () => {
                 name,
                 formattedDate,
                 libraryData,
+                step,
               };
             },
           );
@@ -74,6 +95,7 @@ const Subscribers_wrap = () => {
         // Step 4: Log the results
         // console.log("Results:", results);
         setallusers(results);
+        setallusers_copy(results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -82,19 +104,90 @@ const Subscribers_wrap = () => {
     fetchData();
   }, []); // Empty dependency array means this effect runs once on mount
 
+  // useEffect to filter and log the desired results when allusers state changes
+  useEffect(() => {
+    const filterAndLogResults = () => {
+      if (!allusers || allusers.length === 0) {
+        console.log("No users to filter.");
+        return;
+      }
+
+      // Step 1: Filter users with step === 3
+      const step3Users = allusers.filter((user: any) => user.step === 3);
+
+      // Step 2: Filter users with step === 4
+      const step4Users = allusers.filter((user: any) => user.step === 4);
+
+      // Step 3: Create the final object
+      const resultObject = {
+        "Standard ": step3Users.length,
+        "Premium ": step4Users.length,
+      };
+
+      setsubscriber_stats(resultObject);
+      setsubscriber_stats_is_loading(false);
+      // Step 4: Log the final result
+    };
+
+    // Call the filterAndLogResults function when allusers state changes
+    filterAndLogResults();
+  }, [allusers]); // Include allusers as a dependency to trigger the effect when it changes
+
   const showuser_profile = (e: string) => {
     setuuid(e);
     sethideProfile(false);
     // sethideProfile(false);
+  };
+
+  const filter_subscribers = (e: number) => {
+    if (e == 0) {
+      setallusers_copy(allusers);
+    } else {
+      const filter_users = allusers.filter((user: any) => user.step === e);
+      setallusers_copy(filter_users);
+      console.log(e);
+    }
   };
   return (
     <>
       {!hideProfile && (
         <Sub_user_profile uuid={uuid} sethideProfile={sethideProfile} />
       )}
+      <Subscription_statistics
+        subscriber_stats={subscriber_stats}
+        subscriber_stats_is_loading={subscriber_stats_is_loading}
+      />
 
-      <div className="w-full sm:overflow-x-scroll sm:py-[8vw]  sm:rounded-[4vw]  py-[3vw] px-[1.5vw]   rounded-[2vw] bg-white flex-col">
-        <div className="w-full sm:w-[250vw]  sm:gap-[5vw] flex-col  flex gap-[1.3vw]">
+      <div className="w-full sm:overflow-x-scroll sm:pb-[8vw] sm:pt-[5vw]  sm:rounded-[4vw] pt-[1vw]  pb-[3vw] px-[1.5vw]   rounded-[2vw] bg-white flex-col">
+        {/* this is for the mini header on here */}
+        <div className="w-full sm:flex-col sm:gap-[3vw] sm:items-start pt-[1vw] pb-[2vw] h-auto gap-[1.5vw] flex justify-start items-center">
+          <h1 className="neuem text-[1.6vw] sm:text-[5vw] ">
+            ALL USERS & SUBSCRIBERS
+          </h1>
+          <div className="w-auto flex gap-[0.6vw] sm:gap[1vw] sm:px-[2vw] sm:py-[2vw] px-[0.6vw] py-[0.2vw] border-[0.1vw]  border-black border-opacity-[50%] rounded-[0.7vw]">
+            {subscribe_filter.map((e: any, index: any) => {
+              return (
+                <button
+                  key={index}
+                  className="neuer sm:text-[3.5vw] sm:h-[8vw] sm:w-[20vw] text-[1vw] h-[3vw] rounded-[0.7vw] w-[6vw]  text-black text-opacity-[50%]"
+                  style={{
+                    backgroundColor:
+                      e.step == selected_filer ? "#CCFF00" : "transparent",
+                    transition: "0.4s ease",
+                  }}
+                  onClick={() => {
+                    setselected_filer(e.step);
+                    filter_subscribers(e.step);
+                  }}
+                >
+                  {e.msg}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="w-full sm:w-[250vw] min-h-[30vw] sm:min-h-[80vw]  sm:gap-[5vw] flex-col  flex gap-[1.3vw]">
           <div className="w-full sm:py-[3vw]  flex justify-between items-center neuer py-[1vw] text-[1vw] sm:text-[3.2vw] font-[900]">
             <div className="w-[25%]  h-auto">Name</div>
             <div className="w-[20%]  h-auto">Join Date</div>
@@ -103,7 +196,7 @@ const Subscribers_wrap = () => {
             <div className="w-[15%]  h-auto">Days remaining for renewal </div>
           </div>
 
-          {allusers.map((e: any, index: any) => {
+          {allusers_copy.map((e: any, index: any) => {
             return (
               <>
                 <Each_subscriber
@@ -120,6 +213,8 @@ const Subscribers_wrap = () => {
           })}
         </div>
       </div>
+
+      <div className="w-full h-[2vw] sm:h-[10vw]"></div>
     </>
   );
 };
