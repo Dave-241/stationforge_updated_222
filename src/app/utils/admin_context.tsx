@@ -1,6 +1,19 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import firebaseConfig from "./fire_base_config";
+
 
 const Admin_context = createContext({});
 
