@@ -1,0 +1,311 @@
+"use client";
+import { initializeApp } from "firebase/app";
+import React, { useState, useEffect } from "react";
+
+import firebaseConfig from "@/app/utils/fire_base_config";
+import { format, formatDistanceToNow } from "date-fns";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+import Penalty_options from "./penalty_options";
+const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
+  const hide_modal = () => {
+    sethideProfile(true);
+  };
+  const [role, setrole] = useState("");
+  const [all_libary_arr, setall_libary_arr] = useState<any>([]);
+  const [filtered_libray_arr, setfiltered_libray_arr] = useState<any>([]);
+  const [the_last_downloaded_data, setthe_last_downloaded_data] = useState<any>(
+    [],
+  );
+
+  const [lastdownload_title, setlastdownload_title] = useState<any>("");
+  const [lastdownload_time, setlastdownload_time] = useState<any>("");
+  const [download_libary_arr, setdownload_libary_arr] = useState<any>([]);
+  const [profile_data, setprofile_data] = useState<any>({});
+
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Firestore
+  const db = getFirestore(app);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Step 1: Fetch user data from the "users" collection
+        const usersCollectionRef = collection(db, "users");
+        const usersQuery = query(
+          usersCollectionRef,
+          where("userid", "==", uuid),
+        );
+        const usersSnapshot = await getDocs(usersQuery);
+
+        const userData = usersSnapshot.docs.map((doc) => doc.data());
+
+        // Assuming setprofile_data and setrole are state-setting functions
+        setprofile_data(userData[0]);
+        setrole(() => {
+          switch (userData[0].step) {
+            case 1:
+              return "Public";
+            case 2:
+              return "Subscribers";
+            case 3:
+              return "Standard Tier Subscribers";
+            case 4:
+              return "Merchant Tier Subscribers";
+            default:
+              return "Unknown Subscription";
+          }
+        });
+
+        // Step 2: Fetch data from the "library" collection
+        const libraryCollectionRef = collection(db, "libray");
+        const libraryQuery = query(
+          libraryCollectionRef,
+          where("userid", "==", uuid),
+        );
+        const librarySnapshot = await getDocs(libraryQuery);
+
+        // Step 3: Filter out items with downloaded === true
+        const excludedLibraryData = librarySnapshot.docs
+          .filter((libraryDoc) => libraryDoc.data().downloaded)
+          .map((libraryDoc) => libraryDoc.data().productid);
+
+        // Step 4: Fetch additional data from the "products" collection based on product ID
+        const libraryData = librarySnapshot.docs.map(async (libraryDoc) => {
+          const libraryDocData = libraryDoc.data();
+
+          // Step 5: Fetch additional data from the "products" collection based on product ID
+          const productId = libraryDocData.productid;
+          const productDocRef = doc(db, "products", productId);
+          const productDocSnapshot = await getDoc(productDocRef);
+          const productData = productDocSnapshot.data();
+
+          // Combine the library data with product data
+          return { ...libraryDocData, productData };
+        });
+
+        // Step 7: Log the original library data
+        const originalLibraryData = librarySnapshot.docs.map(
+          (doc) => doc.data().productid,
+        );
+        const colRef = collection(db, "libray");
+        const col_qery = query(
+          colRef,
+          where("downloaded", "==", true),
+          where("userid", "==", uuid),
+          orderBy("downloadedAt", "desc"),
+        );
+
+        const lastDownloaded = await getDocs(col_qery);
+        if (!lastDownloaded.empty) {
+          const download_data = lastDownloaded.docs[0];
+
+          const lastdownload_ref = doc(
+            db,
+            "products",
+            download_data.data().productid,
+          );
+          // console.log(download_data.data().productid);
+          const lastdownload_final_data = await getDoc(lastdownload_ref);
+          // Get the relative time
+          const timestamp = download_data.data().downloadedAt;
+          const relativeTime = formatDistanceToNow(
+            new Date(timestamp.toDate()),
+            {
+              addSuffix: true,
+            },
+          );
+
+          setlastdownload_time(relativeTime);
+          if (lastdownload_final_data.exists()) {
+            const download_title = lastdownload_final_data.data().title;
+            setlastdownload_title(download_title);
+          }
+        }
+        // setlastdownload_title(lastdownload_final_data.data().title)
+        console.log(originalLibraryData);
+        console.log(excludedLibraryData);
+        setall_libary_arr(originalLibraryData);
+        setfiltered_libray_arr(excludedLibraryData);
+        // Step 8: Set loader to false after obtaining all information
+        // setLoader(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [uuid]); // Include uuid as a dependency to refetch data if it changes
+  return (
+    <>
+      <div className="w-full h-full bg-opacity-[70%] z-[999] bg-black fixed top-0 left-0 flex justify-center items-center">
+        <div className="w-[45vw] h-[40vw] max-h-[96vh] gap-[2vw] bg-white rounded-[3vw] flex flex-col px-[2vw] items-center justify-center">
+          {/* the first section */}
+
+          <div className="w-full h-auto flex flex-col gap-[0.75vw]   justify-center  items-center ">
+            <div className="w-full flex h-[6.2vw] justify-between  items-start  relative ">
+              <p className="border-black border-[0.1vw] w-fit rounded-[2vw] px-[1.5vw] py-[0.7vw] neuer text-[0.8vw] ">
+                {role}
+              </p>
+
+              <div className="w-[6vw] overflow-hidden absolute left-[50%] translate-x-[-50%] top-0 h-[6vw] rounded-[100%]  ">
+                <img
+                  src={
+                    profile_data.avatar_url != ""
+                      ? profile_data.avatar_url
+                      : "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w"
+                  }
+                  alt="user_img"
+                  className="h-full w-full"
+                />
+              </div>
+
+              <i
+                className="bi bi-x-lg text-[2vw]  cursor-pointer"
+                onClick={hide_modal}
+              ></i>
+            </div>
+
+            <h1 className="text-[1.2vw] neuem">{profile_data.Username}</h1>
+
+            <div className="w-full  flex justify-between text-center gap-[1vw] items-center text-[0.9vw] text-black text-opacity-[50%] neuer">
+              <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                {lastdownload_time == "" && lastdownload_title == ""
+                  ? "No available download"
+                  : "Last download"}{" "}
+                {lastdownload_time} {lastdownload_title}
+              </p>
+              <div className="w-[0.25vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+              <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                Downloaded {filtered_libray_arr.length} items
+              </p>
+              <div className="w-[0.25vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+
+              <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                Renewed subscription 6 times
+              </p>
+              <div className="w-[0.25vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+
+              <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                Added {all_libary_arr.length} items to forge Libary
+              </p>
+            </div>
+          </div>
+
+          {/* the profile section */}
+          <div className="w-full flex items-center flex-col gap-[1vw]">
+            <h1 className="text-[1.2vw] neuer text-center ">
+              Profile information
+            </h1>
+
+            <div className="w-full flex flex-wrap justify-start  gap-[2%]">
+              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw]  gap-[0.5vw]">
+                <label className="text-[0.75vw]  neuer ">Public name</label>
+                <input
+                  type="text"
+                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  disabled
+                  value={
+                    profile_data.name == ""
+                      ? "Name unavaliable"
+                      : profile_data.name
+                  }
+                />
+              </div>
+              <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
+                <label className="text-[0.75vw]  neuer ">
+                  Public description
+                </label>
+                <input
+                  type="text"
+                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  disabled
+                  value={
+                    profile_data.description == ""
+                      ? "Description unavaliable"
+                      : profile_data.description
+                  }
+                />
+              </div>
+              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
+                <label className="text-[0.75vw]  neuer ">Public Email</label>
+                <input
+                  type="text"
+                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  disabled
+                  value={
+                    profile_data.Email == ""
+                      ? "Email unavaliable"
+                      : profile_data.Email
+                  }
+                />
+              </div>
+              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
+                <label className="text-[0.75vw]  neuer ">Username</label>
+                <input
+                  type="text"
+                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  disabled
+                  value={
+                    profile_data.Username == ""
+                      ? "Username unavaliable"
+                      : profile_data.Username
+                  }
+                />
+              </div>
+              <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
+                <label className="text-[0.75vw]  neuer ">Birthday</label>
+                <input
+                  type="text"
+                  className="rounded-[3vw] w-[80%] h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  disabled
+                  value={
+                    profile_data.birthday == ""
+                      ? "Birthday unavaliable"
+                      : profile_data.birthday
+                  }
+                />
+              </div>
+              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
+                <label className="text-[0.75vw]  neuer ">Country</label>
+                <input
+                  type="text"
+                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  disabled
+                  value={
+                    profile_data.country == ""
+                      ? "Country unavaliable"
+                      : profile_data.country
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* the ctn section */}
+
+          <div className="w-full h-auto flex     gap-[2vw]  justify-between  items-center">
+            <button className=" w-full h-[3.5vw] bg-[#CCFF00] rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]">
+              See All Downloads
+            </button>
+            <button className=" w-full h-[3.5vw] bg-[#FF0000] text-white rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]">
+              Penalize
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <Penalty_options />
+    </>
+  );
+};
+
+export default Sub_user_profile;

@@ -16,23 +16,9 @@ const config: Config = {
     },
     screens: {
       sm: { max: "650px" },
-      dsm: { min: "640px" },
-      md: { min: "768px" },
-      lg: { min: "1024px" },
-      xl: { min: "1280px" },
+
       // => @media (min-height: 800px) { ... }
     },
-  },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: false,
-    darkTheme: "dark",
-    base: true,
-    styled: true,
-    utils: true,
-    rtl: false,
-    prefix: "",
-    logs: true,
   },
 };
 export default config;

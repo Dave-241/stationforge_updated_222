@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Each_subscriber from "./each_subscriber";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
+import { format } from "date-fns";
 import {
   collection,
   getDocs,
@@ -11,8 +12,13 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import Sub_user_profile from "@/app/admin_general_component/sub_user_profile";
 const Subscribers_wrap = () => {
   const items = ["", "", "", ""];
+
+  const [allusers, setallusers] = useState<any>([]);
+  const [hideProfile, sethideProfile] = useState(true);
+  const [uuid, setuuid] = useState("");
   const app = initializeApp(firebaseConfig);
 
   // Initialize Firestore
@@ -29,6 +35,14 @@ const Subscribers_wrap = () => {
         usersSnapshot.forEach((userDoc) => {
           const data = userDoc.data();
           const userId = data.userid;
+          const avater = data.avatar_url;
+          const username = data.Username;
+          const name = data.name;
+          const createdAt = data.createdAt;
+          const timestampFromFirebase = new Date(createdAt.toMillis()); // Convert to JavaScript Date object
+
+          const formattedDate = format(timestampFromFirebase, "do MMMM yyyy");
+
           console.log(userId);
           // Step 2: Get documents from the 'library' collection where userId matches and downloaded is true
           const libraryCollectionRef = collection(db, "libray");
@@ -41,7 +55,14 @@ const Subscribers_wrap = () => {
           const libraryPromise = getDocs(libraryQuery).then(
             (librarySnapshot) => {
               const libraryData = librarySnapshot.docs.map((doc) => doc.data());
-              return { userId, libraryData };
+              return {
+                userId,
+                avater,
+                username,
+                name,
+                formattedDate,
+                libraryData,
+              };
             },
           );
 
@@ -52,7 +73,8 @@ const Subscribers_wrap = () => {
         const results = await Promise.all(userPromises);
 
         // Step 4: Log the results
-        console.log("Results:", results);
+        // console.log("Results:", results);
+        setallusers(results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -61,8 +83,17 @@ const Subscribers_wrap = () => {
     fetchData();
   }, []); // Empty dependency array means this effect runs once on mount
 
+  const showuser_profile = (e: string) => {
+    setuuid(e);
+    sethideProfile(false);
+    // sethideProfile(false);
+  };
   return (
     <>
+      {!hideProfile && (
+        <Sub_user_profile uuid={uuid} sethideProfile={sethideProfile} />
+      )}
+
       <div className="w-full py-[3vw] px-[1.5vw]  flex gap-[1.3vw] rounded-[2vw] bg-white flex-col">
         <div className="w-full  flex justify-between items-center neuer py-[1vw] text-[1vw] font-[900]">
           <div className="w-[25%]  h-auto">Name</div>
@@ -72,10 +103,16 @@ const Subscribers_wrap = () => {
           <div className="w-[15%]  h-auto">Days remaining for renewal </div>
         </div>
 
-        {items.map((e: any, index: any) => {
+        {allusers.map((e: any, index: any) => {
           return (
             <>
-              <Each_subscriber key={index} />
+              <Each_subscriber
+                key={index}
+                userdata={e}
+                setuuid={setuuid}
+                sethideProfile={sethideProfile}
+                showuser_profile={showuser_profile}
+              />
 
               <div className="w-full h-[0.15vw] bg-black bg-opacity-[12%]"></div>
             </>
