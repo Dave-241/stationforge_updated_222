@@ -55,7 +55,8 @@ const Forge_Reduction_Confirmation = ({
           }}
         >
           <h1 className="text-[1.2vw] sm:text-[4.5vw] text-center neuem">
-            Are you sure you want to Limit <br /> this users allocation to 20
+            Are you sure you want to Limit <br /> this users allocation to{" "}
+            {selected_option}
           </h1>
 
           <div className="w-full flex justify-between gap-[1.5vw] items-center">

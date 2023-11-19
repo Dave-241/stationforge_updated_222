@@ -20,6 +20,7 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
     sethideProfile(true);
   };
   const [role, setrole] = useState("");
+  const [loading, setloading] = useState(true);
   const [all_libary_arr, setall_libary_arr] = useState<any>([]);
   const [filtered_libray_arr, setfiltered_libray_arr] = useState<any>([]);
   const [the_last_downloaded_data, setthe_last_downloaded_data] = useState<any>(
@@ -139,6 +140,7 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
         setfiltered_libray_arr(excludedLibraryData);
         // Step 8: Set loader to false after obtaining all information
         // setLoader(false);
+        setloading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -158,175 +160,263 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
             e.stopPropagation();
           }}
         >
-          {/* the first section */}
+          {loading ? (
+            <>
+              {/* this section is for preloaders */}
+              {/* this section is for preloaders */}
+              {/* this section is for preloaders */}
+              {/* this section is for preloaders */}
+              {/* this section is for preloaders */}
+              {/* this section is for preloaders */}
+              {/* the first section */}
 
-          <div className="w-full h-auto flex flex-col sm:gap-[3vw]  gap-[0.75vw]   justify-center  items-center ">
-            <div className="w-full  flex h-[6.2vw] sm:h-[16vw] justify-between  items-start  relative ">
-              <p className="border-black border-[0.1vw] w-fit rounded-[2vw] px-[1.5vw] py-[0.7vw] neuer text-[0.8vw] sm:text-[3vw] sm:rounded-[3vw] ">
-                {role}
-              </p>
+              <div className="w-full h-auto flex flex-col sm:gap-[3vw]  gap-[0.75vw]   justify-center  items-center ">
+                <div className="w-full  flex h-[6.2vw] sm:h-[16vw] justify-between  items-start  relative ">
+                  <p className=" sm:h-[8vw] sm:w-[25vw] bg-[#D9D9D9] animate-pulse rounded-[2vw] h-[3vw] w-[10vw] neuer text-[0.8vw] sm:text-[3vw] sm:rounded-[3vw] "></p>
 
-              <div className="w-[6vw] sm:w-[16vw] sm:h-[16vw] overflow-hidden absolute left-[50%] translate-x-[-50%] top-0 h-[6vw] rounded-[100%]  ">
-                <img
-                  src={
-                    profile_data.avatar_url != ""
-                      ? profile_data.avatar_url
-                      : "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w"
-                  }
-                  alt="user_img"
-                  className="h-full w-full"
-                />
+                  <div className="w-[6vw] sm:w-[16vw] sm:h-[16vw] overflow-hidden absolute left-[50%] translate-x-[-50%] top-0 h-[6vw] rounded-[100%] bg-[#D9D9D9] animate-pulse "></div>
+
+                  <i
+                    className="bi bi-x-lg text-[2vw] sm:text-[6vw]  cursor-pointer"
+                    onClick={hide_modal}
+                  ></i>
+                </div>
+
+                <h1 className="h-[2.5vw] rounded-[1vw] w-[10vw] sm:w-[30vw] sm:h-[9vw] sm:rounded-[2vw] bg-[#D9D9D9] animate-pulse "></h1>
+
+                <div className="w-full sm:gap-[1.5vw]  flex justify-between text-center gap-[1vw] items-center text-[0.9vw] sm:text-[2.5vw] text-black text-opacity-[50%] neuer">
+                  <div className="bg-[#D9D9D9] w-full h-[3.7vw] sm:h-[9vw] animate-pulse "></div>
+                  <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+                  <div className="bg-[#D9D9D9] w-full h-[3.7vw] sm:h-[9vw] animate-pulse "></div>
+                  <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+
+                  <div className="bg-[#D9D9D9] w-full h-[3.7vw] sm:h-[9vw] animate-pulse "></div>
+                  <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+
+                  <div className="bg-[#D9D9D9] w-full h-[3.7vw] sm:h-[9vw] animate-pulse "></div>
+                </div>
               </div>
 
-              <i
-                className="bi bi-x-lg text-[2vw] sm:text-[6vw]  cursor-pointer"
-                onClick={hide_modal}
-              ></i>
-            </div>
+              {/* the profile section */}
+              <div className="w-full flex items-center flex-col sm:gap-[4vw] gap-[1vw]">
+                <div className="bg-[#D9D9D9] w-[10vw] sm:w-[30vw] h-[3vw] rounded-[2vw] sm:rounded-[4vw] sm:h-[9vw] animate-pulse "></div>
 
-            <h1 className="text-[1.2vw] sm:text-[4.2vw] neuem">
-              {profile_data.Username}
-            </h1>
-
-            <div className="w-full  flex justify-between text-center gap-[1vw] items-center text-[0.9vw] sm:text-[2.5vw] text-black text-opacity-[50%] neuer">
-              <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
-                {lastdownload_time == "" && lastdownload_title == ""
-                  ? "No available download"
-                  : "Last download"}{" "}
-                {lastdownload_time} {lastdownload_title}
-              </p>
-              <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
-              <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
-                Downloaded {filtered_libray_arr.length} items
-              </p>
-              <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
-
-              <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
-                Renewed subscription 6 times
-              </p>
-              <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
-
-              <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
-                Added {all_libary_arr.length} items to forge Libary
-              </p>
-            </div>
-          </div>
-
-          {/* the profile section */}
-          <div className="w-full flex items-center flex-col sm:gap-[4vw] gap-[1vw]">
-            <h1 className="text-[1.2vw] sm:text-[4.5vw] neuer text-center ">
-              Profile information
-            </h1>
-
-            <div className="w-full flex flex-wrap justify-start  gap-[2%]">
-              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw]  gap-[0.5vw]">
-                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
-                  Public name
-                </label>
-                <input
-                  type="text"
-                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
-                  disabled
-                  value={
-                    profile_data.name == ""
-                      ? "Name unavaliable"
-                      : profile_data.name
-                  }
-                />
+                <div className="w-full flex flex-wrap justify-start  gap-[2%]">
+                  <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw]  gap-[0.5vw]">
+                    <div className="sm:text-[2.5vw] h-[1.2vw] bg-[#D9D9D9] animate-pulse sm:h-[3vw] text-[0.75vw]  neuer "></div>
+                    <div className="rounded-[3vw]  w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]   bg-[#D9D9D9] animate-pulse px-[1vw] text-[0.9vw] neuem"></div>
+                  </div>
+                  <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <div className="sm:text-[2.5vw] h-[1.2vw] bg-[#D9D9D9] animate-pulse sm:h-[3vw] text-[0.75vw]  neuer "></div>
+                    <div className="rounded-[3vw]  w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]   bg-[#D9D9D9] animate-pulse px-[1vw] text-[0.9vw] neuem"></div>
+                  </div>
+                  <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <div className="sm:text-[2.5vw] h-[1.2vw] bg-[#D9D9D9] animate-pulse sm:h-[3vw] text-[0.75vw]  neuer "></div>
+                    <div className="rounded-[3vw]  w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]   bg-[#D9D9D9] animate-pulse px-[1vw] text-[0.9vw] neuem"></div>
+                  </div>
+                  <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <div className="sm:text-[2.5vw] h-[1.2vw] bg-[#D9D9D9] animate-pulse sm:h-[3vw] text-[0.75vw]  neuer "></div>
+                    <div className="rounded-[3vw]  w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]   bg-[#D9D9D9] animate-pulse px-[1vw] text-[0.9vw] neuem"></div>
+                  </div>
+                  <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <div className="sm:text-[2.5vw] h-[1.2vw] bg-[#D9D9D9] animate-pulse sm:h-[3vw] text-[0.75vw]  neuer "></div>
+                    <div className="rounded-[3vw]  w-[80%] sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]   bg-[#D9D9D9] animate-pulse px-[1vw] text-[0.9vw] neuem"></div>
+                  </div>
+                  <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <div className="sm:text-[2.5vw] h-[1.2vw] bg-[#D9D9D9] animate-pulse sm:h-[3vw] text-[0.75vw]  neuer "></div>
+                    <div className="rounded-[3vw]  w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]   bg-[#D9D9D9] animate-pulse px-[1vw] text-[0.9vw] neuem"></div>
+                  </div>
+                </div>
               </div>
-              <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
-                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
-                  Public description
-                </label>
-                <input
-                  type="text"
-                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
-                  disabled
-                  value={
-                    profile_data.description == ""
-                      ? "Description unavaliable"
-                      : profile_data.description
-                  }
-                />
-              </div>
-              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
-                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
-                  Public Email
-                </label>
-                <input
-                  type="text"
-                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
-                  disabled
-                  value={
-                    profile_data.Email == ""
-                      ? "Email unavaliable"
-                      : profile_data.Email
-                  }
-                />
-              </div>
-              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
-                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
-                  disabled
-                  value={
-                    profile_data.Username == ""
-                      ? "Username unavaliable"
-                      : profile_data.Username
-                  }
-                />
-              </div>
-              <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
-                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
-                  Birthday
-                </label>
-                <input
-                  type="text"
-                  className="rounded-[3vw] w-[80%] sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
-                  disabled
-                  value={
-                    profile_data.birthday == ""
-                      ? "Birthday unavaliable"
-                      : profile_data.birthday
-                  }
-                />
-              </div>
-              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
-                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
-                  Country
-                </label>
-                <input
-                  type="text"
-                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
-                  disabled
-                  value={
-                    profile_data.country == ""
-                      ? "Country unavaliable"
-                      : profile_data.country
-                  }
-                />
-              </div>
-            </div>
-          </div>
 
-          {/* the ctn section */}
+              {/* the ctn section */}
 
-          <div className="w-full h-auto flex  sm:gap-[4vw]   gap-[2vw]  justify-between  items-center">
-            <button className=" w-full h-[3.5vw] sm:h-[12vw] text-[1vw] sm:text-[3.5vw] bg-[#CCFF00] rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]">
-              See All Downloads
-            </button>
-            <button
-              className=" w-full h-[3.5vw] sm:h-[12vw] text-[1vw] sm:text-[3.5vw] bg-[#FF0000] text-white rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]"
-              onClick={() => {
-                sethide_penalty_options(false);
-              }}
-            >
-              Penalize
-            </button>
-          </div>
+              <div className="w-full h-auto flex  sm:gap-[4vw]   gap-[2vw]  justify-between  items-center">
+                <div className="bg-[#D9D9D9] w-full h-[3.7vw] sm:rounded-[3vw] rounded-[1.2vw] sm:h-[10.5vw] animate-pulse "></div>
+
+                <div className="bg-[#D9D9D9] w-full h-[3.7vw] sm:rounded-[3vw] rounded-[1.2vw] sm:h-[10.5vw] animate-pulse "></div>
+              </div>
+            </>
+          ) : (
+            <>
+              {" "}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* this section is for the actual data */}
+              {/* the first section */}
+              <div className="w-full h-auto flex flex-col sm:gap-[3vw]  gap-[0.75vw]   justify-center  items-center ">
+                <div className="w-full  flex h-[6.2vw] sm:h-[16vw] justify-between  items-start  relative ">
+                  <p className="border-black border-[0.1vw] w-fit rounded-[2vw] px-[1.5vw] py-[0.7vw] neuer text-[0.8vw] sm:text-[3vw] sm:rounded-[3vw] ">
+                    {role}
+                  </p>
+
+                  <div className="w-[6vw] sm:w-[16vw] sm:h-[16vw] overflow-hidden absolute left-[50%] translate-x-[-50%] top-0 h-[6vw] rounded-[100%]  ">
+                    <img
+                      src={
+                        profile_data.avatar_url != ""
+                          ? profile_data.avatar_url
+                          : "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w"
+                      }
+                      alt="user_img"
+                      className="h-full w-full"
+                    />
+                  </div>
+
+                  <i
+                    className="bi bi-x-lg text-[2vw] sm:text-[6vw]  cursor-pointer"
+                    onClick={hide_modal}
+                  ></i>
+                </div>
+
+                <h1 className="text-[1.2vw] sm:text-[4.2vw] neuem">
+                  {profile_data.Username}
+                </h1>
+
+                <div className="w-full  flex justify-between text-center gap-[1vw] items-center text-[0.9vw] sm:text-[2.5vw] text-black text-opacity-[50%] neuer">
+                  <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                    {lastdownload_time == "" && lastdownload_title == ""
+                      ? "No available download"
+                      : "Last download"}{" "}
+                    {lastdownload_time} {lastdownload_title}
+                  </p>
+                  <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+                  <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                    Downloaded {filtered_libray_arr.length} items
+                  </p>
+                  <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+
+                  <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                    Renewed subscription 6 times
+                  </p>
+                  <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+
+                  <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                    Added {all_libary_arr.length} items to forge Libary
+                  </p>
+                </div>
+              </div>
+              {/* the profile section */}
+              <div className="w-full flex items-center flex-col sm:gap-[4vw] gap-[1vw]">
+                <h1 className="text-[1.2vw] sm:text-[4.5vw] neuer text-center ">
+                  Profile information
+                </h1>
+
+                <div className="w-full flex flex-wrap justify-start  gap-[2%]">
+                  <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw]  gap-[0.5vw]">
+                    <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                      Public name
+                    </label>
+                    <input
+                      type="text"
+                      className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                      disabled
+                      value={
+                        profile_data.name == ""
+                          ? "Name unavaliable"
+                          : profile_data.name
+                      }
+                    />
+                  </div>
+                  <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                      Public description
+                    </label>
+                    <input
+                      type="text"
+                      className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                      disabled
+                      value={
+                        profile_data.description == ""
+                          ? "Description unavaliable"
+                          : profile_data.description
+                      }
+                    />
+                  </div>
+                  <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                      Public Email
+                    </label>
+                    <input
+                      type="text"
+                      className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                      disabled
+                      value={
+                        profile_data.Email == ""
+                          ? "Email unavaliable"
+                          : profile_data.Email
+                      }
+                    />
+                  </div>
+                  <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                      disabled
+                      value={
+                        profile_data.Username == ""
+                          ? "Username unavaliable"
+                          : profile_data.Username
+                      }
+                    />
+                  </div>
+                  <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                      Birthday
+                    </label>
+                    <input
+                      type="text"
+                      className="rounded-[3vw] w-[80%] sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                      disabled
+                      value={
+                        profile_data.birthday == ""
+                          ? "Birthday unavaliable"
+                          : profile_data.birthday
+                      }
+                    />
+                  </div>
+                  <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                    <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                      disabled
+                      value={
+                        profile_data.country == ""
+                          ? "Country unavaliable"
+                          : profile_data.country
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+              {/* the ctn section */}
+              <div className="w-full h-auto flex  sm:gap-[4vw]   gap-[2vw]  justify-between  items-center">
+                <button className=" w-full h-[3.5vw] sm:h-[12vw] text-[1vw] sm:text-[3.5vw] bg-[#CCFF00] rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]">
+                  See All Downloads
+                </button>
+                <button
+                  className=" w-full h-[3.5vw] sm:h-[12vw] text-[1vw] sm:text-[3.5vw] bg-[#FF0000] text-white rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]"
+                  onClick={() => {
+                    sethide_penalty_options(false);
+                  }}
+                >
+                  Penalize
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
       {!hide_penalty_options && (
