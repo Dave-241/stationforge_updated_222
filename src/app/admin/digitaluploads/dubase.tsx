@@ -14,9 +14,10 @@ import LastDownloadModal from "@/app/admin_general_component/modals/last_downloa
 import { MonthlyForgeAllocationsTypes } from "@/app/types/monthlyforgeallocation";
 
 const DigitalUploadsBase = ({
-  handleModalPopUp,
-}: MonthlyForgeAllocationsTypes) => {
+  digitalSalesData,
+}: Partial<MonthlyForgeAllocationsTypes>) => {
   const [isOpen, setOpen] = useState(false);
+  const [userId, setUserId] = useState<undefined | string>();
   const ref = useRef();
 
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -46,6 +47,18 @@ const DigitalUploadsBase = ({
     return arr;
   }, []);
 
+  function handleModalPopUp(id: string, index = null) {
+    // console.log(index);
+    // document.getElementById(id).showModal();
+    const modalElement = document.getElementById(
+      id
+    ) as HTMLDialogElement | null;
+
+    if (modalElement) {
+      modalElement.showModal();
+    }
+  }
+
   return (
     <div className="min-h-screen px-[25px] lg:px-[70px] flex flex-row gap-48 py-20 pt-18 dsm:pt-28 lg:pt-40">
       <div className="w-full">
@@ -57,7 +70,10 @@ const DigitalUploadsBase = ({
             selectedMonth={selectedMonth}
             setSelectedMonth={setSelectedMonth}
           />
-          <ForgeAllocations handleModalPopUp={handleModalPopUp} />
+          <ForgeAllocations
+            handleModalPopUp={handleModalPopUp}
+            digitalSalesData={digitalSalesData}
+          />
         </div>
       </div>
       <BottomFilterSheet
@@ -69,7 +85,11 @@ const DigitalUploadsBase = ({
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
       />
-      <ForgeInfoModal name={"francis"} handleModalPopUp={handleModalPopUp} />
+      <ForgeInfoModal
+        digitalSalesData={digitalSalesData}
+        handleModalPopUp={handleModalPopUp}
+        userId={userId}
+      />
       <ProfileDetailsModal
         name={"francis"}
         handleModalPopUp={handleModalPopUp}

@@ -10,31 +10,62 @@ import ForgesWishList from "@/app/admin_general_component/modals/forges_wishlist
 import LastDownloadModal from "@/app/admin_general_component/modals/last_download_modal";
 import { MonthlyForgeAllocationsTypes } from "@/app/types/monthlyforgeallocation";
 
+const DigitalSalesBase = ({
+  digitalSalesData,
+}: Partial<MonthlyForgeAllocationsTypes>) => {
+  console.log("hdhdhidholhwe", digitalSalesData);
+  const [userId, setUserId] = useState<undefined | string>()
 
-const DigitalSalesBase = ({ handleModalPopUp }: MonthlyForgeAllocationsTypes) => {
+  function handleModalPopUp(id: string, objId?:string) {
+    console.log('objId', objId);
+    // document.getElementById(id).showModal();
+    const modalElement = document.getElementById(
+      id
+    ) as HTMLDialogElement | null;
+
+    if (modalElement) {
+      modalElement.showModal();
+      setUserId(objId)
+    }
+  }
+
   return (
-    // px-20
     <div className="flex flex-col items-center gap-[10px] dsm:gap-[40px] min-h-screen py-20 pt-18 dsm:pt-28 lg:pt-40 w-full h-auto">
       <SubscriptionFilters />
-      <Tiers />
-      <AllSubscribers handleModalPopUp={handleModalPopUp} />
-      <ProfileDetailsModal
-        name={"francis"}
+      <Tiers digitalSalesData={digitalSalesData} />
+      <AllSubscribers
         handleModalPopUp={handleModalPopUp}
+        digitalSalesData={digitalSalesData}
+      />
+      <ProfileDetailsModal
+        digitalSalesData={digitalSalesData}
+        handleModalPopUp={handleModalPopUp}
+        userId={userId}
       />
       <AllForgesDownloadedModal
-        name={"franis"}
+        digitalSalesData={digitalSalesData}
+        userId={userId}
         handleModalPopUp={handleModalPopUp}
       />
-      <ForgesWishList name={"franis"} handleModalPopUp={handleModalPopUp} />
+      <ForgesWishList
+        digitalSalesData={digitalSalesData}
+        handleModalPopUp={handleModalPopUp}
+        
+      />
       <RenewedSubscriptionsModal
-        name={"franis"}
+        digitalSalesData={digitalSalesData}
         handleModalPopUp={handleModalPopUp}
       />
-      <LastDownloadModal name={"francis"} handleModalPopUp={handleModalPopUp} />
-      <ForgeInfoModal name={"francis"} handleModalPopUp={handleModalPopUp} />
+      <LastDownloadModal
+        digitalSalesData={digitalSalesData}
+        handleModalPopUp={handleModalPopUp}
+      />
+      <ForgeInfoModal
+        digitalSalesData={digitalSalesData}
+        handleModalPopUp={handleModalPopUp}
+      />
     </div>
   );
-}
+};
 
 export default DigitalSalesBase;

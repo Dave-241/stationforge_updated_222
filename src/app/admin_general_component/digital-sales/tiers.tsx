@@ -1,4 +1,8 @@
-export default function Tiers() {
+import Image from "next/image";
+import { MonthlyForgeAllocationsTypes } from "@/app/types/monthlyforgeallocation";
+
+export default function Tiers({digitalSalesData}: Partial<MonthlyForgeAllocationsTypes>) {
+
   return (
     <>
       <div className="hidden lg:flex flex-row flex-wrap gap-[33px]  items-center justify-center xl:justify-between mt-[16px] w-[95%] lg:w-[90%] ">
@@ -12,7 +16,7 @@ export default function Tiers() {
                 Total Subscribers
               </h2>
               <button className="bg-[#F1F1F1] p-1 w-[140px] min-h-[61px] h-auto rounded-[20px] border border-[#9F9F9F] text-[20px] text-[#000] neuem leading-[129%]">
-                23452
+              {digitalSalesData?.length}
               </button>
             </div>
             <div className="w-[1px] bg-[#D9D9D9] h-[66px]"></div>
@@ -21,7 +25,7 @@ export default function Tiers() {
                 Total Amount Paid
               </h2>
               <button className="bg-[#F1F1F1] p-1 w-[140px] min-h-[61px] h-auto rounded-[20px] border border-[#9F9F9F] text-[20px] text-[#000] neuem leading-[129%]">
-                $328732
+                $0
               </button>
             </div>
           </div>
@@ -36,7 +40,7 @@ export default function Tiers() {
                 Total Subscribers
               </h2>
               <button className="bg-[#F1F1F1] p-1 w-[140px] min-h-[61px] h-auto rounded-[20px] border border-[#9F9F9F] text-[20px] text-[#000] neuem leading-[129%]">
-                23452
+              {digitalSalesData?.length}
               </button>
             </div>
             <div className="w-[1px] bg-[#D9D9D9] h-[66px]"></div>
@@ -45,7 +49,7 @@ export default function Tiers() {
                 Total Amount Paid
               </h2>
               <button className="bg-[#F1F1F1] p-1 w-[140px] min-h-[61px] h-auto rounded-[20px] border border-[#9F9F9F] text-[20px] text-[#000] neuem leading-[129%]">
-                $328732
+                $0
               </button>
             </div>
           </div>
@@ -60,7 +64,7 @@ export default function Tiers() {
                 Total Subscribers
               </h2>
               <button className="bg-[#F1F1F1] p-1 w-[140px] min-h-[61px] h-auto rounded-[20px] border border-[#9F9F9F] text-[20px] text-[#000] neuem leading-[129%]">
-                23452
+              {digitalSalesData?.length}
               </button>
             </div>
             <div className="w-[1px] bg-[#D9D9D9] h-[66px]"></div>
@@ -69,7 +73,7 @@ export default function Tiers() {
                 Total Amount Paid
               </h2>
               <button className="bg-[#F1F1F1] p-1 w-[140px] min-h-[61px] h-auto rounded-[20px] border border-[#9F9F9F] text-[20px] text-[#000] neuem leading-[129%]">
-                $328732
+                $0
               </button>
             </div>
           </div>
@@ -84,8 +88,8 @@ export default function Tiers() {
           >
             Standard Tier
             <img
-              src="./arrow.svg"
-              className="transform rotate-90"
+              src="/admin_section/general/arrow.svg"
+              className="transform"
               alt="arrow"
             />
           </label>
@@ -104,7 +108,7 @@ export default function Tiers() {
                   Total Subscribers
                 </h2>
                 <button className="bg-[#F1F1F1] p-1 w-[100px] min-h-[50px] h-auto rounded-[20px] border border-[#9F9F9F] text-[15px] text-[#000] neuem leading-[129%]">
-                  23452
+                {digitalSalesData?.length}
                 </button>
               </div>
               <div className="w-[1px] bg-[#D9D9D9] h-[66px]"></div>
@@ -126,8 +130,8 @@ export default function Tiers() {
           >
             Merchant Tier
             <img
-              src="./arrow.svg"
-              className="transform rotate-90"
+              src="/admin_section/general/arrow.svg"
+              className="transform"
               alt="arrow"
             />
           </label>
@@ -168,8 +172,8 @@ export default function Tiers() {
           >
             All Subscribers
             <img
-              src="./arrow.svg"
-              className="transform rotate-90"
+              src="/admin_section/general/arrow.svg"
+              className="transform"
               alt="arrow"
             />
           </label>

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { MonthlyForgeAllocationsTypes } from "@/app/types/monthlyforgeallocation";
 
-const SubscriberTypeTggle = () => {
+const SubscriberTypeTggle = ({
+  digitalSalesData,
+}: Partial<MonthlyForgeAllocationsTypes>) => {
   const [subcriberType, setSubcriberType] = useState("standard");
 
   return (
@@ -29,12 +32,12 @@ const SubscriberTypeTggle = () => {
             </p>
           </div>
         </div>
-        <p className="text-[10px] dsm:text-[12px] lg:text-[20px] opacity-[.6] neuem font-medium leading-[129%]">
-          Total Standard Tier Subscribers {26212}
+        <p className="text-[10px] dsm:text-[12px] gap-[16px] lg:text-[20px] opacity-[.6] neuem font-medium leading-[129%]">
+          Total Standard Tier Subscribers {digitalSalesData?.length}
         </p>
       </div>
       <h4 className="text-[#000] mt-[-10px] lg:mt-0 text-[10px] lg:text-[20px] neuem leading-[129%]">
-        Total Subcribers {46546}
+        Total Subcribers {digitalSalesData?.length}
       </h4>
     </div>
   );

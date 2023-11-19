@@ -11,6 +11,12 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import { useRouter } from "next/navigation";
 import DigitalUploadsBase from "./dubase";
+import {
+  getDocs,
+  collection,
+  query,
+  where
+} from "firebase/firestore";
 
 export default function Home() {
   const {
@@ -19,8 +25,11 @@ export default function Home() {
     page_loader,
     setpage_loader,
     setfrom,
+    db
   }: any = useProfile_Context();
   const [showdash, setshowdash] = useState(false);
+  const [digitalSalesData, setDigitalSalesData] = useState<any>([]);
+
   useEffect(() => {
     // setpage_loader(false);
     setfrom("");
@@ -56,17 +65,33 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleModalPopUp(id: string, index = null) {
-    // console.log(index);
-    // document.getElementById(id).showModal();
-    const modalElement = document.getElementById(
-      id
-    ) as HTMLDialogElement | null;
-
-    if (modalElement) {
-      modalElement.showModal();
+  useEffect(() => {
+    let dataLoaded = false;
+    (async () => {
+      if (!dataLoaded) {
+      const allData = await getDocs(collection(db, 'users'));
+      const dataArr: any = [];
+  
+      for (const item of allData.docs) {
+        const { name, userid, avatar_url, allocations, subscription, Username, Email, step } = item.data();
+        let d: {[key: string]: any } = {name, userid, avatar_url, allocations, subscription, Username, Email, step, forges: [] };
+  
+        const forges = query(collection(db, "forge"), where("userid", "==", userid));
+        const forgeData = await getDocs(forges);
+  
+        forgeData.forEach(forge => {
+          const forgeItem = forge.data();
+          d.forges.push(forgeItem);
+        });
+  
+        dataArr.push(d);
+      }
+      setDigitalSalesData((existingData:any) => [...existingData, ...dataArr]);
+      dataLoaded = true;
     }
-  }
+    })()
+  }, [])
+
 
   return (
     <>
@@ -81,7 +106,7 @@ export default function Home() {
             in={true}
             style={{ width: "100%" }}
           >
-            <DigitalUploadsBase handleModalPopUp={handleModalPopUp} />
+            <DigitalUploadsBase digitalSalesData={digitalSalesData} />
           </FadeInTransition>
 
         </>

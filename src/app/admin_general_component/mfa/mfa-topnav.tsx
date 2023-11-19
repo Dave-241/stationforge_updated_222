@@ -44,8 +44,8 @@ export default function MfaTopnav({ setOpen }: MfTopnavPropTypes) {
           </div>
           <input
             type="text"
-            placeholder="Search dashboard"
-            className="h-[44px] lg:h-[3vw] w-full lg:w-[18vw] bg-[rgba(0,0,0,0.05)]  text-black neuer text-[1.4vw] outline-none focus:border-none transition duration-[0.8s] pl-[6vw] lg:pl-[3.5vw] pr-[1vw]  rounded-[3vw] backdrop-blur-[15px]  border-none"
+            placeholder="Search model"
+            className="h-[44px] lg:h-[3vw] w-full lg:w-[18vw] bg-[rgba(0,0,0,0.05)]  text-black neuer text-[1.8vw] md:text-[1vw] outline-none focus:border-none transition duration-[0.8s] pl-[6vw] lg:pl-[3.5vw] pr-[1vw]  rounded-[3vw] backdrop-blur-[15px]  border-none"
           />
         </div>
         <div className="hidden lg:flex flex-row items-center justify-center  gap-[10px]">

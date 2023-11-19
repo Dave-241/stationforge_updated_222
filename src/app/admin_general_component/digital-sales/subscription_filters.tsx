@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Image from "next/image";
-import { allYears, allMonths } from "../../utils/constants.ts";
+import { allYears, allMonths } from "../../utils/constants";
 
 const SubscriptionFilters = () => {
   const [selectedDateFilter, setSelectedDateFilter] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(0);
   const dateFilters = [
     "Yesterday",
     "Today",
@@ -38,13 +38,18 @@ const SubscriptionFilters = () => {
             Start Date
             <div className="text-[10px] lg:text-[13px] flex flex-wrap flex-row w-auto py-2 px-2 gap-1 bg-[#F1F1F1] rounded-[10px]">
               10th Oct 2023
-              <Image
+              {/* <Image
                 src="/admin_section/general/arrow.svg"
                 width="0"
                 height="0"
                 className="transform rotate-90"
                 alt="arrow"
-              />
+              /> */}
+               <img
+              src="/admin_section/general/arrow.svg"
+              className="transform"
+              alt="arrow"
+            />
             </div>
           </label>
           <ul
@@ -123,26 +128,31 @@ const SubscriptionFilters = () => {
             </div>
           </ul>
         </div>
-        <div className="dropdown dropdown-bottom dropdown-start w-auto">
+        <div className="dropdown dropdown-bottom dropdown-end w-auto">
           <label
             tabIndex={0}
             className="cursor-pointer text-[13px] rounded-[10px] flex flex-wrap flex-row w-auto items-center justify-center py-3 px-1 lg:px-2 gap-0 lg:gap-2 neuem leading-[129%] text-[#000]  m-1 bg-[#fff] hover:bg-[#fff] 5px] hover:border-[#A9A7A7]"
           >
-            Start Date
+            End Date
             <div className="text-[10px] lg:text-[13px] flex flex-wrap flex-row w-auto py-2 px-2 gap-1 bg-[#F1F1F1] rounded-[10px]">
               10th Oct 2023
-              <Image
+              {/* <Image
                 src="/admin_section/general/arrow.svg"
                 width="0"
                 height='0'
                 className="transform rotate-90"
                 alt="arrow"
-              />
+              /> */}
+               <img
+              src="/admin_section/general/arrow.svg"
+              className="transform"
+              alt="arrow"
+            />
             </div>
           </label>
           <ul
             tabIndex={0}
-            className="shadow-[0px_20px_69px_0px_rgba(0,0,0,0.12)] absolute w-[90vw] max-w-[28rem] lg:w-[28rem] mt-2 z-30 h-auto dropdown-content gap-[20px] flex flex-row items-start menu bg-[#fff] p-5 rounded-[10px]"
+            className="translate-x-[7rem] shadow-[0px_20px_69px_0px_rgba(0,0,0,0.12)] absolute w-[90vw] max-w-[28rem] lg:w-[28rem] mt-2 z-30 h-auto dropdown-content gap-[20px] flex flex-row items-start menu bg-[#fff] p-5 rounded-[10px]"
           >
             <div className="w-auto h-full">
               <h1 className="text-[12px] lg:text-[16px] neueb font-bold text-[#000]">

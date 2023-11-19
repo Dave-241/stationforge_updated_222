@@ -4,7 +4,10 @@ import PunishmentTypeModal from "./punishment_type_modal";
 import AmoutToReduceModal from "./amout_to_reduce_modal";
 import { ModalPropsTypes } from "@/app/types/modalPropTypes";
 
-export default function ProfileDetailsModal({ name, handleModalPopUp }: ModalPropsTypes) {
+export default function ProfileDetailsModal({ digitalSalesData, handleModalPopUp, userId }: ModalPropsTypes) {
+  const data = digitalSalesData?.find((item) => item.userid == userId);
+  console.log("felll", data);
+  
   return (
     <dialog
       id="my_modal_3"
@@ -25,12 +28,15 @@ export default function ProfileDetailsModal({ name, handleModalPopUp }: ModalPro
             width="0"
             height="0"
             sizes="100vw"
-            src="/admin_section/general/img1.png"
+            // src="/admin_section/general/img1.png"
+            src={data?.avatar_url?  data?.avatar_url : '/admin_section/general/img1.png'}
+            style={{borderRadius: "100%"}}
             alt=""
-            className="w-[50px] lg:w-[100px] h-[50px] lg:h-[100px]"
+            className="w-[50px] round-full lg:w-[100px] h-[50px] lg:h-[100px]"
           />
           <h3 className="font-medium nueum text-black text-[16px] lg:text-[32px] text-lg mt-[13px] lg:mt-[26px]">
-            Sarah Adams
+            {/* Sarah Adams */}
+            {data?.name? data?.name : data?.Username? data?.Username : ""}
           </h3>
           <div className="flex items-start flex-row flex-wrap mt-[23px] lg:mt-[47px] gap-2">
             <p
