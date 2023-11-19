@@ -43,7 +43,6 @@ const Subscribers_wrap = () => {
 
           const formattedDate = format(timestampFromFirebase, "do MMMM yyyy");
 
-          console.log(userId);
           // Step 2: Get documents from the 'library' collection where userId matches and downloaded is true
           const libraryCollectionRef = collection(db, "libray");
           const libraryQuery = query(
@@ -94,30 +93,32 @@ const Subscribers_wrap = () => {
         <Sub_user_profile uuid={uuid} sethideProfile={sethideProfile} />
       )}
 
-      <div className="w-full py-[3vw] px-[1.5vw]  flex gap-[1.3vw] rounded-[2vw] bg-white flex-col">
-        <div className="w-full  flex justify-between items-center neuer py-[1vw] text-[1vw] font-[900]">
-          <div className="w-[25%]  h-auto">Name</div>
-          <div className="w-[20%]  h-auto">Join Date</div>
-          <div className="w-[20%]  h-auto">Last Subscription</div>
-          <div className="w-[20%]  h-auto">Number of forges downloaded</div>
-          <div className="w-[15%]  h-auto">Days remaining for renewal </div>
+      <div className="w-full sm:overflow-x-scroll sm:py-[8vw]  sm:rounded-[4vw]  py-[3vw] px-[1.5vw]   rounded-[2vw] bg-white flex-col">
+        <div className="w-full sm:w-[250vw]  sm:gap-[5vw] flex-col  flex gap-[1.3vw]">
+          <div className="w-full sm:py-[3vw]  flex justify-between items-center neuer py-[1vw] text-[1vw] sm:text-[3.2vw] font-[900]">
+            <div className="w-[25%]  h-auto">Name</div>
+            <div className="w-[20%]  h-auto">Join Date</div>
+            <div className="w-[20%]  h-auto">Last Subscription</div>
+            <div className="w-[20%]  h-auto">Number of forges downloaded</div>
+            <div className="w-[15%]  h-auto">Days remaining for renewal </div>
+          </div>
+
+          {allusers.map((e: any, index: any) => {
+            return (
+              <>
+                <Each_subscriber
+                  key={index}
+                  userdata={e}
+                  setuuid={setuuid}
+                  sethideProfile={sethideProfile}
+                  showuser_profile={showuser_profile}
+                />
+
+                <div className="w-full h-[0.15vw] sm:h-[1vw] bg-black bg-opacity-[12%]"></div>
+              </>
+            );
+          })}
         </div>
-
-        {allusers.map((e: any, index: any) => {
-          return (
-            <>
-              <Each_subscriber
-                key={index}
-                userdata={e}
-                setuuid={setuuid}
-                sethideProfile={sethideProfile}
-                showuser_profile={showuser_profile}
-              />
-
-              <div className="w-full h-[0.15vw] bg-black bg-opacity-[12%]"></div>
-            </>
-          );
-        })}
       </div>
     </>
   );

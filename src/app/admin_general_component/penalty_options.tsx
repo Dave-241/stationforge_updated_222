@@ -1,10 +1,20 @@
 "use client";
 
-const Penalty_options = () => {
+const Penalty_options = ({ sethide_penalty_options }: any) => {
   return (
     <>
-      <div className="w-full h-full sm:px-[5vw] bg-black bg-opacity-[80%] fixed top-0 left-0 z-[999] flex justify-center items-center">
-        <div className="w-[25vw] sm:w-full sm:rounded-[5vw] sm:h-[43vw] sm:gap-[4vw] h-[10vw] flex-col gap-[1.2vw] px-[2vw] bg-white rounded-[1.5vw] flex justify-center items-center">
+      <div
+        className="w-full h-full sm:px-[5vw] bg-black bg-opacity-[80%] fixed top-0 left-0 z-[999] flex justify-center items-center"
+        onClick={() => {
+          sethide_penalty_options(true);
+        }}
+      >
+        <div
+          className="w-[25vw] sm:w-full sm:rounded-[5vw] sm:h-[43vw] sm:gap-[4vw] h-[10vw] flex-col gap-[1.2vw] px-[2vw] bg-white rounded-[1.5vw] flex justify-center items-center"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <h1 className="text-[1.2vw] sm:text-[4.5vw] neuem">
             Select punishment type
           </h1>

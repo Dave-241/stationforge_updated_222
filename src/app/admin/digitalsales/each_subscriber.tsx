@@ -59,10 +59,10 @@ const Each_subscriber = ({
 
   return (
     <>
-      <div className="w-full  flex justify-between items-center neuer  text-[0.9vw] ">
-        <div className="w-[25%]  h-auto flex items-center gap-[0.5vw]">
+      <div className="w-full  flex justify-between items-center neuer sm:text-[2.8vw]  text-[0.9vw] ">
+        <div className="w-[25%] sm:gap-[2vw]  h-auto flex items-center gap-[0.5vw]">
           <div
-            className="w-[3.5vw] h-[3.5vw] rounded-[100%] avater_bg overflow-hidden  "
+            className="w-[3.5vw] h-[3.5vw] sm:w-[9vw] sm:h-[9vw] rounded-[100%] avater_bg overflow-hidden  "
             style={{ backgroundImage: `url(${userdata.avater})` }}
           >
             {" "}
@@ -89,15 +89,15 @@ const Each_subscriber = ({
         <div className="w-[20%]  h-auto">
           1st {currentMonthName} {currentYear}
         </div>
-        <div className="w-[20%]  h-auto flex items-center font-[900] gap-[0.5vw]">
+        <div className="w-[20%] sm:gap-[2vw] h-auto flex items-center font-[900] gap-[0.5vw]">
           <Image
             src={forge_download_img}
             alt="forge download img"
-            className="w-[7vw] h-fit "
+            className="w-[7vw] sm:w-[14vw] h-fit "
           />
           {userdata.libraryData.length}{" "}
           {userdata.libraryData.length == 0 ? "forge" : "forges"}
-          <button className=" bg-[#F5F5F5] px-[0.8vw] py-[0.3vw] text-[#95B611] rounded-[2vw]">
+          <button className=" bg-[#F5F5F5] px-[0.8vw] py-[0.3vw] text-[#95B611] rounded-[2vw]  sm:px-[1.5vw] sm:py-[0.7vw] sm:rounded-[3vw]">
             View <i className="bi bi-chevron-right"></i>
           </button>
         </div>

@@ -93,7 +93,7 @@ export default function Home() {
           <Header />
           <div className="w-full h-[10vw]"></div>
           {/* this is for the digital sales record  */}
-          <div className="w-full px-[2vw] py-[2vw]  h-auto">
+          <div className="w-full px-[2vw] py-[2vw]   h-auto">
             <Subscribers_wrap />
           </div>
         </>

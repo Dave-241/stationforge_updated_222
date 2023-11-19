@@ -26,6 +26,8 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
     [],
   );
 
+  const [hide_penalty_options, sethide_penalty_options] = useState(true);
+
   const [lastdownload_title, setlastdownload_title] = useState<any>("");
   const [lastdownload_time, setlastdownload_time] = useState<any>("");
   const [download_libary_arr, setdownload_libary_arr] = useState<any>([]);
@@ -57,9 +59,9 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
             case 2:
               return "Subscribers";
             case 3:
-              return "Standard Tier Subscribers";
+              return "Standard Tier";
             case 4:
-              return "Merchant Tier Subscribers";
+              return "Merchant Tier";
             default:
               return "Unknown Subscription";
           }
@@ -131,8 +133,8 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
           }
         }
         // setlastdownload_title(lastdownload_final_data.data().title)
-        console.log(originalLibraryData);
-        console.log(excludedLibraryData);
+        // console.log(originalLibraryData);
+        // console.log(excludedLibraryData);
         setall_libary_arr(originalLibraryData);
         setfiltered_libray_arr(excludedLibraryData);
         // Step 8: Set loader to false after obtaining all information
@@ -146,17 +148,17 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
   }, [uuid]); // Include uuid as a dependency to refetch data if it changes
   return (
     <>
-      <div className="w-full h-full bg-opacity-[70%] z-[999] bg-black fixed top-0 left-0 flex justify-center items-center">
-        <div className="w-[45vw] h-[40vw] max-h-[96vh] gap-[2vw] bg-white rounded-[3vw] flex flex-col px-[2vw] items-center justify-center">
+      <div className="w-full h-full sm:px-[3vw] bg-opacity-[70%] z-[999] bg-black fixed top-0 left-0 flex justify-center items-center">
+        <div className="w-[45vw] sm:w-full sm:h-[120vw] sm:gap-[4vw] h-[40vw] max-h-[96vh] gap-[2vw] bg-white sm:rounded-[5vw] rounded-[3vw] flex flex-col px-[2vw] items-center justify-center">
           {/* the first section */}
 
-          <div className="w-full h-auto flex flex-col gap-[0.75vw]   justify-center  items-center ">
-            <div className="w-full flex h-[6.2vw] justify-between  items-start  relative ">
-              <p className="border-black border-[0.1vw] w-fit rounded-[2vw] px-[1.5vw] py-[0.7vw] neuer text-[0.8vw] ">
+          <div className="w-full h-auto flex flex-col sm:gap-[3vw]  gap-[0.75vw]   justify-center  items-center ">
+            <div className="w-full  flex h-[6.2vw] sm:h-[16vw] justify-between  items-start  relative ">
+              <p className="border-black border-[0.1vw] w-fit rounded-[2vw] px-[1.5vw] py-[0.7vw] neuer text-[0.8vw] sm:text-[3vw] sm:rounded-[3vw] ">
                 {role}
               </p>
 
-              <div className="w-[6vw] overflow-hidden absolute left-[50%] translate-x-[-50%] top-0 h-[6vw] rounded-[100%]  ">
+              <div className="w-[6vw] sm:w-[16vw] sm:h-[16vw] overflow-hidden absolute left-[50%] translate-x-[-50%] top-0 h-[6vw] rounded-[100%]  ">
                 <img
                   src={
                     profile_data.avatar_url != ""
@@ -169,30 +171,32 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
               </div>
 
               <i
-                className="bi bi-x-lg text-[2vw]  cursor-pointer"
+                className="bi bi-x-lg text-[2vw] sm:text-[6vw]  cursor-pointer"
                 onClick={hide_modal}
               ></i>
             </div>
 
-            <h1 className="text-[1.2vw] neuem">{profile_data.Username}</h1>
+            <h1 className="text-[1.2vw] sm:text-[4.2vw] neuem">
+              {profile_data.Username}
+            </h1>
 
-            <div className="w-full  flex justify-between text-center gap-[1vw] items-center text-[0.9vw] text-black text-opacity-[50%] neuer">
+            <div className="w-full  flex justify-between text-center gap-[1vw] items-center text-[0.9vw] sm:text-[2.5vw] text-black text-opacity-[50%] neuer">
               <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
                 {lastdownload_time == "" && lastdownload_title == ""
                   ? "No available download"
                   : "Last download"}{" "}
                 {lastdownload_time} {lastdownload_title}
               </p>
-              <div className="w-[0.25vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+              <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
               <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
                 Downloaded {filtered_libray_arr.length} items
               </p>
-              <div className="w-[0.25vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+              <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
 
               <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
                 Renewed subscription 6 times
               </p>
-              <div className="w-[0.25vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
+              <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
 
               <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
                 Added {all_libary_arr.length} items to forge Libary
@@ -201,17 +205,19 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
           </div>
 
           {/* the profile section */}
-          <div className="w-full flex items-center flex-col gap-[1vw]">
-            <h1 className="text-[1.2vw] neuer text-center ">
+          <div className="w-full flex items-center flex-col sm:gap-[4vw] gap-[1vw]">
+            <h1 className="text-[1.2vw] sm:text-[4.5vw] neuer text-center ">
               Profile information
             </h1>
 
             <div className="w-full flex flex-wrap justify-start  gap-[2%]">
-              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw]  gap-[0.5vw]">
-                <label className="text-[0.75vw]  neuer ">Public name</label>
+              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw]  gap-[0.5vw]">
+                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                  Public name
+                </label>
                 <input
                   type="text"
-                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
                   disabled
                   value={
                     profile_data.name == ""
@@ -220,13 +226,13 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
                   }
                 />
               </div>
-              <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
-                <label className="text-[0.75vw]  neuer ">
+              <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
                   Public description
                 </label>
                 <input
                   type="text"
-                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
                   disabled
                   value={
                     profile_data.description == ""
@@ -235,11 +241,13 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
                   }
                 />
               </div>
-              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
-                <label className="text-[0.75vw]  neuer ">Public Email</label>
+              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                  Public Email
+                </label>
                 <input
                   type="text"
-                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
                   disabled
                   value={
                     profile_data.Email == ""
@@ -248,11 +256,13 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
                   }
                 />
               </div>
-              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
-                <label className="text-[0.75vw]  neuer ">Username</label>
+              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                  Username
+                </label>
                 <input
                   type="text"
-                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
                   disabled
                   value={
                     profile_data.Username == ""
@@ -261,11 +271,13 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
                   }
                 />
               </div>
-              <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
-                <label className="text-[0.75vw]  neuer ">Birthday</label>
+              <div className="w-[38%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                  Birthday
+                </label>
                 <input
                   type="text"
-                  className="rounded-[3vw] w-[80%] h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  className="rounded-[3vw] w-[80%] sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
                   disabled
                   value={
                     profile_data.birthday == ""
@@ -274,11 +286,13 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
                   }
                 />
               </div>
-              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] gap-[0.5vw]">
-                <label className="text-[0.75vw]  neuer ">Country</label>
+              <div className="w-[28%] h-auto  flex flex-col mb-[1.2vw] sm:mb-[3vw] gap-[0.5vw]">
+                <label className="sm:text-[2.5vw] text-[0.75vw]  neuer ">
+                  Country
+                </label>
                 <input
                   type="text"
-                  className="rounded-[3vw] w-full h-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
+                  className="rounded-[3vw] w-full sm:rounded-[3vw] sm:font-[400] h-[3vw] sm:h-[9vw] sm:text-[2.7vw] sm:px-[3vw]  bg-[#F0F0F0] px-[1vw] text-[0.9vw] neuem"
                   disabled
                   value={
                     profile_data.country == ""
@@ -292,18 +306,24 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
 
           {/* the ctn section */}
 
-          <div className="w-full h-auto flex     gap-[2vw]  justify-between  items-center">
-            <button className=" w-full h-[3.5vw] bg-[#CCFF00] rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]">
+          <div className="w-full h-auto flex  sm:gap-[4vw]   gap-[2vw]  justify-between  items-center">
+            <button className=" w-full h-[3.5vw] sm:h-[12vw] text-[1vw] sm:text-[3.5vw] bg-[#CCFF00] rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]">
               See All Downloads
             </button>
-            <button className=" w-full h-[3.5vw] bg-[#FF0000] text-white rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]">
+            <button
+              className=" w-full h-[3.5vw] sm:h-[12vw] text-[1vw] sm:text-[3.5vw] bg-[#FF0000] text-white rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]"
+              onClick={() => {
+                sethide_penalty_options(false);
+              }}
+            >
               Penalize
             </button>
           </div>
         </div>
       </div>
-
-      <Penalty_options />
+      {!hide_penalty_options && (
+        <Penalty_options sethide_penalty_options={sethide_penalty_options} />
+      )}
     </>
   );
 };
