@@ -45,7 +45,7 @@ export default function Home() {
 
       <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
-      <Chats_modal />
+      {/* <Chats_modal /> */}
 
       <Subscription_Hero />
       <FadeInTransition

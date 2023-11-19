@@ -191,7 +191,7 @@ export default function Home() {
 
       <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
-      <Chats_modal />
+      {/* <Chats_modal /> */}
       {mobile_faction_active && (
         <div className="w-full h-full sm:block hidden sm:top sm:relative">
           <Mobile_factions

@@ -1,6 +1,10 @@
 "use client";
 
+import Penalty_kickout from "./penalty_kickout";
+import React, { useState } from "react";
+
 const Penalty_options = ({ sethide_penalty_options }: any) => {
+  const [hide_penalty_kickout, sethide_penalty_kickout] = useState(true);
   return (
     <>
       <div
@@ -20,7 +24,12 @@ const Penalty_options = ({ sethide_penalty_options }: any) => {
           </h1>
 
           <div className="w-full flex justify-between gap-[1.5vw] items-center">
-            <button className="h-[3.5vw] sm:h-[13vw] sm:text-[3.5vw] w-full bg-[#FF0000] neuer text-white hover:bg-opacity-[80%] text-[0.9vw] rounded-[1vw] sm:rounded-[3vw]">
+            <button
+              className="h-[3.5vw] sm:h-[13vw] sm:text-[3.5vw] w-full bg-[#FF0000] neuer text-white hover:bg-opacity-[80%] text-[0.9vw] rounded-[1vw] sm:rounded-[3vw]"
+              onClick={() => {
+                sethide_penalty_kickout(false);
+              }}
+            >
               Kick out of platform
             </button>
             <button className="h-[3.5vw] sm:h-[13vw] sm:text-[3.5vw] w-full bg-[#CCFF00] neuer text-black hover:bg-opacity-[80%] text-[0.9vw] rounded-[1vw] sm:rounded-[3vw]">
@@ -29,6 +38,10 @@ const Penalty_options = ({ sethide_penalty_options }: any) => {
           </div>
         </div>
       </div>
+
+      {!hide_penalty_kickout && (
+        <Penalty_kickout sethide_penalty_kickout={sethide_penalty_kickout} />
+      )}
     </>
   );
 };
