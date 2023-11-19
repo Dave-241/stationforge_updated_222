@@ -74,6 +74,7 @@ export const Profile_Context_Dropdown = (props: any) => {
     // Update the "downloaded" field to true
     updateDoc(libraryCollectionRef, {
       downloaded: updatedoc,
+      downloadedAt: serverTimestamp(),
     })
       .then(() => {
         setdownload_product_id("");

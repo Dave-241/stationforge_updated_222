@@ -19,6 +19,7 @@ import {
   query,
   where,
   getDocs,
+  serverTimestamp,
 } from "firebase/firestore"; // Firestore modules for database operations
 import {
   getAuth,
@@ -204,6 +205,7 @@ export default function Signin_component() {
             description: "",
             step: 1,
             subscription: "Public",
+            createdAt: serverTimestamp(),
             name: "",
             avatar_url:
               "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w",

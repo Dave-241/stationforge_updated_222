@@ -185,7 +185,7 @@ export default function Home() {
     <>
       {page_loader && <Loader />}
       {forge_loader && <Forge />}
-      <div className="w-full h-fit z-[99] sm:h-[20vw]  fixed top-[0vw] ">
+      <div className="w-full h-fit z-[99] sm:h-[20vw] border2  fixed top-[-0.9vw] ">
         <Header />
       </div>
 
@@ -193,7 +193,7 @@ export default function Home() {
       {show_setting_modal && <Settings_modal />}
       <Chats_modal />
       {mobile_faction_active && (
-        <div className="w-full h-full sm:block hidden relative">
+        <div className="w-full h-full sm:block hidden sm:top sm:relative">
           <Mobile_factions
             faction_option={faction_option}
             setmobile_faction_active={setmobile_faction_active}

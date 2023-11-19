@@ -21,7 +21,7 @@ const Home_hero = () => {
   const { setpage_loader }: any = useProfile_Context();
 
   return (
-    <div className="w-full padding mt-[0.8vw] sm:hidden">
+    <div className="w-full padding pt-[0.8vw] sm:hidden">
       <div className="w-full h-[40vw]  flex gap-[1vw]">
         {/* left container */}
         <section

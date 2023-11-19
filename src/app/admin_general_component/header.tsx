@@ -19,10 +19,10 @@ import axios from "axios";
 import { useProfile_Context } from "../utils/profile_context";
 
 type HeaderProp = {
-  showModeratorBtn?: boolean
-}
+  showModeratorBtn?: boolean;
+};
 
-const Header = ({showModeratorBtn = true}: HeaderProp) => {
+const Header = ({ showModeratorBtn = true }: HeaderProp) => {
   const [nav_array, setnav_array] = useState([
     {
       link: "/admin/dashboard",
@@ -39,7 +39,7 @@ const Header = ({showModeratorBtn = true}: HeaderProp) => {
     {
       link: "/admin/postinsight",
       txt: "Posts & Insights",
-    }
+    },
   ]);
 
   initializeApp(firebaseConfig);
@@ -141,14 +141,14 @@ const Header = ({showModeratorBtn = true}: HeaderProp) => {
               />
             </div>
 
-            {showModeratorBtn &&
-                (<Link
-                  href={"/"}
-                  className="text-white border-[0.1vw] border-white border-opacity-[30%] rounded-[1.6vw] py-[0.8vw] px-[1.6vw] hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black  text-[0.8vw]"
-                >
-                  Add a moderator
-                </Link>)
-            }
+            {showModeratorBtn && (
+              <Link
+                href={"/"}
+                className="text-white border-[0.1vw] border-white border-opacity-[30%] rounded-[1.6vw] py-[0.8vw] px-[1.6vw] hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black  text-[0.8vw]"
+              >
+                Add a moderator
+              </Link>
+            )}
 
             <button
               className="w-[2.5vw] h-[2.5vw] border-[0.1vw] border-white border-opacity-[30%] flex justify-center items-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    text-white text-[1.2vw] rounded-[100%]"
