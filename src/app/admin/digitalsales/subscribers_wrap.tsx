@@ -14,8 +14,8 @@ import {
 } from "firebase/firestore";
 import Sub_user_profile from "@/app/admin_general_component/sub_user_profile";
 import Subscription_statistics from "./sub_statistics";
+import Each_subscriber_loadeer from "./each_sub_loader";
 const Subscribers_wrap = () => {
-  const items = ["", "", "", ""];
   const subscribe_filter = [
     {
       step: 0,
@@ -30,8 +30,11 @@ const Subscribers_wrap = () => {
       msg: "Merchant ",
     },
   ];
+
+  const user_loading_loader = ["", "", "", "", ""];
   const [allusers, setallusers] = useState<any>([]);
   const [allusers_copy, setallusers_copy] = useState<any>([]);
+  const [allusers_loading, setallusers_loading] = useState<any>(true);
   const [hideProfile, sethideProfile] = useState(true);
   const [selected_filer, setselected_filer] = useState(0);
   const [subscriber_stats, setsubscriber_stats] = useState({});
@@ -96,6 +99,7 @@ const Subscribers_wrap = () => {
         // console.log("Results:", results);
         setallusers(results);
         setallusers_copy(results);
+        setallusers_loading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -145,7 +149,6 @@ const Subscribers_wrap = () => {
     } else {
       const filter_users = allusers.filter((user: any) => user.step === e);
       setallusers_copy(filter_users);
-      console.log(e);
     }
   };
   return (
@@ -196,21 +199,43 @@ const Subscribers_wrap = () => {
             <div className="w-[15%]  h-auto">Days remaining for renewal </div>
           </div>
 
-          {allusers_copy.map((e: any, index: any) => {
-            return (
-              <>
-                <Each_subscriber
-                  key={index}
-                  userdata={e}
-                  setuuid={setuuid}
-                  sethideProfile={sethideProfile}
-                  showuser_profile={showuser_profile}
-                />
+          {!allusers_loading ? (
+            <>
+              {allusers_copy.map((e: any, index: any) => {
+                return (
+                  <>
+                    <Each_subscriber
+                      key={index}
+                      userdata={e}
+                      setuuid={setuuid}
+                      sethideProfile={sethideProfile}
+                      showuser_profile={showuser_profile}
+                    />
 
-                <div className="w-full h-[0.15vw] sm:h-[1vw] bg-black bg-opacity-[12%]"></div>
-              </>
-            );
-          })}
+                    <div className="w-full h-[0.15vw] sm:h-[1vw] bg-black bg-opacity-[12%]"></div>
+                  </>
+                );
+              })}
+            </>
+          ) : (
+            <>
+              {user_loading_loader.map((e: any, index: any) => {
+                return (
+                  <>
+                    <Each_subscriber_loadeer
+                      key={index}
+                      userdata={e}
+                      setuuid={setuuid}
+                      sethideProfile={sethideProfile}
+                      showuser_profile={showuser_profile}
+                    />
+
+                    <div className="w-full h-[0.15vw] sm:h-[1vw] bg-black bg-opacity-[12%] animate-pulse"></div>
+                  </>
+                );
+              })}
+            </>
+          )}
         </div>
       </div>
 
