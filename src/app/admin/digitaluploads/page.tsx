@@ -146,7 +146,8 @@ export default function Home() {
           {/* this is for the digital sales record  */}
           <div className="w-full  flex justify-center  px-[2vw] py-[2vw]   h-auto">
             {/* this is for the factions */}
-            <div className="w-[30%] sticky top-0 left-0 h-[10vw]">
+            {/* this filter is hidden for mobile screesn */}
+            <div className="w-[30%] sm:hidden sticky top-0 left-0 h-[10vw]">
               <Filters
                 setselected_month={setselected_month}
                 selected_month={selected_month}
@@ -155,7 +156,7 @@ export default function Home() {
               />
             </div>
             {/* this is for teh product */}
-            <div className="w-[70%] h-auto   ">
+            <div className="w-[70%] sm:w-full h-auto   ">
               <Admin_Product_wrap
                 update_search_text={update_search_text}
                 setproductStats_copy={setproductStats_copy}

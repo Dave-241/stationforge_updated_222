@@ -94,7 +94,6 @@ const Admin_Product_wrap = ({
   useEffect(() => {
     setproductStats_copy(productStats);
     setproductStats_copy_filter(productStats);
-    console.log(productStats);
   }, [productStats]);
   return (
     <>
@@ -108,8 +107,8 @@ const Admin_Product_wrap = ({
         />
       )}
 
-      <div className="w-full  h-auto border-l-[0.1vw]   border-black border-opacity-[40%] flex flex-col gap-[2vw]">
-        <div className="w-full  h-auto flex items-center pl-[3vw] sm:pl-[0vw]  justify-between gap-[1.2vw]">
+      <div className="w-full sm:border-none  h-auto border-l-[0.1vw]   border-black border-opacity-[40%] flex flex-col gap-[2vw]">
+        <div className="w-full  h-auto flex items-center pl-[3vw]  sm:pl-[0vw]  justify-between gap-[1.2vw]">
           {/* the heading */}
           <h1 className="neuem text-[1.5vw]">
             All Models Added in {selected_month} {selected_year}
@@ -146,7 +145,7 @@ const Admin_Product_wrap = ({
 
         <div className="w-full h-[0.1vw] bg-black bg-opacity-[40%]"></div>
 
-        <div className="w-full  flex flex-wrap sm:pl-[0vw] pl-[3vw]  justify-start gap-[2.2%]">
+        <div className="w-full  flex flex-wrap sm:pl-[0vw] pl-[3vw]  justify-start gap-[2.2%] sm:gap-[4%]">
           {productStats_copy_filter.map((e: any, index: any) => {
             return (
               <Product

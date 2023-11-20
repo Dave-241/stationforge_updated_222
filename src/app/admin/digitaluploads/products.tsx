@@ -10,17 +10,20 @@ const Product = ({
 }: any) => {
   return (
     <>
-      <div className="w-[31.7%] rounded-[2vw] overflow-hidden auto border-black border-opacity-[17%] border-[0.1vw]  flex flex-col gap-[1vw] mb-[2.3vw]">
+      <div className="w-[31.7%] sm:rounded-[4vw] sm:w-[48%] rounded-[2vw] overflow-hidden auto border-black border-opacity-[17%] border-[0.1vw]  flex flex-col gap-[1vw] mb-[2.3vw] sm:mb-[4vw] sm:gap-[2.5vw]">
         <div
-          className="w-full h-[20vw]  avater_bg "
+          className="w-full h-[20vw] sm:h-[50vw] overflow-hidden avater_bg "
           style={{ backgroundImage: `url(/cover.webp)` }}
         >
           <img src={data.cover_png} alt="model img" className="w-full h-fit " />
         </div>
-        <p className="text-[0.9vw] neuem px-[1vw]"> {data.title}</p>{" "}
-        <div className="w-full mb-[1.2vw] flex justify-between items-center px-[1vw] ">
+        <p className="text-[0.9vw] neuem px-[1vw] sm:text-[3vw]">
+          {" "}
+          {data.title}
+        </p>{" "}
+        <div className="w-full mb-[1.2vw] sm:mb-[3vw] flex justify-between items-center px-[1vw] ">
           <button
-            className="bg-[#CCFF00] hover:bg-opacity-[40%] h-[3vw] w-[8vw] text-[0.8vw] rounded-[1vw]"
+            className="bg-[#CCFF00] sm:text-[2.7vw] sm:h-[7vw] sm:w-[28vw] sm:rounded-[1.6vw] hover:bg-opacity-[40%] h-[3vw] w-[8vw] text-[0.8vw] rounded-[1vw]"
             onClick={() => {
               setproduct_id(data.productId);
               setinfo_download(data.downloadedItemCount);
@@ -31,7 +34,7 @@ const Product = ({
           >
             View more details
           </button>
-          <p className="text-black text-opacity-[40%] text-[0.8vw] neuer w-fit">
+          <p className="text-black text-opacity-[40%] sm:text-[2.3vw] sm:text-center text-[0.8vw] neuer w-fit">
             Downloaded {data.downloadedItemCount} Times
           </p>
         </div>
