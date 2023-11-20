@@ -237,22 +237,6 @@ const Admin_Post_wrap = () => {
       });
   };
 
-  // useEffect(() => {
-  //   if (search_value == "") {
-  //     settrimmedpost(posts);
-  //   } else {
-  //     const searcher = new JsonSearch(posts, {
-  //       indice: {
-  //         searching_title: "searching_title", // search the `title`
-  //         // name: "author", // search the `author` but it's renamed as `name` in queries
-  //       },
-  //     });
-
-  //     let foundObjects = searcher.query(search_value);
-  //     settrimmedpost(foundObjects);
-  //   }
-  // }, [search_value, posts]);
-
   useEffect(() => {
     if (search_value === "") {
       settrimmedpost(posts);
