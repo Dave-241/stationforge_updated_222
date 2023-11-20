@@ -248,7 +248,7 @@ const Subscribers_wrap = () => {
                       showuser_profile={showuser_profile}
                     />
 
-                    <div className="w-full h-[0.15vw] sm:h-[1vw] bg-black bg-opacity-[12%] animate-pulse"></div>
+                    <div className="w-full h-[0.15vw] sm:h-[0.5vw] bg-black bg-opacity-[12%] animate-pulse"></div>
                   </>
                 );
               })}
