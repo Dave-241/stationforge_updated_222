@@ -25,6 +25,7 @@ const Forge_Reduction_Confirmation = ({
   const db = getFirestore(app);
   const [button_text, setbutton_text] = useState("Yes");
   const update_forge_allocation = () => {
+    setbutton_text("Updating ");
     const user_ref = doc(db, "users", user_doc_id);
     updateDoc(user_ref, {
       allocations: selected_option,
