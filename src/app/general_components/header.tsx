@@ -47,7 +47,7 @@ const Header = () => {
   const [links, setlinks] = useState([
     {
       txt: "Physical store",
-      link: "/null",
+      link: "https://malkainstaging.website/forge/shop/",
     },
     {
       txt: " Digital store",
@@ -59,7 +59,7 @@ const Header = () => {
     },
     {
       txt: "    Community",
-      link: "/null333",
+      link: "https://malkainstaging.website/forge/community/",
     },
     {
       txt: "    Support",
@@ -226,16 +226,16 @@ const Header = () => {
         {/* logo image */}
         <div className="sm:hidden">
           <Link
-            href="/"
+            href="https://malkainstaging.website/forge/"
             aria-label="StationForge Home"
             className="= w-[10vw] h-auto flex"
-            onClick={() => {
-              if (pathname == "/") {
-                setpage_loader(false);
-              } else {
-                setpage_loader(true);
-              }
-            }}
+            // onClick={() => {
+            //   if (pathname == "/") {
+            //     setpage_loader(false);
+            //   } else {
+            //     setpage_loader(true);
+            //   }
+            // }}
           >
             <Image
               src={logo}

@@ -48,7 +48,7 @@ const Custom_subscription_Header = () => {
   const [links, setlinks] = useState([
     {
       txt: "Physical store",
-      link: "/null",
+      link: "https://malkainstaging.website/forge/shop/",
     },
     {
       txt: " Digital store",
@@ -60,7 +60,7 @@ const Custom_subscription_Header = () => {
     },
     {
       txt: "    Community",
-      link: "/null333",
+      link: "https://malkainstaging.website/forge/community/",
     },
     {
       txt: "    Support",
