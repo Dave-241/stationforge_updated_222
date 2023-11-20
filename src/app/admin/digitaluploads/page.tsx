@@ -118,7 +118,22 @@ export default function Home() {
       setproductStats_monthly_copy(filteredData);
       setselected_month("");
     }
-  }, [selected_year]);
+  }, [selected_year, productStats_copy]);
+
+  // useefect for showing the intial data with the current year
+
+  // useEffect(() => {
+  //   if (selected_year !== "") {
+  //     const lowerCaseSelectedYear = selected_year.toString().toLowerCase();
+  //     // Assuming 'data' is your data structure
+  //     const filteredData = productStats_copy.filter((data: any) =>
+  //       data.year.toString().includes(lowerCaseSelectedYear),
+  //     );
+  //     setproductStats_copy_filter(filteredData);
+  //     setproductStats_monthly_copy(filteredData);
+  //     setselected_month("");
+  //   }
+  // }, [selected_year]);
 
   const update_search_text = (e: any) => {
     setsearch_value(e);
@@ -156,6 +171,7 @@ export default function Home() {
                 selected_month={selected_month}
                 selected_year={selected_year}
                 setselected_year={setselected_year}
+                productStats_copy={productStats_copy}
               />
             </div>
             {/* this filter is for mobile */}

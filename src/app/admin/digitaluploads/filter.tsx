@@ -7,6 +7,7 @@ const Filters = ({
   setselected_month,
   selected_year,
   setselected_year,
+  productStats_copy,
 }: any) => {
   const monthNames = [
     "January",
@@ -35,7 +36,7 @@ const Filters = ({
   useEffect(() => {
     setselected_year(currentYear);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [productStats_copy]);
 
   return (
     <>
