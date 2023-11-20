@@ -13,7 +13,7 @@ const Subscription_statistics = ({
         <>
           <div className="w-full sm:flex-col sm:px-[1.5vw] sm:py-[5vw] gap-[4vw] py-[3vw]  flex justify-center items-center">
             <div className="w-full px-[2vw] sm:px-[4vw] border-[#A9A7A7] border-[0.1vw]  bg-white h-[19vw] sm:h-[43vw] sm:rounded-[5vw] gap-[2vw] rounded-[2vw] flex justify-center items-center flex-col">
-              <h1 className="neuem text-[2.3vw] sm:text-[6vw]">
+              <h1 className="neuem text-[2.3vw]  sm:text-[4.8vw]">
                 Standard Tier
               </h1>
               <div className="w-full  flex justify-between items-center ">
@@ -40,7 +40,7 @@ const Subscription_statistics = ({
               </div>
             </div>
             <div className="w-full px-[2vw] sm:px-[4vw] border-[#A9A7A7] border-[0.1vw]  bg-white h-[19vw] sm:h-[43vw] sm:rounded-[5vw] gap-[2vw] rounded-[2vw] flex justify-center items-center flex-col">
-              <h1 className="neuem text-[2.3vw] sm:text-[6vw]">
+              <h1 className="neuem text-[2.3vw]  sm:text-[4.8vw]">
                 Merchant Tier
               </h1>
               <div className="w-full  flex justify-between items-center ">
@@ -67,7 +67,7 @@ const Subscription_statistics = ({
               </div>
             </div>
             <div className="w-full px-[2vw] sm:px-[4vw] border-[#A9A7A7] border-[0.1vw]  bg-white h-[19vw] sm:h-[43vw] sm:rounded-[5vw] gap-[2vw] rounded-[2vw] flex justify-center items-center flex-col">
-              <h1 className="neuem text-[2.3vw] sm:text-[6vw]">
+              <h1 className="neuem text-[2.3vw]  sm:text-[4.8vw]">
                 All Subscribers
               </h1>
               <div className="w-full  flex justify-between items-center ">
