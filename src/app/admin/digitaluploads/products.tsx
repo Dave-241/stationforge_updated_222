@@ -10,7 +10,7 @@ const Product = ({
 }: any) => {
   return (
     <>
-      <div className="w-[31.7%] sm:rounded-[4vw] sm:w-[48%] rounded-[2vw] overflow-hidden auto border-black border-opacity-[17%] border-[0.1vw]  flex flex-col gap-[1vw] mb-[2.3vw] sm:mb-[4vw] sm:gap-[2.5vw]">
+      <div className="w-[31.7%] sm:rounded-[4vw] sm:w-[48%] rounded-[2vw] overflow-hidden auto border-black border-opacity-[17%] border-[0.1vw] sm:border-[0.35vw]  flex flex-col gap-[1vw] mb-[2.3vw] sm:mb-[4vw] sm:gap-[2.5vw]">
         <div
           className="w-full h-[20vw] sm:h-[50vw] overflow-hidden avater_bg "
           style={{ backgroundImage: `url(/cover.webp)` }}
