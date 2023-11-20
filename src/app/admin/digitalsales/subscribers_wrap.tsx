@@ -177,18 +177,18 @@ const Subscribers_wrap = () => {
           forge_modal_heading={forge_modal_heading}
         />
       )}
-      <div className="w-full sm:overflow-x-scroll sm:pb-[8vw] sm:pt-[5vw]  sm:rounded-[4vw] pt-[1vw]  pb-[3vw] px-[1.5vw]   rounded-[2vw] bg-white flex-col">
+      <div className="w-full   sm:pb-[8vw] sm:pt-[5vw]  sm:rounded-[4vw] pt-[1vw]  pb-[3vw] px-[1.5vw]   rounded-[2vw] bg-white flex-col">
         {/* this is for the mini header on here */}
         <div className="w-full sm:flex-col sm:gap-[3vw] sm:items-start pt-[1vw] pb-[2vw] h-auto gap-[1.5vw] flex justify-start items-center">
           <h1 className="neuem text-[1.6vw] sm:text-[5vw] ">
             ALL USERS & SUBSCRIBERS
           </h1>
-          <div className="w-auto flex gap-[0.6vw] sm:gap[1vw] sm:px-[2vw] sm:py-[2vw] px-[0.6vw] py-[0.2vw] border-[0.1vw]  border-black border-opacity-[50%] rounded-[0.7vw]">
+          <div className="w-auto flex gap-[0.6vw] sm:rounded-[3vw] sm:gap[1vw] sm:px-[2vw] sm:py-[2vw] px-[0.6vw] py-[0.2vw] border-[0.1vw]  border-black border-opacity-[50%] rounded-[0.7vw]">
             {subscribe_filter.map((e: any, index: any) => {
               return (
                 <button
                   key={index}
-                  className="neuer sm:text-[3.5vw] sm:h-[8vw] sm:w-[20vw] text-[1vw] h-[3vw] rounded-[0.7vw] w-[6vw]  text-black text-opacity-[50%]"
+                  className="neuer sm:rounded-[3vw] sm:text-[3.5vw] sm:h-[8vw] sm:w-[20vw] text-[1vw] h-[3vw] rounded-[0.7vw] w-[6vw]  text-black text-opacity-[50%]"
                   style={{
                     backgroundColor:
                       e.step == selected_filer ? "#CCFF00" : "transparent",
@@ -206,57 +206,60 @@ const Subscribers_wrap = () => {
           </div>
         </div>
 
-        <div className="w-full sm:w-[250vw] min-h-[30vw] sm:min-h-[80vw]  sm:gap-[5vw] flex-col  flex gap-[1.3vw]">
-          <div className="w-full sm:py-[3vw]  flex justify-between items-center neuer py-[1vw] text-[1vw] sm:text-[3.2vw] font-[900]">
-            <div className="w-[25%]  h-auto">Name</div>
-            <div className="w-[20%]  h-auto">Join Date</div>
-            <div className="w-[20%]  h-auto">Last Subscription</div>
-            <div className="w-[20%]  h-auto">Number of forges downloaded</div>
-            <div className="w-[15%]  h-auto">Days remaining for renewal </div>
+        <div className="w-full sm:overflow-x-scroll">
+          <div className="w-full  sm:w-[250vw] min-h-[30vw] sm:min-h-[80vw]  sm:gap-[5vw] flex-col  flex gap-[1.3vw]">
+            <div className="w-full sm:py-[3vw]  flex justify-between items-center neuer py-[1vw] text-[1vw] sm:text-[3.2vw] font-[900]">
+              <div className="w-[25%]  h-auto">Name</div>
+              <div className="w-[20%]  h-auto">Join Date</div>
+              <div className="w-[20%]  h-auto">Last Subscription</div>
+              <div className="w-[20%]  h-auto">Number of forges downloaded</div>
+              <div className="w-[15%]  h-auto">Days remaining for renewal </div>
+            </div>
+
+            {!allusers_loading ? (
+              <>
+                {allusers_copy.map((e: any, index: any) => {
+                  return (
+                    <>
+                      <Each_subscriber
+                        key={index}
+                        userdata={e}
+                        setuuid={setuuid}
+                        sethideProfile={sethideProfile}
+                        showuser_profile={showuser_profile}
+                        setcustom_all_libary_arr={setcustom_all_libary_arr}
+                        sethide_display_forge_modal={
+                          sethide_display_forge_modal
+                        }
+                      />
+
+                      <div className="w-full h-[0.15vw] sm:h-[1vw] bg-black bg-opacity-[12%]"></div>
+                    </>
+                  );
+                })}
+              </>
+            ) : (
+              <>
+                {user_loading_loader.map((e: any, index: any) => {
+                  return (
+                    <>
+                      <Each_subscriber_loadeer
+                        key={index}
+                        userdata={e}
+                        setuuid={setuuid}
+                        sethideProfile={sethideProfile}
+                        showuser_profile={showuser_profile}
+                      />
+
+                      <div className="w-full h-[0.15vw] sm:h-[0.5vw] bg-black bg-opacity-[12%] animate-pulse"></div>
+                    </>
+                  );
+                })}
+              </>
+            )}
           </div>
-
-          {!allusers_loading ? (
-            <>
-              {allusers_copy.map((e: any, index: any) => {
-                return (
-                  <>
-                    <Each_subscriber
-                      key={index}
-                      userdata={e}
-                      setuuid={setuuid}
-                      sethideProfile={sethideProfile}
-                      showuser_profile={showuser_profile}
-                      setcustom_all_libary_arr={setcustom_all_libary_arr}
-                      sethide_display_forge_modal={sethide_display_forge_modal}
-                    />
-
-                    <div className="w-full h-[0.15vw] sm:h-[1vw] bg-black bg-opacity-[12%]"></div>
-                  </>
-                );
-              })}
-            </>
-          ) : (
-            <>
-              {user_loading_loader.map((e: any, index: any) => {
-                return (
-                  <>
-                    <Each_subscriber_loadeer
-                      key={index}
-                      userdata={e}
-                      setuuid={setuuid}
-                      sethideProfile={sethideProfile}
-                      showuser_profile={showuser_profile}
-                    />
-
-                    <div className="w-full h-[0.15vw] sm:h-[0.5vw] bg-black bg-opacity-[12%] animate-pulse"></div>
-                  </>
-                );
-              })}
-            </>
-          )}
         </div>
       </div>
-
       <div className="w-full h-[2vw] sm:h-[10vw]"></div>
     </>
   );
