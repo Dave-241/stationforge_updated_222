@@ -41,9 +41,13 @@ export default function Home() {
   const [selected_month, setselected_month] = useState("");
   const [selected_year, setselected_year] = useState("");
   const [productStats_copy, setproductStats_copy] = useState<any>([]);
+  const [productStats_monthly_copy, setproductStats_monthly_copy] =
+    useState<any>([]);
   const [productStats_copy_filter, setproductStats_copy_filter] = useState<any>(
     [],
   );
+
+  const [search_value, setsearch_value] = useState("");
 
   initializeApp(firebaseConfig);
   const auth: any = getAuth();
@@ -86,15 +90,17 @@ export default function Home() {
   }, []);
 
   // useEffect for filtering based on selected_month
-  // useEffect(() => {
-  //   if (selected_month !== "") {
-  //     const lowerCaseSelectedMonth = selected_month.toLowerCase();
-  //     const filteredMonths = productStats_copy_filter.filter((month) =>
-  //       month.toLowerCase().includes(lowerCaseSelectedMonth),
-  //     );
-  //     console.log("Filtered Months:", filteredMonths);
-  //   }
-  // }, [selected_month]);
+  useEffect(() => {
+    if (selected_month == "" && productStats_monthly_copy.length > 0) {
+      setproductStats_copy_filter(productStats_monthly_copy);
+    } else if (selected_month !== "" && productStats_monthly_copy.length > 0) {
+      const lowerCaseSelectedMonth = selected_month;
+      const filteredData = productStats_monthly_copy.filter((data: any) =>
+        data.monthAdded.includes(lowerCaseSelectedMonth),
+      );
+      setproductStats_copy_filter(filteredData);
+    }
+  }, [selected_month]);
 
   // useEffect for filtering based on selected_year
   // useEffect for filtering based on selected_year
@@ -105,10 +111,29 @@ export default function Home() {
       const filteredData = productStats_copy.filter((data: any) =>
         data.year.toString().includes(lowerCaseSelectedYear),
       );
-      console.log("Filtered Data:", filteredData);
       setproductStats_copy_filter(filteredData);
+      setproductStats_monthly_copy(filteredData);
+      setselected_month("");
     }
   }, [selected_year]);
+
+  const update_search_text = (e: any) => {
+    setsearch_value(e);
+  };
+
+  useEffect(() => {
+    // console.log(search_value);
+    if (search_value == "" && productStats_monthly_copy.length > 0) {
+      setproductStats_copy_filter(productStats_monthly_copy);
+    } else if (search_value !== "" && productStats_monthly_copy.length > 0) {
+      const lowerCasesearch_value = search_value.toLowerCase();
+      const filteredData = productStats_monthly_copy.filter((data: any) =>
+        data.title.toLowerCase().includes(lowerCasesearch_value),
+      );
+      setselected_month("");
+      setproductStats_copy_filter(filteredData);
+    }
+  }, [search_value]);
 
   return (
     <>
@@ -121,7 +146,7 @@ export default function Home() {
           {/* this is for the digital sales record  */}
           <div className="w-full  flex justify-center  px-[2vw] py-[2vw]   h-auto">
             {/* this is for the factions */}
-            <div className="w-[30%]  h-[10vw]">
+            <div className="w-[30%] sticky top-0 left-0 h-[10vw]">
               <Filters
                 setselected_month={setselected_month}
                 selected_month={selected_month}
@@ -132,10 +157,13 @@ export default function Home() {
             {/* this is for teh product */}
             <div className="w-[70%] h-auto   ">
               <Admin_Product_wrap
+                update_search_text={update_search_text}
                 setproductStats_copy={setproductStats_copy}
                 productStats_copy={productStats_copy}
+                selected_month={selected_month}
                 setproductStats_copy_filter={setproductStats_copy_filter}
                 productStats_copy_filter={productStats_copy_filter}
+                selected_year={selected_year}
               />
             </div>
           </div>

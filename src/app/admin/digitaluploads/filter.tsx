@@ -39,12 +39,12 @@ const Filters = ({
 
   return (
     <>
-      <div className="w-full  h-auto  flex flex-col gap-[2vw]">
+      <div className="w-full  h-auto  flex flex-col gap-[2vw] ">
         <h1 className="neuem text-center  text-[2.67vw]">Digital Uploads</h1>
 
         <div className="w-full h-[0.1vw] bg-black bg-opacity-[40%]"></div>
 
-        <div className="w-full  px-[3vw] flex flex-col mb-[4vw] gap-[1vw]">
+        <div className="w-full  px-[3vw] flex flex-col mb-[2vw] gap-[1vw]">
           <h1 className="neuer text-[1.2vw] px-[1vw] ">Select year</h1>
 
           <select

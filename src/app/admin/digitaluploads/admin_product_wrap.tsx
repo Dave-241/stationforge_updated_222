@@ -24,6 +24,9 @@ const Admin_Product_wrap = ({
   setproductStats_copy,
   setproductStats_copy_filter,
   productStats_copy_filter,
+  update_search_text,
+  selected_year,
+  selected_month,
 }: any) => {
   const { setpage_loader }: any = useProfile_Context();
 
@@ -108,7 +111,9 @@ const Admin_Product_wrap = ({
       <div className="w-full  h-auto border-l-[0.1vw]   border-black border-opacity-[40%] flex flex-col gap-[2vw]">
         <div className="w-full  h-auto flex items-center pl-[3vw] sm:pl-[0vw]  justify-between gap-[1.2vw]">
           {/* the heading */}
-          <h1 className="neuem text-[1.5vw]">All Models Added This Month</h1>
+          <h1 className="neuem text-[1.5vw]">
+            All Models Added in {selected_month} {selected_year}
+          </h1>
 
           <div className="w-auto  items-center  flex justify-center   relative ">
             <div className="absolute h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
@@ -123,7 +128,7 @@ const Admin_Product_wrap = ({
               placeholder="Search model"
               className="h-[3vw] w-[23vw]  text-black neuer text-[0.9vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] placeholder:text-black neuer bg-[#000000] bg-opacity-[10%]  border-white border-opacity-[30%] border-[0.1vw]"
               onChange={(e) => {
-                // setsearch_value(e.target.value);
+                update_search_text(e.target.value);
               }}
             />
           </div>

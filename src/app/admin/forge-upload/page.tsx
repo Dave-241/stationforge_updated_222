@@ -209,7 +209,25 @@ export default function Home() {
   ) => {
     const storage = getStorage();
     abortControllerRef.current = new AbortController();
+    const date = new Date();
+
     const year = new Date().getFullYear();
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const currentMonthName = monthNames[date.getMonth()];
+
     const randomNumber = Math.floor(Math.random() * 9) + 1;
     addDoc(collection(db, "products"), {
       cover_png: "",
@@ -222,6 +240,7 @@ export default function Home() {
       title: selected_text,
       year: year,
       // random: randomNumber,
+      monthAdded: currentMonthName,
       createdAt: serverTimestamp(),
     })
       .then(async (res) => {
