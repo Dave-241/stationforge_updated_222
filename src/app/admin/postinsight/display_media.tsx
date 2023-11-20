@@ -42,7 +42,6 @@ const Display_media = (props: any) => {
     if (img_display_arr.length == 0) {
       return setimg_display_show(false);
     }
-    console.log(img_display);
   }, [img_display_arr, img_display]);
   //   const isVideo = videoExtensions.some((ext) =>
   //     img_display.includes(`.${ext}`),
