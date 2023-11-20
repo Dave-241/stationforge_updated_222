@@ -10,6 +10,7 @@ import {
   getFirestore,
   serverTimestamp,
 } from "firebase/firestore";
+import Image from "next/image";
 
 const Review = (props: any) => {
   const {
@@ -106,9 +107,12 @@ const Review = (props: any) => {
                     className="w-[4vw] h-[4vw] overflow-hidden sm:w-[10vw] sm:h-[10vw] avater_bg  rounded-[100%]"
                     style={{ backgroundImage: "url(/cover.webp)" }}
                   >
-                    <img
+                    <Image
                       src={e.avatar}
                       alt="user avatar"
+                      unoptimized
+                      width="0"
+                      height="0"
                       className="h-full w-full"
                     />
                   </div>
