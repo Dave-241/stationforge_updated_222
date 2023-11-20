@@ -229,13 +229,13 @@ const Header = () => {
             href="https://malkainstaging.website/forge/"
             aria-label="StationForge Home"
             className="= w-[10vw] h-auto flex"
-            // onClick={() => {
-            //   if (pathname == "/") {
-            //     setpage_loader(false);
-            //   } else {
-            //     setpage_loader(true);
-            //   }
-            // }}
+            onClick={() => {
+              if (pathname == "/") {
+                setpage_loader(false);
+              } else {
+                setpage_loader(true);
+              }
+            }}
           >
             <Image
               src={logo}
