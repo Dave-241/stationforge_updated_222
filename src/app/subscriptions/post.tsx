@@ -400,7 +400,7 @@ const Post = (props: any) => {
                     <img
                       src={e.link}
                       alt={index + "bg images"}
-                      className="h-fit w-full scale-[2]"
+                      className="h-full w-full scale-[2]"
                     />
                   </div>
                 );

@@ -416,7 +416,7 @@ const Admin_Post = (props: any) => {
                     <img
                       src={e.link}
                       alt={index + "bg images"}
-                      className="h-fit sm:h-full w-full"
+                      className="h-full sm:h-full w-full"
                     />
                   </div>
                 );
