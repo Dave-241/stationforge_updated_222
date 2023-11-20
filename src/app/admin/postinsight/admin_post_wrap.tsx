@@ -273,7 +273,7 @@ const Admin_Post_wrap = () => {
     <>
       {!edit_post ? (
         <>
-          <PostAnalytics />
+          {/* <PostAnalytics /> */}
           <div className="w-full flex h-fit justify-center items-center py-[1vw]  gap-[1.4vw]">
             <h2 className="text-center neuem text-[2.7vw]  capitalize ">
               All Posts And Insights
@@ -325,7 +325,8 @@ const Admin_Post_wrap = () => {
               : null}
             {post_loading ? (
               <>
-                <Admin_Post_preloader /> <Admin_Post_preloader />
+                <Admin_Post_preloader /> <Admin_Post_preloader />{" "}
+                <Admin_Post_preloader />
               </>
             ) : null}
           </div>

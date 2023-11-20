@@ -326,47 +326,6 @@ const Admin_Post = (props: any) => {
       });
   };
 
-  // //   for deleting the files in the folder and all of that
-  // const deleteFilesInFolder = async (folderPath: any) => {
-  //   const storage = getStorage();
-  //   const folderRef = ref(storage, folderPath);
-
-  //   try {
-  //     // Optionally, delete the folder itself
-  //     // Note: The folder must be empty for this to work
-  //     // await deleteObject(folderRef);
-
-  //     if (postdata.images.length > 0) {
-  //       setdelete_info("Deleting Media");
-  //       // List all files in the folder
-  //       const listResult = await listAll(folderRef);
-
-  //       // Iterate through files and delete each one
-  //       const deletePromises = listResult.items.map((item) =>
-  //         deleteObject(item),
-  //       );
-
-  //       // Wait for all delete operations to complete
-  //       await Promise.all(deletePromises);
-  //       setdelete_info("Deleted");
-  //       setpost_loading(true);
-  //       setTimeout(() => {
-  //         setpost_loading(false);
-  //       }, 500);
-  //       setshowdeletemodal(false);
-  //     } else {
-  //       setpost_loading(true);
-  //       setTimeout(() => {
-  //         setpost_loading(false);
-  //       }, 500);
-  //       setdelete_info("Deleted");
-  //       setshowdeletemodal(false);
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error deleting files in folder '${folderPath}':`, error);
-  //   }
-  // };
-
   useEffect(() => {
     // Set a timer to reset the text after 1000 milliseconds (1 second)
     const timer = setTimeout(() => {
@@ -381,24 +340,24 @@ const Admin_Post = (props: any) => {
   return (
     <>
       <section
-        className={` w-[58vw] h-auto flex flex-col py-[4vw] gap-[3vw]  bg-[white] rounded-[1.5vw]`}
+        className={` w-[58vw] h-auto sm:w-full sm:gap-[5vw] sm:rounded-[3vw] flex flex-col py-[4vw] gap-[3vw] sm:py-[10vw]  bg-[white] rounded-[1.5vw]`}
         id={id}
         style={{ order: order }}
       >
         {/*the heading */}
 
         <div className="w-full px-[4vw] flex flex-col gap-[0.7vw]  items-start">
-          <div className="w-full flex items-center text-[1vw] gap-[0.5vw] text-opacity-[70%] text-[#010101] neuer">
+          <div className="w-full flex items-center text-[1vw] gap-[0.5vw] text-opacity-[70%] text-[#010101] neuer  sm:gap-[1vw] sm:text-[2.6vw]">
             <p className="">{postdata.timeAgo}</p>
-            <div className="rounded-[100%] bg-[#010101] bg-opacity-[30%] h-[0.3vw] w-[0.3vw]"></div>{" "}
+            <div className="rounded-[100%] sm:h-[0.9vw] sm:w-[0.9vw] bg-[#010101] bg-opacity-[30%] h-[0.3vw] w-[0.3vw]"></div>{" "}
             <p>{postdata.exactTime}</p>
           </div>
           <div className="flex w-full justify-between items-center ">
-            <h2 className="text-[#010101] text-[2.2vw] neuem capitalize">
+            <h2 className="text-[#010101] text-[2.2vw] neuem capitalize sm:text-[5vw]">
               {postdata.postData.title}
             </h2>
-            {postdata.latest && (
-              <span className="py-[1vw] px-[2vw] rounded-[1.5vw] bg-[#CCFF00] neuer text-[1.2vw]">
+            {!postdata.latest && (
+              <span className="py-[1vw] sm:px-[4vw] sm:py-[2vw] sm:text-[4vw] px-[2vw] rounded-[1.5vw] bg-[#CCFF00] neuer text-[1.2vw]">
                 Latest Post
               </span>
             )}
@@ -406,7 +365,7 @@ const Admin_Post = (props: any) => {
         </div>
         {/* the images */}
         {postdata.images.length > 0 && (
-          <div className="w-full flex flex-wrap gap-[1vw] relative  justify-center items-center px-[0vw]">
+          <div className="w-full border2 flex flex-wrap  gap-[1vw] sm:gap-[1.5vw]  relative  justify-center items-center px-[0vw]">
             {postdata.trimmedimages.map((e: any, index: any) => {
               const isVideoLink = videoExtensions.some((ext) =>
                 e.link.includes(`.${ext}`),
@@ -416,7 +375,10 @@ const Admin_Post = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-[28vw]   relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+                    className="w-[28vw] sm:w-[44.5vw] avater_bg sm:h-[36vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+                    style={{
+                      backgroundImage: `url(/subscription/video_loader.webp)`,
+                    }}
                     // style={{
                     //   backgroundImage: `url(/subscription/video_loader.webp)`,
                     // }}
@@ -441,8 +403,8 @@ const Admin_Post = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-[28vw]   relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
-                    style={{ backgroundImage: `url(${e.link})` }}
+                    className="w-[28vw] sm:w-[44.5vw] sm:h-[36vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg avater_bg rounded-[1.5vw] overflow-hidden "
+                    style={{ backgroundImage: "url(/cover.webp)" }}
                     onClick={() => {
                       setvideo(false);
                       setimg_display_arr(postdata.images);
@@ -462,14 +424,14 @@ const Admin_Post = (props: any) => {
             })}
             {postdata.images.length > 4 && (
               <div
-                className="absolute right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
+                className="absolute sm:w-[44.7vw] sm:h-[36.1vw] sm:right-[0.67vw] right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
                 onClick={() => {
                   setimg_display_arr(postdata.images);
                   setimg_display(postdata.images[3].link);
                   setimg_display_show(true);
                 }}
               >
-                <p className="neuem text-[4.2vw] text-[white] text-center ">
+                <p className="neuem text-[4.2vw] sm:text-[10vw] text-[white] text-center ">
                   +{postdata.images.length - 4}
                 </p>
               </div>
