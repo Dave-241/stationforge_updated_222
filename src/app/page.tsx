@@ -185,7 +185,7 @@ export default function Home() {
     <>
       {page_loader && <Loader />}
       {forge_loader && <Forge />}
-      <div className="w-full h-fit z-[99] sm:h-[20vw] border2  fixed top-[-0.9vw] ">
+      <div className="w-full h-fit z-[99] sm:h-[20vw]   fixed top-[-0.9vw] ">
         <Header />
       </div>
 

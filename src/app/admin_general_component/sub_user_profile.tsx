@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import Penalty_options from "./penalty_options";
 import Display_forge_modal from "./forge_display";
+import Single_Display_forge_modal from "./single_forge_display";
 const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
   const hide_modal = () => {
     sethideProfile(true);
@@ -32,6 +33,8 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
 
   const [hide_penalty_options, sethide_penalty_options] = useState(true);
   const [hide_display_forge_modal, sethide_display_forge_modal] =
+    useState(true);
+  const [hide_single_display_forge_modal, sethide_single_display_forge_modal] =
     useState(true);
 
   const [lastdownload_title, setlastdownload_title] = useState<any>("");
@@ -135,6 +138,8 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
           setlastdownload_time(relativeTime);
           if (lastdownload_final_data.exists()) {
             const download_title = lastdownload_final_data.data().title;
+            const download_data = lastdownload_final_data.id;
+            setthe_last_downloaded_data(download_data);
             setlastdownload_title(download_title);
           }
         }
@@ -285,7 +290,12 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
                 </h1>
 
                 <div className="w-full  flex justify-between text-center gap-[1vw] items-center text-[0.9vw] sm:text-[2.5vw] text-black text-opacity-[50%] neuer">
-                  <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                  <p
+                    className="w-full underline underline-offset-4 hover:text-black cursor-pointer"
+                    onClick={() => {
+                      sethide_single_display_forge_modal(false);
+                    }}
+                  >
                     {lastdownload_time == "" && lastdownload_title == ""
                       ? "No available download"
                       : "Last download"}{" "}
@@ -458,6 +468,17 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
         <Display_forge_modal
           arr_data={custom_all_libary_arr}
           sethide_display_forge_modal={sethide_display_forge_modal}
+          forge_modal_heading={forge_modal_heading}
+        />
+      )}
+
+      {!hide_single_display_forge_modal && (
+        <Single_Display_forge_modal
+          data={the_last_downloaded_data}
+          sethide_single_display_forge_modal={
+            sethide_single_display_forge_modal
+          }
+          lastdownload_time={lastdownload_time}
           forge_modal_heading={forge_modal_heading}
         />
       )}
