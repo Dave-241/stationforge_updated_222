@@ -199,6 +199,7 @@ export default function Signin_component() {
             Username: name,
             Email: email,
             userid: uid,
+            allocations: 0,
             billing_address: "",
             birthday: "",
             country: "",
