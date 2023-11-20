@@ -303,7 +303,7 @@ const Admin_Post_wrap = () => {
               sethide_pinned_modal={sethide_pinned_modal}
             />
           )}
-          <div className="w-full  flex flex-col gap-[6vw] justify-center pt-[4vw] items-center">
+          <div className="w-full  sm:gap-[10vw]  sm:px-[4vw] flex flex-col gap-[6vw] justify-center pt-[4vw] items-center">
             {!post_loading
               ? trimmedpost.map((e: any, index: any) => {
                   return (

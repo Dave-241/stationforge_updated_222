@@ -356,8 +356,8 @@ const Admin_Post = (props: any) => {
             <h2 className="text-[#010101] text-[2.2vw] neuem capitalize sm:text-[5vw]">
               {postdata.postData.title}
             </h2>
-            {!postdata.latest && (
-              <span className="py-[1vw] sm:px-[4vw] sm:py-[2vw] sm:text-[4vw] px-[2vw] rounded-[1.5vw] bg-[#CCFF00] neuer text-[1.2vw]">
+            {postdata.latest && (
+              <span className="py-[1vw] sm:px-[4vw] sm:py-[2vw] sm:text-[3vw] px-[2vw] rounded-[1.5vw] bg-[#CCFF00] neuer text-[1.2vw]">
                 Latest Post
               </span>
             )}
@@ -365,7 +365,7 @@ const Admin_Post = (props: any) => {
         </div>
         {/* the images */}
         {postdata.images.length > 0 && (
-          <div className="w-full border2 flex flex-wrap  gap-[1vw] sm:gap-[1.5vw]  relative  justify-center items-center px-[0vw]">
+          <div className="w-full  flex flex-wrap  gap-[1vw] sm:gap-[1.5vw]  relative  justify-center items-center px-[0vw]">
             {postdata.trimmedimages.map((e: any, index: any) => {
               const isVideoLink = videoExtensions.some((ext) =>
                 e.link.includes(`.${ext}`),
@@ -439,7 +439,7 @@ const Admin_Post = (props: any) => {
           </div>
         )}
 
-        <div className="w-full px-[4vw] text-[#010101] text-opacity-[50%] text-[1.2vw] flex flex-col gap-[0.7vw] items-start ">
+        <div className="w-full px-[4vw] text-[#010101] sm:text-[3.5vw]  sm:gap-[3vw] text-opacity-[50%] text-[1.2vw] flex flex-col gap-[0.7vw] items-start ">
           {showmore ? (
             <p
               className="w-[100%] neuer"
@@ -467,10 +467,10 @@ const Admin_Post = (props: any) => {
 
           {/* the icons */}
           <div className="w-full  py-[1vw]  h-auto  flex justify-between items-center">
-            <div className="w-auto flex justify-start gap-[1.7vw] ">
+            <div className="w-auto flex justify-start gap-[1.7vw] sm:gap-[4vw]">
               {" "}
               <i
-                className="bi relative bi-upload text-[#010101] text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
+                className="bi sm:text-[4vw] relative bi-upload text-[#010101] text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
                 style={{
                   color: copied == "copied url" ? "#CCFF00" : "#010101",
                 }}
@@ -482,7 +482,7 @@ const Admin_Post = (props: any) => {
                 }}
               >
                 <p
-                  className="text-[0.8vw] w-[4.5vw]  text-opacity-[70%] absolute bottom-[-0.8vw] right-[-1.8vw]"
+                  className="text-[0.8vw] sm:text-[2vw] sm:bottom-[-2vw] sm:right-[-4vw] sm:w-[10vw]  w-[4.5vw]  text-opacity-[70%] absolute bottom-[-0.8vw] right-[-1.8vw]"
                   style={{ color: "#010101" }}
                 >
                   {copied}
@@ -490,7 +490,7 @@ const Admin_Post = (props: any) => {
               </i>
               {/* this is the trash icon */}
               <i
-                className="bi hover:text-[#95B611] bi-trash text-[#010101] text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
+                className="bi hover:text-[#95B611] sm:text-[4vw] bi-trash text-[#010101] text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
                 onClick={() => {
                   setdelete_info("Delete ");
                   setshowdeletemodal(true);
@@ -498,7 +498,7 @@ const Admin_Post = (props: any) => {
               ></i>
               {/* this is the pencil icon */}
               <i
-                className="bi hover:text-[#95B611] bi-pencil text-[#010101] text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
+                className="bi hover:text-[#95B611] bi-pencil sm:text-[4vw] text-[#010101] text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
                 onClick={() => {
                   setedit_postid(postdata.postId);
                   goback();
@@ -506,7 +506,7 @@ const Admin_Post = (props: any) => {
               ></i>
               {/* this is the pinning  icon */}
               <i
-                className="bi hover:text-[#95B611] bi-pin-angle-fill text-[#010101] text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
+                className="bi hover:text-[#95B611] bi-pin-angle-fill sm:text-[4vw] text-[#010101] text-[1.3vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
                 onClick={handlepinned}
                 style={{
                   color: postdata.postData.pinned ? "#95B611" : "#010101",
@@ -514,17 +514,17 @@ const Admin_Post = (props: any) => {
               ></i>
             </div>
 
-            <div className="w-auto flex gap-[1vw] justify-end items-center ">
-              <p className="text-[1vw] text-[#CCFF00] neuer">
+            <div className="w-auto flex gap-[1vw] sm:gap-[1.6vw] justify-end items-center  ">
+              <p className="text-[1vw] text-[#CCFF00] neuer sm:text-[3vw]">
                 {postdata.likesCount}{" "}
                 {postdata.likesCount < 2 ? "Like" : "Likes"}
               </p>
-              <i className="bi hover:text-[#95B611] bi-bar-chart-fill text-[#010101] text-[1.3vw] hover:opacity-[100%] duration-[0.6s] transition opacity-[70%] cursor-pointer"></i>
+              <i className="bi hover:text-[#95B611] sm:text-[4vw]  bi-bar-chart-fill text-[#010101] text-[1.3vw] hover:opacity-[100%] duration-[0.6s] transition opacity-[70%] cursor-pointer"></i>
             </div>
           </div>
 
           <button
-            className="text-[#010101] bg-transparent neuer text-opacity-[50%]"
+            className="text-[#010101] bg-transparent neuer sm:text-[3vw]  text-opacity-[50%]"
             onClick={() => {
               // setcomment_info_data(postdata.comments);
               setshowcomment(true);
@@ -534,11 +534,11 @@ const Admin_Post = (props: any) => {
           </button>
 
           {/* the form to handle comments  */}
-          <div className="w-full h-auto  mt-[0vw] relative text-[1vw]">
+          <div className="w-full h-auto sm:text-[3vw]  mt-[0vw] relative text-[1vw]">
             <input
               type="text"
               placeholder={err ? "Login to comment" : "Write a  comment"}
-              className="w-full h-[3.4vw] rounded-[2.5vw] text-[#010101] text-opacity-[80%] px-[2vw] neuer outline-none border-[black] border-opacity-[26%] focus:border-opacity-[80%] border-[0.12vw] transition duration-[0.6s] bg-[white]"
+              className="w-full h-[3.4vw] rounded-[2.5vw] text-[#010101] text-opacity-[80%] px-[2vw] neuer outline-none border-[black] border-opacity-[26%] focus:border-opacity-[80%] border-[0.12vw] transition duration-[0.6s] bg-[white] sm:rounded-[5vw] sm:pl-[4vw] sm:pr-[12vw]  sm:border-[0.3vw] sm:h-[9vw] "
               onChange={(e: any) => {
                 setcommentvalue(e.target.value);
               }}
@@ -548,7 +548,7 @@ const Admin_Post = (props: any) => {
             <button
               type="submit"
               disabled={disable}
-              className="text-[#CCFF00]  neuer text-[1.2vw]  absolute right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
+              className="text-[#CCFF00] sm:text-[3vw] sm:right-[4vw]  neuer text-[1.2vw]  absolute right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
               onClick={() => {
                 handlecomment(postdata.postId);
               }}
