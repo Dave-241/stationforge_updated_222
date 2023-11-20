@@ -34,6 +34,7 @@ const Forge_info = ({
 
   const [allitems_arr, setallitems_arr] = useState<any>([]);
   const [hideProfile, sethideProfile] = useState<any>(true);
+  const [forge_info_is_loading, setforge_info_is_loading] = useState<any>(true);
   const [uuid, setuuid] = useState<any>("");
 
   // Initialize Firestore
@@ -93,6 +94,7 @@ const Forge_info = ({
 
         // Set the state with the array of items
         setallitems_arr(itemsArray);
+        setforge_info_is_loading(false);
       } catch (error) {
         console.error("Error fetching downloaded users info:", error);
       }
@@ -101,92 +103,141 @@ const Forge_info = ({
     fetchDownloadedUsersInfo();
   }, [product_id]);
 
-  useEffect(() => {
-    console.log(allitems_arr);
-  }, [allitems_arr]);
+  // useEffect(() => {
+  //   console.log(allitems_arr);
+  // }, [allitems_arr]);
 
-  const example = ["", "", "", "", "", "", "", ""];
+  const example = ["", "", "", ""];
   return (
     <>
       <div
-        className="w-full h-full sm:px-[5vw] bg-black bg-opacity-[80%] fixed top-0 left-0 z-[999] flex justify-center items-center"
+        className="w-full h-full sm:px-[3vw] bg-black bg-opacity-[80%] fixed top-0 left-0 z-[999] flex justify-center items-center"
         onClick={() => {
           sethideforge_info(true);
         }}
       >
         <div
-          className="w-[40vw] sm:w-full  sm:rounded-[5vw] sm:h-[46vw] sm:gap-[4vw] h-[40vw] flex-col gap-[1.2vw] px-[2vw] bg-white rounded-[1.5vw] flex justify-center items-center"
+          className="w-[40vw] sm:w-full relative sm:rounded-[5vw] sm:h-[110vw] sm:gap-[2vw] h-[40vw] flex-col gap-[1.2vw] px-[2vw] bg-white rounded-[1.5vw] flex justify-center items-center"
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
-          <div
-            className="w-[6vw] h-[6vw] sm:w-[13vw] sm:h-[13vw] avater_bg  rounded-[100%] overflow-hidden"
-            style={{ backgroundImage: `url(/cover.webp)` }}
-          >
-            <img
-              src={info_avater}
-              alt="user avater img"
-              className="w-full h-full"
-            />
-          </div>
+          <i
+            className="bi bi-x-lg text-[2vw] sm:top-[2vw] sm:right-[2vw] sm:text-[6vw] absolute top-[1vw] right-[1vw]  cursor-pointer"
+            onClick={() => {
+              sethideforge_info(true);
+            }}
+          ></i>
+          {!forge_info_is_loading ? (
+            <>
+              <div
+                className="w-[6vw] h-[6vw] sm:w-[18vw] sm:h-[18vw] avater_bg  rounded-[100%] overflow-hidden"
+                style={{ backgroundImage: `url(/cover.webp)` }}
+              >
+                <img
+                  src={info_avater}
+                  alt="user avater img"
+                  className="w-full h-full"
+                />
+              </div>
 
-          <h1 className="text-[1.5vw] neuem sm:text-[5vw]">{info_title}</h1>
+              <h1 className="text-[1.5vw] neuem sm:text-[5vw]">{info_title}</h1>
 
-          <p className="text-black text-opacity-[40%] txt-[1vw]">
-            Downloaded {info_download} Times
-          </p>
-          <p className="text-black text-opacity-[40%] txt-[1vw]">
-            Last download {allitems_arr[0]?.time} by {allitems_arr[0]?.username}
-          </p>
+              <p className="text-black text-opacity-[40%] txt-[1vw]">
+                Downloaded {info_download} Times
+              </p>
+              <p className="text-black text-opacity-[40%] text-[1vw] sm:text-[3.5vw]">
+                Last download {allitems_arr[0]?.time} by{" "}
+                {allitems_arr[0]?.username}
+              </p>
 
-          <h1 className="text-[1.2vw] neuem sm:text-[5vw]">
-            All profiles that downloaded
-          </h1>
+              <h1 className="text-[1.2vw] neuem sm:text-[5vw]">
+                All profiles that downloaded
+              </h1>
 
-          <div className="w-full h-[0.1vw] bg-black bg-opacity-[30%]"></div>
+              <div className="w-full h-[0.1vw] bg-black bg-opacity-[30%]"></div>
 
-          <div className="w-full h-[15vw] gap-[2vw] flex flex-col  items-center overflow-y-scroll">
-            {allitems_arr.map((e: any, index: any) => {
-              return (
-                <div
-                  className="w-full  px-[1vw] flex justify-between items-center"
-                  key={index}
-                >
-                  {/* the cover imag */}
-                  <div className="flex gap-[1vw] items-center">
+              <div className="w-full h-[15vw] sm:gap-[6vw] sm:h-[40vw]  gap-[2vw] flex flex-col  items-center overflow-y-scroll">
+                {allitems_arr.map((e: any, index: any) => {
+                  return (
                     <div
-                      className="w-[6vw]  overflow-hidden   h-[5vw] avater_bg rounded-[1vw]"
-                      style={{ backgroundImage: `url(/cover.webp)` }}
+                      className="w-full sm:px-[2vw]  px-[1vw] flex justify-between items-center"
+                      key={index}
                     >
-                      <img
-                        src={e.avater}
-                        alt="avater img"
-                        className="w-full h-full"
-                      />
-                    </div>
+                      {/* the cover imag */}
+                      <div className="flex gap-[1vw] sm:gap-[2vw] items-center">
+                        <div
+                          className="w-[6vw] sm:w-[14vw] sm:h-[12.5vw] sm:rounded-[2vw] overflow-hidden   h-[5vw] avater_bg rounded-[1vw]"
+                          style={{ backgroundImage: `url(/cover.webp)` }}
+                        >
+                          <img
+                            src={e.avater}
+                            alt="avater img"
+                            className="w-full h-full"
+                          />
+                        </div>
 
-                    <div className="flex flex-col gap-[1vw] ">
-                      <p className=" text-[1vw] neuem ">{e.username}</p>
-                      <p className="text-[0.9vw] neuer text-black text-opacity-[50%]">
-                        {e.time}
-                      </p>
-                    </div>
-                  </div>
+                        <div className="flex flex-col gap-[1vw] ">
+                          <p className=" text-[1vw] neuem sm:text-[4vw]">
+                            {e.username}
+                          </p>
+                          <p className="text-[0.9vw] sm:text-[3.5vw] neuer text-black text-opacity-[50%]">
+                            {e.time}
+                          </p>
+                        </div>
+                      </div>
 
-                  <button
-                    className="bg-[#F5F5F5] text-[1vw] sm:text-[3.5vw] hover:text-black h-[2.5vw] rounded-[1vw] sm:rounded-[3vw] w-[10vw] flex justify-center items-center text-[#95B611] "
-                    onClick={() => {
-                      setuuid(e.userId);
-                      sethideProfile(false);
-                    }}
-                  >
-                    View profile <i className="bi bi-chevron-right"></i>
-                  </button>
-                </div>
-              );
-            })}
-          </div>
+                      <button
+                        className="bg-[#F5F5F5] sm:h-[10vw]  sm:w-[30vw] text-[1vw] sm:text-[3.5vw] hover:text-black h-[2.5vw] rounded-[1vw] sm:rounded-[4vw] w-[10vw] flex justify-center items-center text-[#95B611] "
+                        onClick={() => {
+                          setuuid(e.userId);
+                          sethideProfile(false);
+                        }}
+                      >
+                        View profile <i className="bi bi-chevron-right"></i>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="w-[6vw] h-[6vw] sm:w-[18vw] sm:h-[18vw]  bg-[#D9D9D9] animate-pulse avater_bg  rounded-[100%] overflow-hidden"></div>
+              <div className=" bg-[#D9D9D9] animate-pulse h-[2vw] w-[20vw] sm:h-[6vw] sm:w-[38vw]"></div>
+
+              <div className=" bg-[#D9D9D9] animate-pulse h-[2vw] w-[10vw] sm:h-[6vw] sm:w-[20vw]"></div>
+              <div className=" bg-[#D9D9D9] animate-pulse h-[1.6vw] w-[25vw] sm:h-[4vw] sm:w-[70vw]"></div>
+              <div className=" bg-[#D9D9D9] animate-pulse h-[2vw] w-[18vw] sm:h-[6vw] sm:w-[30vw]"></div>
+
+              <div className="w-full h-[0.1vw] bg-black bg-opacity-[30%]"></div>
+
+              <div className="w-full h-[15vw] sm:gap-[6vw] sm:h-[40vw]  gap-[2vw] flex flex-col  items-center overflow-y-scroll">
+                {example.map((e: any, index: any) => {
+                  return (
+                    <div
+                      className="w-full sm:px-[2vw]  px-[1vw] flex justify-between items-center"
+                      key={index}
+                    >
+                      {/* the cover imag */}
+                      <div className="flex gap-[1vw] sm:gap-[2vw] items-center">
+                        <div className="w-[6vw] sm:w-[14vw] sm:h-[12.5vw] sm:rounded-[2vw] overflow-hidden  bg-[#D9D9D9] animate-pulse   h-[5vw] avater_bg rounded-[1vw]"></div>
+
+                        <div className="flex flex-col gap-[1vw] ">
+                          <div className=" bg-[#D9D9D9] animate-pulse h-[1.5vw] w-[10vw] sm:h-[4vw] sm:w-[20vw]"></div>
+                          <div className=" bg-[#D9D9D9] animate-pulse h-[1.5vw] w-[7vw] sm:h-[3vw] sm:w-[15vw]"></div>
+                        </div>
+                      </div>
+
+                      <button className=" sm:h-[10vw]  sm:w-[30vw] text-[1vw] sm:text-[3.5vw] hover:text-black h-[2.5vw] rounded-[1vw]  bg-[#D9D9D9] animate-pulse sm:rounded-[4vw] w-[10vw] flex justify-center items-center text-[#95B611] "></button>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+
+          {/* this is for the loader  */}
         </div>
       </div>
       {!hideProfile && (
