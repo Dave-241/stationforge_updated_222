@@ -15,7 +15,11 @@ const Product = ({
           className="w-full h-[20vw] sm:h-[50vw] overflow-hidden avater_bg "
           style={{ backgroundImage: `url(/cover.webp)` }}
         >
-          <img src={data.cover_png} alt="model img" className="w-full h-fit " />
+          <img
+            src={data.cover_png}
+            alt="model img"
+            className="w-full h-full "
+          />
         </div>
         <p className="text-[0.9vw] neuem px-[1vw] sm:text-[3vw]">
           {" "}
