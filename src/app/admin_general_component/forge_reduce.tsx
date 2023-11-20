@@ -39,6 +39,7 @@ const Forge_Reduction_Confirmation = ({
       })
       .catch((err) => {
         console.log("Error deleting user" + err);
+        setbutton_text("Not successfull ");
       });
   };
   return (
