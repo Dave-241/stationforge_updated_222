@@ -274,22 +274,22 @@ const Admin_Post_wrap = () => {
       {!edit_post ? (
         <>
           {/* <PostAnalytics /> */}
-          <div className="w-full flex h-fit justify-center items-center py-[1vw]  gap-[1.4vw]">
-            <h2 className="text-center neuem text-[2.7vw]  capitalize ">
+          <div className="w-full flex h-fit justify-center sm:flex-col items-center py-[1vw] sm:px-[4vw] sm:py-[3vw] sm:gap-[4vw] gap-[1.4vw]">
+            <h2 className="text-center neuem text-[2.7vw] sm:text-[5vw] capitalize ">
               All Posts And Insights
             </h2>{" "}
-            <div className="w-auto  items-center  flex justify-center   relative ">
-              <div className="absolute h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
+            <div className="w-auto sm:w-full  items-center  flex justify-center   relative ">
+              <div className="absolute h-full sm:w-[13vw]    w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
                 <Image
                   src={searchimg}
                   alt="Search icon image"
-                  className="w-[1.3vw]  h-fit"
+                  className="w-[1.3vw] sm:w-[5vw]  h-fit"
                 />
               </div>
               <input
                 type="text"
                 placeholder="Search by post title"
-                className="h-[3vw] w-[23vw]  text-black neuer text-[0.9vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] placeholder:text-black neuer bg-[#000000] bg-opacity-[10%]  border-white border-opacity-[30%] border-[0.1vw]"
+                className="h-[3vw] w-[23vw] sm:w-full sm:pl-[15vw] sm:h-[12vw] sm:rounded-[8vw] sm:text-[4vw] text-black neuer text-[0.9vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] placeholder:text-black neuer bg-[#000000] bg-opacity-[10%]  border-white border-opacity-[30%] border-[0.1vw]"
                 onChange={(e) => {
                   setsearch_value(e.target.value);
                 }}
