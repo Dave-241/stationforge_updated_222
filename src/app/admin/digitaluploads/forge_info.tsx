@@ -141,17 +141,19 @@ const Forge_info = ({
                 />
               </div>
 
-              <h1 className="text-[1.5vw] neuem sm:text-[5vw]">{info_title}</h1>
+              <h1 className="text-[1.5vw] neuem sm:text-[4.6vw]">
+                {info_title}
+              </h1>
 
-              <p className="text-black text-opacity-[40%] txt-[1vw]">
+              <p className="text-black text-opacity-[40%] txt-[1vw] sm:text-[3vw]">
                 Downloaded {info_download} Times
               </p>
-              <p className="text-black text-opacity-[40%] text-[1vw] sm:text-[3.5vw]">
+              <p className="text-black text-opacity-[40%] text-[1vw] sm:text-[3vw]">
                 Last download {allitems_arr[0]?.time} by{" "}
                 {allitems_arr[0]?.username}
               </p>
 
-              <h1 className="text-[1.2vw] neuem sm:text-[5vw]">
+              <h1 className="text-[1.2vw] neuem sm:text-[3.8vw]">
                 All profiles that downloaded
               </h1>
 
@@ -178,10 +180,10 @@ const Forge_info = ({
                         </div>
 
                         <div className="flex flex-col gap-[1vw] ">
-                          <p className=" text-[1vw] neuem sm:text-[4vw]">
+                          <p className=" text-[1vw] neuem sm:text-[3.7vw]">
                             {e.username}
                           </p>
-                          <p className="text-[0.9vw] sm:text-[3.5vw] neuer text-black text-opacity-[50%]">
+                          <p className="text-[0.9vw] sm:text-[3.3vw] neuer text-black text-opacity-[50%]">
                             {e.time}
                           </p>
                         </div>
