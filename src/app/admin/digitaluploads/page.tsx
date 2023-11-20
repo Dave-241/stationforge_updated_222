@@ -48,7 +48,7 @@ export default function Home() {
     [],
   );
 
-  const [show_mobile_filters, setshow_mobile_filters] = useState(true);
+  const [show_mobile_filters, setshow_mobile_filters] = useState(false);
 
   const [search_value, setsearch_value] = useState("");
 

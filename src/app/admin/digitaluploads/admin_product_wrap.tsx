@@ -158,9 +158,15 @@ const Admin_Product_wrap = ({
           <div className="w-full h-auto  flex justify-between items-center">
             <h1 className="neuem text-[5vw] ">Digital Uploads</h1>
 
-            <button className="bg-[#CCFF00] w-[40vw] text-[3vw] rounded-[2vw] h-[10vw]">
+            <Link
+              href={"/admin/forge-upload"}
+              onClick={() => {
+                setpage_loader(true);
+              }}
+              className="bg-[#CCFF00] flex justify-center items-center w-[40vw] text-[3vw] rounded-[2vw] h-[10vw]"
+            >
               Add Monthly Allocations
-            </button>
+            </Link>
           </div>
 
           <div className="w-full bg-black bg-opacity-[30%] h-[0.5vw]"></div>
