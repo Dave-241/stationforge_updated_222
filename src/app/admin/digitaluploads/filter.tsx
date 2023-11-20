@@ -64,7 +64,7 @@ const Filters = ({
         {/* select month */}
         <div className="w-full flex flex-col px-[3vw]  gap-[1vw]">
           <div className="w-full flex justify-between items-center ">
-            <h1 className="neuer text-[1.2vw] px-[1vw] ">Select year</h1>
+            <h1 className="neuer text-[1.2vw] px-[1vw] ">Select month</h1>
 
             <button
               className="w-[6vw] h-[3vw] hover:bg-opacity-[40%] bg-[#CCFF00] rounded-[1vw] text-[0.9vw] neuer"

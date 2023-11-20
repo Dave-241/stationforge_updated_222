@@ -34,6 +34,7 @@ import {
 } from "firebase/firestore";
 import Admin_Product_wrap from "./admin_product_wrap";
 import Filters from "./filter";
+import Mobile_Filters from "./mobile_filters";
 
 export default function Home() {
   const { page_loader, setpage_loader, setfrom }: any = useProfile_Context();
@@ -46,6 +47,8 @@ export default function Home() {
   const [productStats_copy_filter, setproductStats_copy_filter] = useState<any>(
     [],
   );
+
+  const [show_mobile_filters, setshow_mobile_filters] = useState(true);
 
   const [search_value, setsearch_value] = useState("");
 
@@ -155,6 +158,17 @@ export default function Home() {
                 setselected_year={setselected_year}
               />
             </div>
+            {/* this filter is for mobile */}
+            {show_mobile_filters && (
+              <Mobile_Filters
+                setselected_month={setselected_month}
+                selected_month={selected_month}
+                selected_year={selected_year}
+                setselected_year={setselected_year}
+                setshow_mobile_filters={show_mobile_filters}
+              />
+            )}
+
             {/* this is for teh product */}
             <div className="w-[70%] sm:w-full h-auto   ">
               <Admin_Product_wrap
