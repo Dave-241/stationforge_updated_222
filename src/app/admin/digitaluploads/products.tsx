@@ -1,6 +1,13 @@
 "use client ";
 
-const Product = ({ data, sethideforge_info, setproduct_id }: any) => {
+const Product = ({
+  data,
+  sethideforge_info,
+  setinfo_title,
+  setproduct_id,
+  setinfo_download,
+  setinfo_avater,
+}: any) => {
   return (
     <>
       <div className="w-[31.7%] rounded-[2vw] overflow-hidden auto border-black border-opacity-[17%] border-[0.1vw]  flex flex-col gap-[1vw] mb-[2.3vw]">
@@ -16,7 +23,10 @@ const Product = ({ data, sethideforge_info, setproduct_id }: any) => {
             className="bg-[#CCFF00] hover:bg-opacity-[40%] h-[3vw] w-[8vw] text-[0.8vw] rounded-[1vw]"
             onClick={() => {
               setproduct_id(data.productId);
+              setinfo_download(data.downloadedItemCount);
+              setinfo_title(data.title);
               sethideforge_info(false);
+              setinfo_avater(data.cover_png);
             }}
           >
             View more details

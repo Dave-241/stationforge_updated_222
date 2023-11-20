@@ -27,6 +27,9 @@ const Admin_Product_wrap = () => {
   const app = initializeApp(firebaseConfig);
 
   const [hideforge_info, sethideforge_info] = useState(true);
+  const [info_title, setinfo_title] = useState("");
+  const [info_download, setinfo_download] = useState("");
+  const [info_avater, setinfo_avater] = useState("");
   const [product_id, setproduct_id] = useState("");
 
   // Initialize Firestore
@@ -88,6 +91,9 @@ const Admin_Product_wrap = () => {
         <Forge_info
           sethideforge_info={sethideforge_info}
           product_id={product_id}
+          info_title={info_title}
+          info_download={info_download}
+          info_avater={info_avater}
         />
       )}
 
@@ -135,6 +141,9 @@ const Admin_Product_wrap = () => {
                 data={e}
                 sethideforge_info={sethideforge_info}
                 setproduct_id={setproduct_id}
+                setinfo_title={setinfo_title}
+                setinfo_download={setinfo_download}
+                setinfo_avater={setinfo_avater}
               />
             );
           })}
