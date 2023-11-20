@@ -23,7 +23,7 @@ const Mob_Banner = () => {
         </p>
 
         <Link
-          href={"/about"}
+          href={"https://malkainstaging.website/forge/community/"}
           className="bg-[#CCFF00] z-[99] rounded-[7vw] text-[3vw] neuer text-black py-[2.5vw] px-[5vw] hover:bg-opacity-[70%]"
           onClick={() => {
             setpage_loader(true);

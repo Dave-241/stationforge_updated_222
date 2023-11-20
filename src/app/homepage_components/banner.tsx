@@ -22,7 +22,7 @@ const Banner = () => {
         </p>
 
         <Link
-          href={"/about"}
+          href={"https://malkainstaging.website/forge/community/"}
           className="bg-[#CCFF00] z-[99] rounded-[4vw] text-[1.3vw] neuer text-black py-[1vw] px-[3.5vw] hover:bg-opacity-[70%]"
           onClick={() => {
             setpage_loader(true);
