@@ -15,12 +15,15 @@ import {
   where,
 } from "firebase/firestore";
 import Penalty_options from "./penalty_options";
+import Display_forge_modal from "./forge_display";
 const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
   const hide_modal = () => {
     sethideProfile(true);
   };
   const [role, setrole] = useState("");
   const [loading, setloading] = useState(true);
+  const [custom_all_libary_arr, setcustom_all_libary_arr] = useState<any>([]);
+  const [forge_modal_heading, setforge_modal_heading] = useState("");
   const [all_libary_arr, setall_libary_arr] = useState<any>([]);
   const [filtered_libray_arr, setfiltered_libray_arr] = useState<any>([]);
   const [the_last_downloaded_data, setthe_last_downloaded_data] = useState<any>(
@@ -28,6 +31,8 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
   );
 
   const [hide_penalty_options, sethide_penalty_options] = useState(true);
+  const [hide_display_forge_modal, sethide_display_forge_modal] =
+    useState(true);
 
   const [lastdownload_title, setlastdownload_title] = useState<any>("");
   const [lastdownload_time, setlastdownload_time] = useState<any>("");
@@ -287,7 +292,14 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
                     {lastdownload_time} {lastdownload_title}
                   </p>
                   <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
-                  <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                  <p
+                    className="w-full underline underline-offset-4 hover:text-black cursor-pointer"
+                    onClick={() => {
+                      setcustom_all_libary_arr(filtered_libray_arr);
+                      setforge_modal_heading("All forges downloaded");
+                      sethide_display_forge_modal(false);
+                    }}
+                  >
                     Downloaded {filtered_libray_arr.length} items
                   </p>
                   <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
@@ -297,7 +309,15 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
                   </p>
                   <div className="w-[0.25vw] sm:w-[1vw] sm:h-[8vw] h-[2.2vw] bg-black bg-opacity-[40%]"></div>
 
-                  <p className="w-full underline underline-offset-4 hover:text-black cursor-pointer">
+                  <p
+                    className="w-full underline underline-offset-4 hover:text-black cursor-pointer"
+                    onClick={() => {
+                      setcustom_all_libary_arr(all_libary_arr);
+                      setforge_modal_heading("All forges in libray");
+
+                      sethide_display_forge_modal(false);
+                    }}
+                  >
                     Added {all_libary_arr.length} items to forge Libary
                   </p>
                 </div>
@@ -403,7 +423,15 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
               </div>
               {/* the ctn section */}
               <div className="w-full h-auto flex  sm:gap-[4vw]   gap-[2vw]  justify-between  items-center">
-                <button className=" w-full h-[3.5vw] sm:h-[12vw] text-[1vw] sm:text-[3.5vw] bg-[#CCFF00] rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]">
+                <button
+                  className=" w-full h-[3.5vw] sm:h-[12vw] text-[1vw] sm:text-[3.5vw] bg-[#CCFF00] rounded-[2vw] justify-center items-center flex hover:bg-opacity-[60%]"
+                  onClick={() => {
+                    setforge_modal_heading("All forges downloaded");
+
+                    setcustom_all_libary_arr(filtered_libray_arr);
+                    sethide_display_forge_modal(false);
+                  }}
+                >
                   See All Downloads
                 </button>
                 <button
@@ -423,6 +451,14 @@ const Sub_user_profile = ({ sethideProfile, uuid }: any) => {
         <Penalty_options
           user_doc_id={user_doc_id}
           sethide_penalty_options={sethide_penalty_options}
+        />
+      )}
+
+      {!hide_display_forge_modal && (
+        <Display_forge_modal
+          arr_data={custom_all_libary_arr}
+          sethide_display_forge_modal={sethide_display_forge_modal}
+          forge_modal_heading={forge_modal_heading}
         />
       )}
     </>
