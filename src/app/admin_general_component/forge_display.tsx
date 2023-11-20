@@ -47,7 +47,6 @@ const Display_forge_modal = ({
         });
 
         const productsData = await Promise.all(productPromises);
-        console.log(productsData);
         setforgesarr(productsData);
         setforgearr_is_loading(false);
         // setProducts(productsData.filter(Boolean)); // Remove any null entries

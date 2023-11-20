@@ -8,7 +8,9 @@ const Each_subscriber = ({
   userdata,
   sethideProfile,
   showuser_profile,
+  setcustom_all_libary_arr,
   setuuid,
+  sethide_display_forge_modal,
 }: any) => {
   const [currentYear, setCurrentYear] = useState("");
   const [daysRemaining, setDaysRemaining] = useState(0);
@@ -97,7 +99,13 @@ const Each_subscriber = ({
           />
           {userdata.libraryData.length}{" "}
           {userdata.libraryData.length == 0 ? "forge" : "forges"}
-          <button className=" bg-[#F5F5F5] px-[0.8vw] py-[0.3vw] text-[#95B611] rounded-[2vw]  sm:px-[1.5vw] sm:py-[0.7vw] sm:rounded-[3vw]">
+          <button
+            className=" bg-[#F5F5F5] px-[0.8vw] py-[0.3vw] text-[#95B611] rounded-[2vw]  sm:px-[1.5vw] sm:py-[0.7vw] sm:rounded-[3vw]"
+            onClick={() => {
+              setcustom_all_libary_arr(userdata.libraryData);
+              sethide_display_forge_modal(false);
+            }}
+          >
             View <i className="bi bi-chevron-right"></i>
           </button>
         </div>

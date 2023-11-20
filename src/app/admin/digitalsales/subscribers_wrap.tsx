@@ -15,6 +15,7 @@ import {
 import Sub_user_profile from "@/app/admin_general_component/sub_user_profile";
 import Subscription_statistics from "./sub_statistics";
 import Each_subscriber_loadeer from "./each_sub_loader";
+import Display_forge_modal from "@/app/admin_general_component/forge_display";
 const Subscribers_wrap = () => {
   const subscribe_filter = [
     {
@@ -34,7 +35,13 @@ const Subscribers_wrap = () => {
   const user_loading_loader = ["", "", "", "", ""];
   const [allusers, setallusers] = useState<any>([]);
   const [allusers_copy, setallusers_copy] = useState<any>([]);
+  const [custom_all_libary_arr, setcustom_all_libary_arr] = useState<any>([]);
   const [allusers_loading, setallusers_loading] = useState<any>(true);
+  const [hide_display_forge_modal, sethide_display_forge_modal] =
+    useState<any>(true);
+  const [forge_modal_heading, setforge_modal_heading] = useState<any>(
+    "All forges downloaded",
+  );
   const [hideProfile, sethideProfile] = useState(true);
   const [selected_filer, setselected_filer] = useState(0);
   const [subscriber_stats, setsubscriber_stats] = useState({});
@@ -76,7 +83,9 @@ const Subscribers_wrap = () => {
 
           const libraryPromise = getDocs(libraryQuery).then(
             (librarySnapshot) => {
-              const libraryData = librarySnapshot.docs.map((doc) => doc.data());
+              const libraryData = librarySnapshot.docs.map(
+                (doc) => doc.data().productid,
+              );
               return {
                 userId,
                 avater,
@@ -97,6 +106,7 @@ const Subscribers_wrap = () => {
 
         // Step 4: Log the results
         // console.log("Results:", results);
+        console.log(results);
         setallusers(results);
         setallusers_copy(results);
         setallusers_loading(false);
@@ -112,7 +122,6 @@ const Subscribers_wrap = () => {
   useEffect(() => {
     const filterAndLogResults = () => {
       if (!allusers || allusers.length === 0) {
-        console.log("No users to filter.");
         return;
       }
 
@@ -161,6 +170,13 @@ const Subscribers_wrap = () => {
         subscriber_stats_is_loading={subscriber_stats_is_loading}
       />
 
+      {!hide_display_forge_modal && (
+        <Display_forge_modal
+          arr_data={custom_all_libary_arr}
+          sethide_display_forge_modal={sethide_display_forge_modal}
+          forge_modal_heading={forge_modal_heading}
+        />
+      )}
       <div className="w-full sm:overflow-x-scroll sm:pb-[8vw] sm:pt-[5vw]  sm:rounded-[4vw] pt-[1vw]  pb-[3vw] px-[1.5vw]   rounded-[2vw] bg-white flex-col">
         {/* this is for the mini header on here */}
         <div className="w-full sm:flex-col sm:gap-[3vw] sm:items-start pt-[1vw] pb-[2vw] h-auto gap-[1.5vw] flex justify-start items-center">
@@ -210,6 +226,8 @@ const Subscribers_wrap = () => {
                       setuuid={setuuid}
                       sethideProfile={sethideProfile}
                       showuser_profile={showuser_profile}
+                      setcustom_all_libary_arr={setcustom_all_libary_arr}
+                      sethide_display_forge_modal={sethide_display_forge_modal}
                     />
 
                     <div className="w-full h-[0.15vw] sm:h-[1vw] bg-black bg-opacity-[12%]"></div>
