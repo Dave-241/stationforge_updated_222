@@ -32,6 +32,7 @@ const Admin_Product_wrap = ({
   update_search_text,
   selected_year,
   selected_month,
+  setshow_mobile_filters,
 }: any) => {
   const { setpage_loader }: any = useProfile_Context();
 
@@ -174,6 +175,7 @@ const Admin_Product_wrap = ({
               onClick={() => {
                 // setmobile_faction_active(true);
                 // setmobile_filter(true);
+                setshow_mobile_filters(true);
               }}
             >
               <p className={`${inter.className}`}>Select date</p>

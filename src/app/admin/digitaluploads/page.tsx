@@ -165,7 +165,7 @@ export default function Home() {
                 selected_month={selected_month}
                 selected_year={selected_year}
                 setselected_year={setselected_year}
-                setshow_mobile_filters={show_mobile_filters}
+                setshow_mobile_filters={setshow_mobile_filters}
               />
             )}
 
@@ -179,6 +179,7 @@ export default function Home() {
                 setproductStats_copy_filter={setproductStats_copy_filter}
                 productStats_copy_filter={productStats_copy_filter}
                 selected_year={selected_year}
+                setshow_mobile_filters={setshow_mobile_filters}
               />
             </div>
           </div>
