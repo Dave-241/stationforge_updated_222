@@ -273,7 +273,10 @@ const Admin_Product_wrap = ({
             <div className="w-full  flex flex-wrap sm:pl-[0vw] pl-[3vw]  justify-start gap-[2.2%] sm:gap-[4%]">
               {loader_items.map((e: any, index: any) => {
                 return (
-                  <div className="w-[31.7%] sm:rounded-[4vw] sm:w-[48%] rounded-[2vw] overflow-hidden auto border-black border-opacity-[17%] border-[0.1vw] sm:border-[0.35vw]  flex flex-col gap-[1vw] mb-[2.3vw] sm:mb-[4vw] sm:gap-[2.5vw]">
+                  <div
+                    key={index}
+                    className="w-[31.7%] sm:rounded-[4vw] sm:w-[48%] rounded-[2vw] overflow-hidden auto border-black border-opacity-[17%] border-[0.1vw] sm:border-[0.35vw]  flex flex-col gap-[1vw] mb-[2.3vw] sm:mb-[4vw] sm:gap-[2.5vw]"
+                  >
                     <div className="w-full bg-[#424141]  animate-pulse h-[20vw] sm:h-[46vw] overflow-hidden avater_bg "></div>
                     <p className="text-[0.9vw] neuem px-[1vw] sm:text-[3vw]">
                       {" "}
