@@ -103,7 +103,7 @@ const Review = (props: any) => {
                   key={index}
                 >
                   <div
-                    className="w-[4vw] h-[4vw]  sm:w-[10vw] sm:h-[10vw] avater_bg  rounded-[100%]"
+                    className="w-[4vw] h-[4vw] overflow-hidden sm:w-[10vw] sm:h-[10vw] avater_bg  rounded-[100%]"
                     style={{ backgroundImage: "url(/cover.webp)" }}
                   >
                     <img
