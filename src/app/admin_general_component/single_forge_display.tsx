@@ -101,18 +101,9 @@ const Single_Display_forge_modal = ({
                 <div className="bg-[#A9A7A7] animate-pulse h-[1.5vw] w-[12vw] sm:w-[25vw] sm:h-[4vw] "></div>
                 <div className="bg-[#A9A7A7] animate-pulse h-[1.5vw] w-[7vw] sm:w-[10vw] sm:h-[4vw] "></div>
               </div>
-              <div className="w-full gap-[1.5vw] sm:gap-[3vw] overflow-y-scroll scroll-container h-full  flex flex-wrap justify-start ">
-                {user_loading_loader.map((e: any, index: any) => {
-                  return (
-                    <div
-                      key={index}
-                      className="w-[9.2vw] sm:gap-[2vw] sm:w-[25.68vw]  sm:h-fit  gap-[0.7vw] flex flex-col items-start h-auto"
-                    >
-                      <div className="w-full h-[9vw] sm:h-[24vw] avater_bg bg-[#A9A7A7] animate-pulse "></div>
-                      <p className="neuer text-[0.9vw] bg-[#A9A7A7] animate-pulse h-[1.5vw] w-full sm:h-[4vw] capitalize sm:text-[3vw]"></p>
-                    </div>
-                  );
-                })}
+              <div className="w-full px-[6vw]  sm:px-[12vw]    sm:gap-[2.3vw] sm:w-full  sm:h-fit  gap-[0.7vw] flex flex-col items-start h-auto">
+                <div className="w-full sm:w-full h-[18vw] sm:h-[62vw] bg-[#A9A7A7] animate-pulse avater_bg "></div>
+                <p className="bg-[#A9A7A7] animate-pulse w-full h-[2.3vw] sm:h-[4vw]"></p>
               </div>
             </>
           )}
