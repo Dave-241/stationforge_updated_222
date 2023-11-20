@@ -33,16 +33,17 @@ import {
   getDoc,
 } from "firebase/firestore";
 import Admin_Product_wrap from "./admin_product_wrap";
+import Filters from "./filter";
 
 export default function Home() {
-  const [options, setoptions] = useState([
-    { id: 1, label: "Public" },
-    { id: 2, label: "Subscribers" },
-    { id: 3, label: "Standard Tier Subscribers" },
-    { id: 4, label: "Merchant Tier Subscribers" },
-  ]);
   const { page_loader, setpage_loader, setfrom }: any = useProfile_Context();
   const [showdash, setshowdash] = useState(false);
+  const [selected_month, setselected_month] = useState("");
+  const [selected_year, setselected_year] = useState("");
+  const [productStats_copy, setproductStats_copy] = useState<any>([]);
+  const [productStats_copy_filter, setproductStats_copy_filter] = useState<any>(
+    [],
+  );
 
   initializeApp(firebaseConfig);
   const auth: any = getAuth();
@@ -84,6 +85,31 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // useEffect for filtering based on selected_month
+  // useEffect(() => {
+  //   if (selected_month !== "") {
+  //     const lowerCaseSelectedMonth = selected_month.toLowerCase();
+  //     const filteredMonths = productStats_copy_filter.filter((month) =>
+  //       month.toLowerCase().includes(lowerCaseSelectedMonth),
+  //     );
+  //     console.log("Filtered Months:", filteredMonths);
+  //   }
+  // }, [selected_month]);
+
+  // useEffect for filtering based on selected_year
+  // useEffect for filtering based on selected_year
+  useEffect(() => {
+    if (selected_year !== "") {
+      const lowerCaseSelectedYear = selected_year.toString().toLowerCase();
+      // Assuming 'data' is your data structure
+      const filteredData = productStats_copy.filter((data: any) =>
+        data.year.toString().includes(lowerCaseSelectedYear),
+      );
+      console.log("Filtered Data:", filteredData);
+      setproductStats_copy_filter(filteredData);
+    }
+  }, [selected_year]);
+
   return (
     <>
       {page_loader && <Loader />}
@@ -95,10 +121,22 @@ export default function Home() {
           {/* this is for the digital sales record  */}
           <div className="w-full  flex justify-center  px-[2vw] py-[2vw]   h-auto">
             {/* this is for the factions */}
-            <div className="w-[30%]  h-[10vw]"></div>
+            <div className="w-[30%]  h-[10vw]">
+              <Filters
+                setselected_month={setselected_month}
+                selected_month={selected_month}
+                selected_year={selected_year}
+                setselected_year={setselected_year}
+              />
+            </div>
             {/* this is for teh product */}
             <div className="w-[70%] h-auto   ">
-              <Admin_Product_wrap />
+              <Admin_Product_wrap
+                setproductStats_copy={setproductStats_copy}
+                productStats_copy={productStats_copy}
+                setproductStats_copy_filter={setproductStats_copy_filter}
+                productStats_copy_filter={productStats_copy_filter}
+              />
             </div>
           </div>
         </>
