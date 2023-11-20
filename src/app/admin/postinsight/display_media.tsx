@@ -88,17 +88,22 @@ const Display_media = (props: any) => {
       {" "}
       <div
         className="w-full flex justify-center items-center h-full fixed  top-0 left-0 bg-black bg-opacity-[97%]  gap-[3vw] comment_wrap  z-[9999] py-[10vw]  "
-        // onClick={() => hide(false)}
+        onClick={() => {
+          setimg_display_show(false);
+        }}
       >
-        <div className="w-full h-[6vw] absolute px-[3vw] flex justify-between items-center   top-0 left-0">
+        <div className="w-full h-[6vw] sm:h-[14vw]  absolute px-[3vw] flex justify-between items-center   top-0 left-0">
           <Image
             src={logo}
             alt="Station forge logo"
-            className="w-[10vw] h-fit"
+            className="w-[10vw] sm:w-[30vw] h-fit"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           />
 
           <i
-            className="text-[2vw] hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] text-white bi bi-x-circle"
+            className="text-[2vw] sm:text-[7vw]  hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] text-white bi bi-x-circle"
             onClick={() => {
               setimg_display_show(false);
             }}
@@ -116,12 +121,17 @@ const Display_media = (props: any) => {
             gap: "3vw",
             display: "flex",
             justifyContent: "center",
-            flexDirection: "row",
+            flexDirection: globalThis.innerWidth > 650 ? "row" : "column",
             alignItems: "center",
           }}
           //   onClick={handleModalClick}
         >
-          <div className="w-[32vw] h-full gap-[1.2vw] flex-col overflow-hidden flex justify-center items-center">
+          <div
+            className="w-[32vw]  sm:w-[90vw] sm:h-auto sm:max-h-[60vh] h-full gap-[1.2vw] flex-col overflow-hidden flex justify-center items-center"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             {video && (
               <video
                 src={img_display}
@@ -142,11 +152,16 @@ const Display_media = (props: any) => {
             )}
           </div>
 
-          <div className="w-auto h-auto relative">
-            <p className="text-[1.2vw] capitalize pb-[1vw] text-white neuer text-center ">
+          <div className="w-auto h-auto  relative">
+            <p className="text-[1.2vw] sm:text-[3.5vw] sm:py-[3vw] capitalize pb-[1vw] text-white neuer text-center ">
               Select a media to preview
             </p>
-            <div className="w-[35vw] max-h-[32vw]  border-white border-opacity-[20%] rounded-[1.2vw] border-[0.1vw]  h-full overflow-y-scroll scroll-container flex flex-wrap justify-center gap-[1vw] py-[2vw] px-[3vw] items-center  ">
+            <div
+              className="w-[35vw] max-h-[32vw] sm:w-[90vw] sm:max-h-[40vw] sm:py-[5vw]  border-white border-opacity-[20%] rounded-[1.2vw] border-[0.1vw]  h-full overflow-y-scroll scroll-container flex flex-wrap justify-center gap-[1vw] py-[2vw] px-[3vw] items-center  "
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
               {img_display_arr.map((file: any, index: any) => {
                 // Check if the file is a video based on its link
                 const isVideoLink =
@@ -155,9 +170,9 @@ const Display_media = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className={`overflow-hidden  relative avater_bg rounded-[0.5vw] hover:scale-[1.04] relative transition duration-[0.6s] w-[5.5vw] ${
+                    className={`overflow-hidden sm:w-[15vw] sm:h-[15vw]   avater_bg rounded-[0.5vw] hover:scale-[1.04] relative transition duration-[0.6s] w-[5.5vw] ${
                       img_display == file.link
-                        ? "border-[0.3vw]  border-opacity-[80%] border-[#CCFF00] "
+                        ? "border-[0.3vw]  border-opacity-[80%] sm:border-[1vw] border-[#CCFF00] "
                         : " border-[0.1vw]  border-opacity-[20%] border-white "
                     }  cursor-pointer h-[5.5vw] `}
                     // style={{
