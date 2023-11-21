@@ -66,7 +66,7 @@ export default function Home() {
       {showdash ? (
         <>
           <Header />
-          <div className="w-full h-[10vw] "></div>
+          <div className="w-full h-[10vw] sm:h-[27vw]"></div>
           <FadeInTransition
             timeout={1500}
             from={0}

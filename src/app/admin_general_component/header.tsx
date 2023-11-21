@@ -19,12 +19,15 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "../utils/fire_base_config";
 import axios from "axios";
 import { useProfile_Context } from "../utils/profile_context";
+import Admin_Mobile_header from "./mobile_header";
 
 type HeaderProp = {
   showModeratorBtn?: boolean;
 };
 
 const Header = ({ showModeratorBtn = true }: HeaderProp) => {
+  const [mobile_bg_changer, setmobile_bg_changer] = useState<any>(false);
+  const [comedown, setcomedown] = useState(false);
   const [nav_array, setnav_array] = useState([
     {
       link: "/admin/dashboard",
@@ -80,39 +83,44 @@ const Header = ({ showModeratorBtn = true }: HeaderProp) => {
   return (
     <>
       <div className="w-full fixed top-[1vw] sm:backdrop-blur-[5px] sm:top-0 sm:py-[2.5vw]  right-0 h-auto px-[2vw] z-[999]">
-        <nav className="w-full bg-[#000002] sm:bg-opacity-[90%] drop-shadow-2xl rounded-[2vw] flex items-center justify-between sm:px-[3vw] h-[6vw] sm:h-[20vw] sm:rounded-[5vw] px-[2vw]">
+        {mobile_bg_changer && (
+          <Admin_Mobile_header
+            setmobile_bg_changer={setmobile_bg_changer}
+            comedown={comedown}
+            setcomedown={setcomedown}
+            links={nav_array}
+            // loggedin={loggedin}
+          />
+        )}
+        <nav
+          className="w-full  sm:bg-opacity-[90%] drop-shadow-2xl rounded-[2vw] flex items-center justify-between sm:px-[3vw] h-[6vw] sm:h-[20vw] sm:rounded-[5vw] px-[2vw]"
+          style={{
+            backgroundColor: mobile_bg_changer ? "#181818" : "#000002",
+            transition: "0.6s ease",
+            opacity: mobile_bg_changer ? 1 : "",
+          }}
+        >
           <div className=" hidden sm:flex  justify-between items-center h-full w-full">
             <div className="w-full">
               <button
                 className="= w-[10vw] h-auto flex"
                 onClick={() => {
-                  // if (pathname == "/") {
-                  //   setpage_loader(false);
-                  // } else {
-                  //   setpage_loader(true);
-                  // }
-                  // if (mobile_bg_changer) {
-                  //   setcomedown(false);
-                  //   setTimeout(() => {
-                  //     setmobile_bg_changer(false);
-                  //   }, 800);
-                  // } else {
-                  //   setmobile_bg_changer(!mobile_bg_changer);
-                  // }
+                  if (mobile_bg_changer) {
+                    setcomedown(false);
+                    setTimeout(() => {
+                      setmobile_bg_changer(false);
+                    }, 850);
+                  } else {
+                    setmobile_bg_changer(!mobile_bg_changer);
+                  }
                 }}
               >
                 <Image
-                  src={mob_ham}
-                  alt="StationForge Logo"
-                  className="w-full h-fit"
-                  style={{ transition: "2s ease" }}
-                />
-                {/* <Image
                   src={mobile_bg_changer ? mob_ham_exit : mob_ham}
                   alt="StationForge Logo"
                   className="w-full h-fit"
                   style={{ transition: "2s ease" }}
-                /> */}
+                />
               </button>
             </div>
 

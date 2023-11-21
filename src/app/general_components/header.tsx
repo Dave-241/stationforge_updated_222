@@ -147,11 +147,6 @@ const Header = () => {
           <button
             className="= w-[10vw] h-auto flex"
             onClick={() => {
-              // if (pathname == "/") {
-              //   setpage_loader(false);
-              // } else {
-              //   setpage_loader(true);
-              // }
               if (mobile_bg_changer) {
                 setcomedown(false);
                 setTimeout(() => {
