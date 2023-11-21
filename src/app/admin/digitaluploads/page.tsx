@@ -160,7 +160,7 @@ export default function Home() {
         <>
           {" "}
           <Header />
-          <div className="w-full h-[10vw]"></div>
+          <div className="w-full h-[10vw] sm:h-[25vw]"></div>
           {/* this is for the digital sales record  */}
           <div className="w-full  flex justify-center  px-[2vw] py-[2vw]   h-auto">
             {/* this is for the factions */}

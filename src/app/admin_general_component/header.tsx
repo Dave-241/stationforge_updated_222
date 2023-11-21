@@ -79,8 +79,8 @@ const Header = ({ showModeratorBtn = true }: HeaderProp) => {
 
   return (
     <>
-      <div className="w-full fixed top-[1vw]  right-0 h-auto px-[2vw] z-[999]">
-        <nav className="w-full bg-[#000002] drop-shadow-2xl rounded-[2vw] flex items-center justify-between h-[6vw] sm:h-[20vw] sm:rounded-[5vw] px-[2vw]">
+      <div className="w-full fixed top-[1vw] sm:backdrop-blur-[5px] sm:top-0 sm:py-[2vw]  right-0 h-auto px-[2vw] z-[999]">
+        <nav className="w-full bg-[#000002] sm:bg-opacity-[90%] drop-shadow-2xl rounded-[2vw] flex items-center justify-between sm:px-[3vw] h-[6vw] sm:h-[20vw] sm:rounded-[5vw] px-[2vw]">
           <div className=" hidden sm:flex  justify-between items-center h-full w-full">
             <div className="w-full">
               <button
