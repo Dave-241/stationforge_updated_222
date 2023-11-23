@@ -9,6 +9,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import { useRouter } from "next/navigation";
+import Dashboard_hero_section from "./dashboard_hero";
 
 export default function Home() {
   const {
@@ -58,7 +59,13 @@ export default function Home() {
       {page_loader && <Loader />}
       {showdash ? (
         <>
-          <Header />
+          <div className="w-full h-[40vw] px-[2vw] sm:h-[160vw] flex fixed top-[1vw] left-0 ">
+            <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:rounded-[4vw] rounded-[2vw] relative h-full">
+              <Header position={"absolute"} padding={"0"} top={"0"} />
+
+              <Dashboard_hero_section />
+            </div>
+          </div>
         </>
       ) : null}
     </>

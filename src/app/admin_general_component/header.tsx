@@ -25,7 +25,7 @@ type HeaderProp = {
   showModeratorBtn?: boolean;
 };
 
-const Header = ({ showModeratorBtn = true }: HeaderProp) => {
+const Header = ({ position, padding, top }: any) => {
   const [mobile_bg_changer, setmobile_bg_changer] = useState<any>(false);
   const [comedown, setcomedown] = useState(false);
   const [nav_array, setnav_array] = useState([
@@ -79,10 +79,13 @@ const Header = ({ showModeratorBtn = true }: HeaderProp) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
   const handlecustomclaim = async () => {};
-
+  // this dashboard is for other pages but because of design we would have props passed into it to take either a fixed or absolute position
   return (
     <>
-      <div className="w-full fixed top-[1vw] sm:backdrop-blur-[5px] sm:top-0 sm:py-[2.5vw]  right-0 h-auto px-[2vw] z-[999]">
+      <div
+        className="w-full fixed top-[1vw] sm:backdrop-blur-[5px] sm:top-0 sm:py-[2.5vw]  right-0 h-auto px-[2vw] z-[999]"
+        style={{ position: position, padding: padding, top: top }}
+      >
         {mobile_bg_changer && (
           <Admin_Mobile_header
             setmobile_bg_changer={setmobile_bg_changer}
@@ -227,14 +230,12 @@ const Header = ({ showModeratorBtn = true }: HeaderProp) => {
                 />
               </div>
 
-              {showModeratorBtn && (
-                <Link
-                  href={"/"}
-                  className="text-white border-[0.1vw] border-white border-opacity-[30%] rounded-[1.6vw] py-[0.8vw] px-[1.6vw] hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black  text-[0.8vw]"
-                >
-                  Add a moderator
-                </Link>
-              )}
+              <Link
+                href={"/"}
+                className="text-white border-[0.1vw] border-white border-opacity-[30%] rounded-[1.6vw] py-[0.8vw] px-[1.6vw] hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black  text-[0.8vw]"
+              >
+                Add a moderator
+              </Link>
 
               <button
                 className="w-[2.5vw] h-[2.5vw] border-[0.1vw] border-white border-opacity-[30%] flex justify-center items-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    text-white text-[1.2vw] rounded-[100%]"

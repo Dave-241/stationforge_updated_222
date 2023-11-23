@@ -20,7 +20,7 @@ const Subscribers_wrap = () => {
   const subscribe_filter = [
     {
       step: 0,
-      msg: "Users",
+      msg: "All Users",
     },
     {
       step: 3,
@@ -44,6 +44,7 @@ const Subscribers_wrap = () => {
   );
   const [hideProfile, sethideProfile] = useState(true);
   const [selected_filer, setselected_filer] = useState(0);
+  const [selected_fiter_text, setselected_fiter_text] = useState("Users");
   const [subscriber_stats, setsubscriber_stats] = useState({});
   const [subscriber_stats_is_loading, setsubscriber_stats_is_loading] =
     useState(true);
@@ -106,7 +107,6 @@ const Subscribers_wrap = () => {
 
         // Step 4: Log the results
         // console.log("Results:", results);
-        console.log(results);
         setallusers(results);
         setallusers_copy(results);
         setallusers_loading(false);
@@ -196,6 +196,7 @@ const Subscribers_wrap = () => {
                   }}
                   onClick={() => {
                     setselected_filer(e.step);
+                    setselected_fiter_text(e.msg);
                     filter_subscribers(e.step);
                   }}
                 >
@@ -204,6 +205,15 @@ const Subscribers_wrap = () => {
               );
             })}
           </div>
+
+          <p className="neuer text-black text-opacity-[60%] text-[1vw] sm:text-[3.5vw]">
+            {" "}
+            Total{" "}
+            {selected_filer == 0
+              ? "Users"
+              : selected_fiter_text + "Subscribers"}{" "}
+            ({allusers_copy.length})
+          </p>
         </div>
 
         <div className="w-full sm:overflow-x-scroll">
