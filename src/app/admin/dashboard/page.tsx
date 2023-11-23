@@ -180,10 +180,9 @@ export default function Home() {
               <Header position={"absolute"} padding={"0"} top={"0"} />
 
               <Dashboard_hero_section />
-
-              <div className="w-full sm:h-[15vw]"></div>
             </div>
           </div>
+          <div className="w-full sm:h-[40vw] "></div>
         </>
       ) : null}
     </>
