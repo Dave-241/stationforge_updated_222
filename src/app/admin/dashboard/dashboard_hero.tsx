@@ -14,7 +14,7 @@ const Dashboard_hero_section = () => {
 
   return (
     <>
-      <div className="w-full  px-[2vw] sm:px-0 flex mt-[8vw] sm:mt-[26vw] flex-col sm:gap-[10vw] gap-[2vw]">
+      <div className="w-full  px-[2vw] sm:px-0 flex mt-[8vw] sm:mt-[30vw] flex-col sm:gap-[10vw] gap-[2vw]">
         {/* the first row is for the path and the ctn  */}
         <div className="w-full sm:hidden h-auto flex justify-between sm:justify-center items-center  neuer text-[1vw] ">
           <p className="text-opacity-[30%] text-white sm:hidden">
