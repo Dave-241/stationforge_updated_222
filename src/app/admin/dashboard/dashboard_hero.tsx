@@ -14,10 +14,10 @@ const Dashboard_hero_section = () => {
 
   return (
     <>
-      <div className="w-full border2 px-[2vw] flex mt-[8vw] sm:mt-[24vw] flex-col gap-[2vw]">
+      <div className="w-full border2 px-[2vw] flex mt-[8vw] sm:mt-[24vw] flex-col sm:gap-[10vw] gap-[2vw]">
         {/* the first row is for the path and the ctn  */}
-        <div className="w-full h-auto flex justify-between items-center  neuer text-[1vw] ">
-          <p className="text-opacity-[30%] text-white ">
+        <div className="w-full h-auto flex justify-between sm:justify-center items-center  neuer text-[1vw] ">
+          <p className="text-opacity-[30%] text-white sm:hidden">
             Home /{" "}
             <span className="text-white text-opacity-[100%]">Dashboard</span>
           </p>
@@ -26,14 +26,15 @@ const Dashboard_hero_section = () => {
             onClick={() => {
               setpage_loader(true);
             }}
-            className="bg-[#CCFF00] cursor-pointer hover:bg-opacity-[40%] neuer flex justify-center items-center text-[1vw] rounded-[1vw] h-[3.5vw] w-[12vw]"
+            className="bg-[#CCFF00] sm:w-full sm:h-[13vw] sm:text-[4vw] sm:rounded-[4vw] cursor-pointer hover:bg-opacity-[40%] neuer flex justify-center items-center text-[1vw] rounded-[1vw] h-[3.5vw] w-[12vw]"
           >
             Add new post
           </Link>{" "}
         </div>
 
         {/* the second div carries the stats on here */}
-        <div className="w-full h-auto flex justify-between items-end  border2">
+        {/* these designs are hidden for mobile screens . mobile screen design below  */}
+        <div className="w-full h-auto flex sm:hidden justify-between items-end  border2">
           {/* this is for the first column */}
           <div className="w-[34%] h-auto    flex flex-col   gap-[4vw] ">
             {/* the header of the first section on this row  */}
@@ -126,6 +127,74 @@ const Dashboard_hero_section = () => {
             <p className="text-white text-opacity-[40%] neuer text-[1vw] ">
               Increased vs last month
             </p>
+          </div>
+        </div>
+
+        {/* this is for tthe mobile screen */}
+        <div className="w-full overflow-x-scroll  cover_scrollbar  flex h-auto border2 py-[3vw] ">
+          <div className="w-[180vw] justify-start gap-[4vw] flex ">
+            {/* this is for the second columen */}
+            <div className="w-[60vw] h-[70vw]  justify-center  flex-col flex bg-[#151515] rounded-[5vw] px-[4vw]   gap-[5vw] ">
+              <Image
+                src={post_icon}
+                alt="post_img"
+                className="w-[15vw] h-fit"
+              />
+              <p className="text-white  text-opacity-[40%] neuer text-[4vw] ">
+                Total posts
+              </p>
+
+              <p className="text-white neuem text-[6vw] ">6567</p>
+              <div className="w-full flex justify-start items-center gap-[2vw] ">
+                <Image src={up} alt="up arrow " className="w-[4vw] h-fit" />
+                <p className="text-[#77DC5E] text-[3.5vw] neuer">10.4%</p>
+              </div>
+              <p className="text-white text-opacity-[40%] neuer text-[3.5vw] ">
+                Increased vs last month{" "}
+              </p>
+            </div>
+
+            {/* this is for the third columen */}
+            <div className="w-[60vw] h-[70vw]  justify-center  flex-col flex bg-[#151515] rounded-[5vw] px-[4vw]   gap-[5vw] ">
+              <Image src={sub_icon} alt="post_img" className="w-[15vw] h-fit" />
+              <p className="text-white text-opacity-[40%] neuer text-[4vw] ">
+                All Subscribers
+              </p>
+
+              <p className="text-white neuem text-[6vw] ">2537</p>
+
+              <div className="w-full flex justify-start items-center gap-[2vw] ">
+                <Image src={down} alt="up arrow " className="w-[4vw] h-fit" />
+                <p className="text-[#DC5E5E] text-[3.5vw] neuer">12.4%</p>
+              </div>
+
+              <p className="text-white text-opacity-[40%] neuer text-[3.5vw] ">
+                Decrease vs last month
+              </p>
+            </div>
+
+            {/* this is for the fourth columen */}
+            <div className="w-[50vw] h-[21vw]  justify-center  flex-col flex bg-[#151515] rounded-[2vw] px-[2vw]   gap-[1.3vw] ">
+              <Image
+                src={digital_icon}
+                alt="post_img"
+                className="w-[5vw] h-fit"
+              />
+              <p className="text-white text-opacity-[40%] neuer text-[1.4vw] ">
+                Digital sales
+              </p>
+
+              <p className="text-white neuem text-[2vw] ">2537</p>
+
+              <div className="w-full flex justify-start items-center gap-[0.3vw] ">
+                <Image src={up} alt="up arrow " className="w-[1vw] h-fit" />
+                <p className="text-[#77DC5E] text-[1vw] neuer">32.4%</p>
+              </div>
+
+              <p className="text-white text-opacity-[40%] neuer text-[1vw] ">
+                Increased vs last month
+              </p>
+            </div>
           </div>
         </div>
       </div>
