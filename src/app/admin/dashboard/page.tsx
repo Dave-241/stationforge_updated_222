@@ -59,7 +59,7 @@ export default function Home() {
       {page_loader && <Loader />}
       {showdash ? (
         <>
-          <div className="w-full h-[40vw] px-[2vw] sm:h-[160vw] flex fixed top-[1vw] left-0 ">
+          <div className="w-full h-[40vw] px-[2vw] sm:h-[250vw] flex fixed top-[1vw] left-0 ">
             <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:rounded-[4vw] rounded-[2vw] relative h-full">
               <Header position={"absolute"} padding={"0"} top={"0"} />
 
