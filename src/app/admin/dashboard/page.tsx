@@ -19,6 +19,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import New_Subscribers_wrap from "./new_subscribers_wrap";
 
 export default function Home() {
   const {
@@ -101,6 +102,10 @@ export default function Home() {
             <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:drop-shadow-none sm:rounded-[4vw] rounded-[2vw] relative h-full">
               <Dashboard_hero_section admin_username={admin_username} />
             </div>
+          </div>
+
+          <div className="w-full px-[2vw] py-[2vw] sm:mt-[8vw]    h-auto">
+            <New_Subscribers_wrap />
           </div>
           <div className="w-full sm:h-[40vw] "></div>
         </>

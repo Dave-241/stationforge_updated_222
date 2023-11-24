@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ backgroundColor: "white" }}>
+      <body style={{ backgroundColor: "#E7E6E8" }}>
         <Profile_Context_Dropdown>
           <Admin_context_Info>{children}</Admin_context_Info>
         </Profile_Context_Dropdown>
