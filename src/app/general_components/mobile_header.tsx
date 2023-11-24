@@ -12,6 +12,13 @@ import Image from "next/image";
 import firebaseConfig from "../utils/fire_base_config";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 
 const Mobile_header = ({
   setmobile_bg_changer,
@@ -36,19 +43,36 @@ const Mobile_header = ({
     setshow_setting_modal,
   }: any = useProfile_Context();
 
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Firestore
+  const db = getFirestore(app);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is authenticated, redirect to a protected route
+        const user_ref = collection(db, "users");
+        const user_query = query(user_ref, where("userid", "==", user.uid));
 
-        user.getIdTokenResult().then((idTokenResult) => {
-          const isAdmin = idTokenResult.claims.admin === true;
-          if (isAdmin) {
-            setadmin_loggedin(true);
-          } else {
-            setadmin_loggedin(false);
-          }
-        });
+        getDocs(user_query)
+          .then((res) => {
+            if (!res.empty) {
+              const snap = res.docs[0].data().role;
+
+              if (snap == "admin") {
+                setadmin_loggedin(true);
+                setpage_loader(false);
+              } else {
+                setadmin_loggedin(false);
+              }
+            } else {
+              setadmin_loggedin(false);
+            }
+          })
+          .catch(() => {
+            console.log("error while getting user");
+          });
       } else {
         setadmin_loggedin(false);
         // User is not authenticated, you can keep them on the current page or redirect them to a login page
@@ -59,8 +83,6 @@ const Mobile_header = ({
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  initializeApp(firebaseConfig);
 
   // init authentication
   const auth = getAuth();

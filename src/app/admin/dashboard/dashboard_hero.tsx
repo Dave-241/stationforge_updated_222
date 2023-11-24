@@ -18,7 +18,7 @@ import {
   where,
 } from "firebase/firestore";
 
-const Dashboard_hero_section = () => {
+const Dashboard_hero_section = ({ admin_username }: any) => {
   const { setpage_loader }: any = useProfile_Context();
 
   const [sales_is_loading, setsales_is_loading] = useState(true);
@@ -263,7 +263,7 @@ const Dashboard_hero_section = () => {
             {/* the header of the first section on this row  */}
             <div className="w-full flex flex-col gap-[0.2vw]">
               <h1 className="neuem  text-[2.3vw] text-white ">
-                Good Morning, Max
+                Good DY, {admin_username}
               </h1>
               <p className="neuer text-[1.2vw] text-white text-opacity-[40%] ">
                 Track and manage all forge digital and physical sales
@@ -423,7 +423,7 @@ const Dashboard_hero_section = () => {
           <div className="w-full flex flex-col gap-[4vw] px-[3vw]">
             <div className="w-full flex justify-between items-start  ">
               <h1 className="neuem  text-[7vw] text-white ">
-                Good <br /> Morning, Max
+                Good <br /> DY, {admin_username}
               </h1>
               <Link
                 href={"/admin/postupload"}

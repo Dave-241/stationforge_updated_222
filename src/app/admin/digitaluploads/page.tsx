@@ -31,6 +31,8 @@ import {
   serverTimestamp,
   getDocs,
   getDoc,
+  where,
+  query,
 } from "firebase/firestore";
 import Admin_Product_wrap from "./admin_product_wrap";
 import Filters from "./filter";
@@ -67,23 +69,37 @@ export default function Home() {
   // Use useEffect to check if the user is already authenticated
   useEffect(() => {
     setpage_loader(true);
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is authenticated, redirect to a protected route
-        // router.push("/"); // Replace with your protected route
-        user.getIdTokenResult().then((idTokenResult) => {
-          const isAdmin = idTokenResult.claims.admin === true;
-          if (isAdmin) {
-            setshowdash(true);
-            setpage_loader(false);
-          } else {
-            setshowdash(false);
-            route.push("/");
-          }
-        });
+        const user_ref = collection(db, "users");
+        const user_query = query(user_ref, where("userid", "==", user.uid));
+
+        getDocs(user_query)
+          .then((res) => {
+            if (!res.empty) {
+              const snap = res.docs[0].data().role;
+
+              if (snap == "admin") {
+                setshowdash(true);
+                setpage_loader(false);
+              } else {
+                setshowdash(false);
+                route.push("/");
+              }
+            } else {
+              setshowdash(false);
+              route.push("/");
+            }
+          })
+          .catch(() => {
+            console.log("error while getting user");
+          });
       } else {
-        setfrom("/admin/postupload");
-        route.push("/login"); // User is not authenticated, you can keep them on the current page or redirect them to a login page
+        setpage_loader(false);
+        setpage_loader(true);
+        route.push("/"); // User is not authenticated, you can keep them on the current page or redirect them to a login page
       }
     });
 

@@ -22,6 +22,13 @@ import {
 import firebaseConfig from "../utils/fire_base_config";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Mobile_header from "./mobile_header";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 
 initializeApp(firebaseConfig);
 
@@ -67,19 +74,37 @@ const Header = () => {
     },
   ]);
 
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Firestore
+  const db = getFirestore(app);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is authenticated, redirect to a protected route
         setloggedin(true);
-        user.getIdTokenResult().then((idTokenResult) => {
-          const isAdmin = idTokenResult.claims.admin === true;
-          if (isAdmin) {
-            setadmin_loggedin(true);
-          } else {
-            setadmin_loggedin(false);
-          }
-        });
+        const user_ref = collection(db, "users");
+        const user_query = query(user_ref, where("userid", "==", user.uid));
+
+        getDocs(user_query)
+          .then((res) => {
+            if (!res.empty) {
+              const snap = res.docs[0].data().role;
+
+              if (snap == "admin") {
+                setadmin_loggedin(true);
+                setpage_loader(false);
+              } else {
+                setadmin_loggedin(false);
+              }
+            } else {
+              setadmin_loggedin(false);
+            }
+          })
+          .catch(() => {
+            console.log("error while getting user");
+          });
       } else {
         setadmin_loggedin(false);
         setloggedin(false);
