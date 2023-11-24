@@ -16,6 +16,7 @@ import {
   getDoc,
   doc,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
@@ -240,6 +241,7 @@ const Post = (props: any) => {
           addDoc(imagesCollectionRef, update_like)
             .then((res) => {
               setlikes(postdata.likesCount);
+              update_engagement("likes");
             })
             .catch((error) => {
               console.error(error);
@@ -250,59 +252,59 @@ const Post = (props: any) => {
       setliked(!liked);
     }
   };
-  const handlepinned = async (postid: any) => {
-    if (auth.currentUser) {
-      const pinnedCollectionRef = collection(
-        db,
-        "posts",
-        postdata.postId,
-        "pinned",
-      );
-      const likeDocRef = doc(pinnedCollectionRef, auth.currentUser?.uid);
-      // Query the Firestore collection to find the user
-      const userQuery = query(
-        pinnedCollectionRef,
-        where("user_id", "==", auth.currentUser?.uid),
-      );
-      // Check if the user's like already exists
-      const likeDoc = await getDoc(likeDocRef);
-      const update_like = { user_id: auth?.currentUser?.uid };
+  // const handlepinned = async (postid: any) => {
+  //   if (auth.currentUser) {
+  //     const pinnedCollectionRef = collection(
+  //       db,
+  //       "posts",
+  //       postdata.postId,
+  //       "pinned",
+  //     );
+  //     const likeDocRef = doc(pinnedCollectionRef, auth.currentUser?.uid);
+  //     // Query the Firestore collection to find the user
+  //     const userQuery = query(
+  //       pinnedCollectionRef,
+  //       where("user_id", "==", auth.currentUser?.uid),
+  //     );
+  //     // Check if the user's like already exists
+  //     const likeDoc = await getDoc(likeDocRef);
+  //     const update_like = { user_id: auth?.currentUser?.uid };
 
-      getDocs(userQuery).then((querySnapshot) => {
-        if (!querySnapshot.empty) {
-          // Assuming each username is unique, there should be only one matching user
-          const userDoc = querySnapshot.docs[0];
-          // const userData = userDoc.data();
-          const docid = userDoc.id;
+  //     getDocs(userQuery).then((querySnapshot) => {
+  //       if (!querySnapshot.empty) {
+  //         // Assuming each username is unique, there should be only one matching user
+  //         const userDoc = querySnapshot.docs[0];
+  //         // const userData = userDoc.data();
+  //         const docid = userDoc.id;
 
-          const delete_doc_reference = doc(
-            db,
-            "posts",
-            postdata.postId,
-            "pinned",
-            docid,
-          );
-          deleteDoc(delete_doc_reference)
-            .then(() => {
-              setpinned(false);
-            })
-            .catch((error) => {
-              console.error("Error removing like: ", error);
-            });
-        } else {
-          addDoc(pinnedCollectionRef, update_like)
-            .then((res) => {
-              setpinned(true);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
-      });
-    } else {
-      // setliked(!liked);
-    }
-  };
+  //         const delete_doc_reference = doc(
+  //           db,
+  //           "posts",
+  //           postdata.postId,
+  //           "pinned",
+  //           docid,
+  //         );
+  //         deleteDoc(delete_doc_reference)
+  //           .then(() => {
+  //             setpinned(false);
+  //           })
+  //           .catch((error) => {
+  //             console.error("Error removing like: ", error);
+  //           });
+  //       } else {
+  //         addDoc(pinnedCollectionRef, update_like)
+  //           .then((res) => {
+  //             setpinned(true);
+  //           })
+  //           .catch((error) => {
+  //             console.error(error);
+  //           });
+  //       }
+  //     });
+  //   } else {
+  //     // setliked(!liked);
+  //   }
+  // };
 
   const handlecomment = (e: any) => {
     if (commentvalue != "") {
@@ -313,6 +315,7 @@ const Post = (props: any) => {
       addDoc(comment_CollectionRef, commentinfo)
         .then((res) => {
           setcommentvalue("");
+          update_engagement("commented");
         })
         .catch((err) => {
           console.error(err);
@@ -331,6 +334,20 @@ const Post = (props: any) => {
       clearTimeout(timer);
     };
   }, [copied]); // Empty dependency array ensures the effect runs only once
+
+  // update the engagement collection
+  const update_engagement = (e: string) => {
+    const collection_ref = collection(db, "post_engagement");
+    addDoc(collection_ref, {
+      type: e,
+      userid: auth?.currentUser?.uid,
+      createdAt: serverTimestamp(),
+    })
+      .then(() => {})
+      .catch((err) => {
+        console.log("New error" + err);
+      });
+  };
   return (
     <>
       <section
@@ -352,7 +369,12 @@ const Post = (props: any) => {
         </div>
         {/* the images */}
         {postdata.images.length > 0 && (
-          <div className="w-full flex flex-wrap gap-[1vw] sm:gap-[1.5vw] relative  justify-center items-center px-[0vw]">
+          <div
+            className="w-full flex flex-wrap gap-[1vw] sm:gap-[1.5vw] relative  justify-center items-center px-[0vw]"
+            onClick={() => {
+              update_engagement("Media_view");
+            }}
+          >
             {postdata.trimmedimages.map((e: any, index: any) => {
               const isVideoLink = videoExtensions.some((ext) =>
                 e.link.includes(`.${ext}`),

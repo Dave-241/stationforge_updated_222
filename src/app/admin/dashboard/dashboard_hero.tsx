@@ -37,6 +37,18 @@ const Dashboard_hero_section = () => {
   const [total_digital_sales, settotal_digital_sales] = useState(0);
   const [digital_sales_isIncrease, setdigital_sales_IsIncrease] =
     useState<any>(null);
+
+  const [currentMonthPostEngagement, setCurrentMonthPostEngagement] =
+    useState(0);
+  const [previousMonthPostEngagement, setPreviousMonthPostEngagement] =
+    useState(0);
+  const [postEngagementPercentageChange, setPostEngagementPercentageChange] =
+    useState(0);
+  const [isPostEngagementIncrease, setIsPostEngagementIncrease] =
+    useState(true);
+  const [total_posts, settotal_posts] = useState(0);
+
+  // this is for loading the digital sales
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -131,21 +143,98 @@ const Dashboard_hero_section = () => {
     };
 
     fetchData();
-
-    console.log("useEffect completed");
   }, []);
 
-  // useEffect(() => {
-  //   console.log(
-  //     digital_sales_currentMonthDownloads,
-  //     digital_sales_percentageChange,
-  //     digital_sales_previousMonthDownloads,
-  //   );
-  // }, [
-  //   digital_sales_percentageChange,
-  //   digital_sales_currentMonthDownloads,
-  //   digital_sales_previousMonthDownloads,
-  // ]);
+  // this is for loading the postengagement
+  useEffect(() => {
+    const fetchPostEngagementData = async () => {
+      try {
+        const db = getFirestore();
+        const libraryCollection = collection(db, "post_engagement");
+
+        const currentDate = new Date();
+        const currentMonthStart = Timestamp.fromDate(
+          new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+        );
+        const currentMonthEnd = Timestamp.fromDate(
+          new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + 1,
+            0,
+            23,
+            59,
+            59,
+          ),
+        );
+
+        const previousMonthStart = Timestamp.fromDate(
+          new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1),
+        );
+        const previousMonthEnd = Timestamp.fromDate(
+          new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            0,
+            23,
+            59,
+            59,
+          ),
+        );
+
+        const currentMonthQuery = query(
+          libraryCollection,
+          where("createdAt", ">=", currentMonthStart),
+          where("createdAt", "<=", currentMonthEnd),
+        );
+        const previousMonthQuery = query(
+          libraryCollection,
+          where("createdAt", ">=", previousMonthStart),
+          where("createdAt", "<=", previousMonthEnd),
+        );
+
+        const post_size = collection(db, "posts");
+        const post_size_snapshot = await getDocs(post_size);
+        settotal_posts(post_size_snapshot.size);
+
+        const currentMonthSnapshot = await getDocs(currentMonthQuery);
+        const currentMonthData = currentMonthSnapshot.docs.map((doc) =>
+          doc.data(),
+        );
+        setCurrentMonthPostEngagement(currentMonthData.length);
+
+        const previousMonthSnapshot = await getDocs(previousMonthQuery);
+        const previousMonthData = previousMonthSnapshot.docs.map((doc) =>
+          doc.data(),
+        );
+        setPreviousMonthPostEngagement(previousMonthData.length);
+
+        const postEngagementPercentageChangeValue =
+          currentMonthData.length !== 0
+            ? ((currentMonthData.length - previousMonthData.length) /
+                currentMonthData.length) *
+              100
+            : 0;
+
+        const roundedpostengagementPercentageChange = parseFloat(
+          postEngagementPercentageChangeValue.toFixed(1),
+        );
+        setPostEngagementPercentageChange(
+          roundedpostengagementPercentageChange,
+        );
+
+        // Determine if it's an increase or decrease
+        setIsPostEngagementIncrease(
+          currentMonthData.length >= previousMonthData.length,
+        );
+        setpost_is_loading(false);
+      } catch (error) {
+        console.error("Error fetching post engagement data:", error);
+      }
+    };
+
+    fetchPostEngagementData();
+  }, []); // The empty dependency array ensures that this useEffect only runs once on component mount
+
   return (
     <>
       <div className="w-full  px-[2vw] sm:px-0 flex mt-[8vw] sm:mt-[30vw] flex-col sm:gap-[10vw] gap-[2vw]">
@@ -211,14 +300,47 @@ const Dashboard_hero_section = () => {
               Total posts
             </p>
 
-            <p className="text-white neuem text-[2vw] ">6567</p>
-            <div className="w-full flex justify-start items-center gap-[0.3vw] ">
-              <Image src={up} alt="up arrow " className="w-[1vw] h-fit" />
-              <p className="text-[#77DC5E] text-[1vw] neuer">10.4%</p>
-            </div>
-            <p className="text-white text-opacity-[40%] neuer text-[1vw] ">
-              Increased vs last month{" "}
-            </p>
+            {/* this is the loader for the number of sales*/}
+            {post_is_loading ? (
+              <div className="w-[50%] h-[2.5vw] bg-[black] animate-pulse "></div>
+            ) : (
+              <p className="text-white neuem text-[2vw] ">{total_posts}</p>
+            )}
+
+            {/* this is the loader */}
+            {post_is_loading ? (
+              <div className="w-[30%] h-[2vw] bg-[black] animate-pulse "></div>
+            ) : (
+              <div className="w-full flex justify-start items-center gap-[0.3vw] ">
+                <Image
+                  src={!postEngagementPercentageChange ? down : up}
+                  alt="up arrow "
+                  className="w-[1vw] h-fit"
+                />
+                <p
+                  className="text-[#77DC5E] text-[1vw] neuer"
+                  style={{
+                    color: postEngagementPercentageChange
+                      ? "#77DC5E"
+                      : "#DC5E5E",
+                  }}
+                >
+                  {" "}
+                  {postEngagementPercentageChange}%
+                </p>
+              </div>
+            )}
+
+            {/* this is the loader to show whether increase of decrease  */}
+            {post_is_loading ? (
+              <div className="w-[80%] h-[2vw] bg-[black] animate-pulse "></div>
+            ) : (
+              <p className="text-white text-opacity-[40%] neuer text-[1vw] ">
+                {digital_sales_isIncrease
+                  ? "  Increase vs last month"
+                  : "  Decrease vs last month"}
+              </p>
+            )}
           </div>
 
           {/* this is for the third columen */}
@@ -228,11 +350,11 @@ const Dashboard_hero_section = () => {
               All Subscribers
             </p>
 
-            <p className="text-white neuem text-[2vw] ">2537</p>
+            <p className="text-white neuem text-[2vw] ">0000</p>
 
             <div className="w-full flex justify-start items-center gap-[0.3vw] ">
               <Image src={down} alt="up arrow " className="w-[1vw] h-fit" />
-              <p className="text-[#DC5E5E] text-[1vw] neuer">12.4%</p>
+              <p className="text-[#DC5E5E] text-[1vw] neuer">0.00%</p>
             </div>
 
             <p className="text-white text-opacity-[40%] neuer text-[1vw] ">
@@ -332,15 +454,43 @@ const Dashboard_hero_section = () => {
                   Total posts
                 </p>
 
-                <p className="text-white neuem text-[6vw] ">6567</p>
+                {/* this is the loader for the post engagement */}
+                {post_is_loading ? (
+                  <div className="w-[50%] h-[8vw] bg-[black] animate-pulse "></div>
+                ) : (
+                  <p className="text-white neuem text-[6vw] ">{total_posts}</p>
+                )}
+                {/* this is the loader */}
+                {post_is_loading ? (
+                  <div className="w-[50%] h-[5vw] bg-[black] animate-pulse "></div>
+                ) : (
+                  <div className="w-full flex justify-start items-center gap-[2vw] ">
+                    <Image
+                      src={!isPostEngagementIncrease ? down : up}
+                      alt="up arrow "
+                      className="w-[4vw] h-fit"
+                    />
+                    <p
+                      className="text-[#77DC5E] text-[3.5vw] neuer"
+                      style={{
+                        color: isPostEngagementIncrease ? "#77DC5E" : "#DC5E5E",
+                      }}
+                    >
+                      {postEngagementPercentageChange}%
+                    </p>
+                  </div>
+                )}
 
-                <div className="w-full flex justify-start items-center gap-[2vw] ">
-                  <Image src={up} alt="up arrow " className="w-[4vw] h-fit" />
-                  <p className="text-[#77DC5E] text-[3.5vw] neuer">10.4%</p>
-                </div>
-                <p className="text-white text-opacity-[40%] neuer text-[3.5vw] ">
-                  Increased vs last month{" "}
-                </p>
+                {/* this is the loader to show whether increase of decrease  */}
+                {post_is_loading ? (
+                  <div className="w-[80%] h-[5vw] bg-[black] animate-pulse "></div>
+                ) : (
+                  <p className="text-white text-opacity-[40%] neuer text-[3.5vw] ">
+                    {isPostEngagementIncrease
+                      ? "  Increase vs last month"
+                      : "  Decrease vs last month"}
+                  </p>
+                )}
               </div>
 
               {/* this is for the third columen */}
@@ -354,11 +504,11 @@ const Dashboard_hero_section = () => {
                   All Subscribers
                 </p>
 
-                <p className="text-white neuem text-[6vw] ">2537</p>
+                <p className="text-white neuem text-[6vw] ">0000</p>
 
                 <div className="w-full flex justify-start items-center gap-[2vw] ">
                   <Image src={down} alt="up arrow " className="w-[4vw] h-fit" />
-                  <p className="text-[#DC5E5E] text-[3.5vw] neuer">12.4%</p>
+                  <p className="text-[#DC5E5E] text-[3.5vw] neuer">00.0%</p>
                 </div>
 
                 <p className="text-white text-opacity-[40%] neuer text-[3.5vw] ">
