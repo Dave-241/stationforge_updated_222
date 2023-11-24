@@ -25,7 +25,7 @@ type HeaderProp = {
   showModeratorBtn?: boolean;
 };
 
-const Header = ({ position, padding, top }: any) => {
+const Header = ({ position, padding, top, blur }: any) => {
   const [mobile_bg_changer, setmobile_bg_changer] = useState<any>(false);
   const [comedown, setcomedown] = useState(false);
   const [nav_array, setnav_array] = useState([
@@ -83,7 +83,9 @@ const Header = ({ position, padding, top }: any) => {
   return (
     <>
       <div
-        className="w-full fixed top-[1vw] sm:backdrop-blur-[5px] sm:top-0 sm:py-[2.5vw]  right-0 h-auto px-[2vw] z-[999]"
+        className={`w-full fixed top-[1vw] ${
+          blur ? "sm:backdrop-blur-[5px] " : ""
+        }  sm:top-0 sm:py-[2.5vw]  right-0 h-auto px-[2vw] z-[999]`}
         style={{ position: position, padding: padding, top: top }}
       >
         {mobile_bg_changer && (

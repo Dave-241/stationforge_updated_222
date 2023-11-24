@@ -29,12 +29,11 @@ export default function Home() {
   }: any = useProfile_Context();
   const [showdash, setshowdash] = useState(false);
   const [downloadsData, setDownloadsData] = useState([]);
-  const [currentWeekDownloads, setCurrentWeekDownloads] = useState(0);
-  const [previousMonthDownloads, setPreviousMonthDownloads] = useState(0);
   const [currentMonthDownloads, setCurrentMonthDownloads] = useState(0);
-
-  const [previousWeekDownloads, setPreviousWeekDownloads] = useState(0);
+  const [previousMonthDownloads, setPreviousMonthDownloads] = useState(0);
   const [percentageChange, setPercentageChange] = useState(0);
+  const [isIncrease, setIsIncrease] = useState<any>(null);
+
   useEffect(() => {
     // setpage_loader(false);
     setfrom("");
@@ -81,13 +80,9 @@ export default function Home() {
       console.log("Fetching data...");
 
       try {
-        // Initialize Firestore
         const db = getFirestore();
-
-        // Define the 'library' collection
         const libraryCollection = collection(db, "libray");
 
-        // Define the current month's start and end timestamps
         const currentDate = new Date();
         const currentMonthStart = Timestamp.fromDate(
           new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
@@ -103,7 +98,6 @@ export default function Home() {
           ),
         );
 
-        // Define the previous month's start and end timestamps
         const previousMonthStart = Timestamp.fromDate(
           new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1),
         );
@@ -118,35 +112,31 @@ export default function Home() {
           ),
         );
 
-        // Define the queries for the current and previous months
         const currentMonthQuery = query(
           libraryCollection,
-          where("createdAt", ">=", currentMonthStart),
-          where("createdAt", "<=", currentMonthEnd),
+          where("downloadedAt", ">=", currentMonthStart),
+          where("downloadedAt", "<=", currentMonthEnd),
           where("downloaded", "==", true),
         );
         const previousMonthQuery = query(
           libraryCollection,
-          where("createdAt", ">=", previousMonthStart),
-          where("createdAt", "<=", previousMonthEnd),
+          where("downloadedAt", ">=", previousMonthStart),
+          where("downloadedAt", "<=", previousMonthEnd),
           where("downloaded", "==", true),
         );
 
-        // Fetch data for the current month
         const currentMonthSnapshot = await getDocs(currentMonthQuery);
         const currentMonthData = currentMonthSnapshot.docs.map((doc) =>
           doc.data(),
         );
         setCurrentMonthDownloads(currentMonthData.length);
 
-        // Fetch data for the previous month
         const previousMonthSnapshot = await getDocs(previousMonthQuery);
         const previousMonthData = previousMonthSnapshot.docs.map((doc) =>
           doc.data(),
         );
         setPreviousMonthDownloads(previousMonthData.length);
 
-        // Calculate percentage change
         const percentageChangeValue =
           currentMonthData.length !== 0
             ? ((currentMonthData.length - previousMonthData.length) /
@@ -154,6 +144,9 @@ export default function Home() {
               100
             : 0;
         setPercentageChange(percentageChangeValue);
+
+        // Determine if it's an increase or decrease
+        setIsIncrease(currentMonthData.length >= previousMonthData.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -163,11 +156,11 @@ export default function Home() {
 
     console.log("useEffect completed");
   }, []); // The empty dependency array ensures that this useEffect only runs once on component mount
-
   useEffect(() => {
     console.log("Setting currentMonthDownloads:", currentMonthDownloads);
     console.log("Setting previousMonthDownloads:", previousMonthDownloads);
     console.log("Setting percentageChange:", percentageChange);
+    console.log("Setting isIncrease:", isIncrease);
   }, [previousMonthDownloads, currentMonthDownloads, percentageChange]); // Add states as dependencies
 
   return (
@@ -175,14 +168,19 @@ export default function Home() {
       {page_loader && <Loader />}
       {showdash ? (
         <>
-          <div className="w-full h-[40vw] px-[2vw] sm:h-[190vw] flex fixed top-[1vw] left-0 ">
-            <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:rounded-[4vw] rounded-[2vw] relative h-full">
-              <Header position={"absolute"} padding={"0"} top={"0"} />
+          <Header
+            position={"fixed"}
+            padding={"0 2vw"}
+            top={"1vw"}
+            blur={false}
+          />
 
+          <div className="w-full h-[40vw] px-[2vw] py-[1vw] sm:h-[190vw] flex  sm:relative top-[1vw] left-0 ">
+            <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:drop-shadow-none sm:rounded-[4vw] rounded-[2vw] relative h-full">
               <Dashboard_hero_section />
             </div>
           </div>
-          <div className="w-full sm:h-[40vw] "></div>
+          <div className="w-full h-[400vw] "></div>
         </>
       ) : null}
     </>
