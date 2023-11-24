@@ -28,11 +28,6 @@ export default function Home() {
     setfrom,
   }: any = useProfile_Context();
   const [showdash, setshowdash] = useState(false);
-  const [downloadsData, setDownloadsData] = useState([]);
-  const [currentMonthDownloads, setCurrentMonthDownloads] = useState(0);
-  const [previousMonthDownloads, setPreviousMonthDownloads] = useState(0);
-  const [percentageChange, setPercentageChange] = useState(0);
-  const [isIncrease, setIsIncrease] = useState<any>(null);
 
   useEffect(() => {
     // setpage_loader(false);
@@ -73,96 +68,6 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    console.log("useEffect started");
-
-    const fetchData = async () => {
-      console.log("Fetching data...");
-
-      try {
-        const db = getFirestore();
-        const libraryCollection = collection(db, "libray");
-
-        const currentDate = new Date();
-        const currentMonthStart = Timestamp.fromDate(
-          new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-        );
-        const currentMonthEnd = Timestamp.fromDate(
-          new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth() + 1,
-            0,
-            23,
-            59,
-            59,
-          ),
-        );
-
-        const previousMonthStart = Timestamp.fromDate(
-          new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1),
-        );
-        const previousMonthEnd = Timestamp.fromDate(
-          new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth(),
-            0,
-            23,
-            59,
-            59,
-          ),
-        );
-
-        const currentMonthQuery = query(
-          libraryCollection,
-          where("downloadedAt", ">=", currentMonthStart),
-          where("downloadedAt", "<=", currentMonthEnd),
-          where("downloaded", "==", true),
-        );
-        const previousMonthQuery = query(
-          libraryCollection,
-          where("downloadedAt", ">=", previousMonthStart),
-          where("downloadedAt", "<=", previousMonthEnd),
-          where("downloaded", "==", true),
-        );
-
-        const currentMonthSnapshot = await getDocs(currentMonthQuery);
-        const currentMonthData = currentMonthSnapshot.docs.map((doc) =>
-          doc.data(),
-        );
-        setCurrentMonthDownloads(currentMonthData.length);
-
-        const previousMonthSnapshot = await getDocs(previousMonthQuery);
-        const previousMonthData = previousMonthSnapshot.docs.map((doc) =>
-          doc.data(),
-        );
-        setPreviousMonthDownloads(previousMonthData.length);
-
-        const percentageChangeValue =
-          currentMonthData.length !== 0
-            ? ((currentMonthData.length - previousMonthData.length) /
-                currentMonthData.length) *
-              100
-            : 0;
-        setPercentageChange(percentageChangeValue);
-
-        // Determine if it's an increase or decrease
-        setIsIncrease(currentMonthData.length >= previousMonthData.length);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-
-    console.log("useEffect completed");
-  }, []); // The empty dependency array ensures that this useEffect only runs once on component mount
-  useEffect(() => {
-    console.log("Setting currentMonthDownloads:", currentMonthDownloads);
-    console.log("Setting previousMonthDownloads:", previousMonthDownloads);
-    console.log("Setting percentageChange:", percentageChange);
-    console.log("Setting isIncrease:", isIncrease);
-  }, [previousMonthDownloads, currentMonthDownloads, percentageChange]); // Add states as dependencies
-
   return (
     <>
       {page_loader && <Loader />}
@@ -180,7 +85,7 @@ export default function Home() {
               <Dashboard_hero_section />
             </div>
           </div>
-          <div className="w-full h-[400vw] "></div>
+          <div className="w-full sm:h-[40vw] "></div>
         </>
       ) : null}
     </>
