@@ -19,7 +19,10 @@ import Sub_user_profile from "@/app/admin_general_component/sub_user_profile";
 import Display_forge_modal from "@/app/admin_general_component/forge_display";
 import New_Each_subscriber from "./each_subscriber";
 import New_Each_subscriber_loadeer from "./new_subscripton_loader";
-const New_Subscribers_wrap = () => {
+const New_Subscribers_wrap = ({
+  setall_subscribers_in_dashboard,
+  setall_subscribers_is_loading,
+}: any) => {
   const subscribe_filter = [
     {
       step: 0,
@@ -73,7 +76,8 @@ const New_Subscribers_wrap = () => {
         );
 
         const usersSnapshot = await getDocs(userSpecificQuery);
-
+        setall_subscribers_in_dashboard(usersSnapshot.size);
+        setall_subscribers_is_loading(false);
         const userPromises: any = [];
 
         usersSnapshot.forEach((userDoc) => {

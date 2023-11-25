@@ -30,6 +30,11 @@ export default function Home() {
     setfrom("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // funtion to setup payments
+  const paynow = () => {
+    console.log("this is for payetn");
+  };
   return (
     <>
       {page_loader && <Loader />}
@@ -38,6 +43,7 @@ export default function Home() {
       <div className="w-full h-fit z-[99] sm:hidden  fixed top-[0.9vw] ">
         <Header />
       </div>
+
       {/* <Pay /> */}
       <div className="w-full h-auto z-[99] sm:block px-[3vw]  hidden  fixed top-0 ">
         <Custom_subscription_Header />
@@ -55,6 +61,12 @@ export default function Home() {
         in={true}
         style={{ width: "100%" }}
       >
+        <button
+          className="w-full h-[5vw] bg-white text-black "
+          onClick={paynow}
+        >
+          pay now for testing
+        </button>
         <Subscription_Plans />
         <Post_wrap />
       </FadeInTransition>
