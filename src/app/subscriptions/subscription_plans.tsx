@@ -1,13 +1,149 @@
 "use client ";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import bg_image from "../../../public/login/login.webp";
 import Image from "next/image";
 import StandardPlan from "./standard_plan";
 import mob_bg from "../../../public/subscription/mob_bg_sub.webp";
 import Merchant_plan from "./merchat_plan";
+import firebaseConfig from "../utils/fire_base_config";
+import { initializeApp } from "firebase/app";
+import {
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useSearchParams } from "next/navigation";
+import { stripe } from "../utils/stripe";
 
 const Subscription_Plans = () => {
+  const app = initializeApp(firebaseConfig);
+  const [uuid, setuuid] = useState("");
+  const [doc_user_ref_id, setdoc_user_ref_id] = useState("");
+  const [currentplan, setcurrentplan] = useState(0);
+  const [email, setemail] = useState("");
+
+  // Initialize Firestore
+  const db = getFirestore(app);
+  const auth: any = getAuth();
+
+  // to check the auth state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setuuid(user.uid);
+      } else {
+        setuuid("");
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // this is to check to manage subscription
+
+  useEffect(() => {
+    console.log("from the subscription plans" + uuid);
+    if (auth.currentUser) {
+      const userCollectionRef = collection(db, "users");
+      const userQuery = query(
+        userCollectionRef,
+        where("userid", "==", auth.currentUser.uid),
+      );
+
+      const unsubscribe = onSnapshot(userQuery, (snapshot) => {
+        if (!snapshot.empty) {
+          snapshot.forEach((doc) => {
+            // Extract user data from the document
+            const userDataFromFirestore = doc.data();
+            //  setUserData(userDataFromFirestore);
+            console.log(userDataFromFirestore.step);
+            setdoc_user_ref_id(doc.id);
+            setemail(userDataFromFirestore.Email);
+            setuuid(userDataFromFirestore.userid);
+            setcurrentplan(userDataFromFirestore.step);
+          });
+        } else {
+          console.log("No user document found.");
+          //  setUserData(null);
+        }
+      });
+
+      // Clean up the listener when the component unmounts or when needed
+      return () => {
+        unsubscribe();
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uuid]);
+
+  const searchParams = useSearchParams();
+
+  const session_id = searchParams.get("session_id");
+  useEffect(() => {
+    // checkSubscription(session_id);
+    const fetchsession = async () => {
+      if (session_id) {
+        const session: any = await stripe.checkout.sessions.retrieve(
+          session_id ?? "",
+        );
+        if (session.subscription) {
+          const subscriptionId: any = session.subscription;
+
+          // Retrieve additional information about the subscription
+          const subscription: any = await stripe.subscriptions.retrieve(
+            subscriptionId ?? "",
+          );
+          if (subscription.plan.id == "price_1OBmWvHosKgwPfXjrxDrY480") {
+            update_user_doc(4, session.metadata.userId, "Merchant tier");
+            console.log("NEXT_PUBLIC_MERCHANT_PRICE");
+          } else if (subscription.plan.id == "price_1OGPHMHosKgwPfXjyfz6axKz") {
+            update_user_doc(3, session.metadata.userId, "Standard tier");
+            console.log("NEXT_PUBLIC_STANDARD_PRICE");
+          }
+        }
+      }
+    };
+
+    fetchsession();
+  }, [session_id]);
+
+  const update_user_doc = async (e: number, id: string, type: string) => {
+    try {
+      const userQuery = query(
+        collection(db, "users"),
+        where("userid", "==", id),
+      );
+      const userDocs = await getDocs(userQuery);
+
+      if (userDocs.empty) {
+        console.log("No user document found for the current user");
+        return;
+      }
+
+      const userDocRef = doc(db, "users", userDocs.docs[0].id);
+      await updateDoc(userDocRef, {
+        subscribedAt: serverTimestamp(),
+        step: e,
+        subscriptionCancelled: false,
+        subscription: type,
+      });
+
+      console.log("User document updated successfully");
+    } catch (error) {
+      console.error("Error updating user document:", error);
+      throw error;
+    }
+  };
   return (
     <>
       <div className="w-full h-auto justify-center flex flex-col items-center sm:pb[6vw] pb-[3vw] relative">
@@ -28,8 +164,16 @@ const Subscription_Plans = () => {
           {/* this is where the pricing would be  */}
           <div className="h-auto sm:h-[150vw] cover_scrollbar w-full sm:relative sm:overflow-x-scroll ">
             <div className="w-auto sm:px-[4vw] pt-[3vw] sm:pt-[6.5vw] sm:top-0 sm:left-0  sm:absolute justify-center items-center flex gap-[3vw] sm:gap-[5vw]">
-              <StandardPlan />
-              <Merchant_plan />
+              <StandardPlan
+                email={email}
+                uuid={uuid}
+                currentplan={currentplan}
+              />
+              <Merchant_plan
+                email={email}
+                uuid={uuid}
+                currentplan={currentplan}
+              />
             </div>
           </div>
         </div>

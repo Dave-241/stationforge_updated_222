@@ -3,8 +3,34 @@
 import React from "react";
 import mer_1 from "../../../public/subscription/mer_1.webp";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import {
+  pay_merchant_Subscriptions,
+  pay_standard_Subscriptions,
+} from "../utils/stripe";
 
-const Merchant_plan = () => {
+const Merchant_plan = ({ currentplan, email, uuid }: any) => {
+  const router = useRouter();
+
+  const paynow = async () => {
+    if (uuid != "" && email != "") {
+      console.log("this is for payetn");
+      const session_url = await pay_merchant_Subscriptions(uuid, email);
+      try {
+        if (session_url.url) {
+          router.push(session_url.url);
+        }
+      } catch (error: any) {
+        console.error("Error creating Checkout session:", error);
+        if (error && error.raw && error.raw.message) {
+          console.error("Stripe API Error Message:", error.raw.message);
+        }
+        throw error;
+      }
+    } else {
+      return;
+    }
+  };
   return (
     <>
       <div className="w-[29vw] sm:w-[80vw] sm:h-[130vw] sm:border-l-[1.6vw]  sm:gap-[4vw] sm:px-[6vw] sm:rounded-[4vw]   h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] flex flex-col justify-center items-center  subscription_merchant_background_color rounded-[1.2vw] border-l-[0.5vw] gap-[2vw]  border-[#CCFF00]">
@@ -32,7 +58,7 @@ const Merchant_plan = () => {
         {/* thired div  */}
         <div className="w-full">
           <h3 className="text-black text-[2.3vw] neuem sm:text-[4vw] ">
-            $100{" "}
+            $50{" "}
             <span className="text-opacity-[60%] text-black text-[1.2vw] sm:text-[3vw]">
               /Month
             </span>
@@ -53,9 +79,20 @@ const Merchant_plan = () => {
         </p>
 
         {/* fivth div  also known as button */}
-        <button className="w-full h-[4.3vw] text-[1.6vw] sm:rounded-[5vw]  sm:text-[4vw] sm:h-[10vw] neuem rounded-[3.7vw] transition duration-[0.2s] hover:bg-opacity-[80%] bg-opacity-[100%] bg-[#000000] text-white ">
-          Join
-        </button>
+        {currentplan == 4 && (
+          <button className="w-full h-[4.3vw] text-[1.6vw] sm:rounded-[5vw]  sm:text-[4vw] sm:h-[10vw] neuem rounded-[3.7vw] transition duration-[0.2s] hover:bg-opacity-[80%] bg-opacity-[100%] bg-[#000000] text-white ">
+            Manage subscription
+          </button>
+        )}
+
+        {currentplan != 4 && (
+          <button
+            className="w-full h-[4.3vw] text-[1.6vw] sm:rounded-[5vw]  sm:text-[4vw] sm:h-[10vw] neuem rounded-[3.7vw] transition duration-[0.2s] hover:bg-opacity-[80%] bg-opacity-[100%] bg-[#000000] text-white "
+            onClick={paynow}
+          >
+            Join
+          </button>
+        )}
       </div>{" "}
     </>
   );

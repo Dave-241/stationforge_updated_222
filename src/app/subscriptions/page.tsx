@@ -14,6 +14,8 @@ import Forge from "../general_components/forge";
 import Pay from "./pay";
 import Custom_subscription_Header from "../general_components/custom_header_subscription";
 import Chats_modal from "../general_components/chat";
+import { pay_standard_Subscriptions, stripe } from "../utils/stripe";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Home() {
   const {
@@ -24,7 +26,7 @@ export default function Home() {
     setfrom,
     forge_loader,
   }: any = useProfile_Context();
-
+  const router = useRouter();
   useEffect(() => {
     setpage_loader(false);
     setfrom("");
@@ -32,9 +34,23 @@ export default function Home() {
   }, []);
 
   // funtion to setup payments
-  const paynow = () => {
-    console.log("this is for payetn");
-  };
+  // const paynow = async () => {
+  //   console.log("this is for payetn");
+  //   const session_url = await pay_standard_Subscriptions();
+  //   try {
+  //     if (session_url.url) {
+  //       router.push(session_url.url);
+  //       console.log(session_url.url);
+  //     }
+  //   } catch (error: any) {
+  //     console.error("Error creating Checkout session:", error);
+  //     if (error && error.raw && error.raw.message) {
+  //       console.error("Stripe API Error Message:", error.raw.message);
+  //     }
+  //     throw error;
+  //   }
+  // };
+
   return (
     <>
       {page_loader && <Loader />}
@@ -61,12 +77,12 @@ export default function Home() {
         in={true}
         style={{ width: "100%" }}
       >
-        <button
+        {/* <button
           className="w-full h-[5vw] bg-white text-black "
           onClick={paynow}
         >
           pay now for testing
-        </button>
+        </button> */}
         <Subscription_Plans />
         <Post_wrap />
       </FadeInTransition>
