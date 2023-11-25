@@ -32,6 +32,11 @@ export default function Home() {
   const [showdash, setshowdash] = useState(false);
   const [admin_username, setadmin_username] = useState("");
 
+  const [all_subscribers_in_dashboard, setall_subscribers_in_dashboard] =
+    useState(0);
+  const [all_subscribers_is_loading, setall_subscribers_is_loading] =
+    useState(true);
+
   useEffect(() => {
     // setpage_loader(false);
     setfrom("");
@@ -100,12 +105,19 @@ export default function Home() {
 
           <div className="w-full h-[40vw] px-[2vw] py-[1vw] sm:h-[190vw] flex  sm:relative top-[1vw] left-0 ">
             <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:drop-shadow-none sm:rounded-[4vw] rounded-[2vw] relative h-full">
-              <Dashboard_hero_section admin_username={admin_username} />
+              <Dashboard_hero_section
+                admin_username={admin_username}
+                all_subscribers_in_dashboard={all_subscribers_in_dashboard}
+                all_subscribers_is_loading={all_subscribers_is_loading}
+              />
             </div>
           </div>
 
           <div className="w-full px-[2vw] py-[2vw] sm:mt-[8vw]    h-auto">
-            <New_Subscribers_wrap />
+            <New_Subscribers_wrap
+              setall_subscribers_in_dashboard={setall_subscribers_in_dashboard}
+              setall_subscribers_is_loading={setall_subscribers_is_loading}
+            />
           </div>
           <div className="w-full sm:h-[40vw] "></div>
         </>
