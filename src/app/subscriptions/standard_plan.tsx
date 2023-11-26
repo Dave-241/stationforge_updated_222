@@ -130,23 +130,33 @@ const StandardPlan = ({ currentplan, email, uuid, customer }: any) => {
         </ul>
 
         {/* fivth div  also known as button */}
-        {currentplan == 3 && (
-          <button
-            className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
-            onClick={manage_merchant_subscriptions}
-          >
-            Manage subscription
-          </button>
-        )}
+        <button
+          className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
+          onClick={() => {
+            if (!customer) {
+              paynow();
+            } else if (
+              (customer != "" && currentplan == 1) ||
+              currentplan == 3
+            ) {
+              manage_merchant_subscriptions();
+            }
+          }}
+        >
+          {!customer && "Join"}
+          {customer && currentplan == 1 && "Renew subscription"}
+          {customer && currentplan == 3 && "Manage subscription"}
+          {customer && currentplan == 4 && "Downgrade "}
+        </button>
 
-        {currentplan != 3 && (
+        {/* {customer == "" && (
           <button
             className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
             onClick={paynow}
           >
             Join
           </button>
-        )}
+        )} */}
       </div>{" "}
     </>
   );

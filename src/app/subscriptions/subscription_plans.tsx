@@ -28,6 +28,8 @@ const Subscription_Plans = () => {
   const [uuid, setuuid] = useState("");
   const [doc_user_ref_id, setdoc_user_ref_id] = useState("");
   const [currentplan, setcurrentplan] = useState(0);
+  const [current_subscription_plain, setcurrent_subscription_plain] =
+    useState("");
   const [email, setemail] = useState("");
   const [customer, setcustomer] = useState("");
 
@@ -71,6 +73,7 @@ const Subscription_Plans = () => {
             setdoc_user_ref_id(doc.id);
             setemail(userDataFromFirestore.Email);
             setuuid(userDataFromFirestore.userid);
+            // setcurrent_subscription_plain(userDataFromFirestore.subscriptionId);
             setcustomer(userDataFromFirestore.subscriptionId);
             setcurrentplan(userDataFromFirestore.step);
           });
