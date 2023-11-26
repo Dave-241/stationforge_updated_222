@@ -73,7 +73,7 @@ const Subscription_Plans = () => {
             setdoc_user_ref_id(doc.id);
             setemail(userDataFromFirestore.Email);
             setuuid(userDataFromFirestore.userid);
-            // setcurrent_subscription_plain(userDataFromFirestore.subscriptionId);
+            setcurrent_subscription_plain(userDataFromFirestore.subscription);
             setcustomer(userDataFromFirestore.subscriptionId);
             setcurrentplan(userDataFromFirestore.step);
           });
@@ -193,12 +193,14 @@ const Subscription_Plans = () => {
                 uuid={uuid}
                 currentplan={currentplan}
                 customer={customer}
+                current_subscription_plain={current_subscription_plain}
               />
               <Merchant_plan
                 email={email}
                 uuid={uuid}
                 currentplan={currentplan}
                 customer={customer}
+                current_subscription_plain={current_subscription_plain}
               />
             </div>
           </div>

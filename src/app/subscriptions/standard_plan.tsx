@@ -13,7 +13,13 @@ import {
   pay_standard_Subscriptions,
 } from "../utils/stripe";
 
-const StandardPlan = ({ currentplan, email, uuid, customer }: any) => {
+const StandardPlan = ({
+  currentplan,
+  email,
+  uuid,
+  customer,
+  current_subscription_plain,
+}: any) => {
   const [list, setlist] = useState([
     {
       img: stan_2,
@@ -144,9 +150,14 @@ const StandardPlan = ({ currentplan, email, uuid, customer }: any) => {
           }}
         >
           {!customer && "Join"}
-          {customer && currentplan == 1 && "Renew subscription"}
+          {customer &&
+            currentplan == 1 &&
+            current_subscription_plain == "Standard tier" &&
+            "Renew subscription"}
           {customer && currentplan == 3 && "Manage subscription"}
-          {customer && currentplan == 4 && "Downgrade "}
+          {customer &&
+            current_subscription_plain == " Merchant tier" &&
+            "Downgrade "}
         </button>
 
         {/* {customer == "" && (

@@ -10,7 +10,13 @@ import {
   pay_standard_Subscriptions,
 } from "../utils/stripe";
 
-const Merchant_plan = ({ currentplan, email, uuid, customer }: any) => {
+const Merchant_plan = ({
+  currentplan,
+  email,
+  uuid,
+  customer,
+  current_subscription_plain,
+}: any) => {
   const router = useRouter();
 
   const paynow = async () => {
@@ -76,7 +82,6 @@ const Merchant_plan = ({ currentplan, email, uuid, customer }: any) => {
             to 50 individuals as was the previous tier
           </h3>
         </div>
-
         {/* thired div  */}
         <div className="w-full">
           <h3 className="text-black text-[2.3vw] neuem sm:text-[4vw] ">
@@ -86,7 +91,6 @@ const Merchant_plan = ({ currentplan, email, uuid, customer }: any) => {
             </span>
           </h3>
         </div>
-
         {/* fourthe div */}
         <p className="text-[1vw] neuer sm:text-[2.9vw]">
           Permission to print and distribute physical models (not the STL.
@@ -99,9 +103,7 @@ const Merchant_plan = ({ currentplan, email, uuid, customer }: any) => {
           websites of your profile on where you are planning to sell our
           <span className="text-[#CCFF00]"> Read more</span>
         </p>
-
         {/* fivth div  also known as button */}
-
         <button
           className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
           onClick={() => {
@@ -116,9 +118,14 @@ const Merchant_plan = ({ currentplan, email, uuid, customer }: any) => {
           }}
         >
           {!customer && "Join"}
-          {customer && currentplan == 1 && "Renew subscription"}
+          {customer &&
+            currentplan == 1 &&
+            current_subscription_plain == " Merchant tier" &&
+            "Renew subscription"}
           {customer && currentplan == 4 && "Manage subscription"}
-          {customer && currentplan == 3 && "Upgrade "}
+          {customer &&
+            current_subscription_plain == "Standard tier" &&
+            "Upgrade "}
         </button>
 
         {/* {currentplan != 4 && (
