@@ -173,12 +173,11 @@ export async function POST(request: Request) {
 
     await transporter.sendMail(emailOptions);
   };
-
+  const subscription: any = await stripe.subscriptions.retrieve(
+    session.subscription as string,
+  );
   if (event.type === "checkout.session.completed") {
-    const subscription: any = await stripe.subscriptions.retrieve(
-      session.subscription as string,
-    );
-    console.log(session.metadata.userId);
+    console.log("tis is the session id " + session.metadata.userId);
     // console.log(subscription);
 
     if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
@@ -217,7 +216,7 @@ export async function POST(request: Request) {
       // Then define and call a function to handle the event customer.subscription.deleted
       break;
     case "customer.subscription.updated":
-      const customerSubscriptionUpdated: any = event.data.object;
+      const customerSubscriptionUpdated: any = await event.data.object;
 
       const plain_id = customerSubscriptionUpdated.plan.id;
 
