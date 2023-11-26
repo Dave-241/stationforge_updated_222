@@ -93,11 +93,11 @@ export async function POST(request: Request) {
         where("subscriptionId", "==", subscriptionid),
       );
       const userDocs = await getDocs(userQuery);
-      const current_number = userDocs.docs[0].data().no_of_subscriptions;
       if (userDocs.empty) {
         console.log("No user document found for the current user");
         return;
       }
+      const current_number = userDocs.docs[0].data().no_of_subscriptions;
 
       const userDocRef = doc(db, "users", userDocs.docs[0].id);
       await updateDoc(userDocRef, {
