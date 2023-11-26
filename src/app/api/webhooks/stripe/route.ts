@@ -139,7 +139,7 @@ export async function POST(request: Request) {
     const email = userDocs.docs[0].data().Email;
 
     const emailContent = `
-  <h2>Dear ${email},</h2>
+  <h4>Dear ${email},</h4>
   <p>We hope this message finds you well. We wanted to inform you that there was an issue processing the recent payment for your account.</p>
   
  
@@ -172,11 +172,12 @@ export async function POST(request: Request) {
 
     await transporter.sendMail(emailOptions);
   };
+
   if (event.type === "checkout.session.completed") {
     const subscription: any = await stripe.subscriptions.retrieve(
       session.subscription as string,
     );
-
+    console.log(session.metadata.userId);
     // console.log(subscription);
 
     if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
