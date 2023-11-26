@@ -173,44 +173,47 @@ export async function POST(request: Request) {
 
     await transporter.sendMail(emailOptions);
   };
-  const subscription: any = await stripe.subscriptions.retrieve(
-    session.subscription as string,
-  );
-  if (event.type === "checkout.session.completed") {
-    console.log("tis is the session id " + session.metadata.userId);
-    // console.log(subscription);
 
-    if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-      update_user_doc(
-        4,
-        session.metadata.userId,
-        "Merchant tier",
-        session.customer,
-        false,
-      );
-    } else if (subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-      update_user_doc(
-        3,
-        session.metadata.userId,
-        "Standard tier",
-        session.customer,
-        false,
-      );
-    }
-  }
+  // if (event.type === "checkout.session.completed") {
+  //   console.log("tis is the session id " + session.metadata.userId);
+  //   // console.log(subscription);
+
+  // }
 
   switch (event.type) {
     case "checkout.session.completed":
       const checkoutSessionCompleted = event.data.object;
+      const subscription: any = await stripe.subscriptions.retrieve(
+        session.subscription as string,
+      );
+      if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+        update_user_doc(
+          4,
+          session.metadata.userId,
+          "Merchant tier",
+          session.customer,
+          false,
+        );
+      } else if (
+        subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
+      ) {
+        update_user_doc(
+          3,
+          session.metadata.userId,
+          "Standard tier",
+          session.customer,
+          false,
+        );
+      }
       //   console.log("Checkout was completed just now ");
       // Then define and call a function to handle the event checkout.session.completed
       break;
     case "customer.subscription.deleted":
       //   console.log("this was urrent");
       const customerSubscriptionDeleted = event.data.object;
-      const subscription: any = await stripe.subscriptions.retrieve(
-        session.subscription as string,
-      );
+      //   const subscription: any = await stripe.subscriptions.retrieve(
+      //     session.subscription as string,
+      //   );
 
       //   console.log("checkout was just deleted from this " + subscription);
       // Then define and call a function to handle the event customer.subscription.deleted
@@ -219,13 +222,12 @@ export async function POST(request: Request) {
       const customerSubscriptionUpdated: any = await event.data.object;
 
       const plain_id = customerSubscriptionUpdated.plan.id;
-
+      //   console.log(customerSubscriptionUpdated);
+      //   console.log(customerSubscriptionUpdated.customer);
       if (!customerSubscriptionUpdated.cancel_at_period_end) {
         if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
           updateT(customerSubscriptionUpdated.customer, false, 4, 1);
-        } else if (
-          subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
-        ) {
+        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
           updateT(customerSubscriptionUpdated.customer, false, 3, 1);
         }
       } else {
@@ -259,5 +261,5 @@ export async function POST(request: Request) {
       console.log(`Unhandled event type ${event.type}`);
   }
 
-  return new Response("success at the end ", { status: 200 });
+  return new Response(null, { status: 200 });
 }
