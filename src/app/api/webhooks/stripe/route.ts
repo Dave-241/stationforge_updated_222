@@ -71,6 +71,7 @@ export async function POST(request: Request) {
         subscriptionCancelled: subscriptionCancel,
         subscription: type,
         subscriptionId: subscriptionid,
+        no_of_subscriptions: 1,
       });
 
       console.log("User document updated successfully");
