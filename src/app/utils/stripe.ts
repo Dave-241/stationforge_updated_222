@@ -17,7 +17,7 @@ export const pay_standard_Subscriptions: any = async (
   }${"subscriptions"}`;
 
   const stripeSession = await stripe.checkout.sessions.create({
-    success_url: `${billing_url}?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: billing_url,
     cancel_url: billing_url,
     payment_method_types: ["card"],
     mode: "subscription",
@@ -47,12 +47,13 @@ export const pay_merchant_Subscriptions: any = async (
   }${"subscriptions"}`;
 
   const stripeSession = await stripe.checkout.sessions.create({
-    success_url: `${billing_url}?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: billing_url,
     cancel_url: billing_url,
     payment_method_types: ["card"],
     mode: "subscription",
     billing_address_collection: "auto",
     customer_email: email,
+
     line_items: [
       {
         price: process.env.NEXT_PUBLIC_MERCHANT_PRICE,
@@ -65,5 +66,17 @@ export const pay_merchant_Subscriptions: any = async (
   });
 
   // console.log(stripeSession.url);
+  return { url: stripeSession.url };
+};
+
+export const manage_subscription: any = async (customerid: string) => {
+  const billing_url = `${
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/"
+  }${"subscriptions"}`;
+
+  const stripeSession = await stripe.billingPortal.sessions.create({
+    customer: customerid,
+    return_url: billing_url,
+  });
   return { url: stripeSession.url };
 };

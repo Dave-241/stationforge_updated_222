@@ -29,6 +29,7 @@ const Subscription_Plans = () => {
   const [doc_user_ref_id, setdoc_user_ref_id] = useState("");
   const [currentplan, setcurrentplan] = useState(0);
   const [email, setemail] = useState("");
+  const [customer, setcustomer] = useState("");
 
   // Initialize Firestore
   const db = getFirestore(app);
@@ -70,6 +71,7 @@ const Subscription_Plans = () => {
             setdoc_user_ref_id(doc.id);
             setemail(userDataFromFirestore.Email);
             setuuid(userDataFromFirestore.userid);
+            setcustomer(userDataFromFirestore.subscriptionId);
             setcurrentplan(userDataFromFirestore.step);
           });
         } else {
@@ -89,61 +91,80 @@ const Subscription_Plans = () => {
   const searchParams = useSearchParams();
 
   const session_id = searchParams.get("session_id");
-  useEffect(() => {
-    // checkSubscription(session_id);
-    const fetchsession = async () => {
-      if (session_id) {
-        const session: any = await stripe.checkout.sessions.retrieve(
-          session_id ?? "",
-        );
-        if (session.subscription) {
-          const subscriptionId: any = session.subscription;
+  // useEffect(() => {
+  //   // checkSubscription(session_id);
+  //   const fetchsession = async () => {
+  //     if (session_id) {
+  //       const session: any = await stripe.checkout.sessions.retrieve(
+  //         session_id ?? "",
+  //       );
 
-          // Retrieve additional information about the subscription
-          const subscription: any = await stripe.subscriptions.retrieve(
-            subscriptionId ?? "",
-          );
-          if (subscription.plan.id == "price_1OBmWvHosKgwPfXjrxDrY480") {
-            update_user_doc(4, session.metadata.userId, "Merchant tier");
-            console.log("NEXT_PUBLIC_MERCHANT_PRICE");
-          } else if (subscription.plan.id == "price_1OGPHMHosKgwPfXjyfz6axKz") {
-            update_user_doc(3, session.metadata.userId, "Standard tier");
-            console.log("NEXT_PUBLIC_STANDARD_PRICE");
-          }
-        }
-      }
-    };
+  //       console.log(session.customer);
 
-    fetchsession();
-  }, [session_id]);
+  //       if (session.subscription) {
+  //         const subscriptionId: any = session.subscription;
 
-  const update_user_doc = async (e: number, id: string, type: string) => {
-    try {
-      const userQuery = query(
-        collection(db, "users"),
-        where("userid", "==", id),
-      );
-      const userDocs = await getDocs(userQuery);
+  //         // Retrieve additional information about the subscription
+  //         const subscription: any = await stripe.subscriptions.retrieve(
+  //           subscriptionId ?? "",
+  //         );
+  //         if (subscription.plan.id == "price_1OBmWvHosKgwPfXjrxDrY480") {
+  //           update_user_doc(
+  //             4,
+  //             session.metadata.userId,
+  //             "Merchant tier",
+  //             session.customer,
+  //           );
+  //           console.log("NEXT_PUBLIC_MERCHANT_PRICE");
+  //         } else if (subscription.plan.id == "price_1OGPHMHosKgwPfXjyfz6axKz") {
+  //           update_user_doc(
+  //             3,
+  //             session.metadata.userId,
+  //             "Standard tier",
+  //             session.customer,
+  //           );
+  //           console.log("NEXT_PUBLIC_STANDARD_PRICE");
+  //         }
+  //       }
+  //     }
+  //   };
 
-      if (userDocs.empty) {
-        console.log("No user document found for the current user");
-        return;
-      }
+  //   fetchsession();
+  // }, [session_id]);
 
-      const userDocRef = doc(db, "users", userDocs.docs[0].id);
-      await updateDoc(userDocRef, {
-        subscribedAt: serverTimestamp(),
-        step: e,
-        subscriptionCancelled: false,
-        subscription: type,
-      });
+  // const update_user_doc = async (
+  //   e: number,
+  //   id: string,
+  //   type: string,
+  //   subscriptionid: string,
+  // ) => {
+  //   try {
+  //     const userQuery = query(
+  //       collection(db, "users"),
+  //       where("userid", "==", id),
+  //     );
+  //     const userDocs = await getDocs(userQuery);
 
-      console.log("User document updated successfully");
-    } catch (error) {
-      console.error("Error updating user document:", error);
-      throw error;
-    }
-  };
+  //     if (userDocs.empty) {
+  //       console.log("No user document found for the current user");
+  //       return;
+  //     }
+
+  //     const userDocRef = doc(db, "users", userDocs.docs[0].id);
+  //     await updateDoc(userDocRef, {
+  //       subscribedAt: serverTimestamp(),
+  //       step: e,
+  //       subscriptionCancelled: false,
+  //       subscription: type,
+  //       subscriptionId: subscriptionid,
+  //     });
+
+  //     console.log("User document updated successfully");
+  //   } catch (error) {
+  //     console.error("Error updating user document:", error);
+  //     throw error;
+  //   }
+  // };
   return (
     <>
       <div className="w-full h-auto justify-center flex flex-col items-center sm:pb[6vw] pb-[3vw] relative">
@@ -168,11 +189,13 @@ const Subscription_Plans = () => {
                 email={email}
                 uuid={uuid}
                 currentplan={currentplan}
+                customer={customer}
               />
               <Merchant_plan
                 email={email}
                 uuid={uuid}
                 currentplan={currentplan}
+                customer={customer}
               />
             </div>
           </div>

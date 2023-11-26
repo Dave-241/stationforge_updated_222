@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^2.3.2",
@@ -21,6 +22,7 @@
     "framer-motion": "^10.16.5",
     "jszip": "^3.10.1",
     "next": "13.4.12",
+    "nodemailer": "^6.9.7",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-circular-progressbar": "^2.1.0",
@@ -37,6 +39,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^9.0.6",

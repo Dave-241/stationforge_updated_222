@@ -8,9 +8,12 @@ import stan_3 from "../../../public/subscription/stan_3.webp";
 import stan_4 from "../../../public/subscription/stan_4.webp";
 import stan_5 from "../../../public/subscription/stan_5.webp";
 import { useRouter } from "next/navigation";
-import { pay_standard_Subscriptions } from "../utils/stripe";
+import {
+  manage_subscription,
+  pay_standard_Subscriptions,
+} from "../utils/stripe";
 
-const StandardPlan = ({ currentplan, email, uuid }: any) => {
+const StandardPlan = ({ currentplan, email, uuid, customer }: any) => {
   const [list, setlist] = useState([
     {
       img: stan_2,
@@ -39,6 +42,27 @@ const StandardPlan = ({ currentplan, email, uuid }: any) => {
       try {
         if (session_url.url) {
           router.push(session_url.url);
+        }
+      } catch (error: any) {
+        console.error("Error creating Checkout session:", error);
+        if (error && error.raw && error.raw.message) {
+          console.error("Stripe API Error Message:", error.raw.message);
+        }
+        throw error;
+      }
+    } else {
+      return;
+    }
+  };
+
+  const manage_merchant_subscriptions = async () => {
+    if (customer != "") {
+      console.log("this is for manageing subscription");
+      try {
+        const manage_session = await manage_subscription(customer);
+        if (manage_session.url) {
+          router.push(manage_session.url);
+          console.log(manage_session.url);
         }
       } catch (error: any) {
         console.error("Error creating Checkout session:", error);
@@ -107,7 +131,10 @@ const StandardPlan = ({ currentplan, email, uuid }: any) => {
 
         {/* fivth div  also known as button */}
         {currentplan == 3 && (
-          <button className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] ">
+          <button
+            className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
+            onClick={manage_merchant_subscriptions}
+          >
             Manage subscription
           </button>
         )}

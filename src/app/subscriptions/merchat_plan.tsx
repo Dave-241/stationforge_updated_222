@@ -5,11 +5,12 @@ import mer_1 from "../../../public/subscription/mer_1.webp";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
+  manage_subscription,
   pay_merchant_Subscriptions,
   pay_standard_Subscriptions,
 } from "../utils/stripe";
 
-const Merchant_plan = ({ currentplan, email, uuid }: any) => {
+const Merchant_plan = ({ currentplan, email, uuid, customer }: any) => {
   const router = useRouter();
 
   const paynow = async () => {
@@ -19,6 +20,27 @@ const Merchant_plan = ({ currentplan, email, uuid }: any) => {
       try {
         if (session_url.url) {
           router.push(session_url.url);
+        }
+      } catch (error: any) {
+        console.error("Error creating Checkout session:", error);
+        if (error && error.raw && error.raw.message) {
+          console.error("Stripe API Error Message:", error.raw.message);
+        }
+        throw error;
+      }
+    } else {
+      return;
+    }
+  };
+
+  const manage_merchant_subscriptions = async () => {
+    if (customer != "") {
+      console.log("this is for manageing subscription");
+      try {
+        const manage_session = await manage_subscription(customer);
+        if (manage_session.url) {
+          router.push(manage_session.url);
+          console.log(manage_session.url);
         }
       } catch (error: any) {
         console.error("Error creating Checkout session:", error);
@@ -80,7 +102,10 @@ const Merchant_plan = ({ currentplan, email, uuid }: any) => {
 
         {/* fivth div  also known as button */}
         {currentplan == 4 && (
-          <button className="w-full h-[4.3vw] text-[1.6vw] sm:rounded-[5vw]  sm:text-[4vw] sm:h-[10vw] neuem rounded-[3.7vw] transition duration-[0.2s] hover:bg-opacity-[80%] bg-opacity-[100%] bg-[#000000] text-white ">
+          <button
+            className="w-full h-[4.3vw] text-[1.6vw] sm:rounded-[5vw]  sm:text-[4vw] sm:h-[10vw] neuem rounded-[3.7vw] transition duration-[0.2s] hover:bg-opacity-[80%] bg-opacity-[100%] bg-[#000000] text-white "
+            onClick={manage_merchant_subscriptions}
+          >
             Manage subscription
           </button>
         )}
