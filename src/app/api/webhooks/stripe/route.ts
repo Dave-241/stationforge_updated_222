@@ -34,8 +34,7 @@ export async function POST(request: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      "whsec_5d57657d7ae14a31a9eb80ac529e3ba3f9b6d93197cd6d11e4046010621b7814" ||
-        "",
+      process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_KEY || "",
     );
   } catch (err) {
     return new Response(
