@@ -1,6 +1,6 @@
 "use client ";
 
-import React from "react";
+import React, { useState } from "react";
 import mer_1 from "../../../public/subscription/mer_1.webp";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,10 @@ import {
   manage_subscription,
   pay_merchant_Subscriptions,
   pay_standard_Subscriptions,
+  stripe,
+  // upgrade_subscriptions,
 } from "../utils/stripe";
+import { useProfile_Context } from "../utils/profile_context";
 
 const Merchant_plan = ({
   currentplan,
@@ -16,18 +19,21 @@ const Merchant_plan = ({
   uuid,
   customer,
   current_subscription_plain,
+  merchant_isloading,
+  setmerchant_isloading,
 }: any) => {
   const router = useRouter();
-
+  const { setpage_loader }: any = useProfile_Context();
   const paynow = async () => {
     if (uuid != "" && email != "") {
-      console.log("this is for payetn");
       const session_url = await pay_merchant_Subscriptions(uuid, email);
       try {
+        setmerchant_isloading(true);
         if (session_url.url) {
           router.push(session_url.url);
         }
       } catch (error: any) {
+        setmerchant_isloading(false);
         console.error("Error creating Checkout session:", error);
         if (error && error.raw && error.raw.message) {
           console.error("Stripe API Error Message:", error.raw.message);
@@ -35,20 +41,24 @@ const Merchant_plan = ({
         throw error;
       }
     } else {
+      setmerchant_isloading(false);
       return;
     }
   };
 
   const manage_merchant_subscriptions = async () => {
     if (customer != "") {
-      console.log("this is for manageing subscription");
       try {
+        setmerchant_isloading(true);
+
         const manage_session = await manage_subscription(customer);
         if (manage_session.url) {
           router.push(manage_session.url);
           console.log(manage_session.url);
         }
       } catch (error: any) {
+        setmerchant_isloading(false);
+
         console.error("Error creating Checkout session:", error);
         if (error && error.raw && error.raw.message) {
           console.error("Stripe API Error Message:", error.raw.message);
@@ -56,6 +66,48 @@ const Merchant_plan = ({
         throw error;
       }
     } else {
+      setmerchant_isloading(false);
+
+      return;
+    }
+  };
+  const update_subscription_to_merchant = async () => {
+    if (customer != "") {
+      try {
+        setmerchant_isloading(true);
+
+        const subscriptions = await stripe.subscriptions.list({
+          customer: customer,
+        });
+
+        const sub_id = subscriptions.data[0].id;
+        const item_id = subscriptions.data[0].items.data[0].id;
+
+        const subscription_update: any = await stripe.subscriptions.update(
+          sub_id,
+          {
+            items: [
+              {
+                id: item_id,
+                price: process.env.NEXT_PUBLIC_MERCHANT_PRICE,
+              },
+            ],
+          },
+        );
+
+        console.log(subscriptions);
+      } catch (error: any) {
+        setmerchant_isloading(false);
+
+        console.error("Error creating Checkout session:", error);
+        if (error && error.raw && error.raw.message) {
+          console.error("Stripe API Error Message:", error.raw.message);
+        }
+        throw error;
+      }
+    } else {
+      setmerchant_isloading(false);
+
       return;
     }
   };
@@ -105,10 +157,15 @@ const Merchant_plan = ({
         </p>
         {/* fivth div  also known as button */}
         <button
-          className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
+          className="w-full flex justify-center items-center sm:gap-[4vw] gap-[1vw] h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
           onClick={() => {
-            if (!customer) {
+            if (!uuid) {
+              setpage_loader(true);
+              router.push("/login?ref=subscription");
+            } else if (!customer) {
               paynow();
+            } else if (currentplan == 3) {
+              update_subscription_to_merchant();
             } else if (
               (customer != "" && currentplan == 1) ||
               currentplan == 4
@@ -126,6 +183,9 @@ const Merchant_plan = ({
           {customer &&
             current_subscription_plain == "Standard tier" &&
             "Upgrade "}
+          {merchant_isloading && (
+            <div className="rounded-[100%] sm:h-[7vw] sm:border-t-[1vw] sm:w-[7vw] h-[2vw] w-[2vw]  border-solid  border-t-[0.3vw] border-[black] animate-spin"></div>
+          )}
         </button>
 
         {/* {currentplan != 4 && (

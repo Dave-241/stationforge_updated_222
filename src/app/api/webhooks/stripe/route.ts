@@ -87,6 +87,7 @@ export async function POST(request: Request) {
     cancelled: boolean,
     step: number,
     subscription_no: number,
+    subscription: string,
   ) => {
     try {
       const userQuery = query(
@@ -106,6 +107,7 @@ export async function POST(request: Request) {
         step: step,
         subscriptionCancelled: cancelled,
         no_of_subscriptions: current_number + subscription_no,
+        subscription: subscription,
       });
 
       console.log("User document updated successfully");
@@ -210,28 +212,33 @@ export async function POST(request: Request) {
       break;
     case "customer.subscription.deleted":
       //   console.log("this was urrent");
-      const customerSubscriptionDeleted = event.data.object;
-      //   const subscription: any = await stripe.subscriptions.retrieve(
-      //     session.subscription as string,
-      //   );
+      const customerSubscriptionDeleted: any = event.data.object;
 
-      //   console.log("checkout was just deleted from this " + subscription);
+      updateT(customerSubscriptionDeleted.customer, true, 1, 0, "Public user");
+
       // Then define and call a function to handle the event customer.subscription.deleted
       break;
     case "customer.subscription.updated":
       const customerSubscriptionUpdated: any = await event.data.object;
-
       const plain_id = customerSubscriptionUpdated.plan.id;
       //   console.log(customerSubscriptionUpdated);
       //   console.log(customerSubscriptionUpdated.customer);
-      if (!customerSubscriptionUpdated.cancel_at_period_end) {
-        if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-          updateT(customerSubscriptionUpdated.customer, false, 4, 1);
-        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-          updateT(customerSubscriptionUpdated.customer, false, 3, 1);
-        }
-      } else {
-        updateT(customerSubscriptionUpdated.customer, true, 1, 0);
+      if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+        updateT(
+          customerSubscriptionUpdated.customer,
+          false,
+          4,
+          1,
+          "Merchant tier",
+        );
+      } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+        updateT(
+          customerSubscriptionUpdated.customer,
+          false,
+          3,
+          1,
+          "Standard tier",
+        );
       }
       // Then define and call a function to handle the event customer.subscription.updated
       break;

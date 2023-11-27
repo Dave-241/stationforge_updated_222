@@ -73,29 +73,12 @@ export default function Login_component() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is authenticated, redirect to a protected route
-        user.getIdTokenResult().then((idTokenResult) => {
-          const isAdmin = idTokenResult.claims.admin === true;
-          if (isAdmin) {
-            if (ref == "forge") {
-              router.back();
-            } else if (ref == "libray") {
-              router.back();
-            } else {
-              router.push("/admin/dashboard");
-            }
+        if (ref) {
+          router.back();
+        } else {
+          router.push("/");
+        }
 
-            setpage_loader(false);
-          } else {
-            if (ref == "forge") {
-              router.back();
-            } else if (ref == "libray") {
-              router.back();
-            } else {
-              router.push("/");
-            }
-          }
-        });
         // Replace with your protected route
       } else {
         // User is not authenticated, you can keep them on the current page or redirect them to a login page

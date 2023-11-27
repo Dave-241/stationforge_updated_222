@@ -8,6 +8,14 @@ export const stripe = new Stripe(
   },
 );
 
+// Function to calculate the Unix timestamp for the 1st day of the next month
+function getNextMonthTimestamp() {
+  const currentDate = new Date();
+  const nextMonth = new Date(currentDate);
+  nextMonth.setMonth(currentDate.getMonth() + 1, 1); // Set to 1st day of next month
+  return Math.floor(nextMonth.getTime() / 1000); // Convert to Unix timestamp (in seconds)
+}
+
 export const pay_standard_Subscriptions: any = async (
   userid: string,
   email: string,
@@ -31,6 +39,9 @@ export const pay_standard_Subscriptions: any = async (
     ],
     metadata: {
       userId: userid,
+    },
+    subscription_data: {
+      billing_cycle_anchor: getNextMonthTimestamp(),
     },
   });
 
@@ -63,6 +74,9 @@ export const pay_merchant_Subscriptions: any = async (
     metadata: {
       userId: userid,
     },
+    subscription_data: {
+      billing_cycle_anchor: getNextMonthTimestamp(),
+    },
   });
 
   // console.log(stripeSession.url);
@@ -80,3 +94,15 @@ export const manage_subscription: any = async (customerid: string) => {
   });
   return { url: stripeSession.url };
 };
+
+// export const upgrade_subscriptions: any = async (customerid: string) => {
+//   const billing_url = `${
+//     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/"
+//   }${"subscriptions"}`;
+
+//   const subscriptions = await stripe.subscriptions.list({
+//     customer: customerid,
+//   });
+
+//   return { url: subscriptions.url };
+// };

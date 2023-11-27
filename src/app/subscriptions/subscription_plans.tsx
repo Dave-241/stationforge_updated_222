@@ -32,6 +32,8 @@ const Subscription_Plans = () => {
     useState("");
   const [email, setemail] = useState("");
   const [customer, setcustomer] = useState("");
+  const [merchant_isloading, setmerchant_isloading] = useState(false);
+  const [standard_isloading, setstandard_isloading] = useState(false);
 
   // Initialize Firestore
   const db = getFirestore(app);
@@ -44,6 +46,7 @@ const Subscription_Plans = () => {
         setuuid(user.uid);
       } else {
         setuuid("");
+        setcustomer("");
       }
     });
 
@@ -55,7 +58,6 @@ const Subscription_Plans = () => {
   // this is to check to manage subscription
 
   useEffect(() => {
-    console.log("from the subscription plans" + uuid);
     if (auth.currentUser) {
       const userCollectionRef = collection(db, "users");
       const userQuery = query(
@@ -69,8 +71,9 @@ const Subscription_Plans = () => {
             // Extract user data from the document
             const userDataFromFirestore = doc.data();
             //  setUserData(userDataFromFirestore);
-            console.log(userDataFromFirestore.step);
             setdoc_user_ref_id(doc.id);
+            setmerchant_isloading(false);
+            setstandard_isloading(false);
             setemail(userDataFromFirestore.Email);
             setuuid(userDataFromFirestore.userid);
             setcurrent_subscription_plain(userDataFromFirestore.subscription);
@@ -194,6 +197,8 @@ const Subscription_Plans = () => {
                 currentplan={currentplan}
                 customer={customer}
                 current_subscription_plain={current_subscription_plain}
+                standard_isloading={standard_isloading}
+                setstandard_isloading={setstandard_isloading}
               />
               <Merchant_plan
                 email={email}
@@ -201,6 +206,8 @@ const Subscription_Plans = () => {
                 currentplan={currentplan}
                 customer={customer}
                 current_subscription_plain={current_subscription_plain}
+                merchant_isloading={merchant_isloading}
+                setmerchant_isloading={setmerchant_isloading}
               />
             </div>
           </div>
