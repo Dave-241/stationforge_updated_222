@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     );
   }
 
-  //   This is the funtion to update on after the webhook
+  //   this is the funtion to update on after the webhook
   const update_user_doc = async (
     e: number,
     id: string,
