@@ -73,8 +73,6 @@ export async function POST(request: Request) {
         subscriptionId: subscriptionid,
         // no_of_subscriptions: 1,
       });
-
-      console.log("User document updated successfully");
     } catch (error) {
       console.error("Error updating user document:", error);
       throw error;
@@ -109,8 +107,6 @@ export async function POST(request: Request) {
         // no_of_subscriptions: current_number + subscription_no,
         subscription: subscription,
       });
-
-      console.log("User document updated successfully");
     } catch (error) {
       console.error("Error updating user document:", error);
       throw error;
