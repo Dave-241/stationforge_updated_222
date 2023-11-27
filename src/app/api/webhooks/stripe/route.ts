@@ -71,7 +71,7 @@ export async function POST(request: Request) {
         subscriptionCancelled: subscriptionCancel,
         subscription: type,
         subscriptionId: subscriptionid,
-        no_of_subscriptions: 1,
+        // no_of_subscriptions: 1,
       });
 
       console.log("User document updated successfully");
@@ -106,7 +106,7 @@ export async function POST(request: Request) {
         subscribedAt: serverTimestamp(),
         step: step,
         subscriptionCancelled: cancelled,
-        no_of_subscriptions: current_number + subscription_no,
+        // no_of_subscriptions: current_number + subscription_no,
         subscription: subscription,
       });
 
