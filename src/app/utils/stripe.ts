@@ -106,3 +106,38 @@ export const manage_subscription: any = async (customerid: string) => {
 
 //   return { url: subscriptions.url };
 // };
+
+export const renew_subscription: any = async (
+  customerid: string,
+  userid: string,
+  email: string,
+  priceid: any,
+) => {
+  const billing_url = `${
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/"
+  }${"subscriptions"}`;
+  const stripeSession = await stripe.checkout.sessions.create({
+    success_url: billing_url,
+    customer: customerid, // Replace with the actual customer ID
+    cancel_url: billing_url,
+    payment_method_types: ["card"],
+    mode: "subscription",
+    billing_address_collection: "auto",
+
+    line_items: [
+      {
+        price: priceid,
+        quantity: 1,
+      },
+    ],
+    metadata: {
+      userId: userid,
+    },
+    subscription_data: {
+      billing_cycle_anchor: getNextMonthTimestamp(),
+    },
+  });
+
+  // console.log(stripeSession.url);
+  return { url: stripeSession.url };
+};

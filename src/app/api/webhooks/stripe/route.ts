@@ -214,10 +214,15 @@ export async function POST(request: Request) {
       // Then define and call a function to handle the event customer.subscription.deleted
       break;
     case "customer.subscription.updated":
-      const customerSubscriptionUpdated: any = await event.data.object;
+      const customerSubscriptionUpdated: any = event.data
+        .object as Stripe.Subscription;
       const plain_id = customerSubscriptionUpdated.plan.id;
-      //   console.log(customerSubscriptionUpdated);
+      console.log(customerSubscriptionUpdated);
       //   console.log(customerSubscriptionUpdated.customer);
+      // If the user is cancelling their subscription, return and handle it in the .deleted event
+      if (customerSubscriptionUpdated.status === "canceled") {
+        break;
+      }
       if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
         updateT(
           customerSubscriptionUpdated.customer,

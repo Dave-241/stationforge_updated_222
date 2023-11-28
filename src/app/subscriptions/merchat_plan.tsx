@@ -8,6 +8,7 @@ import {
   manage_subscription,
   pay_merchant_Subscriptions,
   pay_standard_Subscriptions,
+  renew_subscription,
   stripe,
   // upgrade_subscriptions,
 } from "../utils/stripe";
@@ -54,7 +55,6 @@ const Merchant_plan = ({
         const manage_session = await manage_subscription(customer);
         if (manage_session.url) {
           router.push(manage_session.url);
-          console.log(manage_session.url);
         }
       } catch (error: any) {
         setmerchant_isloading(false);
@@ -71,31 +71,21 @@ const Merchant_plan = ({
       return;
     }
   };
-  const update_subscription_to_merchant = async () => {
+
+  const renew_subscription_to_merchant = async () => {
     if (customer != "") {
       try {
         setmerchant_isloading(true);
 
-        const subscriptions = await stripe.subscriptions.list({
-          customer: customer,
-        });
-
-        const sub_id = subscriptions.data[0].id;
-        const item_id = subscriptions.data[0].items.data[0].id;
-
-        const subscription_update: any = await stripe.subscriptions.update(
-          sub_id,
-          {
-            items: [
-              {
-                id: item_id,
-                price: process.env.NEXT_PUBLIC_MERCHANT_PRICE,
-              },
-            ],
-          },
+        const manage_session = await renew_subscription(
+          customer,
+          uuid,
+          email,
+          process.env.NEXT_PUBLIC_MERCHANT_PRICE,
         );
-
-        console.log(subscriptions);
+        if (manage_session.url) {
+          router.push(manage_session.url);
+        }
       } catch (error: any) {
         setmerchant_isloading(false);
 
@@ -157,32 +147,34 @@ const Merchant_plan = ({
         </p>
         {/* fivth div  also known as button */}
         <button
-          className="w-full flex justify-center items-center sm:gap-[4vw] gap-[1vw] h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
+          className="w-full h-[4vw]  flex justify-center items-center sm:gap-[4vw] gap-[1vw] text-[1.4vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[3.7vw] sm:h-[10vw] "
           onClick={() => {
             if (!uuid) {
               setpage_loader(true);
               router.push("/login?ref=subscription");
             } else if (!customer) {
               paynow();
-            } else if (currentplan == 3) {
-              update_subscription_to_merchant();
+            } else if (customer && currentplan == 1) {
+              renew_subscription_to_merchant();
             } else if (
-              (customer != "" && currentplan == 1) ||
+              (customer != "" && currentplan == 3) ||
               currentplan == 4
             ) {
               manage_merchant_subscriptions();
+              // renew_subscription_to_merchant();
             }
           }}
         >
           {!customer && "Join"}
           {customer &&
             currentplan == 1 &&
-            current_subscription_plain == " Merchant tier" &&
+            current_subscription_plain == "Public user" &&
             "Renew subscription"}
-          {customer && currentplan == 4 && "Manage subscription"}
-          {customer &&
+          {customer && currentplan == 4 && "Manage active subscription"}
+          {customer && currentplan == 3 && "Upgrade subscription "}
+          {/* {customer &&
             current_subscription_plain == "Standard tier" &&
-            "Upgrade "}
+            "Upgrade "} */}
           {merchant_isloading && (
             <div className="rounded-[100%] sm:h-[7vw] sm:border-t-[1vw] sm:w-[7vw] h-[2vw] w-[2vw]  border-solid  border-t-[0.3vw] border-[black] animate-spin"></div>
           )}
