@@ -79,6 +79,39 @@ export async function POST(request: Request) {
   };
 
   //   this function updates t when the user either cancels or renews subscriptions
+  const Cancel_subscription = async (
+    subscriptionid: string,
+    cancelled: boolean,
+    step: number,
+    subscription_no: number,
+    subscription: string,
+  ) => {
+    try {
+      const userQuery = query(
+        collection(db, "users"),
+        where("subscriptionId", "==", subscriptionid),
+      );
+      const userDocs = await getDocs(userQuery);
+      if (userDocs.empty) {
+        console.log("No user document found for the current user");
+        return;
+      }
+      const current_number = userDocs.docs[0].data().no_of_subscriptions;
+
+      const userDocRef = doc(db, "users", userDocs.docs[0].id);
+      await updateDoc(userDocRef, {
+        step: step,
+        subscriptionCancelled: cancelled,
+        // no_of_subscriptions: current_number + subscription_no,
+        subscription: subscription,
+        cancelledAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error("Error updating user document:", error);
+      throw error;
+    }
+  };
+  //   this function updates t when the user either cancels or renews subscriptions
   const updateT = async (
     subscriptionid: string,
     cancelled: boolean,
@@ -209,7 +242,13 @@ export async function POST(request: Request) {
       //   console.log("this was urrent");
       const customerSubscriptionDeleted: any = event.data.object;
 
-      updateT(customerSubscriptionDeleted.customer, true, 1, 0, "Public user");
+      Cancel_subscription(
+        customerSubscriptionDeleted.customer,
+        true,
+        1,
+        0,
+        "Public user",
+      );
 
       // Then define and call a function to handle the event customer.subscription.deleted
       break;
@@ -217,7 +256,7 @@ export async function POST(request: Request) {
       const customerSubscriptionUpdated: any = event.data
         .object as Stripe.Subscription;
       const plain_id = customerSubscriptionUpdated.plan.id;
-      console.log(customerSubscriptionUpdated);
+      // console.log(customerSubscriptionUpdated);
       //   console.log(customerSubscriptionUpdated.customer);
       // If the user is cancelling their subscription, return and handle it in the .deleted event
       if (customerSubscriptionUpdated.status === "canceled") {
