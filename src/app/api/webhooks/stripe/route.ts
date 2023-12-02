@@ -213,28 +213,28 @@ export async function POST(request: Request) {
   switch (event.type) {
     case "checkout.session.completed":
       const checkoutSessionCompleted = event.data.object;
-      // const subscription: any = await stripe.subscriptions.retrieve(
-      //   session.subscription as string,
-      // );
-      // if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-      //   update_user_doc(
-      //     4,
-      //     session.metadata.userId,
-      //     "Merchant tier",
-      //     session.customer,
-      //     false,
-      //   );
-      // } else if (
-      //   subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
-      // ) {
-      //   update_user_doc(
-      //     3,
-      //     session.metadata.userId,
-      //     "Standard tier",
-      //     session.customer,
-      //     false,
-      //   );
-      // }
+      const subscription: any = await stripe.subscriptions.retrieve(
+        session.subscription as string,
+      );
+      if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+        update_user_doc(
+          4,
+          session.metadata.userId,
+          "Merchant tier",
+          session.customer,
+          false,
+        );
+      } else if (
+        subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
+      ) {
+        update_user_doc(
+          3,
+          session.metadata.userId,
+          "Standard tier",
+          session.customer,
+          false,
+        );
+      }
       //   console.log("Checkout was completed just now ");
       // Then define and call a function to handle the event checkout.session.completed
       break;
@@ -264,10 +264,11 @@ export async function POST(request: Request) {
       const subscriptionId = invoicePaymentSucceeded.subscription;
 
       // Fetch the subscription details from Stripe
-      const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+      const subscription_payment_succedded =
+        await stripe.subscriptions.retrieve(subscriptionId);
 
       // Now you can access the current plan ID
-      const plain_id = subscription.items.data[0].price.id;
+      const plain_id = subscription_payment_succedded.items.data[0].price.id;
 
       // Use currentPlanId for further processing
 
@@ -293,7 +294,7 @@ export async function POST(request: Request) {
         }
       }
 
-      console.log(invoicePaymentSucceeded.billing_reason, plain_id);
+      // console.log(invoicePaymentSucceeded.billing_reason, plain_id);
 
       // Then define and call a function to handle the event invoice.payment_succeeded
       break;
