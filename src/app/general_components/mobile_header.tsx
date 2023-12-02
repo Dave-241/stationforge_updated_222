@@ -131,8 +131,11 @@ const Mobile_header = ({
   return (
     <>
       <div
-        className="w-[100vw] h-[100vh] hidden fixed top-0 left-0 sm:flex justify-center items-start  bg-black bg-opacity-[70%]"
+        className={`w-[100vw] h-[100vh] hidden fixed top-0 left-0 sm:flex justify-center items-start  bg-black  ${
+          comedown ? "bg-opacity-[70%]" : "bg-opacity-[0%]"
+        } `}
         onClick={hide_mob_header}
+        style={{ transition: "1.5s ease" }}
       >
         <div
           className={`w-full ${
