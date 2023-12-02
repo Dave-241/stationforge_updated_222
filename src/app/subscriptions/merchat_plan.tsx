@@ -27,9 +27,11 @@ const Merchant_plan = ({
   const { setpage_loader }: any = useProfile_Context();
   const paynow = async () => {
     if (uuid != "" && email != "") {
-      const session_url = await pay_merchant_Subscriptions(uuid, email);
       try {
         setmerchant_isloading(true);
+
+        const session_url = await pay_merchant_Subscriptions(uuid, email);
+
         if (session_url.url) {
           router.push(session_url.url);
         }

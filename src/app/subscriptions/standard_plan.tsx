@@ -50,9 +50,10 @@ const StandardPlan = ({
 
   const paynow = async () => {
     if (uuid != "" && email != "") {
-      const session_url = await pay_standard_Subscriptions(uuid, email);
       try {
         setstandard_isloading(true);
+
+        const session_url = await pay_standard_Subscriptions(uuid, email);
 
         if (session_url.url) {
           router.push(session_url.url);
