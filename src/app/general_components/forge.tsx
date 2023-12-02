@@ -378,8 +378,15 @@ const Forge = (props: any) => {
   return (
     <>
       <div
-        className="w-full h-full fixed top-0 left-0 bg-black  sm:bg-opacity-[90%] bg-opacity-[50%] flex sm:items-end  z-[999999] justify-center items-center "
+        className={`w-full h-full fixed top-0 left-0 bg-black   ${
+          comeup
+            ? " sm:bg-opacity-[90%]  bg-opacity-[60%]"
+            : " sm:bg-opacity-[0%]  bg-opacity-[0%]"
+        } flex sm:items-end  z-[999999] justify-center items-center `}
         onClick={hideForge} // Hide forge when clicking on the background
+        style={{
+          transition: globalThis.innerWidth > 650 ? "1s ease" : "1.5s ease ",
+        }}
       >
         {/* this is for exsiting  */}
         <Image
@@ -388,7 +395,7 @@ const Forge = (props: any) => {
           className="sm:block hidden w-[10vw] h-fit absolute top-[5vw] right-[3vw] "
           style={{ opacity: comeup ? 1 : 0, transition: "1s ease" }}
         />
-        <div className="w-auto sm:w-full sm:px-[3vw] sm:pt-[10vw] h-auto sm:bg-black">
+        <div className="w-auto sm:w-full sm:px-[3vw] sm:pt-[10vw] h-auto ">
           <div
             className={` bg-[#111111] sm:bg[#131212] ${
               go_width ? "w-[46vw] sm:w-full" : "w-[21vw] sm:w-full"
