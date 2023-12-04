@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-const Each_moderator = ({ data }: any) => {
+const Each_moderator = ({ data, setstage }: any) => {
   return (
     <>
       <div className="w-full flex justify-between sm:rounded-[4vw]  sm:px-[3vw] sm:h-[28vw]  items-center  bg-[#0D0C0C] px-[1.2vw] h-[8vw] rounded-[1.5vw]">
@@ -34,7 +34,12 @@ const Each_moderator = ({ data }: any) => {
         </div>
 
         <div className="h-[4.5vw] sm:h-[15vw]  flex flex-col justify-between">
-          <button className="bg-[#CCFF00] sm:h-[7vw] sm:w-[25vw] sm:text-[2.8vw] sm:rounded-[2vw] hover:bg-opacity-[50%] text-[1vw] rounded-[1vw] w-[8vw] h-[2.2vw]">
+          <button
+            className="bg-[#CCFF00] sm:h-[7vw] sm:w-[25vw] sm:text-[2.8vw] sm:rounded-[2vw] hover:bg-opacity-[50%] text-[1vw] rounded-[1vw] w-[8vw] h-[2.2vw]"
+            onClick={() => {
+              setstage(2);
+            }}
+          >
             View Chats
           </button>
 

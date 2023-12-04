@@ -7,7 +7,7 @@ const Moderator_header = ({ moderator_size, moderator_is_loading }: any) => {
 
   return (
     <>
-      <div className="w-full  items-center backdrop-blur-[14px] bg-opacity-[30%] z-[99999] bg-black  fixed top-0 text-white left-0 flex justify-start sm:h-[18vw] sm:justify-between  px-[2vw] h-[6vw] gap-[2vw] ">
+      <div className="  w-[calc(100vw/3.05)] sm:w-full  items-center backdrop-blur-[14px] bg-opacity-[30%] z-[99999] bg-black  fixed top-0 text-white left-0 flex justify-start sm:h-[18vw] sm:justify-between  px-[2vw] h-[6vw] gap-[2vw] ">
         <button
           className="text-white text-[1.2vw] sm:px-[3vw] sm:py-[1.5vw] sm:rounded-[2vw] sm:text-[4vw] bg-[#161616] neuer px-[1vw] py-[0.5vw] rounded-[1vw]"
           onClick={() => {

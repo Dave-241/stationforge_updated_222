@@ -22,6 +22,7 @@ import {
 import Add_moderator_header from "@/app/admin_general_component/add_moderator_header";
 import axios from "axios";
 import All_moderator_wrap from "./all_moderator_wrap";
+import All_chats_wrap from "./chats_wrap";
 
 export default function Home() {
   const {
@@ -123,7 +124,8 @@ export default function Home() {
       {page_loader && <Loader />}
       {showdash ? (
         <>
-          <All_moderator_wrap />
+          {stage > 0 && <All_moderator_wrap setstage={setstage} />}
+          {stage > 1 && <All_chats_wrap />}
         </>
       ) : null}
     </>
