@@ -5,7 +5,7 @@ import firebaseadmin from "firebase-admin";
 import { cert } from "firebase-admin/app";
 import { initializeApp } from "firebase/app";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 // firebaseadmin.initializeApp();
 
 var serviceAccount = require("../../api/customClaims/service.json");
@@ -28,7 +28,7 @@ if (firebaseadmin.apps.length > 0) {
     .firestore();
 }
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest, res: NextApiResponse) {
   // firebaseadmin.initializeApp({
   //   credential: cert(serviceAccount),
   // });
