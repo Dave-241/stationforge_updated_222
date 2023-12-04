@@ -3,61 +3,65 @@
 import firebaseConfig from "@/app/utils/fire_base_config";
 import firebaseadmin from "firebase-admin";
 import { cert } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
 import { initializeApp } from "firebase/app";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
-// firebaseadmin.initializeApp();
 
 var serviceAccount = require("../../api/customClaims/service.json");
-const firebaseAppName = "custom2";
+// console.log(firebaseadmin.apps[0]);
 if (firebaseadmin.apps.length > 0) {
-  const firebase_app = firebaseadmin.app(firebaseAppName);
-
-  console.log("Firebase app deleted and reinitialized.");
 } else {
-  console.log("Firebase Admin SDK is initialized.");
   firebaseadmin
-    .initializeApp(
-      {
-        credential: firebaseadmin.credential.cert(serviceAccount),
-        projectId: "fir-9-dojo-24129",
-        databaseURL: "https://fir-9-dojo-24129.firebaseapp.com",
-      },
-      firebaseAppName,
-    )
+    .initializeApp({
+      credential: firebaseadmin.credential.cert(serviceAccount),
+      projectId: "fir-9-dojo-24129",
+      databaseURL: "https://fir-9-dojo-24129.firebaseapp.com",
+    })
     .firestore();
 }
 
-export async function GET(req: NextRequest, res: NextApiResponse) {
-  // firebaseadmin.initializeApp({
-  //   credential: cert(serviceAccount),
-  // });
-
-  // const app = initializeApp(firebaseConfig);
-
-  // Initialize Firestore
-  //  const db = getFirestore(app);
-  // const otherauth = firebaseadmin.auth(firebaseadmin)
+export async function POST(req: NextRequest, res: NextApiResponse) {
   try {
-    firebaseadmin
-      .auth()
-      .listUsers()
-      .then((listUsersResult) => {
-        listUsersResult.users.forEach((userRecord) => {
-          console.log("User ID:", userRecord.uid);
-          console.log("Email:", userRecord.email);
-          console.log("Display Name:", userRecord.displayName);
-          console.log("========================");
-        });
-      })
-      .catch((error) => {
-        console.error("Error listing users:", error);
-      });
+    const data = await req.json();
+    const userCredential = await getAuth().createUser({
+      email: data.email,
+      password: data.password,
+    });
 
-    return NextResponse.json({ error: false }, { status: 200 });
-  } catch (error) {
-    console.error("Error during Firebase Admin SDK test:", error);
+    return NextResponse.json({ uid: userCredential.uid }, { status: 200 });
+  } catch (error: any) {
+    if (error.code) {
+      // console.error("Error during Firebase Admin SDK test:", error);
 
-    return NextResponse.json({ error: true }, { status: 500 });
+      return NextResponse.json({ error: error }, { status: 200 });
+    } else {
+      console.log(error);
+      return NextResponse.json({ error: error }, { status: 500 });
+    }
   }
+
+  // try {
+  //   const auth = getAuth();
+  //   const userCredential = await createUserWithEmailAndPassword(
+  //     auth,
+  //     "user@example.com",
+  //     "secretPas:asword",
+  //   );
+
+  //   // If successful, userCredential.user will contain user information
+  //   console.log("Successfully created new user:", userCredential.user.uid);
+
+  //   // Return the UID or any other relevant information
+  //   return NextResponse.json(
+  //     { uid: userCredential.user.uid },
+  //     { status: 200 },
+  //   );
+  // } catch (error) {
+  //   console.error("Error during Firebase Admin SDK test:", error);
+
+  //   // Return the error message
+  //   return NextResponse.json({ error: error.message }, { status: 500 });
+  // }
 }

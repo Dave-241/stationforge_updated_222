@@ -119,7 +119,6 @@ export default function Home() {
       .catch((err) => {
         console.error(err);
       });
-    console.log("how are we doing");
   };
   return (
     <>
@@ -147,12 +146,12 @@ export default function Home() {
             />
           )}
 
-          <button
+          {/* <button
             className="w-full h-[10vw] bg-white"
             onClick={handleuser_update}
           >
             click me{" "}
-          </button>
+          </button> */}
         </>
       ) : null}
     </>

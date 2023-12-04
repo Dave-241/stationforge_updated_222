@@ -29,6 +29,7 @@ import {
 } from "firebase/auth"; // Firebase authentication modules
 import firebaseConfig from "@/app/utils/fire_base_config";
 import { useProfile_Context } from "@/app/utils/profile_context";
+import axios from "axios";
 
 export default function Create_moderator_component({
   setstage,
@@ -83,7 +84,7 @@ export default function Create_moderator_component({
     let errorMessage = "An error occurred. Please try again later."; // Default error message
 
     switch (error.code) {
-      case "auth/email-already-in-use":
+      case "auth/email-already-exists":
         errorMessage =
           "Email address is already in use. Please choose a different one.";
         break;
@@ -92,7 +93,7 @@ export default function Create_moderator_component({
         errorMessage = "Invalid email address. Please enter a valid email.";
         break;
 
-      case "auth/weak-password":
+      case "auth/invalid-password":
         errorMessage = "Password is too weak. Please use a stronger password.";
         break;
 
@@ -173,44 +174,59 @@ export default function Create_moderator_component({
       setisLoading(true);
       //   setstage(2);
       console.log(name, password);
-      await initializeApp(firebaseConfig, "signup");
-      const signup_auth = getAuth();
-
-      createUserWithEmailAndPassword(signup_auth, email, password)
-        .then((userCredential) => {
-          const uid = userCredential.user.uid;
-          addDoc(colRef, {
-            Username: name,
-            Email: email,
-            userid: uid,
-            allocations: 0,
-            billing_address: "",
-            birthday: "",
-            country: "",
-            description: "",
-            step: 1,
-            subscription: "Public",
-            createdAt: serverTimestamp(),
-            name: "",
-            role: "moderator",
-            avatar_url:
-              "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w",
-          })
-            .then((docRef) => {
-              seterrfirebase("Success");
-              console.log(docRef.id);
-              // setisLoading(false);
-              // router.push("/login"); // Navigate to the login page
+      axios
+        .post("/api/moderator_edit", { email: email, password: password })
+        .then((res) => {
+          console.log(res.data.uid);
+          if (res.data.uid) {
+            const uid = res?.data?.uid;
+            addDoc(colRef, {
+              Username: name,
+              Email: email,
+              userid: uid,
+              allocations: 0,
+              billing_address: "",
+              birthday: "",
+              country: "",
+              description: "",
+              step: 1,
+              subscription: "Public",
+              createdAt: serverTimestamp(),
+              name: "",
+              role: "moderator",
+              avatar_url:
+                "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w",
             })
-            .catch((err) => {
-              handleFirebaseError(err);
-              setisLoading(false); // Handle Firebase error
-            });
+              .then((docRef) => {
+                seterrfirebase("Success");
+                setstage(2);
+                setisLoading(false);
+                // router.push("/login"); // Navigate to the login page
+              })
+              .catch((err) => {
+                handleFirebaseError(err);
+                setisLoading(false); // Handle Firebase error
+              });
+          } else if (res.data.error) {
+            const err = res.data.error;
+            setisLoading(false);
+
+            seterrfirebase(err.message);
+          }
         })
         .catch((err) => {
-          handleFirebaseError(err); // Handle Firebase error
+          console.error(err);
           setisLoading(false);
         });
+
+      //   createUserWithEmailAndPassword(auth, email, password)
+      //     .then((userCredential) => {
+      //       const uid = userCredential.user.uid;
+      //     })
+      //     .catch((err) => {
+      //       handleFirebaseError(err); // Handle Firebase error
+      //       setisLoading(false);
+      //     });
     }
   };
 
@@ -248,7 +264,7 @@ export default function Create_moderator_component({
           <span className="text-[red] sm:text-[3.5vw] neuem text-[0.8vw]  mb-[-0.8vw]">
             {errfirebase}
           </span>
-          <div className="w-full h-auto ">
+          <div className="w-full h-auto flex flex-col ">
             <input
               type="text"
               className="  sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[4vw]  w-full h-[3.3vw] lowercase rounded-[1.1vw] bg-[#272727] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
@@ -266,7 +282,7 @@ export default function Create_moderator_component({
             </span>
           </div>
 
-          <div className="w-full h-auto ">
+          <div className="w-full h-auto flex flex-col ">
             <input
               type="email"
               className="  sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:px-[4vw]  w-full h-[3.3vw] rounded-[1.1vw] bg-[#272727] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw]"
@@ -282,7 +298,7 @@ export default function Create_moderator_component({
               {erremail}
             </span>
           </div>
-          <div className="w-full h-auto  ">
+          <div className="w-full h-auto  flex flex-col ">
             <div className="w-full h-auto relative ">
               {/* This section has a different implementation because of the password visibility toggle */}
               <input
@@ -308,13 +324,12 @@ export default function Create_moderator_component({
                 )}
               </span>
             </div>
-            <span className="text-white sm:text-[3.5vw] sm:pt-[2vw]  neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
+            <span className="text-white sm:text-[3.5vw]  sm:pt-[2vw]  neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
               {errpassword}
             </span>
           </div>
-
           <button
-            className="w-full h-[3.3vw]  sm:h-[15vw] sm:rounded-[4vw] sm:text-[4vw] sm:px-[3vw] bg-[#CCFF00] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw] mt-[0.2vw] text-[1.06vw] flex justify-center items-center"
+            className="w-full h-[3.3vw]  sm:h-[15vw] sm:rounded-[4vw] sm:text-[4vw]  sm:px-[3vw] bg-[#CCFF00] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw]  text-[1.06vw] flex justify-center items-center"
             type="submit"
           >
             {" "}
