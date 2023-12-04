@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const Each_moderator = ({ data }: any) => {
   return (
     <>
@@ -7,9 +9,18 @@ const Each_moderator = ({ data }: any) => {
         {/* the avatar , username , and chats moderated */}
         <div className="w-auto flex justify-start items-center gap-[1.2vw] h-[4.5vw] sm:h-[12vw] sm:gap-[4vw]  ">
           <div
-            className="w-[4.5vw] h-[4.5vw] sm:h-[12vw] sm:w-[12vw]  avater_bg rounded-[100%]"
+            className="w-[4.5vw] h-[4.5vw] overflow-hidden sm:h-[12vw] sm:w-[12vw]  avater_bg rounded-[100%]"
             style={{ backgroundImage: `url(/light_cover.webp)` }}
-          ></div>
+          >
+            <Image
+              unoptimized
+              width="0"
+              height="0"
+              src={data.moderator.avatar_url}
+              alt={data.moderator.name}
+              className="w-full h-full"
+            />
+          </div>
 
           <div className="h-full flex flex-col justify-between ">
             <p className="text-[1.1vw]  text-white neuer sm:text-[3.7vw]">
