@@ -7,18 +7,22 @@ import {
   getDocs,
   getFirestore,
   onSnapshot,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import { initializeApp } from "firebase/app";
 import Each_moderator from "./each_moderator";
+import Each_moderator_preloader from "./all_moderator_preloader";
 
 const All_moderator_wrap = () => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const [moderator_is_loading, setmoderator_is_loading] = useState(true);
+  const [allmoderator_is_loading, setallmoderator_is_loading] = useState(true);
   const [moderator_size, setmoderator_size] = useState(0);
+  const [moderatorData, setmoderatorData] = useState<any>([]);
   // Initialize Firestore
   const db = getFirestore(app);
   useEffect(() => {
@@ -30,8 +34,11 @@ const All_moderator_wrap = () => {
         const moderatorsQuery = query(
           userRef,
           where("role", "==", "moderator"),
+          orderBy("createdAt", "desc"),
         );
         const moderatorsSnapshot = await getDocs(moderatorsQuery);
+        setmoderator_is_loading(false);
+        setmoderator_size(moderatorsSnapshot.size);
 
         const moderatorPromises = moderatorsSnapshot.docs.map(async (doc) => {
           const moderator = doc.data();
@@ -49,8 +56,8 @@ const All_moderator_wrap = () => {
         });
 
         const allModeratorData = await Promise.all(moderatorPromises);
-
-        //  setModeratorData(allModeratorData);
+        setallmoderator_is_loading(false);
+        setmoderatorData(allModeratorData);
         console.log(allModeratorData);
       } catch (error) {
         console.log("An error occurred", error);
@@ -62,7 +69,7 @@ const All_moderator_wrap = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const items = ["", "", "", "", "", "", ""];
+  const items = ["", "", "", "", "", ""];
 
   return (
     <>
@@ -73,9 +80,13 @@ const All_moderator_wrap = () => {
           moderator_is_loading={moderator_is_loading}
         />
         <div className="w-full justify-center flex  sm:gap-[4vw] sm:pb-[5vw]  flex-col px-[1vw] sm:px-[2vw] gap-[1.5vw] pb-[1vw]  mt-[7vw] sm:mt-[21vw]">
-          {items.map((e: any, index: any) => {
-            return <Each_moderator key={index} />;
-          })}
+          {allmoderator_is_loading
+            ? items.map((e: any, index: any) => {
+                return <Each_moderator_preloader key={index} />;
+              })
+            : moderatorData.map((e: any, index: any) => {
+                return <Each_moderator key={index} data={e} />;
+              })}
         </div>
       </div>
     </>

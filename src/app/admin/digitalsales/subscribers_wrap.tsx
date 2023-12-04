@@ -9,6 +9,7 @@ import {
   collection,
   getDocs,
   getFirestore,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -58,7 +59,12 @@ const Subscribers_wrap = () => {
       try {
         // Step 1: Get all documents from the 'users' collection
         const usersCollectionRef = collection(db, "users");
-        const usersSnapshot = await getDocs(usersCollectionRef);
+        const user_query = query(
+          usersCollectionRef,
+          where("role", "==", "moderator"),
+          orderBy("createdAt", "desc"),
+        );
+        const usersSnapshot = await getDocs(user_query);
 
         const userPromises: any = [];
 

@@ -10,6 +10,7 @@ import {
   collection,
   getDocs,
   getFirestore,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -64,6 +65,11 @@ const New_Subscribers_wrap = ({
       try {
         // Step 1: Get all documents from the 'users' collection
         const usersCollectionRef = collection(db, "users");
+        // const user_query = query(
+        //   usersCollectionRef,
+        //   where("role", "==", "moderator"),
+        //   orderBy("createdAt", "desc"),
+        // );
         // Calculate the timestamp for 2 weeks ago
         const twoWeeksAgo = new Date();
         twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
@@ -73,6 +79,7 @@ const New_Subscribers_wrap = ({
         const userSpecificQuery = query(
           usersCollectionRef,
           where("subscribedAt", ">=", twoWeeksAgoTimestamp),
+          // orderBy("createdAt", "desc"),
         );
 
         const usersSnapshot = await getDocs(userSpecificQuery);

@@ -1,6 +1,6 @@
 "use client";
 
-const Each_moderator = () => {
+const Each_moderator = ({ data }: any) => {
   return (
     <>
       <div className="w-full flex justify-between sm:rounded-[4vw]  sm:px-[3vw] sm:h-[28vw]  items-center  bg-[#0D0C0C] px-[1.2vw] h-[8vw] rounded-[1.5vw]">
@@ -13,10 +13,11 @@ const Each_moderator = () => {
 
           <div className="h-full flex flex-col justify-between ">
             <p className="text-[1.1vw]  text-white neuer sm:text-[3.7vw]">
-              Goldie John
+              {data.moderator.Username}
+              {data.moderator.name && `(${data.moderator.name})`}
             </p>
             <p className="text-[0.9vw] text-opacity-[30%] text-white neuer sm:text-[3vw]">
-              324 Chats moderated
+              {data.chatSessionIds.length} Chats moderated
             </p>
           </div>
         </div>
