@@ -223,28 +223,30 @@ export default function Login_component() {
             </span>
           </div>
           {/* Password input */}
-          <div className="w-full h-auto relative ">
-            <input
-              type={showPassword ? "text" : "password"}
-              className="w-full h-[3.3vw] rounded-[1.1vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:pl-[4vw] sm:pr-[10vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
-              placeholder="Password"
-              autoComplete="password"
-              onChange={(e) => {
-                setpassword(e.target.value);
-              }}
-            />
-            {/* Toggle password visibility */}
-            <span
-              className="absolute sm:text-[7vw] sm:right-[3vw] right-[0.7vw] top-[50%] text-[2vw] h-full flex items-center  text-white opacity-[50%]"
-              onClick={togglePasswordVisibility}
-              style={{ cursor: "pointer", transform: "translateY(-50%)" }}
-            >
-              {showPassword ? (
-                <i className="bi bi-eye-slash-fill"></i>
-              ) : (
-                <i className="bi bi-eye-fill"></i>
-              )}
-            </span>
+          <div className="w-full h-auto  ">
+            <div className="w-full h-auto relative ">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full h-[3.3vw] rounded-[1.1vw] sm:h-[15vw] sm:rounded-[4vw] sm:text-[3.5vw] sm:pl-[4vw] sm:pr-[10vw] bg-[#0F0F0F] border-[#3F3F3F] text-white border-[0.07vw] px-[1.8vw] text-[1.06vw] "
+                placeholder="Password"
+                autoComplete="password"
+                onChange={(e) => {
+                  setpassword(e.target.value);
+                }}
+              />
+              {/* Toggle password visibility */}
+              <span
+                className="absolute sm:text-[7vw] sm:right-[3vw] right-[0.7vw] top-[50%] text-[2vw] h-full flex items-center  text-white opacity-[50%]"
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer", transform: "translateY(-50%)" }}
+              >
+                {showPassword ? (
+                  <i className="bi bi-eye-slash-fill"></i>
+                ) : (
+                  <i className="bi bi-eye-fill"></i>
+                )}
+              </span>
+            </div>
             {/* Error message for password */}
             <span className="text-white sm:text-[3.5vw] neuem text-[0.8vw] pl-[0.5vw] opacity-[60%]">
               {errpassword}

@@ -233,7 +233,10 @@ const Header = ({ position, padding, top, blur }: any) => {
               </div>
 
               <Link
-                href={"/"}
+                href={"/admin/add-moderator"}
+                onClick={() => {
+                  setpage_loader(true);
+                }}
                 className="text-white border-[0.1vw] border-white border-opacity-[30%] rounded-[1.6vw] py-[0.8vw] px-[1.6vw] hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black  text-[0.8vw]"
               >
                 Add a moderator

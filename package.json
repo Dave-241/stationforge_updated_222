@@ -18,7 +18,7 @@
     "date-fns": "^2.30.0",
     "encoding": "^0.1.13",
     "firebase": "^10.4.0",
-    "firebase-admin": "^11.11.0",
+    "firebase-admin": "^11.11.1",
     "framer-motion": "^10.16.5",
     "jszip": "^3.10.1",
     "next": "13.4.12",

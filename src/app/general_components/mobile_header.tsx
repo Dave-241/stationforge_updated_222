@@ -132,7 +132,7 @@ const Mobile_header = ({
     <>
       <div
         className={`w-[100vw] h-[100vh] hidden fixed top-0 left-0 sm:flex justify-center items-start  bg-black  ${
-          comedown ? "bg-opacity-[75%]" : "bg-opacity-[0%]"
+          comedown ? "bg-opacity-[85%]" : "bg-opacity-[0%]"
         } `}
         onClick={hide_mob_header}
         style={{ transition: "1.5s ease" }}

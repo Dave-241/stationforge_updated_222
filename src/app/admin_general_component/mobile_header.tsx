@@ -110,7 +110,7 @@ const Admin_Mobile_header = ({
     <>
       <div
         className={`w-[100vw] h-[100vh] hidden fixed top-0 left-0 sm:flex justify-center items-start  bg-black  ${
-          comedown ? "bg-opacity-[70%]" : "bg-opacity-[0%]"
+          comedown ? "bg-opacity-[85%]" : "bg-opacity-[0%]"
         } `}
         style={{ transition: "1.5s ease" }}
         onClick={hide_mob_header}
@@ -165,14 +165,10 @@ const Admin_Mobile_header = ({
           <div className="w-full flex justify-center pt-[3vw] px-[3vw] gap-[3vw] items-center ">
             <>
               <Link
-                href={"/login"}
-                //   onClick={() => {
-                //     if (pathname == "/login") {
-                //       setpage_loader(false);
-                //     } else {
-                //       setpage_loader(true);
-                //     }
-                //   }}
+                href={"/admin/add-moderator"}
+                onClick={() => {
+                  setpage_loader(true);
+                }}
                 className="w-full neuer rounded-[4vw] border-white border-opacity-[40%]  flex justify-center items-center text-[4vw] border-[0.3vw] text-opacity-[70%] text-white  h-[14vw] hover:bg-opacity-[80%] transition duration-[0.3s]"
               >
                 Add a moderator
