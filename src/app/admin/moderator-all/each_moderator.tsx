@@ -3,11 +3,11 @@
 const Each_moderator = () => {
   return (
     <>
-      <div className="w-full flex justify-between  items-center  bg-[#0D0C0C] px-[1.2vw] h-[8vw] rounded-[1.5vw]">
+      <div className="w-full flex justify-between border2 sm:px-[3vw] sm:h-[25vw]  items-center  bg-[#0D0C0C] px-[1.2vw] h-[8vw] rounded-[1.5vw]">
         {/* the avatar , username , and chats moderated */}
         <div className="w-auto flex justify-start items-center gap-[1.2vw] h-[4.5vw]  ">
           <div
-            className="w-[4.5vw] h-[4.5vw]  avater_bg rounded-[100%]"
+            className="w-[4.5vw] h-[4.5vw] sm:h-[12vw] sm:w-[12vw]  avater_bg rounded-[100%]"
             style={{ backgroundImage: `url(/light_cover.webp)` }}
           ></div>
 
