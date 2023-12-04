@@ -72,7 +72,7 @@ const All_moderator_wrap = () => {
           moderator_size={moderator_size}
           moderator_is_loading={moderator_is_loading}
         />
-        <div className="w-full justify-center flex border2 sm:gap-[4vw] sm:pb-[5vw]  flex-col px-[1vw] sm:px-[2vw] gap-[1.5vw] pb-[1vw]  mt-[7vw] sm:mt-[21vw]">
+        <div className="w-full justify-center flex  sm:gap-[4vw] sm:pb-[5vw]  flex-col px-[1vw] sm:px-[2vw] gap-[1.5vw] pb-[1vw]  mt-[7vw] sm:mt-[21vw]">
           {items.map((e: any, index: any) => {
             return <Each_moderator key={index} />;
           })}
