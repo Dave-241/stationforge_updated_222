@@ -203,7 +203,7 @@ const Chats_modal = () => {
         </div>
 
         {/* this is for the bottom input for sending messages relative box  */}
-        <div className="w-full h-[5.5vw] sm:h-[20vw]  fixed bottom-0 neuer left-0 bg-[#1F1E1E] rounded-t-[1.7vw]  bg-opacity-[50%] flex justify-center items-center px-[1.3vw]  ">
+        <div className="w-full h-[5.5vw] sm:h-[20vw] sm:bg-opacity-[100%]  fixed bottom-0 neuer left-0 bg-[#1F1E1E] rounded-t-[1.7vw]  bg-opacity-[50%] flex justify-center items-center px-[1.3vw]  ">
           <form
             onSubmit={handlesubmit}
             className="h-[3.2vw] sm:h-[13vw]   w-full relative "
@@ -226,7 +226,7 @@ const Chats_modal = () => {
 
         {/* this is for the chats */}
         <div
-          className="w-full flex  overflow-y-scroll cover_scrollbar flex-col sm:px-[2vw] pb-[1vw] sm:pb-[3vw] sm:gap-[4vw] h-full gap-[0.6vw] "
+          className="w-full flex  overflow-y-scroll cover_scrollbar flex-col sm:px-[2vw] pb-[1vw] sm:pb-[18vw] sm:gap-[4vw] h-full gap-[0.6vw] "
           ref={scrollAreaRef}
         >
           <div className="w-full flex justify-center h-[2vw] sm:h-[9vw]  neuer">
