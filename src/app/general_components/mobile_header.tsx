@@ -41,6 +41,7 @@ const Mobile_header = ({
     setforge_loader,
     hide_download,
     setshow_setting_modal,
+    setshow_chat_modal,
   }: any = useProfile_Context();
 
   const app = initializeApp(firebaseConfig);
@@ -283,7 +284,12 @@ const Mobile_header = ({
 
                     <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
                     {/* this is for the row elements */}
-                    <div className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]">
+                    <div
+                      className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]"
+                      onClick={() => {
+                        setshow_chat_modal(true);
+                      }}
+                    >
                       <Image
                         src={chat}
                         alt="profile img"

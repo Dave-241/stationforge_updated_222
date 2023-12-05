@@ -168,16 +168,16 @@ const Chats_modal = () => {
       </Head>
 
       <div
-        className={`w-[30vw] sm:w-full fixed pt-[6.5vw] pb-[6vw]  h-[43vw] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
-          hide ? "right-[-50vw]" : "right-0"
+        className={`w-[33vw] sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]  h-[43vw] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+          hide ? "right-[-50vw] sm:right-[-110vw]" : "right-0 sm:right-0"
         } border transition duration-[1.5s]`}
         ref={ref_modal}
         style={{ transition: "1.5s ease" }}
       >
         {/* this is for the top relative box  */}
-        <div className="w-full fixed top-0 left-0 h-[5.5vw] bg-[#1F1E1E]  bg-opacity-[50%] flex justify-start items-center neuer px-[1.3vw] gap-[1vw] border-b-[0.2vw] border-white border-opacity-[60%]">
+        <div className="w-full fixed top-0 left-0 h-[5.5vw] bg-[#1F1E1E]  sm:h-[22vw]  bg-opacity-[50%] flex justify-start items-center neuer px-[1.3vw] gap-[1vw] sm:gap-[3vw] sm:px-[2vw] border-b-[0.2vw] border-white border-opacity-[60%]">
           <i
-            className="bi bi-chevron-left cursor-pointer text-white text-[1.2vw]"
+            className="bi bi-chevron-left cursor-pointer text-white text-[1.2vw] sm:text-[6vw]"
             onClick={() => {
               sethide(true);
               setTimeout(() => {
@@ -187,33 +187,36 @@ const Chats_modal = () => {
           ></i>
 
           <div
-            className=" h-[3.2vw] w-[3.2vw] rounded-[100%] avater_bg"
+            className=" h-[3.2vw] w-[3.2vw] sm:h-[10vw] sm:w-[10vw] rounded-[100%] avater_bg"
             style={{ backgroundImage: "url(/chats/station_forge.webp)" }}
           ></div>
 
           {/*the name of the moderator for now its  talk to support */}
-          <div className="w-fit  flex-col flex gap-[0.5vw] ">
-            <p className="text-[1vw] text-white ">Talk to support</p>
-            <p className="text-[0.8vw] text-white  italic text-opacity-[50%]">
+          <div className="w-fit  flex-col flex gap-[0.5vw] sm:gap-[1.2vw] ">
+            <p className="text-[1vw] text-white sm:text-[4vw] ">
+              Talk to support
+            </p>
+            <p className="text-[0.8vw] text-white  sm:text-[3vw] italic text-opacity-[50%]">
               24/7 Support line
             </p>
           </div>
         </div>
 
         {/* this is for the bottom input for sending messages relative box  */}
-        <div className="w-full h-[5.5vw] fixed bottom-0 neuer left-0 bg-[#1F1E1E] rounded-t-[1.7vw]  bg-opacity-[50%] flex justify-center items-center px-[1.3vw]  ">
+        <div className="w-full h-[5.5vw] sm:h-[20vw]  fixed bottom-0 neuer left-0 bg-[#1F1E1E] rounded-t-[1.7vw]  bg-opacity-[50%] flex justify-center items-center px-[1.3vw]  ">
           <form
             onSubmit={handlesubmit}
-            className="h-[3.2vw]   w-full relative "
+            className="h-[3.2vw] sm:h-[13vw]   w-full relative "
           >
             <input
               type="text"
-              className="w-full h-full pl-[1vw] pr-[5vw] text-white text-opacity-[85%]  bg-[#2C2C2C] bg-opacity-[56%] outline-none border-[0.14vw]  border-opacity-[30%] focus:border-opacity-[70%] border-white transition duration-[0.6s] rounded-[2vw]"
+              placeholder="Type text here"
+              className="w-full h-full pl-[1vw] sm:pl-[3vw] sm:pr-[19vw] pr-[5vw] sm:rounded-[6vw] text-white text-opacity-[85%]  bg-[#2C2C2C] bg-opacity-[56%] outline-none border-[0.14vw]  border-opacity-[30%] focus:border-opacity-[70%] border-white transition duration-[0.6s] rounded-[2vw]"
             />
 
             <button
               type="submit"
-              className="absolute hover:bg-opacity-[80%] bg-[#CCFF00] px-[1vw] text-[0.9vw] py-[0.4vw] rounded-[2vw] right-[1vw] top-[50%] translate-y-[-50%]"
+              className="absolute hover:bg-opacity-[80%] bg-[#CCFF00] px-[1vw] text-[0.9vw] py-[0.4vw] rounded-[2vw] right-[1vw] sm:text-[3.5vw] sm:px-[4vw] sm:py-[2vw] sm:rounded-[6vw] sm:right-[2vw] top-[50%] translate-y-[-50%]"
             >
               Send
             </button>
@@ -223,24 +226,24 @@ const Chats_modal = () => {
 
         {/* this is for the chats */}
         <div
-          className="w-full flex  overflow-y-scroll cover_scrollbar flex-col   h-full gap-[1.2vw] "
+          className="w-full flex  overflow-y-scroll cover_scrollbar flex-col sm:px-[2vw] pb-[1vw] sm:pb-[3vw] sm:gap-[4vw] h-full gap-[0.6vw] "
           ref={scrollAreaRef}
         >
-          <div className="w-full flex justify-center h-[2vw]   neuer">
-            <p className="text-white text-[0.9vw] h-full px-[1vw] py-[0.4vw] border-white border-[0.1vw] flex items-center rounded-[2vw] border-opacity-[50%] ">
+          <div className="w-full flex justify-center h-[2vw] sm:h-[9vw]  neuer">
+            <p className="text-white text-[0.9vw] h-full px-[1vw] py-[0.4vw] border-white border-[0.1vw] flex items-center rounded-[2vw] border-opacity-[50%] sm:text-[4vw]  sm:px-[5vw] sm:rounded-[4vw] ">
               Today June 20
             </p>
           </div>
           {chats.map((e: any, index: any) => {
             return (
               <div
-                className={`w-full flex ${
+                className={`w-full flex   ${
                   !e.user ? "justify-start" : "justify-end"
                 }  h-auto bg-white"`}
                 key={index}
               >
                 <div
-                  className={`w-fit rounded-[1.22vw] text-[0.9vw] py-[0.7vw] px-[0.8vw]  max-w-[12vw] h-auto border-[0.1vw] ${
+                  className={`w-fit rounded-[1vw] text-[0.8vw] sm:text-[3vw] sm:max-w-[41vw] sm:py-[1.5vw] sm:px-[2vw] sm:rounded-[2.5vw] py-[0.7vw] px-[0.8vw]  max-w-[12vw] h-auto border-[0.1vw] ${
                     !e.user
                       ? "border-white border-opacity-[50%] text-white"
                       : "border-[#CCFF00] bg-[#CCFF00] text-black "
