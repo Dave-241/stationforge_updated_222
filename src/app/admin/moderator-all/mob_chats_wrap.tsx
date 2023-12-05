@@ -65,7 +65,7 @@ const Mob_All_chats_wrap = ({
           <h2 className="text-white text-[4.4vw] ">{moderator_name} Chats</h2>
         </div>
         <div
-          className={`w-full h-[150vw] max-h-[80vh] bg-black   sm:w-full  overflow-y-scroll scroll-container  ${
+          className={`w-full h-[130vw] max-h-[80vh] bg-black   sm:w-full  overflow-y-scroll scroll-container  ${
             move_right ? "translate-y-0" : "translate-y-[180vw]"
           }  `}
           style={{ transition: "1.5s ease " }}
