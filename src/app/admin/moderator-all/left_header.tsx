@@ -17,13 +17,13 @@ const Moderator_header = ({ moderator_size, moderator_is_loading }: any) => {
           <i className="bi bi-chevron-left"> </i> Back
         </button>
         <div className=" flex items-center sm:gap-[3vw] gap-[1vw]">
-          <div className="neuer sm:text-[4vw] text-[1.2vw] hover:text-[#CCFF00] transition duration-[0.6s] ">
+          <div className="neuer sm:text-[4vw] text-[1.2vw]  transition duration-[0.6s] ">
             All Moderators
           </div>
           {moderator_is_loading ? (
-            <div className="w-[3vw] hover:bg-[#CCFF00] hover:text-black cursor-pointer transition duration-[0.6s] h-[3vw] animate-pulse bg-[#121212]  text-[1vw]  sm:w-[10vw] sm:h-[10vw]  rounded-[100%] border border-white border-opacity-[70%] "></div>
+            <div className="w-[3vw] hover:bg-[#CCFF00] hover:text-black transition duration-[0.6s] h-[3vw] animate-pulse bg-[#121212]  text-[1vw]  sm:w-[10vw] sm:h-[10vw]  rounded-[100%] border border-white border-opacity-[70%] "></div>
           ) : (
-            <div className="w-[3vw] hover:bg-[#CCFF00] hover:text-black cursor-pointer transition duration-[0.6s] h-[3vw]  text-[1vw] rounded-[100%] border sm:text-[3.5vw] sm:w-[10vw] sm:h-[10vw] border-white border-opacity-[70%] flex justify-center items-center">
+            <div className="w-[3vw]   transition duration-[0.6s] h-[3vw]  text-[1vw] rounded-[100%] border sm:text-[3.5vw] sm:w-[10vw] sm:h-[10vw] border-white border-opacity-[70%] flex justify-center items-center">
               {moderator_size}
             </div>
           )}

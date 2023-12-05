@@ -32,17 +32,17 @@ const Add_moderator_header = ({
             All Moderators
           </Link>
           {moderator_is_loading ? (
+            <div className="w-[3vw] hover:bg-[#CCFF00] hover:text-black cursor-pointer transition duration-[0.6s] h-[3vw] animate-pulse bg-[#121212]  text-[1vw] rounded-[100%] border border-white border-opacity-[70%] "></div>
+          ) : (
             <Link
               onClick={() => {
                 setpage_loader(true);
               }}
               href={"/admin/moderator-all"}
-              className="w-[3vw] hover:bg-[#CCFF00] hover:text-black cursor-pointer transition duration-[0.6s] h-[3vw] animate-pulse bg-[#121212]  text-[1vw] rounded-[100%] border border-white border-opacity-[70%] "
-            ></Link>
-          ) : (
-            <div className="w-[3vw] hover:bg-[#CCFF00] hover:text-black cursor-pointer transition duration-[0.6s] h-[3vw]  text-[1vw] rounded-[100%] border sm:text-[3.5vw] sm:w-[10vw] sm:h-[10vw] border-white border-opacity-[70%] flex justify-center items-center">
+              className="w-[3vw] hover:bg-[#CCFF00] hover:text-black cursor-pointer transition duration-[0.6s] h-[3vw]  text-[1vw] rounded-[100%] border sm:text-[3.5vw] sm:w-[10vw] sm:h-[10vw] border-white border-opacity-[70%] flex justify-center items-center"
+            >
               {moderator_size}
-            </div>
+            </Link>
           )}
         </div>
       </div>
