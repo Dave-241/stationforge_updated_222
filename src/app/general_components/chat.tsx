@@ -16,6 +16,9 @@ import {
   doc,
   updateDoc,
   onSnapshot,
+  addDoc,
+  serverTimestamp,
+  orderBy,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -33,6 +36,9 @@ import Image from "next/image";
 
 const Chats_modal = () => {
   const [loading, setloading] = useState(false);
+  const [chat_session_id, setchat_session_id] = useState("");
+  const [chat_text, setchat_text] = useState("");
+  const [chat_data_arr, setchat_data_arr] = useState<any>([]);
 
   const {
     show_chat_modal,
@@ -90,8 +96,11 @@ const Chats_modal = () => {
   const router = useRouter();
 
   // firebase init
-  // Initialize the data base connection
-  initializeApp(firebaseConfig);
+
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Firestore
+  const db = getFirestore(app);
 
   // Initialize services
 
@@ -134,13 +143,82 @@ const Chats_modal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // useEffect(() => {
+  //   if (sess_id == "") {
+  //     return;
+  //   } else if (sess_id != "") {
+  //     create_chat_session(uuid);
+  //   }
+  // }, [sess_id, uuid]);
+  const currentUserUid = auth.currentUser?.uid;
+
+  const create_new_session = () => {
+    const chatSessionsRef = collection(db, "chat_sessions");
+    const chatTextref = collection(db, "chat_text");
+
+    addDoc(chatSessionsRef, {
+      Endedsession: false,
+      JoinedUserid: currentUserUid,
+      SessioncreatedAt: serverTimestamp(),
+      Joinedmoderatorid: "",
+    })
+      .then((doc) => {
+        console.log("just created a new useer ");
+        addDoc(chatTextref, {
+          createdAt: serverTimestamp(),
+          from: "moderator",
+          message: "Hello , how can we help you today ",
+          session_chat_id: doc.id,
+        })
+          .then(() => {
+            setchat_session_id(doc.id);
+            console.log("just created a new text also ");
+          })
+          .catch((err) => {
+            console.log("error whie creating new text" + err);
+          });
+      })
+      .catch((err) => {
+        console.log("Error creating a new chat session " + err);
+      });
+  };
+
   useEffect(() => {
-    if (sess_id == "") {
+    if (!currentUserUid) {
+      // No user is authenticated, you might want to handle this case
       return;
-    } else if (sess_id != "") {
-      create_chat_session(uuid);
     }
-  }, [sess_id, uuid]);
+
+    const chatSessionsRef = collection(db, "chat_sessions");
+    const chatSessionsQuery = query(
+      chatSessionsRef,
+      where("JoinedUserid", "==", currentUserUid),
+      where("Endedsession", "==", false),
+    );
+
+    const unsubscribe = onSnapshot(chatSessionsQuery, (snapshot) => {
+      if (snapshot.empty) {
+        // Handle case when there are no documents
+        console.log("No chat sessions found for the current user");
+        create_new_session();
+        return;
+      }
+
+      snapshot.forEach((doc) => {
+        // Handle each document
+        const chatSessionData = doc.data();
+        setchat_session_id(doc.id);
+
+        scrollToBottom();
+        console.log("Chat Session Data:", chatSessionData);
+      });
+    });
+
+    return () => {
+      // Unsubscribe when the component unmounts
+      unsubscribe();
+    };
+  }, [currentUserUid]); // Dependency on currentUserUid, so it re-subscribes when the user logs in or out
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
@@ -153,8 +231,62 @@ const Chats_modal = () => {
   };
   const handlesubmit = (e: any) => {
     e.preventDefault();
-    scrollToBottom();
+
+    if (chat_text.length > 0 && chat_session_id) {
+      const chatTextref = collection(db, "chat_text");
+
+      addDoc(chatTextref, {
+        createdAt: serverTimestamp(),
+        from: "user",
+        message: chat_text,
+        session_chat_id: chat_session_id,
+      })
+        .then(() => {
+          // setchat_session_id(doc.id);
+          console.log("just created a new text also ");
+          setchat_text("");
+        })
+        .catch((err) => {
+          console.log("error whie creating new text" + err);
+        });
+    }
   };
+
+  useEffect(() => {
+    if (chat_session_id) {
+      const chatTextRef = collection(db, "chat_text");
+      const chatTextQuery = query(
+        chatTextRef,
+        where("session_chat_id", "==", chat_session_id),
+        orderBy("createdAt", "asc"),
+      );
+
+      const unsubscribe = onSnapshot(chatTextQuery, (snapshot) => {
+        if (snapshot.empty) {
+          // Handle case when there are no documents
+          console.log("No chat text found for the current user");
+          //  create_new_session();
+          return;
+        }
+
+        const chatTextDataArray: any = [];
+        snapshot.forEach((doc) => {
+          // Handle each document
+          const chatTextData = doc.data();
+          chatTextDataArray.push({
+            chatTextId: doc.id,
+            chatTextData: chatTextData,
+          });
+        });
+        setchat_data_arr(chatTextDataArray);
+        console.log(chatTextDataArray);
+      });
+      return () => {
+        // Unsubscribe when the component unmounts
+        unsubscribe();
+      };
+    }
+  }, [chat_session_id]); // Dependency on chatid, so it re-subscribes when chatid changes
 
   useEffect(() => {
     sethide(false);
@@ -211,7 +343,11 @@ const Chats_modal = () => {
             <input
               type="text"
               placeholder="Type text here"
-              className="w-full h-full pl-[1vw] sm:pl-[3vw] sm:pr-[19vw] pr-[5vw] sm:rounded-[6vw] text-white text-opacity-[85%]  bg-[#2C2C2C] bg-opacity-[56%] outline-none border-[0.14vw]  border-opacity-[30%] focus:border-opacity-[70%] border-white transition duration-[0.6s] rounded-[2vw]"
+              className="w-full h-full pl-[1vw] sm:pl-[3vw] sm:pr-[19vw] pr-[5vw] sm:rounded-[6vw] text-white text-opacity-[85%] text-[1vw] sm:text-[3.5vw] bg-[#2C2C2C] bg-opacity-[56%] outline-none border-[0.14vw]  border-opacity-[30%] focus:border-opacity-[70%] border-white transition duration-[0.6s] rounded-[2vw]"
+              onChange={(e) => {
+                setchat_text(e.target.value);
+              }}
+              value={chat_text || ""}
             />
 
             <button
@@ -234,22 +370,24 @@ const Chats_modal = () => {
               Today June 20
             </p>
           </div>
-          {chats.map((e: any, index: any) => {
+          {chat_data_arr.map((e: any, index: any) => {
             return (
               <div
                 className={`w-full flex   ${
-                  !e.user ? "justify-start" : "justify-end"
+                  e.chatTextData.from != "user"
+                    ? "justify-start"
+                    : "justify-end"
                 }  h-auto bg-white"`}
                 key={index}
               >
                 <div
                   className={`w-fit rounded-[1vw] text-[0.8vw] sm:text-[3vw] sm:max-w-[41vw] sm:py-[1.5vw] sm:px-[2vw] sm:rounded-[2.5vw] py-[0.7vw] px-[0.8vw]  max-w-[12vw] h-auto border-[0.1vw] ${
-                    !e.user
+                    e.chatTextData.from != "user"
                       ? "border-white border-opacity-[50%] text-white"
                       : "border-[#CCFF00] bg-[#CCFF00] text-black "
                   }  h-[2vw]`}
                 >
-                  <p className={` `}>{e.msg}</p>
+                  <p className={` `}>{e.chatTextData.message}</p>
                 </div>
               </div>
             );
