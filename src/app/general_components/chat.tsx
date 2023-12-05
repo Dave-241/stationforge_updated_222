@@ -119,7 +119,10 @@ const Chats_modal = () => {
   useEffect(() => {
     function handleClickOutside(event: any) {
       if (ref_modal.current && !ref_modal.current.contains(event.target)) {
-        setshow_chat_modal(false);
+        sethide(true);
+        setTimeout(() => {
+          setshow_chat_modal(false);
+        }, 1000);
       }
     }
 
@@ -153,6 +156,10 @@ const Chats_modal = () => {
     scrollToBottom();
   };
 
+  useEffect(() => {
+    sethide(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <Head>
@@ -161,8 +168,8 @@ const Chats_modal = () => {
       </Head>
 
       <div
-        className={`w-[30vw] sm:w-full fixed pt-[6.5vw] pb-[6vw]  h-[43vw] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999999]  sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
-          !show_chat_modal ? "right-[-50vw]" : "right-0"
+        className={`w-[30vw] sm:w-full fixed pt-[6.5vw] pb-[6vw]  h-[43vw] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+          hide ? "right-[-50vw]" : "right-0"
         } border transition duration-[1.5s]`}
         ref={ref_modal}
         style={{ transition: "1.5s ease" }}
@@ -172,7 +179,10 @@ const Chats_modal = () => {
           <i
             className="bi bi-chevron-left cursor-pointer text-white text-[1.2vw]"
             onClick={() => {
-              setshow_chat_modal(false);
+              sethide(true);
+              setTimeout(() => {
+                setshow_chat_modal(false);
+              }, 1000);
             }}
           ></i>
 

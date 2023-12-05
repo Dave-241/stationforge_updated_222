@@ -29,6 +29,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import Chats_modal from "./chat";
 
 initializeApp(firebaseConfig);
 
@@ -48,6 +49,8 @@ const Header = () => {
     setpage_loader,
     setforge_loader,
     hide_download,
+    show_chat_modal,
+    setshow_chat_modal,
   }: any = useProfile_Context();
   const pathname = usePathname();
   const route = useRouter();
@@ -145,245 +148,249 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute z-[99] top-[2.5vw] sm:top-0 flex justify-center ">
-      {mobile_bg_changer && (
-        <Mobile_header
-          setmobile_bg_changer={setmobile_bg_changer}
-          comedown={comedown}
-          setcomedown={setcomedown}
-          links={links}
-          loggedin={loggedin}
-        />
-      )}
-      <nav
-        className="w-[90%] sm:w-[100%] sm:px-[5%] h-full pr-[1.3vw] bg-[#0A0B0B] sm:bg-[black] border-[#CCFF00] sm:bg-opacity-[50%] border-opacity-[5%] sm:border-none border rounded-[1.06vw] flex justify-between  items-center backdrop-blur-[14px]  bg-opacity-[30%]"
-        style={{
-          backgroundColor: mobile_bg_changer ? "#181818" : "",
-          transition: "0.6s ease",
-          opacity: mobile_bg_changer ? 1 : "",
-        }}
-      >
-        {/* mobile design */}
-        {/* mobile design */}
-        {/* mobile design */}
-        {/* mobile design */}
-        {/* mobile design */}
-        <div className="sm:block sm:w-fit  hidden">
-          <button
-            className="= w-[10vw] h-auto flex"
-            onClick={() => {
-              if (mobile_bg_changer) {
-                setcomedown(false);
-                setTimeout(() => {
-                  setmobile_bg_changer(false);
-                }, 800);
-              } else {
-                setmobile_bg_changer(!mobile_bg_changer);
-              }
-            }}
-          >
-            <Image
-              src={mobile_bg_changer ? mob_ham_exit : mob_ham}
-              alt="StationForge Logo"
-              className="w-full h-fit"
-              style={{ transition: "2s ease" }}
-            />
-          </button>
-        </div>
+    <>
+      {show_chat_modal && <Chats_modal />}
 
-        <div className="sm:block sm:w-fit  hidden">
-          <Link
-            href="/"
-            aria-label="StationForge Home"
-            className="= w-[30vw] h-auto flex"
-            onClick={() => {
-              if (pathname == "/") {
-                setpage_loader(false);
-              } else {
-                setpage_loader(true);
-              }
-            }}
-          >
-            <Image
-              src={logo}
-              alt="StationForge Logo"
-              className="w-full h-fit"
-            />
-          </Link>
-        </div>
-
-        <div
-          className="sm:block sm:w-fit  hidden"
-          onClick={() => {
-            setforge_loader(true);
+      <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute z-[99] top-[2.5vw] sm:top-0 flex justify-center ">
+        {mobile_bg_changer && (
+          <Mobile_header
+            setmobile_bg_changer={setmobile_bg_changer}
+            comedown={comedown}
+            setcomedown={setcomedown}
+            links={links}
+            loggedin={loggedin}
+          />
+        )}
+        <nav
+          className="w-[90%] sm:w-[100%] sm:px-[5%] h-full pr-[1.3vw] bg-[#0A0B0B] sm:bg-[black] border-[#CCFF00] sm:bg-opacity-[50%] border-opacity-[5%] sm:border-none border rounded-[1.06vw] flex justify-between  items-center backdrop-blur-[14px]  bg-opacity-[30%]"
+          style={{
+            backgroundColor: mobile_bg_changer ? "#181818" : "",
+            transition: "0.6s ease",
+            opacity: mobile_bg_changer ? 1 : "",
           }}
         >
-          <button
-            className="= w-[10vw] h-auto flex"
-            // onClick={() => {
-            //   if (pathname == "/") {
-            //     setpage_loader(false);
-            //   } else {
-            //     setpage_loader(true);
-            //   }
-            // }}
-          >
-            <Image
-              src={mob_cart}
-              alt="StationForge Logo"
-              className="w-full h-fit"
-            />
-          </button>
-        </div>
-        {/* destop designs */}
-        {/* destop designs */}
-        {/* destop designs */}
-        {/* destop designs */}
-        {/* destop designs */}
-        {/* destop designs */}
-        {/* destop designs */}
-        {/* destop designs */}
-        {/* logo image */}
-        <div className="sm:hidden">
-          <Link
-            href="https://malkainstaging.website/forge/"
-            aria-label="StationForge Home"
-            className="= w-[10vw] h-auto flex"
-            onClick={() => {
-              if (pathname == "/") {
-                setpage_loader(false);
-              } else {
-                setpage_loader(true);
-              }
-            }}
-          >
-            <Image
-              src={logo}
-              alt="StationForge Logo"
-              className="w-full h-fit"
-            />
-          </Link>
-        </div>
-        {/* nav array list  */}
-        <div className="neuer sm:hidden  flex items-center gap-[1.8vw] capitalize text-[1vw]">
-          {links.map((e: any, index: any) => {
-            return (
-              <>
-                <Link
-                  onClick={() => {
-                    if (pathname == e.link) {
-                      setpage_loader(false);
-                    } else {
-                      setpage_loader(true);
-                    }
-                  }}
-                  href={e.link}
-                  key={index}
-                  className={`  text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] h-full ${
-                    pathname == e.link
-                      ? "text-black bg-white py-[0.5vw] px-[1vw] rounded-[1.2vw] text-opacity-[100%]"
-                      : "text-white"
-                  } `}
-                  style={{ transition: "1s ease" }}
-                >
-                  {e.txt}
-                </Link>
-              </>
-            );
-          })}
-        </div>
-        <div className="text-white sm:hidden  flex gap-[0.9vw] text-[1vw] items-center justify-center">
-          {/* now this is for the download */}
-          {!track_hide_download && (
-            <div
-              className="w-[3vw] h-[3vw] relative bg-[#151414] cursor-pointer rounded-[100%]"
+          {/* mobile design */}
+          {/* mobile design */}
+          {/* mobile design */}
+          {/* mobile design */}
+          {/* mobile design */}
+          <div className="sm:block sm:w-fit  hidden">
+            <button
+              className="= w-[10vw] h-auto flex"
               onClick={() => {
-                route.push("/libary");
-                if (pathname == "/libary") {
+                if (mobile_bg_changer) {
+                  setcomedown(false);
+                  setTimeout(() => {
+                    setmobile_bg_changer(false);
+                  }, 800);
+                } else {
+                  setmobile_bg_changer(!mobile_bg_changer);
+                }
+              }}
+            >
+              <Image
+                src={mobile_bg_changer ? mob_ham_exit : mob_ham}
+                alt="StationForge Logo"
+                className="w-full h-fit"
+                style={{ transition: "2s ease" }}
+              />
+            </button>
+          </div>
+
+          <div className="sm:block sm:w-fit  hidden">
+            <Link
+              href="/"
+              aria-label="StationForge Home"
+              className="= w-[30vw] h-auto flex"
+              onClick={() => {
+                if (pathname == "/") {
                   setpage_loader(false);
                 } else {
                   setpage_loader(true);
                 }
               }}
             >
-              {downloadProgress != "100" && (
-                <i className="bi bi-arrow-down absolute  top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-white text-[1.2vw] text-opacity-[90%]"></i>
-              )}
-
-              {downloadProgress >= "99" && (
-                <i className="bi bi-check2 absolute  top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-white text-[1.4vw] text-opacity-[90%]"></i>
-              )}
-              <CircularProgressbar
-                value={track_progress}
-                styles={buildStyles({
-                  // Rotation of path and trail, in number of turns (0-1)
-                  rotation: 0.25,
-
-                  // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                  strokeLinecap: "butt",
-
-                  // Text size
-                  // textSize: "16px",
-
-                  // How long animation takes to go from one percentage to another, in seconds
-                  pathTransitionDuration: 0.5,
-
-                  // Can specify path transition in more detail, or remove it entirely
-                  // pathTransition: 'none',
-
-                  // Colors
-                  pathColor: `#CCFF00`,
-                  // textColor: "#f88",
-                  trailColor: "#151414",
-                  backgroundColor: "",
-                })}
+              <Image
+                src={logo}
+                alt="StationForge Logo"
+                className="w-full h-fit"
               />
-            </div>
-          )}
-          {/*  */}
-          {admin_loggedin && (
-            <Link
-              href={"/admin/dashboard"}
-              className="  py-[0.7vw] border-white border neuem px-[0.9vw] rounded-[0.8vw]  hover:bg-[#CCFF00] hover:bg-opacity-[30%] transition duration-[0.3s]  "
-            >
-              {" "}
-              Dashboard
             </Link>
-          )}
-          <button
+          </div>
+
+          <div
+            className="sm:block sm:w-fit  hidden"
             onClick={() => {
               setforge_loader(true);
             }}
-            className=" py-[0.7vw] border-white border neuem px-[0.9vw] rounded-[0.8vw]  hover:bg-[#CCFF00] hover:bg-opacity-[30%] transition duration-[0.3s] "
           >
-            {" "}
-            <i className="bi bi-bag-fill"></i> Forge
-          </button>{" "}
-          {!loggedin ? (
+            <button
+              className="= w-[10vw] h-auto flex"
+              // onClick={() => {
+              //   if (pathname == "/") {
+              //     setpage_loader(false);
+              //   } else {
+              //     setpage_loader(true);
+              //   }
+              // }}
+            >
+              <Image
+                src={mob_cart}
+                alt="StationForge Logo"
+                className="w-full h-fit"
+              />
+            </button>
+          </div>
+          {/* destop designs */}
+          {/* destop designs */}
+          {/* destop designs */}
+          {/* destop designs */}
+          {/* destop designs */}
+          {/* destop designs */}
+          {/* destop designs */}
+          {/* destop designs */}
+          {/* logo image */}
+          <div className="sm:hidden">
             <Link
-              href={"/login"}
-              className=" py-[0.7vw]  px-[0.9vw]  border-transparent border rounded-[0.8vw] text-black bg-white hover:bg-[#CCFF00] hover:text-white hover:bg-opacity-[30%] transition duration-[0.3s] font-[600]"
+              href="https://malkainstaging.website/forge/"
+              aria-label="StationForge Home"
+              className="= w-[10vw] h-auto flex"
               onClick={() => {
-                if (pathname == "/login") {
+                if (pathname == "/") {
                   setpage_loader(false);
                 } else {
                   setpage_loader(true);
                 }
               }}
             >
-              Log In
+              <Image
+                src={logo}
+                alt="StationForge Logo"
+                className="w-full h-fit"
+              />
             </Link>
-          ) : (
+          </div>
+          {/* nav array list  */}
+          <div className="neuer sm:hidden  flex items-center gap-[1.8vw] capitalize text-[1vw]">
+            {links.map((e: any, index: any) => {
+              return (
+                <>
+                  <Link
+                    onClick={() => {
+                      if (pathname == e.link) {
+                        setpage_loader(false);
+                      } else {
+                        setpage_loader(true);
+                      }
+                    }}
+                    href={e.link}
+                    key={index}
+                    className={`  text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] h-full ${
+                      pathname == e.link
+                        ? "text-black bg-white py-[0.5vw] px-[1vw] rounded-[1.2vw] text-opacity-[100%]"
+                        : "text-white"
+                    } `}
+                    style={{ transition: "1s ease" }}
+                  >
+                    {e.txt}
+                  </Link>
+                </>
+              );
+            })}
+          </div>
+          <div className="text-white sm:hidden  flex gap-[0.9vw] text-[1vw] items-center justify-center">
+            {/* now this is for the download */}
+            {!track_hide_download && (
+              <div
+                className="w-[3vw] h-[3vw] relative bg-[#151414] cursor-pointer rounded-[100%]"
+                onClick={() => {
+                  route.push("/libary");
+                  if (pathname == "/libary") {
+                    setpage_loader(false);
+                  } else {
+                    setpage_loader(true);
+                  }
+                }}
+              >
+                {downloadProgress != "100" && (
+                  <i className="bi bi-arrow-down absolute  top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-white text-[1.2vw] text-opacity-[90%]"></i>
+                )}
+
+                {downloadProgress >= "99" && (
+                  <i className="bi bi-check2 absolute  top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-white text-[1.4vw] text-opacity-[90%]"></i>
+                )}
+                <CircularProgressbar
+                  value={track_progress}
+                  styles={buildStyles({
+                    // Rotation of path and trail, in number of turns (0-1)
+                    rotation: 0.25,
+
+                    // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                    strokeLinecap: "butt",
+
+                    // Text size
+                    // textSize: "16px",
+
+                    // How long animation takes to go from one percentage to another, in seconds
+                    pathTransitionDuration: 0.5,
+
+                    // Can specify path transition in more detail, or remove it entirely
+                    // pathTransition: 'none',
+
+                    // Colors
+                    pathColor: `#CCFF00`,
+                    // textColor: "#f88",
+                    trailColor: "#151414",
+                    backgroundColor: "",
+                  })}
+                />
+              </div>
+            )}
+            {/*  */}
+            {admin_loggedin && (
+              <Link
+                href={"/admin/dashboard"}
+                className="  py-[0.7vw] border-white border neuem px-[0.9vw] rounded-[0.8vw]  hover:bg-[#CCFF00] hover:bg-opacity-[30%] transition duration-[0.3s]  "
+              >
+                {" "}
+                Dashboard
+              </Link>
+            )}
             <button
-              className=" py-[0.7vw]  px-[0.9vw]  border-transparent border rounded-[0.8vw] text-black bg-white hover:bg-[#CCFF00] hover:text-white hover:bg-opacity-[30%] transition duration-[0.3s] profile_btn font-[600]"
-              onClick={toggleDropdown}
+              onClick={() => {
+                setforge_loader(true);
+              }}
+              className=" py-[0.7vw] border-white border neuem px-[0.9vw] rounded-[0.8vw]  hover:bg-[#CCFF00] hover:bg-opacity-[30%] transition duration-[0.3s] "
             >
-              Profile
-            </button>
-          )}
-        </div>
-      </nav>
-    </header>
+              {" "}
+              <i className="bi bi-bag-fill"></i> Forge
+            </button>{" "}
+            {!loggedin ? (
+              <Link
+                href={"/login"}
+                className=" py-[0.7vw]  px-[0.9vw]  border-transparent border rounded-[0.8vw] text-black bg-white hover:bg-[#CCFF00] hover:text-white hover:bg-opacity-[30%] transition duration-[0.3s] font-[600]"
+                onClick={() => {
+                  if (pathname == "/login") {
+                    setpage_loader(false);
+                  } else {
+                    setpage_loader(true);
+                  }
+                }}
+              >
+                Log In
+              </Link>
+            ) : (
+              <button
+                className=" py-[0.7vw]  px-[0.9vw]  border-transparent border rounded-[0.8vw] text-black bg-white hover:bg-[#CCFF00] hover:text-white hover:bg-opacity-[30%] transition duration-[0.3s] profile_btn font-[600]"
+                onClick={toggleDropdown}
+              >
+                Profile
+              </button>
+            )}
+          </div>
+        </nav>
+      </header>
+    </>
   );
 };
 

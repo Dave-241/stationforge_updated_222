@@ -185,13 +185,13 @@ export default function Home() {
     <>
       {page_loader && <Loader />}
       {forge_loader && <Forge />}
+      <Profile_dropdown />
       <div className="w-full h-fit z-[99] sm:h-[20vw]   fixed top-[-0.9vw] ">
         <Header />
       </div>
 
-      <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
-      {/* <Chats_modal /> */}
+
       {mobile_faction_active && (
         <div className="w-full h-full sm:block hidden sm:top sm:relative">
           <Mobile_factions
@@ -206,7 +206,6 @@ export default function Home() {
           />
         </div>
       )}
-
       <Home_hero />
       <div className="w-full h-[4vw] sm:h-[25vw]"></div>
       <div
