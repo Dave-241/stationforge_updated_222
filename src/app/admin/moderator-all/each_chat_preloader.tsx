@@ -14,7 +14,7 @@ const Each_chat_preloader = () => {
           </div>
         </div>
 
-        <div className="bg-[#CCFF00]  rounded-[100%]  sm:text-[2.8vw] sm:w-[12vw] sm:h-[12vw] hover:bg-opacity-[50%] text-[1vw] w-[2.8vw] h-[2.8vw] animate-pulse"></div>
+        <div className="bg-[#CCFF00]  rounded-[100%]  sm:text-[2.8vw] sm:w-[10vw] sm:h-[10vw] hover:bg-opacity-[50%] text-[1vw] w-[2.8vw] h-[2.8vw] animate-pulse"></div>
       </div>
     </>
   );

@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 
-const Each_moderator = ({ data, setstage, setshow_mobile_chats }: any) => {
+const Each_moderator = ({
+  data,
+  setstage,
+  setshow_mobile_chats,
+  fetchData,
+  setmoderator_name,
+}: any) => {
   return (
     <>
       <div className="w-full flex justify-between sm:rounded-[4vw]  sm:px-[3vw] sm:h-[28vw]  items-center  bg-[#0D0C0C] px-[1.2vw] h-[8vw] rounded-[1.5vw]">
@@ -39,6 +45,8 @@ const Each_moderator = ({ data, setstage, setshow_mobile_chats }: any) => {
             onClick={() => {
               setstage(2);
               setshow_mobile_chats(true);
+              fetchData(data.chatSessionIds);
+              setmoderator_name(data.moderator.Username);
             }}
           >
             View Chats

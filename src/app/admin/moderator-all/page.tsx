@@ -12,10 +12,12 @@ import { useRouter } from "next/navigation";
 import {
   Timestamp,
   collection,
+  doc,
   getDoc,
   getDocs,
   getFirestore,
   onSnapshot,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -36,7 +38,10 @@ export default function Home() {
   const [showdash, setshowdash] = useState(false);
   const [moderator_is_loading, setmoderator_is_loading] = useState(true);
   const [moderator_size, setmoderator_size] = useState(0);
+  const [all_chats_arr, setall_chats_arr] = useState<any>([]);
+  const [all_chats_is_loading, setall_chats_is_loading] = useState(true);
   const [show_mobile_chats, setshow_mobile_chats] = useState(false);
+  const [moderator_name, setmoderator_name] = useState("");
 
   const [stage, setstage] = useState(1);
 
@@ -110,17 +115,81 @@ export default function Home() {
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const fetchData = async (all_chats_arr: any) => {
+    try {
+      setall_chats_is_loading(true);
+      const chatSessionsData = await Promise.all(
+        all_chats_arr.map(async (chatSessionId: any) => {
+          // console.log(chatSessionId);
+          const chatSessionDocRef = doc(
+            collection(db, "chat_sessions"),
+            chatSessionId,
+          );
+          const chatSessionDoc = await getDoc(chatSessionDocRef);
+          return chatSessionDoc.data();
+        }),
+      );
 
-  const handleuser_update = () => {
-    axios
-      .get("/api/moderator_edit")
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
+      // 2. Fetch user data for each chat session
+      const userDataPromises = chatSessionsData.map(async (chatSession) => {
+        console.log("don22se");
+        // console.log(chatSession);
+        const userDocRef = query(
+          collection(db, "users"),
+          where("userid", "==", chatSession?.JoinedUserid),
+        );
+        // const userDocRef = doc(
+        //   collection(db, "users"),
+        //   chatSession?.JoinedUserid,
+        // );
+        console.log("done");
+
+        const userDoc = await getDocs(userDocRef);
+
+        const userData = await userDoc.docs.map((e) => {
+          return e.data();
+        });
+        return userData;
       });
+
+      // 3. Fetch chat text data for each chat session
+      const chatTextPromises = all_chats_arr.map(async (chatSession: any) => {
+        console.log(chatSession);
+        const chatTextQuery = query(
+          collection(db, "chat_text"),
+          where("session_chat_id", "==", chatSession),
+          orderBy("createdAt", "asc"),
+        );
+        const chatTextSnapshot = await getDocs(chatTextQuery);
+        const chatTextData = chatTextSnapshot.docs.map((doc) => doc.data());
+        return chatTextData;
+      });
+
+      const [userData, chatTextData] = await Promise.all([
+        Promise.all(userDataPromises),
+        Promise.all(chatTextPromises),
+      ]);
+
+      // Combine all data for each chat session
+      const finalChatSessionData = all_chats_arr.map((id: any, index: any) => ({
+        chatSessionId: id,
+        chatSessionData: chatSessionsData[index],
+        userData: userData[index],
+        chatTextData: chatTextData[index],
+      }));
+
+      // Log the result
+      console.log(finalChatSessionData);
+      setall_chats_arr(finalChatSessionData);
+      setall_chats_is_loading(false);
+
+      // Set the state with the fetched data
+      // setChatSessionData(finalChatSessionData);
+    } catch (error) {
+      console.error("An error occurred", error);
+    }
   };
+
   return (
     <>
       {page_loader && <Loader />}
@@ -130,11 +199,25 @@ export default function Home() {
             <All_moderator_wrap
               setstage={setstage}
               setshow_mobile_chats={setshow_mobile_chats}
+              // setall_chats_arr={setall_chats_arr}
+              fetchData={fetchData}
+              setmoderator_name={setmoderator_name}
             />
           )}
-          {stage > 1 && <All_chats_wrap />}
+          {stage > 1 && (
+            <All_chats_wrap
+              all_chats_arr={all_chats_arr}
+              all_chats_is_loading={all_chats_is_loading}
+              moderator_name={moderator_name}
+            />
+          )}
           {show_mobile_chats && (
-            <Mob_All_chats_wrap setshow_mobile_chats={setshow_mobile_chats} />
+            <Mob_All_chats_wrap
+              setshow_mobile_chats={setshow_mobile_chats}
+              all_chats_arr={all_chats_arr}
+              all_chats_is_loading={all_chats_is_loading}
+              moderator_name={moderator_name}
+            />
           )}
         </>
       ) : null}

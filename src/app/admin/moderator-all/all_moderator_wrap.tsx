@@ -18,7 +18,12 @@ import { initializeApp } from "firebase/app";
 import Each_moderator from "./each_moderator";
 import Each_moderator_preloader from "./all_moderator_preloader";
 
-const All_moderator_wrap = ({ setstage, setshow_mobile_chats }: any) => {
+const All_moderator_wrap = ({
+  setstage,
+  setshow_mobile_chats,
+  fetchData,
+  setmoderator_name,
+}: any) => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const [moderator_is_loading, setmoderator_is_loading] = useState(true);
@@ -185,6 +190,8 @@ const All_moderator_wrap = ({ setstage, setshow_mobile_chats }: any) => {
                     data={e}
                     setstage={setstage}
                     setshow_mobile_chats={setshow_mobile_chats}
+                    fetchData={fetchData}
+                    setmoderator_name={setmoderator_name}
                   />
                 );
               })}

@@ -12,30 +12,30 @@ const Each_chat = ({ data }: any) => {
             className="w-[4vw] h-[4vw] overflow-hidden sm:h-[12vw] sm:w-[12vw]  avater_bg rounded-[100%]"
             style={{ backgroundImage: `url(/light_cover.webp)` }}
           >
-            {/* <Image
+            <Image
               unoptimized
               width="0"
               height="0"
-              src={data.moderator.avatar_url}
-              alt={data.moderator.name}
+              src={data.userData[0].avatar_url}
+              alt={data.userData[0].name}
               className="w-full h-full"
-            /> */}
+            />
           </div>
 
           <div className="h-full flex flex-col justify-between ">
-            <p className="text-[1vw]  text-white neuer sm:text-[3.7vw]">
-              {/* {data.moderator.Username}
-              {data.moderator.name && `(${data.moderator.name})`} */}
-              this is name
+            <p className="text-[1.2vw]  text-white neuer sm:text-[3.7vw]">
+              {data.userData[0].Username}{" "}
+              {data.userData[0].name && `(${data.userData[0].name})`}
             </p>
-            <p className="text-[0.8vw] text-opacity-[30%] text-white neuer sm:text-[3vw]">
-              Chats moderated
+            <p className="text-[0.9vw] text-opacity-[30%] text-white neuer sm:text-[3vw]">
+              {data.chatTextData[0]?.message}{" "}
+              {!data.chatTextData[0]?.message && "No messages yet"}
             </p>
           </div>
         </div>
 
-        <div className="bg-[#CCFF00] flex justify-center items-center rounded-[100%]  sm:w-[12vw] sm:h-[12vw] sm:text-[2.8vw] hover:bg-opacity-[50%] text-[0.8vw]  w-[2.8vw] h-[2.8vw]">
-          2
+        <div className="bg-[#CCFF00] flex justify-center items-center rounded-[100%]  sm:w-[10vw] sm:h-[10vw] sm:text-[3vw] hover:bg-opacity-[50%] text-[0.8vw]  w-[2.8vw] h-[2.8vw]">
+          {data.userData.length}
         </div>
       </div>
     </>
