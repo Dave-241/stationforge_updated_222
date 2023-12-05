@@ -69,6 +69,7 @@ export async function POST(request: Request) {
         step: e,
         subscriptionCancelled: subscriptionCancel,
         subscription: type,
+        allocations: 30,
         subscriptionId: subscriptionid,
         // no_of_subscriptions: 1,
       });
@@ -116,7 +117,6 @@ export async function POST(request: Request) {
     subscriptionid: string,
     cancelled: boolean,
     step: number,
-    subscription_no: number,
     subscription: string,
   ) => {
     try {
@@ -256,17 +256,39 @@ export async function POST(request: Request) {
       const customerSubscriptionUpdated: any = event.data
         .object as Stripe.Subscription;
 
+      // Check if the subscription status is "canceled"
+      if (customerSubscriptionUpdated.items.data[0].status === "canceled") {
+        break;
+      } else {
+        const plain_id = customerSubscriptionUpdated.items.data[0].price.id;
+        // console.log(plain_id);
+
+        if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+          updateT(
+            customerSubscriptionUpdated.customer,
+            false,
+            4,
+            "Merchant tier",
+          );
+        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+          updateT(
+            customerSubscriptionUpdated.customer,
+            false,
+            3,
+            "Standard tier",
+          );
+        }
+      }
+
       // Then define and call a function to handle the event customer.subscription.updated
       break;
     case "invoice.payment_succeeded":
       const invoicePaymentSucceeded: any = event.data.object;
       // Check if subscription is available in the invoicePaymentSucceeded object
       const subscriptionId = invoicePaymentSucceeded.subscription;
-
       // Fetch the subscription details from Stripe
       const subscription_payment_succedded =
         await stripe.subscriptions.retrieve(subscriptionId);
-
       // Now you can access the current plan ID
       const plain_id = subscription_payment_succedded.items.data[0].price.id;
 
@@ -275,22 +297,11 @@ export async function POST(request: Request) {
       if (invoicePaymentSucceeded.billing_reason == "subscription_create") {
         break;
       } else {
+        // Retrieve customer details to get metadata
         if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-          updateT(
-            invoicePaymentSucceeded.customer,
-            false,
-            4,
-            1,
-            "Merchant tier",
-          );
+          updateT(invoicePaymentSucceeded.customer, false, 4, "Merchant tier");
         } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-          updateT(
-            invoicePaymentSucceeded.customer,
-            false,
-            3,
-            1,
-            "Standard tier",
-          );
+          updateT(invoicePaymentSucceeded.customer, false, 3, "Standard tier");
         }
       }
 
