@@ -23,6 +23,7 @@ import Add_moderator_header from "@/app/admin_general_component/add_moderator_he
 import axios from "axios";
 import All_moderator_wrap from "./all_moderator_wrap";
 import All_chats_wrap from "./chats_wrap";
+import Mob_All_chats_wrap from "./mob_chats_wrap";
 
 export default function Home() {
   const {
@@ -35,6 +36,7 @@ export default function Home() {
   const [showdash, setshowdash] = useState(false);
   const [moderator_is_loading, setmoderator_is_loading] = useState(true);
   const [moderator_size, setmoderator_size] = useState(0);
+  const [show_mobile_chats, setshow_mobile_chats] = useState(false);
 
   const [stage, setstage] = useState(1);
 
@@ -124,8 +126,16 @@ export default function Home() {
       {page_loader && <Loader />}
       {showdash ? (
         <>
-          {stage > 0 && <All_moderator_wrap setstage={setstage} />}
+          {stage > 0 && (
+            <All_moderator_wrap
+              setstage={setstage}
+              setshow_mobile_chats={setshow_mobile_chats}
+            />
+          )}
           {stage > 1 && <All_chats_wrap />}
+          {show_mobile_chats && (
+            <Mob_All_chats_wrap setshow_mobile_chats={setshow_mobile_chats} />
+          )}
         </>
       ) : null}
     </>

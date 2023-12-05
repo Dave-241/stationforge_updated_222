@@ -17,65 +17,20 @@ import firebaseConfig from "@/app/utils/fire_base_config";
 import { initializeApp } from "firebase/app";
 import Each_moderator from "./each_moderator";
 import Each_moderator_preloader from "./all_moderator_preloader";
+import Each_chat from "./each_chat";
+import Each_chat_preloader from "./each_chat_preloader";
 
-const All_moderator_wrap = ({ setstage, setshow_mobile_chats }: any) => {
+const Mob_All_chats_wrap = ({ setshow_mobile_chats }: any) => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const [moderator_is_loading, setmoderator_is_loading] = useState(true);
   const [allmoderator_is_loading, setallmoderator_is_loading] = useState(true);
   const [moderator_size, setmoderator_size] = useState(0);
+  const [move_right, setmove_right] = useState(false);
   const [moderatorData, setmoderatorData] = useState<any>([]);
   // Initialize Firestore
   const db = getFirestore(app);
-  useEffect(() => {
-    const fetchData = async () => {
-      const userRef = collection(db, "users");
-      const chatSessionsRef = collection(db, "chat_sessions");
 
-      try {
-        const moderatorsQuery = query(
-          userRef,
-          where("role", "==", "moderator"),
-          orderBy("createdAt", "desc"),
-        );
-        const moderatorsSnapshot = await getDocs(moderatorsQuery);
-        setmoderator_is_loading(false);
-        setmoderator_size(moderatorsSnapshot.size);
-
-        const moderatorPromises = moderatorsSnapshot.docs.map(async (doc) => {
-          const moderator = doc.data();
-          const chatSessionsQuery = query(
-            chatSessionsRef,
-            where("Joinedmoderatorid", "==", moderator.userid),
-          );
-          const chatSessionsSnapshot = await getDocs(chatSessionsQuery);
-          const chatSessionIds = chatSessionsSnapshot.docs.map((doc) => doc.id);
-
-          return {
-            moderator,
-            chatSessionIds,
-          };
-        });
-
-        const allModeratorData = await Promise.all(moderatorPromises);
-        setallmoderator_is_loading(false);
-        setmoderatorData(allModeratorData);
-        console.log(allModeratorData);
-      } catch (error) {
-        console.log("An error occurred", error);
-      }
-    };
-
-    fetchData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const text_data = [
-    "TTtFe2L637LFliEh6RcX",
-    "p8r8MBYMQCspxjm9WvYD",
-    "b0gAa6NlpNAmaOQMVGiZ",
-  ];
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -165,33 +120,60 @@ const All_moderator_wrap = ({ setstage, setshow_mobile_chats }: any) => {
 
   const items = ["", "", "", "", "", ""];
 
+  useEffect(() => {
+    setmove_right(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
-      <div className=" fixed h-full w-[calc(100vw/3)] sm:border-none sm:w-full border-r-white border-opacity-[20%] border-r-[0.14vw] z-[99] bg-black overflow-y-scroll scroll-container">
-        {/* this is the header */}
-        <Moderator_header
-          moderator_size={moderator_size}
-          moderator_is_loading={moderator_is_loading}
-        />
-        <div className="w-full justify-center flex  sm:gap-[4vw] sm:pb-[5vw]  flex-col px-[1vw] sm:px-[2vw] gap-[1.5vw] pb-[1vw]  mt-[7vw] sm:mt-[21vw]">
-          {allmoderator_is_loading
+      <div
+        className={`fixed h-full  bg-black  ${
+          !move_right ? " bg-opacity-[0%]" : " bg-opacity-[80%]"
+        }  left-0 sm:flex justify-center items-end  sm:w-full sm:z-[999] hidden cover_scrollbar overflow-hidden `}
+        onClick={() => {
+          setmove_right(false);
+          setTimeout(() => {
+            setshow_mobile_chats(false);
+          }, 900);
+        }}
+        style={{ transition: "1.5s ease " }}
+      >
+        <div
+          className={` ${
+            move_right ? "left-0" : "left-[-100vw]"
+          } fixed h-[20vw] w-full backdrop-blur-[14px] bg-opacity-[30%] z-[99999] bg-black  pl-[2vw] bottom-[0vw] flex items-center`}
+          style={{ transition: "0.8s ease " }}
+        >
+          <h2 className="text-white text-[4.4vw] ">Goldie John Chats</h2>
+        </div>
+        <div
+          className={`w-full h-[150vw] max-h-[80vh] bg-black   sm:w-full  overflow-y-scroll scroll-container  ${
+            move_right ? "translate-y-0" : "translate-y-[180vw]"
+          }  `}
+          style={{ transition: "1.5s ease " }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          {/* this is the header */}
+
+          <div className="w-full pt-[4vw] justify-center flex  sm:gap-[4vw] sm:pb-[5vw]  flex-col px-[2vw] sm:px-[2vw] gap-[1.5vw] pb-[1vw]  mt-[7vw] sm:mb-[23vw]">
+            {/* {allmoderator_is_loading
             ? items.map((e: any, index: any) => {
                 return <Each_moderator_preloader key={index} />;
               })
             : moderatorData.map((e: any, index: any) => {
-                return (
-                  <Each_moderator
-                    key={index}
-                    data={e}
-                    setstage={setstage}
-                    setshow_mobile_chats={setshow_mobile_chats}
-                  />
-                );
-              })}
+                return <Each_moderator key={index} data={e} />;
+              })} */}
+
+            {items.map((e: any, index: any) => {
+              return <Each_chat_preloader key={index} />;
+            })}
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default All_moderator_wrap;
+export default Mob_All_chats_wrap;

@@ -5,7 +5,7 @@ import Image from "next/image";
 const Each_chat = ({ data }: any) => {
   return (
     <>
-      <div className="w-full cursor-pointer hover:bg-opacity-[40%] hover:border transition duration-[0.6s] flex justify-between sm:rounded-[4vw]  sm:px-[3vw] sm:h-[28vw]  items-center  bg-[#0D0C0C] px-[1.2vw] h-[6.5vw] rounded-[1.5vw]">
+      <div className="w-full cursor-pointer hover:bg-opacity-[40%] hover:border transition duration-[0.6s] flex justify-between sm:rounded-[4vw]  sm:px-[3vw] sm:h-[23vw]  items-center  bg-[#0D0C0C] px-[1.2vw] h-[6.5vw] rounded-[1.5vw]">
         {/* the avatar , username , and chats moderated */}
         <div className="w-auto flex justify-start items-center gap-[1.2vw] h-[4vw] sm:h-[12vw] sm:gap-[4vw]  ">
           <div
@@ -34,7 +34,7 @@ const Each_chat = ({ data }: any) => {
           </div>
         </div>
 
-        <div className="bg-[#CCFF00] flex justify-center items-center rounded-[100%] sm:h-[7vw] sm:w-[25vw] sm:text-[2.8vw] sm:rounded-[2vw] hover:bg-opacity-[50%] text-[0.8vw]  w-[2.8vw] h-[2.8vw]">
+        <div className="bg-[#CCFF00] flex justify-center items-center rounded-[100%]  sm:w-[12vw] sm:h-[12vw] sm:text-[2.8vw] hover:bg-opacity-[50%] text-[0.8vw]  w-[2.8vw] h-[2.8vw]">
           2
         </div>
       </div>
