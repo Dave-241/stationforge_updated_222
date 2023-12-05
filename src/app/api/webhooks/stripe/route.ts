@@ -117,6 +117,7 @@ export async function POST(request: Request) {
     subscriptionid: string,
     cancelled: boolean,
     step: number,
+    update_allocation: boolean,
     subscription: string,
   ) => {
     try {
@@ -137,6 +138,39 @@ export async function POST(request: Request) {
         step: step,
         subscriptionCancelled: cancelled,
         // no_of_subscriptions: current_number + subscription_no,
+        subscription: subscription,
+      });
+    } catch (error) {
+      console.error("Error updating user document:", error);
+      throw error;
+    }
+  };
+
+  const update_sub_renewal = async (
+    subscriptionid: string,
+    cancelled: boolean,
+    step: number,
+    update_allocation: boolean,
+    subscription: string,
+  ) => {
+    try {
+      const userQuery = query(
+        collection(db, "users"),
+        where("subscriptionId", "==", subscriptionid),
+      );
+      const userDocs = await getDocs(userQuery);
+      if (userDocs.empty) {
+        console.log("No user document found for the current user");
+        return;
+      }
+      const current_number = userDocs.docs[0].data().no_of_subscriptions;
+
+      const userDocRef = doc(db, "users", userDocs.docs[0].id);
+      await updateDoc(userDocRef, {
+        subscribedAt: serverTimestamp(),
+        step: step,
+        subscriptionCancelled: cancelled,
+        allocations: 30,
         subscription: subscription,
       });
     } catch (error) {
@@ -261,13 +295,14 @@ export async function POST(request: Request) {
         break;
       } else {
         const plain_id = customerSubscriptionUpdated.items.data[0].price.id;
-        // console.log(plain_id);
+        console.log(plain_id);
 
         if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
           updateT(
             customerSubscriptionUpdated.customer,
             false,
             4,
+            true,
             "Merchant tier",
           );
         } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
@@ -275,6 +310,7 @@ export async function POST(request: Request) {
             customerSubscriptionUpdated.customer,
             false,
             3,
+            false,
             "Standard tier",
           );
         }
@@ -296,13 +332,50 @@ export async function POST(request: Request) {
 
       if (invoicePaymentSucceeded.billing_reason == "subscription_create") {
         break;
+      } else if (
+        invoicePaymentSucceeded.billing_reason == "subscription_cycle"
+      ) {
+        if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+          update_sub_renewal(
+            invoicePaymentSucceeded.customer,
+            false,
+            4,
+            true,
+            "Merchant tier",
+          );
+        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+          update_sub_renewal(
+            invoicePaymentSucceeded.customer,
+            false,
+            3,
+            false,
+            "Standard tier",
+          );
+        }
+
+        break;
       } else {
         // Retrieve customer details to get metadata
+
         if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-          updateT(invoicePaymentSucceeded.customer, false, 4, "Merchant tier");
+          updateT(
+            invoicePaymentSucceeded.customer,
+            false,
+            4,
+            true,
+            "Merchant tier",
+          );
         } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-          updateT(invoicePaymentSucceeded.customer, false, 3, "Standard tier");
+          updateT(
+            invoicePaymentSucceeded.customer,
+            false,
+            3,
+            false,
+            "Standard tier",
+          );
         }
+
+        break;
       }
 
       // console.log(invoicePaymentSucceeded.billing_reason, plain_id);
