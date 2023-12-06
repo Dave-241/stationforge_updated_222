@@ -175,7 +175,8 @@ const Chats_modal = () => {
         addDoc(chatTextref, {
           createdAt: serverTimestamp(),
           from: "moderator",
-          message: "Hello , how can we help you today ",
+          message:
+            "Hello , how can we help you today. Please allow for sometime our customer support would be with you in a moment ",
           session_chat_id: doc.id,
         })
           .then(() => {
