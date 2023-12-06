@@ -47,6 +47,8 @@ const Chats_modal = () => {
   const [chat_text, setchat_text] = useState("");
   const [chat_data_arr, setchat_data_arr] = useState<any>([]);
 
+  // Explicitly define the type for useRef
+  const new_session = useRef<any>(false);
   const {
     show_chat_modal,
     setshow_chat_modal,
@@ -162,7 +164,9 @@ const Chats_modal = () => {
   const create_new_session = () => {
     const chatSessionsRef = collection(db, "chat_sessions");
     const chatTextref = collection(db, "chat_text");
-
+    if (new_session.current) {
+      return;
+    }
     addDoc(chatSessionsRef, {
       Endedsession: false,
       JoinedUserid: currentUserUid,
@@ -170,7 +174,6 @@ const Chats_modal = () => {
       Joinedmoderatorid: "",
     })
       .then((doc) => {
-        setcreate_new_sess(false);
         setshow_end_and_start_btn(true);
         addDoc(chatTextref, {
           createdAt: serverTimestamp(),
@@ -208,12 +211,8 @@ const Chats_modal = () => {
     const unsubscribe = onSnapshot(chatSessionsQuery, (snapshot) => {
       if (snapshot.empty) {
         // Handle case when there are no documents
-        if (create_new_sess) {
-          console.log(create_new_sess);
-          create_new_session();
-        } else {
-          return;
-        }
+
+        create_new_session();
 
         return;
       }
@@ -395,12 +394,13 @@ const Chats_modal = () => {
               }}
               onClick={() => {
                 if (!chat_session_id.length) {
+                  new_session.current = false;
                   create_new_session();
-                  return;
+                } else {
+                  new_session.current = true;
+                  setcreate_new_sess(false);
+                  updateChatSessionEndedStatus();
                 }
-                setcreate_new_sess(false);
-
-                updateChatSessionEndedStatus();
               }}
             >
               {chat_session_id.length ? "End session" : "Start chat"}
