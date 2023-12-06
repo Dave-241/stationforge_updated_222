@@ -227,14 +227,16 @@ const Chats_modal = () => {
 
         // Assuming your timestamp field is named 'SessioncreatedAt'
         const timestampValue = doc.data().SessioncreatedAt;
+        if (timestampValue) {
+          // Convert Firebase Timestamp to JavaScript Date
+          const date = fromUnixTime(timestampValue?.seconds);
 
-        // Convert Firebase Timestamp to JavaScript Date
-        const date = fromUnixTime(timestampValue.seconds);
+          // Format the date using date-fns
+          const formattedDate = format(date, "d MMMM, yyyy "); // Customize the format as needed
 
-        // Format the date using date-fns
-        const formattedDate = format(date, "d MMMM, yyyy "); // Customize the format as needed
+          settime_date(formattedDate);
+        }
 
-        settime_date(formattedDate);
         scrollToBottom();
         console.log("Chat Session Data:", chatSessionData);
       });
