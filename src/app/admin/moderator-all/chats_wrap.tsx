@@ -24,6 +24,11 @@ const All_chats_wrap = ({
   all_chats_is_loading,
   all_chats_arr,
   moderator_name,
+  setstage,
+  setadmin_messages_arr,
+  settime_date,
+  setname,
+  setavatar,
 }: any) => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -61,7 +66,17 @@ const All_chats_wrap = ({
                   return <Each_chat_preloader key={index} />;
                 })
               : all_chats_arr.map((e: any, index: any) => {
-                  return <Each_chat key={index} data={e} />;
+                  return (
+                    <Each_chat
+                      key={index}
+                      data={e}
+                      setstage={setstage}
+                      setadmin_messages_arr={setadmin_messages_arr}
+                      settime_date={settime_date}
+                      setname={setname}
+                      setavatar={setavatar}
+                    />
+                  );
                 })}
 
             {all_chats_arr.length == 0 && (

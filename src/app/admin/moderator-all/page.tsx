@@ -26,6 +26,7 @@ import axios from "axios";
 import All_moderator_wrap from "./all_moderator_wrap";
 import All_chats_wrap from "./chats_wrap";
 import Mob_All_chats_wrap from "./mob_chats_wrap";
+import Admin_Chats_modal from "./chats";
 
 export default function Home() {
   const {
@@ -41,7 +42,11 @@ export default function Home() {
   const [all_chats_arr, setall_chats_arr] = useState<any>([]);
   const [all_chats_is_loading, setall_chats_is_loading] = useState(true);
   const [show_mobile_chats, setshow_mobile_chats] = useState(false);
+  const [admin_messages_arr, setadmin_messages_arr] = useState<any>([]);
   const [moderator_name, setmoderator_name] = useState("");
+  const [time_date, settime_date] = useState("Date");
+  const [name, setname] = useState("");
+  const [avatar, setavatar] = useState("");
 
   const [stage, setstage] = useState(1);
 
@@ -199,24 +204,42 @@ export default function Home() {
             <All_moderator_wrap
               setstage={setstage}
               setshow_mobile_chats={setshow_mobile_chats}
-              // setall_chats_arr={setall_chats_arr}
               fetchData={fetchData}
               setmoderator_name={setmoderator_name}
             />
           )}
           {stage > 1 && (
             <All_chats_wrap
+              setstage={setstage}
               all_chats_arr={all_chats_arr}
+              setadmin_messages_arr={setadmin_messages_arr}
               all_chats_is_loading={all_chats_is_loading}
               moderator_name={moderator_name}
+              settime_date={settime_date}
+              setname={setname}
+              setavatar={setavatar}
             />
           )}
           {show_mobile_chats && (
             <Mob_All_chats_wrap
               setshow_mobile_chats={setshow_mobile_chats}
+              setstage={setstage}
               all_chats_arr={all_chats_arr}
+              setadmin_messages_arr={setadmin_messages_arr}
               all_chats_is_loading={all_chats_is_loading}
               moderator_name={moderator_name}
+              settime_date={settime_date}
+              setname={setname}
+              setavatar={setavatar}
+            />
+          )}
+          {stage > 2 && (
+            <Admin_Chats_modal
+              setstage={setstage}
+              admin_messages_arr={admin_messages_arr}
+              time_date={time_date}
+              name={name}
+              avatar={avatar}
             />
           )}
         </>

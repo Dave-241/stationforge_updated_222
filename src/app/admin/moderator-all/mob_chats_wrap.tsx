@@ -25,6 +25,11 @@ const Mob_All_chats_wrap = ({
   all_chats_is_loading,
   all_chats_arr,
   moderator_name,
+  setadmin_messages_arr,
+  setstage,
+  settime_date,
+  setname,
+  setavatar,
 }: any) => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -81,7 +86,17 @@ const Mob_All_chats_wrap = ({
                   return <Each_chat_preloader key={index} />;
                 })
               : all_chats_arr.map((e: any, index: any) => {
-                  return <Each_chat key={index} data={e} />;
+                  return (
+                    <Each_chat
+                      key={index}
+                      data={e}
+                      setstage={setstage}
+                      settime_date={settime_date}
+                      setadmin_messages_arr={setadmin_messages_arr}
+                      setname={setname}
+                      setavatar={setavatar}
+                    />
+                  );
                 })}
 
             {all_chats_arr.length == 0 && (
