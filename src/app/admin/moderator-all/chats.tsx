@@ -151,7 +151,7 @@ const Admin_Chats_modal = ({
       </Head>
 
       <div
-        className={`w-[33vw] sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]  h-[43vw] h-full  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+        className={`w-[33vw] bg-[black] sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]  max-h-[88vh] h-full  sm:py-[5vw] px-[1.5vw] sm:top-0 sm:translate-y-0 top-[55vh] translate-y-[-45vh]  z-[999]   sm:gap-[4vw]   settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
           hide ? "right-[-50vw] sm:right-[-110vw]" : "right-0 sm:right-0"
         } border transition duration-[1.5s]`}
         ref={ref_modal}
@@ -198,7 +198,7 @@ const Admin_Chats_modal = ({
 
         {/* this is for the chats */}
         <div
-          className="w-full flex  overflow-y-scroll cover_scrollbar flex-col sm:px-[2vw] pb-[1vw] sm:pb-[18vw] sm:gap-[4vw] h-full gap-[0.6vw] "
+          className="w-full flex   overflow-y-scroll cover_scrollbar flex-col sm:px-[2vw] pb-[1vw] sm:pb-[18vw] sm:gap-[4vw] h-full gap-[0.6vw] "
           ref={scrollAreaRef}
         >
           <div className="w-full flex justify-center h-[2vw] sm:h-[9vw]  neuer">
