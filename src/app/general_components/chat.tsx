@@ -33,9 +33,16 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import Head from "next/head";
 import Image from "next/image";
+import { fromUnixTime } from "date-fns";
+import format from "date-fns/format";
 
 const Chats_modal = () => {
   const [loading, setloading] = useState(false);
+  const [btn_disabled, setbtn_disabled] = useState(false);
+  const [create_new_sess, setcreate_new_sess] = useState(true);
+  const [show_end_and_start_btn, setshow_end_and_start_btn] = useState(false);
+
+  const [time_date, settime_date] = useState("Date");
   const [chat_session_id, setchat_session_id] = useState("");
   const [chat_text, setchat_text] = useState("");
   const [chat_data_arr, setchat_data_arr] = useState<any>([]);
@@ -163,7 +170,8 @@ const Chats_modal = () => {
       Joinedmoderatorid: "",
     })
       .then((doc) => {
-        console.log("just created a new useer ");
+        setcreate_new_sess(false);
+        setshow_end_and_start_btn(true);
         addDoc(chatTextref, {
           createdAt: serverTimestamp(),
           from: "moderator",
@@ -172,7 +180,7 @@ const Chats_modal = () => {
         })
           .then(() => {
             setchat_session_id(doc.id);
-            console.log("just created a new text also ");
+            setbtn_disabled(false);
           })
           .catch((err) => {
             console.log("error whie creating new text" + err);
@@ -199,8 +207,13 @@ const Chats_modal = () => {
     const unsubscribe = onSnapshot(chatSessionsQuery, (snapshot) => {
       if (snapshot.empty) {
         // Handle case when there are no documents
-        console.log("No chat sessions found for the current user");
-        create_new_session();
+        if (create_new_sess) {
+          console.log(create_new_sess);
+          create_new_session();
+        } else {
+          return;
+        }
+
         return;
       }
 
@@ -208,7 +221,19 @@ const Chats_modal = () => {
         // Handle each document
         const chatSessionData = doc.data();
         setchat_session_id(doc.id);
+        setshow_end_and_start_btn(true);
+        // Convert Firebase Timestamp to JavaScript Date
 
+        // Assuming your timestamp field is named 'SessioncreatedAt'
+        const timestampValue = doc.data().SessioncreatedAt;
+
+        // Convert Firebase Timestamp to JavaScript Date
+        const date = fromUnixTime(timestampValue.seconds);
+
+        // Format the date using date-fns
+        const formattedDate = format(date, "d MMMM, yyyy "); // Customize the format as needed
+
+        settime_date(formattedDate);
         scrollToBottom();
         console.log("Chat Session Data:", chatSessionData);
       });
@@ -231,7 +256,10 @@ const Chats_modal = () => {
   };
   const handlesubmit = (e: any) => {
     e.preventDefault();
-
+    setbtn_disabled(true);
+    setchat_text("");
+    setbtn_disabled(false);
+    scrollToBottom();
     if (chat_text.length > 0 && chat_session_id) {
       const chatTextref = collection(db, "chat_text");
 
@@ -243,11 +271,13 @@ const Chats_modal = () => {
       })
         .then(() => {
           // setchat_session_id(doc.id);
-          console.log("just created a new text also ");
           setchat_text("");
+          setbtn_disabled(false);
+          scrollToBottom();
         })
         .catch((err) => {
           console.log("error whie creating new text" + err);
+          setbtn_disabled(false);
         });
     }
   };
@@ -264,7 +294,6 @@ const Chats_modal = () => {
       const unsubscribe = onSnapshot(chatTextQuery, (snapshot) => {
         if (snapshot.empty) {
           // Handle case when there are no documents
-          console.log("No chat text found for the current user");
           //  create_new_session();
           return;
         }
@@ -288,6 +317,25 @@ const Chats_modal = () => {
     }
   }, [chat_session_id]); // Dependency on chatid, so it re-subscribes when chatid changes
 
+  const updateChatSessionEndedStatus = async () => {
+    const chatSessionsRef = collection(db, "chat_sessions");
+    const chatSessionDocRef = doc(chatSessionsRef, chat_session_id);
+    setcreate_new_sess(false);
+    try {
+      await updateDoc(chatSessionDocRef, {
+        Endedsession: true,
+      });
+      console.log(`Chat session with ID ${chat_session_id} marked as ended.`);
+      setchat_text("");
+      setchat_session_id("");
+      setcreate_new_sess(false);
+
+      setbtn_disabled(true);
+    } catch (error) {
+      console.error("Error updating chat session:", error);
+      // Handle the error according to your requirements
+    }
+  };
   useEffect(() => {
     sethide(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -307,31 +355,54 @@ const Chats_modal = () => {
         style={{ transition: "1.5s ease" }}
       >
         {/* this is for the top relative box  */}
-        <div className="w-full fixed top-0 left-0 h-[5.5vw] bg-[#1F1E1E]  sm:h-[22vw]  bg-opacity-[50%] flex justify-start items-center neuer px-[1.3vw] gap-[1vw] sm:gap-[3vw] sm:px-[2vw] border-b-[0.2vw] border-white border-opacity-[60%]">
-          <i
-            className="bi bi-chevron-left cursor-pointer text-white text-[1.2vw] sm:text-[6vw]"
-            onClick={() => {
-              sethide(true);
-              setTimeout(() => {
-                setshow_chat_modal(false);
-              }, 1000);
-            }}
-          ></i>
+        <div className="w-full fixed top-0 left-0 h-[5.5vw] bg-[#1F1E1E]  sm:h-[22vw]  bg-opacity-[50%] flex justify-start items-center neuer px-[1.3vw] gap-[1vw]  sm:px-[2vw] border-b-[0.2vw] border-white border-opacity-[60%]">
+          <div className="w-full flex gap-[1vw] h-full items-center sm:gap-[3vw]">
+            <i
+              className="bi bi-chevron-left cursor-pointer text-white text-[1.2vw] sm:text-[6vw]"
+              onClick={() => {
+                sethide(true);
+                setTimeout(() => {
+                  setshow_chat_modal(false);
+                }, 1000);
+              }}
+            ></i>
 
-          <div
-            className=" h-[3.2vw] w-[3.2vw] sm:h-[10vw] sm:w-[10vw] rounded-[100%] avater_bg"
-            style={{ backgroundImage: "url(/chats/station_forge.webp)" }}
-          ></div>
+            <div
+              className=" h-[3.2vw] w-[3.2vw] sm:h-[10vw] sm:w-[10vw] rounded-[100%] avater_bg"
+              style={{ backgroundImage: "url(/chats/station_forge.webp)" }}
+            ></div>
 
-          {/*the name of the moderator for now its  talk to support */}
-          <div className="w-fit  flex-col flex gap-[0.5vw] sm:gap-[1.2vw] ">
-            <p className="text-[1vw] text-white sm:text-[4vw] ">
-              Talk to support
-            </p>
-            <p className="text-[0.8vw] text-white  sm:text-[3vw] italic text-opacity-[50%]">
-              24/7 Support line
-            </p>
+            {/*the name of the moderator for now its  talk to support */}
+            <div className="w-fit  flex-col flex gap-[0.5vw] sm:gap-[1.2vw] ">
+              <p className="text-[1vw] text-white sm:text-[4vw] ">
+                Talk to support
+              </p>
+              <p className="text-[0.8vw]  text-white  sm:text-[3vw] italic text-opacity-[50%]">
+                24/7 Support line
+              </p>
+            </div>
           </div>
+
+          {show_end_and_start_btn && (
+            <button
+              className="sm:w-[30vw] w-[10vw] h-[3vw] rounded-[1vw] hover:bg-opacity-[30%] bg-black text-white text-[1vw] sm:text-[3vw] sm:h-[10vw] sm:rounded-[3vw]  neuer   "
+              style={{
+                backgroundColor: chat_session_id.length ? "black" : "#CCFF00",
+                color: chat_session_id.length ? "white" : "black",
+              }}
+              onClick={() => {
+                if (!chat_session_id.length) {
+                  create_new_session();
+                  return;
+                }
+                setcreate_new_sess(false);
+
+                updateChatSessionEndedStatus();
+              }}
+            >
+              {chat_session_id.length ? "End session" : "Start chat"}
+            </button>
+          )}
         </div>
 
         {/* this is for the bottom input for sending messages relative box  */}
@@ -346,12 +417,14 @@ const Chats_modal = () => {
               className="w-full h-full pl-[1vw] sm:pl-[3vw] sm:pr-[19vw] pr-[5vw] sm:rounded-[6vw] text-white text-opacity-[85%] text-[1vw] sm:text-[3.5vw] bg-[#2C2C2C] bg-opacity-[56%] outline-none border-[0.14vw]  border-opacity-[30%] focus:border-opacity-[70%] border-white transition duration-[0.6s] rounded-[2vw]"
               onChange={(e) => {
                 setchat_text(e.target.value);
+                setbtn_disabled(false);
               }}
               value={chat_text || ""}
             />
 
             <button
               type="submit"
+              disabled={btn_disabled}
               className="absolute hover:bg-opacity-[80%] bg-[#CCFF00] px-[1vw] text-[0.9vw] py-[0.4vw] rounded-[2vw] right-[1vw] sm:text-[3.5vw] sm:px-[4vw] sm:py-[2vw] sm:rounded-[6vw] sm:right-[2vw] top-[50%] translate-y-[-50%]"
             >
               Send
@@ -367,7 +440,7 @@ const Chats_modal = () => {
         >
           <div className="w-full flex justify-center h-[2vw] sm:h-[9vw]  neuer">
             <p className="text-white text-[0.9vw] h-full px-[1vw] py-[0.4vw] border-white border-[0.1vw] flex items-center rounded-[2vw] border-opacity-[50%] sm:text-[4vw]  sm:px-[5vw] sm:rounded-[4vw] ">
-              Today June 20
+              {time_date}
             </p>
           </div>
           {chat_data_arr.map((e: any, index: any) => {
