@@ -27,6 +27,7 @@ import All_moderator_wrap from "./all_moderator_wrap";
 import All_chats_wrap from "./chats_wrap";
 import Mob_All_chats_wrap from "./mob_chats_wrap";
 import Admin_Chats_modal from "./chats";
+import Link from "next/link";
 
 export default function Home() {
   const {
@@ -242,6 +243,15 @@ export default function Home() {
               avatar={avatar}
             />
           )}
+          <Link
+            href="/admin/add-moderator"
+            onClick={() => {
+              setpage_loader(true);
+            }}
+            className="bg-[#CCFF00] sm:hidden fixed top-[1vw] right-[2vw] cursor-pointer hover:bg-opacity-[40%] neuer flex justify-center items-center text-[1vw] rounded-[1vw] h-[2.8vw] w-[10vw]"
+          >
+            Add Moderators
+          </Link>
         </>
       ) : null}
     </>
