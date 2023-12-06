@@ -61,8 +61,10 @@ const Each_chat = ({
               {data.userData[0].name && `(${data.userData[0].name})`}
             </p>
             <p className="text-[0.9vw] text-opacity-[30%] text-white neuer sm:text-[3vw]">
-              {truncateText(data.chatTextData[0]?.message, 7) ||
-                "No messages yet"}
+              {truncateText(
+                data.chatTextData[1]?.message || data.chatTextData[0]?.message,
+                7,
+              ) || "No messages yet"}
             </p>
           </div>
         </div>
