@@ -31,6 +31,7 @@ const Mobile_header = ({
   const route = useRouter();
 
   const [admin_loggedin, setadmin_loggedin] = useState(false);
+  const [moderator_loggedin, setmoderator_loggedin] = useState(false);
 
   //   profile context
 
@@ -64,6 +65,9 @@ const Mobile_header = ({
               if (snap == "admin") {
                 setadmin_loggedin(true);
                 setpage_loader(false);
+              } else if (snap == "moderator") {
+                setmoderator_loggedin(true);
+                setadmin_loggedin(false);
               } else {
                 setadmin_loggedin(false);
               }
@@ -191,6 +195,19 @@ const Mobile_header = ({
                 style={{ transition: "1s ease" }}
               >
                 Admin dash
+              </Link>
+            )}
+            {moderator_loggedin && (
+              <Link
+                onClick={() => {
+                  setpage_loader(true);
+                }}
+                href={"/admin/chats"}
+                className={` border-[0.3vw] flex justify-center items-center text-[3.1vw] h-[10vw] capitalize rounded-[4vw] border-white border-opacity-[40%] text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] w-[28vw] mb-[3vw] text-white
+              `}
+                style={{ transition: "1s ease" }}
+              >
+                Chats
               </Link>
             )}
           </div>

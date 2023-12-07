@@ -13,12 +13,14 @@ const Each_chat = ({
   setavatar,
 }: any) => {
   const truncateText = (text: any, numWords: any) => {
-    const words = text.split(" ");
-    const truncatedWords = words.slice(0, numWords);
-    const truncatedText = truncatedWords.join(" ");
+    const words = text?.split(" ");
+    const truncatedWords = words?.slice(0, numWords);
+    const truncatedText = truncatedWords?.join(" ");
 
     // Add ellipsis if the text is truncated
-    return words.length > numWords ? `${truncatedText} . . . .` : truncatedText;
+    return words?.length > numWords
+      ? `${truncatedText} . . . .`
+      : truncatedText;
   };
   return (
     <>

@@ -40,6 +40,7 @@ const Header = () => {
   const [loggedin, setloggedin] = useState(false);
   const [comedown, setcomedown] = useState(false);
   const [admin_loggedin, setadmin_loggedin] = useState(false);
+  const [moderator_loggedin, setmoderator_loggedin] = useState(false);
   const [track_hide_download, settrack_hide_download] = useState(true);
   const [track_progress, settrack_progress] = useState<any>("0");
   const [mobile_bg_changer, setmobile_bg_changer] = useState<any>(false);
@@ -96,8 +97,12 @@ const Header = () => {
               const snap = res.docs[0].data().role;
 
               if (snap == "admin") {
+                setmoderator_loggedin(false);
                 setadmin_loggedin(true);
                 setpage_loader(false);
+              } else if (snap == "moderator") {
+                setmoderator_loggedin(true);
+                setadmin_loggedin(false);
               } else {
                 setadmin_loggedin(false);
               }
@@ -354,6 +359,15 @@ const Header = () => {
               >
                 {" "}
                 Dashboard
+              </Link>
+            )}
+            {moderator_loggedin && (
+              <Link
+                href={"/admin/chats"}
+                className="  py-[0.7vw] border-white border neuem px-[0.9vw] rounded-[0.8vw]  hover:bg-[#CCFF00] hover:bg-opacity-[30%] transition duration-[0.3s]  "
+              >
+                {" "}
+                Chats
               </Link>
             )}
             <button
