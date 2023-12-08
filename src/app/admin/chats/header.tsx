@@ -38,7 +38,7 @@ const Moderator_header = () => {
           <Image
             src={logout}
             alt="logout"
-            className="w-[2.2vw]   h-fit sm:w-[10vw]"
+            className="w-[2.2vw]   h-fit sm:w-[8vw]"
           />
         </button>
       </div>

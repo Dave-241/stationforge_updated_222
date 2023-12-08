@@ -35,6 +35,7 @@ import {
   where,
 } from "firebase/firestore";
 import Moderator_header from "./header";
+import New_chats from "./new_chats";
 
 export default function Home() {
   const [options, setoptions] = useState([
@@ -106,6 +107,7 @@ export default function Home() {
       {showdash ? (
         <>
           <Moderator_header />
+          <New_chats />
         </>
       ) : null}
     </>
