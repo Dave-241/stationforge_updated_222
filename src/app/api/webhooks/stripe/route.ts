@@ -21,6 +21,14 @@ import { useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export async function POST(request: Request) {
+  // Function to calculate the Unix timestamp for the 1st day of the next month
+  function getNextMonthTimestamp() {
+    const currentDate = new Date();
+    const nextMonth = new Date(currentDate);
+    nextMonth.setMonth(currentDate.getMonth() + 1, 1); // Set to 1st day of next month
+    return Math.floor(nextMonth.getTime() / 1000); // Convert to Unix timestamp (in seconds)
+  }
+
   const body = await request.text();
   const signature = headers().get("Stripe-Signature") ?? "";
   let event: Stripe.Event;
@@ -73,6 +81,20 @@ export async function POST(request: Request) {
         subscriptionId: subscriptionid,
         // no_of_subscriptions: 1,
       });
+
+      // Calculate the first day of the next month
+      const today = new Date();
+      const firstDayNextMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        1,
+      );
+
+      // // // Set the billing cycle anchor to the first day of the next month
+      const subscription = await stripe.subscriptions.update(subscriptionid, {
+        billing_cycle_anchor: Math.floor(firstDayNextMonth.getTime() / 1000),
+      } as any);
+      // console.log(subscription);
     } catch (error) {
       console.error("Error updating user document:", error);
       throw error;
@@ -250,6 +272,7 @@ export async function POST(request: Request) {
       const subscription: any = await stripe.subscriptions.retrieve(
         session.subscription as string,
       );
+      console.log(session.metadata.userId);
       if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
         update_user_doc(
           4,

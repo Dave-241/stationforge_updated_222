@@ -40,8 +40,11 @@ export const pay_standard_Subscriptions: any = async (
     metadata: {
       userId: userid,
     },
+    // subscription_data: {
+    //   billing_cycle_anchor: getNextMonthTimestamp(),
+    // },
     subscription_data: {
-      billing_cycle_anchor: getNextMonthTimestamp(),
+      billing_cycle_anchor: Math.floor(Date.now() / 1000), // Set billing_cycle_anchor to now for immediate billing
     },
   });
 
@@ -75,7 +78,7 @@ export const pay_merchant_Subscriptions: any = async (
       userId: userid,
     },
     subscription_data: {
-      billing_cycle_anchor: getNextMonthTimestamp(),
+      billing_cycle_anchor: Math.floor(Date.now() / 1000), // Set billing_cycle_anchor to now for immediate billing
     },
   });
 
@@ -141,3 +144,10 @@ export const renew_subscription: any = async (
   // console.log(stripeSession.url);
   return { url: stripeSession.url };
 };
+
+// export const update_subscription = async (subid:any) => {
+//   // Set the billing cycle anchor to the first day of the next month
+//   const subscription = await stripe.subscriptions.update(subid, {
+//     billing_cycle_anchor: getNextMonthTimestamp,
+//   });
+// }
