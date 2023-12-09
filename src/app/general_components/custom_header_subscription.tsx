@@ -29,6 +29,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import Chats_modal from "./chat";
 
 initializeApp(firebaseConfig);
 
@@ -49,6 +50,7 @@ const Custom_subscription_Header = () => {
     setpage_loader,
     setforge_loader,
     hide_download,
+    show_chat_modal,
   }: any = useProfile_Context();
   const pathname = usePathname();
   const route = useRouter();
@@ -146,102 +148,106 @@ const Custom_subscription_Header = () => {
   }, []);
 
   return (
-    <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute  top-[2.5vw] sm:top-0 flex justify-center left-0 px-[2vw] backdrop-blur-[3px]  ">
-      {mobile_bg_changer && (
-        <Mobile_header
-          setmobile_bg_changer={setmobile_bg_changer}
-          comedown={comedown}
-          setcomedown={setcomedown}
-          links={links}
-          loggedin={loggedin}
-        />
-      )}
-      <nav
-        className="w-full px-[1vw]  h-full  bg-transparent z-[99]  rounded-[1.06vw] flex justify-between  items-center  "
-        style={{
-          backgroundColor: mobile_bg_changer ? "#181818" : "",
-          transition: "0.6s ease",
-          opacity: mobile_bg_changer ? 1 : "",
-        }}
-      >
-        {/* mobile design */}
-        {/* mobile design */}
-        {/* mobile design */}
-        {/* mobile design */}
-        {/* mobile design */}
-        <div className="sm:block sm:w-fit  hidden">
-          <button
-            className="= w-[10vw] h-auto flex"
-            onClick={() => {
-              // if (pathname == "/") {
-              //   setpage_loader(false);
-              // } else {
-              //   setpage_loader(true);
-              // }
-              if (mobile_bg_changer) {
-                setcomedown(false);
-                setTimeout(() => {
-                  setmobile_bg_changer(false);
-                }, 800);
-              } else {
-                setmobile_bg_changer(!mobile_bg_changer);
-              }
-            }}
-          >
-            <Image
-              src={mobile_bg_changer ? mob_ham_exit : mob_ham}
-              alt="StationForge Logo"
-              className="w-full h-fit"
-            />
-          </button>
-        </div>
+    <>
+      {show_chat_modal && <Chats_modal />}
 
-        <div className="sm:block sm:w-fit  hidden">
-          <Link
-            href="/"
-            aria-label="StationForge Home"
-            className="= w-[30vw] h-auto flex"
-            onClick={() => {
-              if (pathname == "/") {
-                setpage_loader(false);
-              } else {
-                setpage_loader(true);
-              }
-            }}
-          >
-            <Image
-              src={logo}
-              alt="StationForge Logo"
-              className="w-full h-fit"
-            />
-          </Link>
-        </div>
-
-        <div
-          className="sm:block sm:w-fit  hidden"
-          onClick={() => {
-            setforge_loader(true);
+      <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute  top-[2.5vw] sm:top-0 flex justify-center left-0 px-[2vw] backdrop-blur-[3px]  ">
+        {mobile_bg_changer && (
+          <Mobile_header
+            setmobile_bg_changer={setmobile_bg_changer}
+            comedown={comedown}
+            setcomedown={setcomedown}
+            links={links}
+            loggedin={loggedin}
+          />
+        )}
+        <nav
+          className="w-full px-[1vw]  h-full  bg-transparent z-[99]  rounded-[1.06vw] flex justify-between  items-center  "
+          style={{
+            backgroundColor: mobile_bg_changer ? "#181818" : "",
+            transition: "0.6s ease",
+            opacity: mobile_bg_changer ? 1 : "",
           }}
         >
-          <button
-            className="= w-[10vw] h-auto flex"
-            // onClick={() => {
-            //   if (pathname == "/") {
-            //     setpage_loader(false);
-            //   } else {
-            //     setpage_loader(true);
-            //   }
-            // }}
+          {/* mobile design */}
+          {/* mobile design */}
+          {/* mobile design */}
+          {/* mobile design */}
+          {/* mobile design */}
+          <div className="sm:block sm:w-fit  hidden">
+            <button
+              className="= w-[10vw] h-auto flex"
+              onClick={() => {
+                // if (pathname == "/") {
+                //   setpage_loader(false);
+                // } else {
+                //   setpage_loader(true);
+                // }
+                if (mobile_bg_changer) {
+                  setcomedown(false);
+                  setTimeout(() => {
+                    setmobile_bg_changer(false);
+                  }, 800);
+                } else {
+                  setmobile_bg_changer(!mobile_bg_changer);
+                }
+              }}
+            >
+              <Image
+                src={mobile_bg_changer ? mob_ham_exit : mob_ham}
+                alt="StationForge Logo"
+                className="w-full h-fit"
+              />
+            </button>
+          </div>
+
+          <div className="sm:block sm:w-fit  hidden">
+            <Link
+              href="/"
+              aria-label="StationForge Home"
+              className="= w-[30vw] h-auto flex"
+              onClick={() => {
+                if (pathname == "/") {
+                  setpage_loader(false);
+                } else {
+                  setpage_loader(true);
+                }
+              }}
+            >
+              <Image
+                src={logo}
+                alt="StationForge Logo"
+                className="w-full h-fit"
+              />
+            </Link>
+          </div>
+
+          <div
+            className="sm:block sm:w-fit  hidden"
+            onClick={() => {
+              setforge_loader(true);
+            }}
           >
-            <Image
-              src={mob_cart}
-              alt="StationForge Logo"
-              className="w-full h-fit"
-            />
-          </button>
-        </div>
-      </nav>
-    </header>
+            <button
+              className="= w-[10vw] h-auto flex"
+              // onClick={() => {
+              //   if (pathname == "/") {
+              //     setpage_loader(false);
+              //   } else {
+              //     setpage_loader(true);
+              //   }
+              // }}
+            >
+              <Image
+                src={mob_cart}
+                alt="StationForge Logo"
+                className="w-full h-fit"
+              />
+            </button>
+          </div>
+        </nav>
+      </header>
+    </>
   );
 };
 

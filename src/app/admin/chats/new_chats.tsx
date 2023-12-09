@@ -4,23 +4,38 @@ import { useEffect, useState } from "react";
 import Each_chat from "./each_chat";
 import {
   collection,
+  doc,
   getDocs,
   getFirestore,
   onSnapshot,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import Moderator_each_chat_preloader from "./preloader";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const New_chats = () => {
+const New_chats = ({
+  session_id,
+  setsession_id,
+  moderator_id,
+  setstage,
+  setuser_data_username,
+  setuser_data_avater,
+}: any) => {
   const items = ["", "", "", "", "", ""];
   const app = initializeApp(firebaseConfig);
   const [session_data, setsession_data] = useState<any>([]);
   const [session_data_is_loading, setsession_data_is_loading] = useState(true);
 
+  //   the state below is to store the username and avater
+  const [username, setusername] = useState("");
+  const [avater, setavater] = useState("");
+
   const db = getFirestore(app); // Initialize your Firestore instance
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,6 +59,8 @@ const New_chats = () => {
             );
             const user_data = await getDocs(user_query);
             const user = user_data.docs[0].data();
+            setusername(user.Username);
+            setavater(user.avatar_url);
 
             // Return an object with combined data
             return {
@@ -54,10 +71,13 @@ const New_chats = () => {
           });
 
           // Wait for all promises to resolve
-          const chatSessionsData = await Promise.all(chatSessionsDataPromises);
+          const chatSessionsData: any = await Promise.all(
+            chatSessionsDataPromises,
+          );
 
           // Log the array containing all the data
           console.log(chatSessionsData);
+          //   setsession_id(chatSessionsData?.id);
           setsession_data(chatSessionsData);
           setsession_data_is_loading(false);
         });
@@ -76,6 +96,26 @@ const New_chats = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Make sure to include an empty dependency array to run this effect only once
 
+  const update_chat_session = (doc_id: any) => {
+    if (doc_id) {
+      const user_query = doc(collection(db, "chat_sessions"), doc_id);
+
+      updateDoc(user_query, {
+        Joinedmoderatorid: moderator_id,
+      })
+        .then(() => {
+          setsession_id(doc_id);
+          setuser_data_avater(avater);
+          setuser_data_username(username);
+          setstage(1);
+        })
+        .catch((error) => {
+          setstage(0);
+          console.log("Error updating document" + error);
+        });
+    }
+  };
+
   return (
     <>
       {" "}
@@ -86,7 +126,18 @@ const New_chats = () => {
                 return <Moderator_each_chat_preloader key={index} />;
               })
             : session_data.map((e: any, index: any) => {
-                return <Each_chat key={index} data={e} />;
+                return (
+                  <Each_chat
+                    key={index}
+                    data={e}
+                    update_chat_session={update_chat_session}
+                    moderator_id={moderator_id}
+                    setstage={setstage}
+                    setsession_id={setsession_id}
+                    setuser_data_username={setuser_data_username}
+                    setuser_data_avater={setuser_data_avater}
+                  />
+                );
               })}
         </div>
       </div>

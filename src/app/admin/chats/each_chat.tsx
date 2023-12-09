@@ -3,7 +3,15 @@
 import { fromUnixTime, format } from "date-fns";
 import Image from "next/image";
 
-const Each_chat = ({ setstage, data }: any) => {
+const Each_chat = ({
+  setstage,
+  data,
+  update_chat_session,
+  moderator_id,
+  setsession_id,
+  setuser_data_username,
+  setuser_data_avater,
+}: any) => {
   const truncateText = (text: any, numWords: any) => {
     const words = text?.split(" ");
     const truncatedWords = words?.slice(0, numWords);
@@ -19,9 +27,9 @@ const Each_chat = ({ setstage, data }: any) => {
     <>
       <div
         className="w-full  duration-[0.6s] flex justify-between sm:rounded-[4vw]  sm:px-[3vw] sm:h-[23vw]  items-center  bg-[#0D0C0C] px-[1.2vw] h-[6.5vw] rounded-[1.5vw]"
-        onClick={() => {
-          setstage(2);
-        }}
+        // onClick={() => {
+        //   setstage(2);
+        // }}
       >
         {/* the avatar , username , and chats moderated */}
         <div className="w-auto flex justify-start items-center gap-[1.2vw] h-[4vw] sm:h-[12vw] sm:gap-[4vw]  ">
@@ -56,9 +64,37 @@ const Each_chat = ({ setstage, data }: any) => {
           </div>
         </div>
 
-        <button className="bg-[#CCFF00] flex justify-center items-center   sm:w-[25vw] sm:h-[8vw] sm:rounded-[3vw] sm:text-[3vw] hover:bg-opacity-[50%] text-[1vw] w-[8vw] h-[2.6vw] rounded-[0.6vw] ">
-          Join session
-        </button>
+        {data.Joinedmoderatorid ? (
+          data.Joinedmoderatorid == moderator_id ? (
+            <button
+              className="bg-[#CCFF00] flex justify-center items-center   sm:w-[25vw] sm:h-[8vw] sm:rounded-[3vw] sm:text-[3vw] hover:bg-opacity-[50%] text-[1vw] w-[8vw] h-[2.6vw] rounded-[0.6vw] "
+              onClick={() => {
+                setsession_id(data.id);
+                setuser_data_username(data.user.Username);
+                setuser_data_avater(data.user.avatar_url);
+                setstage(1);
+              }}
+            >
+              Inchat
+            </button>
+          ) : (
+            <button
+              className="bg-[black] text-white text-opacity-[70%] flex justify-center items-center   sm:w-[25vw] sm:h-[8vw] sm:rounded-[3vw] sm:text-[3vw] hover:bg-opacity-[50%] text-[0.9vw] w-[8vw] h-[2.6vw] rounded-[0.6vw] "
+              disabled
+            >
+              Reserved
+            </button>
+          )
+        ) : (
+          <button
+            className="bg-[#CCFF00] flex justify-center items-center   sm:w-[25vw] sm:h-[8vw] sm:rounded-[3vw] sm:text-[3vw] hover:bg-opacity-[50%] text-[1vw] w-[8vw] h-[2.6vw] rounded-[0.6vw] "
+            onClick={() => {
+              update_chat_session(data.id);
+            }}
+          >
+            join session
+          </button>
+        )}
       </div>
     </>
   );

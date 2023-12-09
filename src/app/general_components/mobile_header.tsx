@@ -79,6 +79,8 @@ const Mobile_header = ({
             console.log("error while getting user");
           });
       } else {
+        setmoderator_loggedin(false);
+
         setadmin_loggedin(false);
         // User is not authenticated, you can keep them on the current page or redirect them to a login page
       }

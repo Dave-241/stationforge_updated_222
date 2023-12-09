@@ -36,6 +36,7 @@ import {
 } from "firebase/firestore";
 import Moderator_header from "./header";
 import New_chats from "./new_chats";
+import Moderator_Chats_modal from "./chat_modal";
 
 export default function Home() {
   const [options, setoptions] = useState([
@@ -46,10 +47,16 @@ export default function Home() {
   ]);
   const { page_loader, setpage_loader, setfrom }: any = useProfile_Context();
   const [showdash, setshowdash] = useState(false);
+  const [user_data_username, setuser_data_username] = useState(false);
+  const [user_data_avater, setuser_data_avater] = useState(false);
+  const [stage, setstage] = useState(0);
 
   initializeApp(firebaseConfig);
   const auth: any = getAuth();
   const route = useRouter();
+  const [session_id, setsession_id] = useState("");
+  const [moderator_id, setmoderator_id] = useState("");
+
   // firebase init
   // Initialize the data base connection
   // Initialize Firebase
@@ -66,6 +73,8 @@ export default function Home() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is authenticated, redirect to a protected route
+        setmoderator_id(user.uid);
+
         const user_ref = collection(db, "users");
         const user_query = query(user_ref, where("userid", "==", user.uid));
 
@@ -90,6 +99,8 @@ export default function Home() {
             console.log("error while getting user");
           });
       } else {
+        setmoderator_id("");
+
         setpage_loader(false);
         setpage_loader(true);
         route.push("/"); // User is not authenticated, you can keep them on the current page or redirect them to a login page
@@ -107,7 +118,23 @@ export default function Home() {
       {showdash ? (
         <>
           <Moderator_header />
-          <New_chats />
+          <New_chats
+            session_id={session_id}
+            setsession_id={setsession_id}
+            moderator_id={moderator_id}
+            setstage={setstage}
+            setuser_data_username={setuser_data_username}
+            setuser_data_avater={setuser_data_avater}
+          />
+
+          {stage > 0 && (
+            <Moderator_Chats_modal
+              setstage={setstage}
+              session_id={session_id}
+              user_data_avater={user_data_avater}
+              user_data_username={user_data_username}
+            />
+          )}
         </>
       ) : null}
     </>

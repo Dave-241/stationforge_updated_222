@@ -116,6 +116,8 @@ const Header = () => {
       } else {
         setadmin_loggedin(false);
         setloggedin(false);
+        setmoderator_loggedin(false);
+
         // User is not authenticated, you can keep them on the current page or redirect them to a login page
       }
     });
