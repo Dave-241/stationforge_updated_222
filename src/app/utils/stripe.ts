@@ -40,12 +40,6 @@ export const pay_standard_Subscriptions: any = async (
     metadata: {
       userId: userid,
     },
-    // subscription_data: {
-    //   billing_cycle_anchor: getNextMonthTimestamp(),
-    // },
-    subscription_data: {
-      billing_cycle_anchor: Math.floor(Date.now() / 1000), // Set billing_cycle_anchor to now for immediate billing
-    },
   });
 
   // console.log(stripeSession.url);
@@ -76,9 +70,6 @@ export const pay_merchant_Subscriptions: any = async (
     ],
     metadata: {
       userId: userid,
-    },
-    subscription_data: {
-      billing_cycle_anchor: Math.floor(Date.now() / 1000), // Set billing_cycle_anchor to now for immediate billing
     },
   });
 
