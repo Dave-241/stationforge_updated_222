@@ -71,6 +71,7 @@ const Each_chat = ({
               onClick={() => {
                 setsession_id(data.id);
                 setuser_data_username(data.user.Username);
+                console.log(data.user.avatar_url);
                 setuser_data_avater(data.user.avatar_url);
                 setstage(1);
               }}

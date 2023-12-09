@@ -47,8 +47,8 @@ export default function Home() {
   ]);
   const { page_loader, setpage_loader, setfrom }: any = useProfile_Context();
   const [showdash, setshowdash] = useState(false);
-  const [user_data_username, setuser_data_username] = useState(false);
-  const [user_data_avater, setuser_data_avater] = useState(false);
+  const [user_data_username, setuser_data_username] = useState("");
+  const [user_data_avater, setuser_data_avater] = useState("");
   const [stage, setstage] = useState(0);
 
   initializeApp(firebaseConfig);
@@ -111,6 +111,10 @@ export default function Home() {
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    console.log(user_data_avater);
+  }, [user_data_avater]);
 
   return (
     <>

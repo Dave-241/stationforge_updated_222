@@ -46,7 +46,7 @@ const Moderator_Chats_modal = ({
   const [create_new_sess, setcreate_new_sess] = useState(true);
   const [show_end_and_start_btn, setshow_end_and_start_btn] = useState(false);
 
-  const [time_date, settime_date] = useState("Date");
+  const [time_date, settime_date] = useState(0);
   const [chat_session_id, setchat_session_id] = useState("");
   const [moderator_name, setmoderator_name] = useState("");
   const [moderator_avater, setmoderator_avater] = useState("");
@@ -96,67 +96,6 @@ const Moderator_Chats_modal = ({
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  //   useEffect(() => {
-  //     if (!currentUserUid) {
-  //       // No user is authenticated, you might want to handle this case
-  //       return;
-  //     }
-
-  //     const chatSessionsRef = collection(db, "chat_sessions");
-  //     const chatSessionsQuery = query(
-  //       chatSessionsRef,
-  //       where("JoinedUserid", "==", currentUserUid),
-  //       where("Endedsession", "==", false),
-  //     );
-
-  //     const unsubscribe = onSnapshot(chatSessionsQuery, (snapshot) => {
-  //       if (snapshot.empty) {
-  //         // Handle case when there are no documents
-
-  //         return;
-  //       }
-
-  //       snapshot.forEach(async (doc) => {
-  //         // Handle each document
-  //         const chatSessionData = doc.data();
-  //         setchat_session_id(doc.id);
-  //         setshow_end_and_start_btn(true);
-  //         // Convert Firebase Timestamp to JavaScript Date
-
-  //         // Assuming your timestamp field is named 'SessioncreatedAt'
-  //         const timestampValue = doc.data().SessioncreatedAt;
-  //         if (timestampValue) {
-  //           // Convert Firebase Timestamp to JavaScript Date
-  //           const date = fromUnixTime(timestampValue?.seconds);
-
-  //           // Format the date using date-fns
-  //           const formattedDate = format(date, "d MMMM, yyyy "); // Customize the format as needed
-
-  //           settime_date(formattedDate);
-  //         }
-
-  //         scrollToBottom();
-  //         const _moderator_id = snapshot.docs[0].data().Joinedmoderatorid;
-  //         if (_moderator_id) {
-  //           // Fetch user data using the user_id
-  //           const user_query = query(
-  //             collection(db, "users"),
-  //             where("userid", "==", _moderator_id),
-  //           );
-  //           const user_data = await getDocs(user_query);
-  //           const user = user_data.docs[0].data();
-  //           setmoderator_avater(user.avatar_url);
-  //           setmoderator_name(user.Username);
-  //         }
-  //       });
-  //     });
-
-  //     return () => {
-  //       // Unsubscribe when the component unmounts
-  //       unsubscribe();
-  //     };
-  //   }, [currentUserUid]); // Dependency on currentUserUid, so it re-subscribes when the user logs in or out
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
@@ -220,6 +159,7 @@ const Moderator_Chats_modal = ({
             chatTextData: chatTextData,
           });
         });
+        settime_date(snapshot.docs[0].data().createdAt.seconds);
         setchat_data_arr(chatTextDataArray);
         console.log(chatTextDataArray);
       });
@@ -260,8 +200,8 @@ const Moderator_Chats_modal = ({
       </Head>
 
       <div
-        className={`w-[33vw] sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]  h-[43vw] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
-          hide ? "right-[-50vw] sm:right-[-110vw]" : "right-0 sm:right-0"
+        className={`w-[40vw] sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-[1vw]  h-[89%] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[0]   translate-y-[10%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+          hide ? "right-[-50vw] sm:right-[-110vw]" : "right-[10vw] sm:right-0"
         } border transition duration-[1.5s]`}
         ref={ref_modal}
         style={{ transition: "1.5s ease" }}
@@ -284,14 +224,14 @@ const Moderator_Chats_modal = ({
               style={{ backgroundImage: "url(/chats/station_forge.webp)" }}
             >
               {" "}
-              {moderator_avater && (
+              {user_data_avater && (
                 <Image
                   unoptimized
                   width="0"
                   height="0"
                   src={user_data_avater}
                   alt={user_data_username}
-                  className="w-full h-full"
+                  className="w-full h-full border2"
                 />
               )}
             </div>
@@ -364,7 +304,7 @@ const Moderator_Chats_modal = ({
         >
           <div className="w-full flex justify-center h-[2vw] sm:h-[9vw]  neuer">
             <p className="text-white text-[0.9vw] h-full px-[1vw] py-[0.4vw] border-white border-[0.1vw] flex items-center rounded-[2vw] border-opacity-[50%] sm:text-[4vw]  sm:px-[5vw] sm:rounded-[4vw] ">
-              {time_date}
+              {format(fromUnixTime(time_date), "d MMMM yyyy h:mm a")}
             </p>
           </div>
           {chat_data_arr.map((e: any, index: any) => {
