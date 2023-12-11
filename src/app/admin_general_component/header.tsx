@@ -123,7 +123,7 @@ const Header = ({ position, padding, top, blur }: any) => {
                 <Image
                   src={mobile_bg_changer ? mob_ham_exit : mob_ham}
                   alt="StationForge Logo"
-                  className="w-full h-fit"
+                  className="w-full h-fit "
                   style={{ transition: "2s ease" }}
                 />
               </button>
@@ -158,13 +158,17 @@ const Header = ({ position, padding, top, blur }: any) => {
                 {" "}
                 <i className="bi bi-bell"></i>
               </button>
-              <button
+              <Link
+                href={"/admin/moderator-all"}
+                onClick={() => {
+                  setpage_loader(true);
+                }}
                 className="w-[10vw] bg-white bg-opacity-[8%] h-[10vw]   border-opacity-[30%] flex justify-center items-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    text-white text-[4vw] rounded-[100%]"
                 // onClick={handlecustomclaim}
               >
                 {" "}
                 <i className="bi bi-chat-dots"></i>
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -249,9 +253,15 @@ const Header = ({ position, padding, top, blur }: any) => {
                 {" "}
                 <i className="bi bi-bell"></i>
               </button>
-              <button className="w-[2.5vw] h-[2.5vw] border-[0.1vw] border-white border-opacity-[30%] flex justify-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    items-center  text-white text-[1.2vw] rounded-[100%]">
+              <Link
+                href={"/admin/moderator-all"}
+                onClick={() => {
+                  setpage_loader(true);
+                }}
+                className="w-[2.5vw] h-[2.5vw] border-[0.1vw] border-white border-opacity-[30%] flex justify-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    items-center  text-white text-[1.2vw] rounded-[100%]"
+              >
                 <i className="bi bi-chat-dots"></i>
-              </button>
+              </Link>
               <div
                 className="w-[3vw] h-[3vw]  rounded-[100%] avater_bg "
                 style={{
