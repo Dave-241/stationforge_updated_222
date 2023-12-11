@@ -39,7 +39,10 @@ const Mobile_Allocations = ({
 
   return (
     <div
-      className="fixed top-0 left-0 justify-center items-end bg-black bg-opacity-[70%] z-[999] h-full w-full hidden sm:flex"
+      className={`fixed top-0 left-0 justify-center ${
+        !comeup ? "bg-opacity-[0%]" : "bg-opacity-[70%]"
+      } items-end bg-black  z-[999] h-full w-full hidden sm:flex`}
+      style={{ transition: "1.2s ease" }}
       onClick={() => {
         if (globalThis.innerWidth > 650) {
           setshow_mobile_filter_allocation(false);

@@ -38,7 +38,10 @@ const Mobile_factions = ({
         <meta name="robots" content="noindex" />
       </Head>
       <div
-        className={`w-full   h-full fixed top-0 left-0 z-[999999] bg-black bg-opacity-[70%] flex justify-center items-end`}
+        className={`w-full ${
+          goup ? "bg-opacity-[70%]" : "bg-opacity-[0%]"
+        }   h-full fixed top-0 left-0 z-[999999] bg-black  flex justify-center items-end`}
+        style={{ transition: "1s ease" }}
         onClick={hideForge}
       >
         <div
