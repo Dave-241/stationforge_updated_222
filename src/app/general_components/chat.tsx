@@ -291,6 +291,7 @@ const Chats_modal = () => {
           setchat_text("");
           setbtn_disabled(false);
           scrollToBottom();
+          update_chat_session();
         })
         .catch((err) => {
           console.log("error whie creating new text" + err);
@@ -299,6 +300,19 @@ const Chats_modal = () => {
     }
   };
 
+  const update_chat_session = () => {
+    if (chat_session_id) {
+      const user_query = doc(collection(db, "chat_sessions"), chat_session_id);
+
+      updateDoc(user_query, {
+        isReadByModerator: false,
+      })
+        .then(() => {})
+        .catch((error) => {
+          console.log("Error updating document" + error);
+        });
+    }
+  };
   useEffect(() => {
     if (chat_session_id) {
       const chatTextRef = collection(db, "chat_text");

@@ -102,6 +102,7 @@ const New_chats = ({
 
       updateDoc(user_query, {
         Joinedmoderatorid: moderator_id,
+        isReadByModerator: true,
       })
         .then(() => {
           setsession_id(doc_id);
@@ -115,6 +116,26 @@ const New_chats = ({
         });
     }
   };
+
+  //   const handleChatClick = async (id: any) => {
+  //     // Update the isReadByModerator field for all associated messages
+  //     const chatQuery = query(
+  //       collection(db, "chat_text"),
+  //       where("session_chat_id", "==", id),
+  //       //   where("isReadByModerator", "==", false),
+  //     );
+
+  //     const chatData = await getDocs(chatQuery);
+
+  //     chatData.docs.forEach((doc) => {
+  //       if (doc.exists()) {
+  //         const chatDocRef = doc(collection(db, "chat_text"), doc.id);
+  //         updateDoc(chatDocRef, { isReadByModerator: true });
+  //       }
+  //     });
+
+  //     // ... (existing code)
+  //   };
 
   return (
     <>
@@ -136,6 +157,7 @@ const New_chats = ({
                     setsession_id={setsession_id}
                     setuser_data_username={setuser_data_username}
                     setuser_data_avater={setuser_data_avater}
+                    // handleChatClick={handleChatClick}
                   />
                 );
               })}

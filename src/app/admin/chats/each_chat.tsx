@@ -67,16 +67,15 @@ const Each_chat = ({
         {data.Joinedmoderatorid ? (
           data.Joinedmoderatorid == moderator_id ? (
             <button
-              className="bg-[#CCFF00] flex justify-center items-center   sm:w-[25vw] sm:h-[8vw] sm:rounded-[3vw] sm:text-[3vw] hover:bg-opacity-[50%] text-[1vw] w-[8vw] h-[2.6vw] rounded-[0.6vw] "
+              className="bg-[#CCFF00] flex justify-center items-center   sm:w-[25vw] sm:h-[8vw] sm:rounded-[3vw] sm:text-[3vw] hover:bg-opacity-[50%] text-[1vw] w-[8vw] flex sm:gap-[1.2vw] gap-[0.7vw] h-[2.6vw] rounded-[0.6vw] "
               onClick={() => {
-                setsession_id(data.id);
-                setuser_data_username(data.user.Username);
-                console.log(data.user.avatar_url);
-                setuser_data_avater(data.user.avatar_url);
-                setstage(1);
+                update_chat_session(data.id);
               }}
             >
               Inchat
+              {!data.isReadByModerator && (
+                <div className="sm:w-[2.5vw] sm:h-[2.5vw] w-[1vw] h-[1vw] bg-[green] rounded-[100%] "></div>
+              )}
             </button>
           ) : (
             <button
