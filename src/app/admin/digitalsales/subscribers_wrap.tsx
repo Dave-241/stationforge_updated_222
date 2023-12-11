@@ -61,7 +61,7 @@ const Subscribers_wrap = () => {
         const usersCollectionRef = collection(db, "users");
         const user_query = query(
           usersCollectionRef,
-          where("role", "==", "moderator"),
+          where("role", "in", ["moderator", "user"]),
           orderBy("createdAt", "desc"),
         );
         const usersSnapshot = await getDocs(user_query);
@@ -101,6 +101,7 @@ const Subscribers_wrap = () => {
                 formattedDate,
                 libraryData,
                 step,
+                data,
               };
             },
           );
@@ -142,6 +143,8 @@ const Subscribers_wrap = () => {
         "Standard ": step3Users.length,
         "Premium ": step4Users.length,
       };
+
+      console.log(allusers);
 
       setsubscriber_stats(resultObject);
       setsubscriber_stats_is_loading(false);

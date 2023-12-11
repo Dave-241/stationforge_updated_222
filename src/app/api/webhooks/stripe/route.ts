@@ -81,20 +81,6 @@ export async function POST(request: Request) {
         subscriptionId: subscriptionid,
         // no_of_subscriptions: 1,
       });
-
-      // Calculate the first day of the next month
-      const today = new Date();
-      const firstDayNextMonth = new Date(
-        today.getFullYear(),
-        today.getMonth() + 1,
-        1,
-      );
-
-      // // // Set the billing cycle anchor to the first day of the next month
-      const subscription = await stripe.subscriptions.update(subscriptionid, {
-        billing_cycle_anchor: Math.floor(firstDayNextMonth.getTime() / 1000),
-      } as any);
-      // console.log(subscription);
     } catch (error) {
       console.error("Error updating user document:", error);
       throw error;
@@ -272,7 +258,7 @@ export async function POST(request: Request) {
       const subscription: any = await stripe.subscriptions.retrieve(
         session.subscription as string,
       );
-      console.log(session.metadata.userId);
+      console.log(subscription);
       if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
         update_user_doc(
           4,
@@ -292,6 +278,28 @@ export async function POST(request: Request) {
           false,
         );
       }
+
+      // Your logic here
+      const today = new Date();
+      const firstDayNextMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        1,
+      );
+
+      const subscription_created_now = await stripe.subscriptions.update(
+        subscription.id, // Use subscription ID, not customer ID
+        {
+          billing_cycle_anchor: "now" as any,
+        },
+      );
+      const subscription_created = await stripe.subscriptions.update(
+        subscription.id, // Use subscription ID, not customer ID
+        {
+          billing_cycle_anchor: 63134000950 as any,
+        },
+      );
+
       //   console.log("Checkout was completed just now ");
       // Then define and call a function to handle the event checkout.session.completed
       break;
@@ -308,6 +316,29 @@ export async function POST(request: Request) {
       );
 
       // Then define and call a function to handle the event customer.subscription.deleted
+      break;
+    case "customer.subscription.created":
+      const created_customer: any = event.data.object as Stripe.Subscription;
+      // Calculate the first day of the next month
+      console.log(created_customer.subscription);
+
+      // // Your logic here
+      // const today = new Date();
+      // const firstDayNextMonth = new Date(
+      //   today.getFullYear(),
+      //   today.getMonth() + 1,
+      //   1,
+      // );
+
+      // const subscription_created = await stripe.subscriptions.update(
+      //   created_customer.subscription, // Use subscription ID, not customer ID
+      //   {
+      //     billing_cycle_anchor: Math.floor(
+      //       firstDayNextMonth.getTime() / 1000,
+      //     ) as any,
+      //   },
+      // );
+
       break;
     case "customer.subscription.updated":
       const customerSubscriptionUpdated: any = event.data
