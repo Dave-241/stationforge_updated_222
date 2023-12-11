@@ -75,6 +75,7 @@ const Subscribers_wrap = () => {
           const username = data.Username;
           const name = data.name;
           const step = data.step;
+          const subscribedAt = data.subscribedAt;
           const createdAt = data.createdAt;
           const timestampFromFirebase = new Date(createdAt.toMillis()); // Convert to JavaScript Date object
 
@@ -101,7 +102,7 @@ const Subscribers_wrap = () => {
                 formattedDate,
                 libraryData,
                 step,
-                data,
+                subscribedAt,
               };
             },
           );
@@ -113,7 +114,6 @@ const Subscribers_wrap = () => {
         const results = await Promise.all(userPromises);
 
         // Step 4: Log the results
-        // console.log("Results:", results);
         setallusers(results);
         setallusers_copy(results);
         setallusers_loading(false);
@@ -143,8 +143,6 @@ const Subscribers_wrap = () => {
         "Standard ": step3Users.length,
         "Premium ": step4Users.length,
       };
-
-      console.log(allusers);
 
       setsubscriber_stats(resultObject);
       setsubscriber_stats_is_loading(false);
