@@ -161,7 +161,7 @@ const Moderator_Chats_modal = ({
         });
         settime_date(snapshot.docs[0].data().createdAt.seconds);
         setchat_data_arr(chatTextDataArray);
-        console.log(chatTextDataArray);
+        // console.log(chatTextDataArray);
       });
       return () => {
         // Unsubscribe when the component unmounts
