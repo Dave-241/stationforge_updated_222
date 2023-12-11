@@ -76,7 +76,7 @@ const New_chats = ({
           );
 
           // Log the array containing all the data
-          console.log(chatSessionsData);
+          //   console.log(chatSessionsData);
           //   setsession_id(chatSessionsData?.id);
           setsession_data(chatSessionsData);
           setsession_data_is_loading(false);
