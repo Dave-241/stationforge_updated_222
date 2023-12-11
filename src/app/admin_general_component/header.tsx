@@ -54,30 +54,6 @@ const Header = ({ position, padding, top, blur }: any) => {
   const auth: any = getAuth();
   const pathname = usePathname();
 
-  // // Use useEffect to check if the user is already authenticated
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       // User is authenticated, redirect to a protected route
-  //       // router.push("/"); // Replace with your protected route
-  //       console.log(user);
-  //       user.getIdTokenResult().then((idTokenResult) => {
-  //         const isAdmin = idTokenResult.claims.admin === true;
-  //         if (isAdmin) {
-  //           console.log("The user is an admin." + idTokenResult.claims.admin);
-  //         } else {
-  //           console.log("The user is not an admin.");
-  //         }
-  //       });
-  //     } else {
-  //       console.log("not logged in"); // User is not authenticated, you can keep them on the current page or redirect them to a login page
-  //     }
-  //   });
-
-  //   // Clean up the listener when the component unmounts
-  //   return () => unsubscribe();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
   const handlecustomclaim = async () => {};
   // this dashboard is for other pages but because of design we would have props passed into it to take either a fixed or absolute position
   return (
