@@ -379,7 +379,7 @@ const Chats_modal = () => {
       </Head>
 
       <div
-        className={`w-[33vw] sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]  h-[43vw] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+        className={`w-[33vw] sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]   h-[96vh] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
           hide ? "right-[-50vw] sm:right-[-110vw]" : "right-0 sm:right-0"
         } border transition duration-[1.5s]`}
         ref={ref_modal}
@@ -466,13 +466,15 @@ const Chats_modal = () => {
               value={chat_text || ""}
             />
 
-            <button
-              type="submit"
-              disabled={btn_disabled}
-              className="absolute hover:bg-opacity-[80%] bg-[#CCFF00] px-[1vw] text-[0.9vw] py-[0.4vw] rounded-[2vw] right-[1vw] sm:text-[3.5vw] sm:px-[4vw] sm:py-[2vw] sm:rounded-[6vw] sm:right-[2vw] top-[50%] translate-y-[-50%]"
-            >
-              Send
-            </button>
+            <div className="absolute h-full right-[1vw] sm:right-[2vw] top-[50%] translate-y-[-50%]">
+              <button
+                type="submit"
+                disabled={btn_disabled}
+                className="  hover:bg-opacity-[80%] bg-[#CCFF00] px-[1vw] text-[0.9vw] py-[0.4vw] rounded-[2vw]  sm:text-[3.5vw] sm:px-[4vw] sm:py-[2vw] sm:rounded-[6vw] "
+              >
+                Send
+              </button>
+            </div>
           </form>
         </div>
         {/* the date teh chat started  */}
