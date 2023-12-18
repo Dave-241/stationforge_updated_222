@@ -43,6 +43,7 @@ const Mobile_header = ({
     hide_download,
     setshow_setting_modal,
     setshow_chat_modal,
+    new_message,
   }: any = useProfile_Context();
 
   const app = initializeApp(firebaseConfig);
@@ -268,7 +269,7 @@ const Mobile_header = ({
                 >
                   {/* this is the option that sticks  */}
                   <div
-                    className="w-full h-[14vw]  neuer text-[4vw] gap-[3vw] flex justify-center items-center"
+                    className="w-full h-[14vw]  relative neuer text-[4vw] gap-[3vw] flex justify-center items-center"
                     onClick={() => {
                       setprofile_comeup(!profile_comeup);
                     }}
@@ -279,6 +280,10 @@ const Mobile_header = ({
                         !profile_comeup ? "bi-chevron-down " : "bi-chevron-up"
                       }  `}
                     ></i>
+
+                    {new_message && (
+                      <div className="w-[4vw] h-[4vw] absolute rounded-[100%] bg-[red] top-[50%] translate-y-[-50%] right-0"></div>
+                    )}
                   </div>
                   <div
                     className={`w-full  ${
@@ -288,7 +293,7 @@ const Mobile_header = ({
                   >
                     {/* this is for the row elements */}
                     <div
-                      className="w-full py-[0vw] pt-[3vw]  justify-start items-center flex gap-[4vw]"
+                      className="w-full py-[0vw] pt-[3vw]   justify-start items-center  flex gap-[4vw]"
                       onClick={() => {
                         setshow_setting_modal(true);
                       }}
@@ -304,7 +309,7 @@ const Mobile_header = ({
                     <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
                     {/* this is for the row elements */}
                     <div
-                      className="w-full py-[0vw]  justify-start items-center flex gap-[4vw]"
+                      className="w-full py-[0vw]  relative  justify-start items-center flex gap-[4vw]"
                       onClick={() => {
                         setshow_chat_modal(true);
                       }}
@@ -315,6 +320,9 @@ const Mobile_header = ({
                         className="h-fit w-[5vw]"
                       />
                       <p className="neuem text-[4vw] ">Talk to us</p>
+                      {new_message && (
+                        <div className="w-[4vw] h-[4vw] absolute rounded-[100%] bg-[red] top-[50%] translate-y-[-50%] right-0"></div>
+                      )}
                     </div>
                     <div className="w-full bg-opacity-[27%] py-[0.2vw] bg-[#1E1B1B]"></div>
 

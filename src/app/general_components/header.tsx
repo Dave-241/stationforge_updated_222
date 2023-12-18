@@ -26,6 +26,7 @@ import {
   collection,
   getDocs,
   getFirestore,
+  onSnapshot,
   query,
   where,
 } from "firebase/firestore";
@@ -52,6 +53,9 @@ const Header = () => {
     hide_download,
     show_chat_modal,
     setshow_chat_modal,
+    new_message,
+    update_message_notification,
+    setnew_message,
   }: any = useProfile_Context();
   const pathname = usePathname();
   const route = useRouter();
@@ -153,6 +157,49 @@ const Header = () => {
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // update the chat notifications
+
+  useEffect(() => {
+    if (!auth?.currentUser?.uid) {
+      // No user is authenticated, you might want to handle this case
+      return;
+    }
+
+    const chatSessionsRef = collection(db, "chat_sessions");
+    const chatSessionsQuery = query(
+      chatSessionsRef,
+      where("JoinedUserid", "==", auth?.currentUser?.uid),
+      where("Endedsession", "==", false),
+    );
+
+    const unsubscribe = onSnapshot(chatSessionsQuery, (snapshot) => {
+      if (snapshot.empty) {
+        // Handle case when there are no documents
+
+        return;
+      }
+
+      snapshot.forEach(async (doc) => {
+        // Handle each document
+        const chatSessionData = doc.data();
+
+        // Convert Firebase Timestamp to JavaScript Date
+
+        // Assuming your timestamp field is named 'SessioncreatedAt'
+        chatSessionData.isNotReadByUser
+          ? update_message_notification()
+          : setnew_message(false);
+
+        console.log(chatSessionData);
+      });
+    });
+
+    return () => {
+      // Unsubscribe when the component unmounts
+      unsubscribe();
+    };
+  }, [auth?.currentUser?.uid]); // Dependency on currentUserUid, so it re-subscribes when the user logs in or out
 
   return (
     <>
@@ -397,10 +444,13 @@ const Header = () => {
               </Link>
             ) : (
               <button
-                className=" py-[0.7vw]  px-[0.9vw]  border-transparent border rounded-[0.8vw] text-black bg-white hover:bg-[#CCFF00] hover:text-white hover:bg-opacity-[30%] transition duration-[0.3s] profile_btn font-[600]"
+                className=" py-[0.7vw]  px-[0.9vw] relative  border-transparent border rounded-[0.8vw] text-black bg-white hover:bg-[#CCFF00] hover:text-white hover:bg-opacity-[30%] transition duration-[0.3s] profile_btn font-[600]"
                 onClick={toggleDropdown}
               >
                 Profile
+                {new_message && (
+                  <div className="w-[0.9vw] h-[0.9vw] absolute rounded-[100%] bg-[red] top-[-0.3vw] right-[-0.3vw]"></div>
+                )}
               </button>
             )}
           </div>

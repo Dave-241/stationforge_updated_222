@@ -8,6 +8,7 @@ import {
   doc,
   getDocs,
   getFirestore,
+  onSnapshot,
   query,
   serverTimestamp,
   updateDoc,
@@ -27,6 +28,7 @@ export const Profile_Context_Dropdown = (props: any) => {
   const [hide_download, sethide_download] = useState(true);
   const [loggedIn_id, setloggedIn_id] = useState("");
   const [show_chat_modal, setshow_chat_modal] = useState(false);
+  const [new_message, setnew_message] = useState(false);
   const [from, setfrom] = useState("");
 
   const [downloadProgress, setdownloadProgress] = useState("");
@@ -158,20 +160,18 @@ export const Profile_Context_Dropdown = (props: any) => {
   // lets handle the chat system here
   const [sess_id, setsess_id] = useState("");
   const session_ref = collection(db, "chat_sessions");
-  const create_chat_session = (user_id: any) => {
-    addDoc(session_ref, {
-      createdAt: serverTimestamp(),
-      joined: false,
-      session_ongoing: true,
-      user_id: user_id,
-    })
-      .then((res) => {
-        console.log(res.id);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+
+  const update_message_notification = () => {
+    setnew_message(true);
+    playNotificationSound();
   };
+
+  const playNotificationSound = () => {
+    const audio = new Audio("/message_mp3/message.mp3"); // Replace with the actual path
+    audio.play();
+  };
+
+  // console.log();
   return (
     <Profile_Context.Provider
       value={{
@@ -192,7 +192,10 @@ export const Profile_Context_Dropdown = (props: any) => {
         hide_download,
         show_chat_modal,
         setshow_chat_modal,
-        create_chat_session,
+        new_message,
+        setnew_message,
+        update_message_notification,
+        // create_chat_session,
         sess_id,
       }}
     >

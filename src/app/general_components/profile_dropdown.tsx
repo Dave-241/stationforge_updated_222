@@ -29,6 +29,7 @@ const Profile_dropdown = () => {
     setpage_loader,
     show_chat_modal,
     setshow_chat_modal,
+    new_message,
   }: any = useProfile_Context();
   //   const [opacity, setopacity] = useState(0);
   const ref = useRef<any>(null);
@@ -82,16 +83,19 @@ const Profile_dropdown = () => {
             ref={ref}
           >
             <div className="bg-white h-full w-full rounded-[1vw] flex flex-col">
-              <div className="border-b-[lightgrey] border-b items-end flex pb-[0.5vw] px-[1vw] h-[28%]">
+              <div className="border-b-[lightgrey]    w-full border-b items-end flex pb-[0.5vw] px-[1vw] h-[28%]">
                 <button
-                  className="neuer text-[1vw] hover:text-[lightgrey] font-[600]"
+                  className="neuer   h-full items-end justify-start flex  w-full relative text-[1vw] hover:text-[lightgrey] font-[600]"
                   onClick={() => {
                     setshow_chat_modal(true);
                   }}
                 >
                   {" "}
-                  <i className="bi pr-[0.6vw] font-[900] bi-chat-dots"></i> Talk
-                  to us
+                  <i className="bi  pr-[0.6vw] font-[900] bi-chat-dots"></i>{" "}
+                  Talk to us
+                  {new_message && (
+                    <div className="w-[0.9vw] h-[0.9vw] absolute rounded-[100%] bg-[red] bottom-[0.4vw] right-0"></div>
+                  )}
                 </button>
               </div>
               <div className="border-b-[lightgrey] flex flex-col border-b h-[44%] px-[1vw] justify-between py-[0.7vw] items-start">

@@ -121,11 +121,19 @@ const Moderator_Chats_modal = ({
         message: chat_text,
         session_chat_id: session_id,
       })
-        .then(() => {
+        .then(async () => {
           // setchat_session_id(doc.id);
           setchat_text("");
           setbtn_disabled(false);
           scrollToBottom();
+          const chat_s_ref = collection(db, "chat_sessions");
+          const chat_session_ref = doc(chat_s_ref, session_id);
+          await updateDoc(chat_session_ref, {
+            isNotReadByUser: false,
+          });
+          updateDoc(chat_session_ref, {
+            isNotReadByUser: true,
+          });
         })
         .catch((err) => {
           console.log("error whie creating new text" + err);
@@ -161,6 +169,11 @@ const Moderator_Chats_modal = ({
         });
         settime_date(snapshot.docs[0].data().createdAt.seconds);
         setchat_data_arr(chatTextDataArray);
+
+        setTimeout(() => {
+          update_moderator_reading_stats();
+        }, 1000);
+
         // console.log(chatTextDataArray);
       });
       return () => {
@@ -170,6 +183,15 @@ const Moderator_Chats_modal = ({
     }
   }, [session_id]); // Dependency on chatid, so it re-subscribes when chatid changes
 
+  const update_moderator_reading_stats = () => {
+    scrollToBottom();
+    const chat_s_ref = collection(db, "chat_sessions");
+
+    const chat_session_ref = doc(chat_s_ref, session_id);
+    updateDoc(chat_session_ref, {
+      isReadByModerator: true,
+    });
+  };
   const updateChatSessionEndedStatus = async () => {
     const chatSessionsRef = collection(db, "chat_sessions");
     const chatSessionDocRef = doc(chatSessionsRef, session_id);

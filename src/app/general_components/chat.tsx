@@ -48,6 +48,9 @@ const Chats_modal = () => {
   const [moderator_avater, setmoderator_avater] = useState("");
   const [chat_text, setchat_text] = useState("");
   const [chat_data_arr, setchat_data_arr] = useState<any>([]);
+  // profile context
+  const { setnew_message, update_message_notification }: any =
+    useProfile_Context();
 
   // Explicitly define the type for useRef
   const new_session = useRef<any>(false);
@@ -188,6 +191,7 @@ const Chats_modal = () => {
         })
           .then(() => {
             setchat_session_id(doc.id);
+            update_message_notification();
             setbtn_disabled(false);
           })
           .catch((err) => {
@@ -228,7 +232,11 @@ const Chats_modal = () => {
         setshow_end_and_start_btn(true);
         // Convert Firebase Timestamp to JavaScript Date
 
-        // Assuming your timestamp field is named 'SessioncreatedAt'
+        // // Assuming your timestamp field is named 'SessioncreatedAt'
+        // !chatSessionData.isReadByUser
+        //   ? update_message_notification()
+        //   : setnew_message(false);
+
         const timestampValue = doc.data().SessioncreatedAt;
         if (timestampValue) {
           // Convert Firebase Timestamp to JavaScript Date
@@ -288,7 +296,7 @@ const Chats_modal = () => {
       })
         .then(() => {
           // setchat_session_id(doc.id);
-          setchat_text("");
+          // setchat_text("");
           setbtn_disabled(false);
           scrollToBottom();
           update_chat_session();
@@ -313,6 +321,7 @@ const Chats_modal = () => {
         });
     }
   };
+
   useEffect(() => {
     if (chat_session_id) {
       const chatTextRef = collection(db, "chat_text");
@@ -339,7 +348,13 @@ const Chats_modal = () => {
           });
         });
         setchat_data_arr(chatTextDataArray);
-        console.log(chatTextDataArray);
+
+        setTimeout(() => {
+          scrollToBottom();
+          update_reading_status();
+        }, 1000);
+
+        // console.log(chatTextDataArray);
       });
       return () => {
         // Unsubscribe when the component unmounts
@@ -347,6 +362,15 @@ const Chats_modal = () => {
       };
     }
   }, [chat_session_id]); // Dependency on chatid, so it re-subscribes when chatid changes
+
+  const update_reading_status = () => {
+    if (chat_session_id) {
+      const user_query = doc(collection(db, "chat_sessions"), chat_session_id);
+      updateDoc(user_query, {
+        isNotReadByUser: false,
+      });
+    }
+  };
 
   const updateChatSessionEndedStatus = async () => {
     const chatSessionsRef = collection(db, "chat_sessions");
@@ -369,8 +393,10 @@ const Chats_modal = () => {
   };
   useEffect(() => {
     sethide(false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <>
       <Head>
@@ -466,7 +492,7 @@ const Chats_modal = () => {
               value={chat_text || ""}
             />
 
-            <div className="absolute h-full right-[1vw] sm:right-[2vw] top-[50%] translate-y-[-50%]">
+            <div className="absolute  flex items-center h-full right-[1vw] sm:right-[2vw] top-[50%] translate-y-[-50%]">
               <button
                 type="submit"
                 disabled={btn_disabled}

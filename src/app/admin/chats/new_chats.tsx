@@ -80,6 +80,8 @@ const New_chats = ({
           //   setsession_id(chatSessionsData?.id);
           setsession_data(chatSessionsData);
           setsession_data_is_loading(false);
+
+          console.log(chatSessionsData);
         });
 
         // Return the cleanup function to unsubscribe when the component unmounts
