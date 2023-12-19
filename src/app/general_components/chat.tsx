@@ -62,44 +62,44 @@ const Chats_modal = () => {
   }: any = useProfile_Context();
   const [hide, sethide] = useState(true);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const chats = [
-    {
-      msg: "Hi good afternoon i would love to enquire about forges",
-      user: true,
-    },
-    {
-      msg: "Hello",
-      user: false,
-    },
-    {
-      msg: "Thank you for using station forge",
-      user: false,
-    },
-    {
-      msg: "Hi good afternoon i would love to enquire about forges",
-      user: true,
-    },
-    {
-      msg: "Hello",
-      user: false,
-    },
-    {
-      msg: "Thank you for using station forge",
-      user: false,
-    },
-    {
-      msg: "Hi good afternoon i would love to enquire about forges",
-      user: true,
-    },
-    {
-      msg: "Hello",
-      user: false,
-    },
-    {
-      msg: "Thank you for using station forge",
-      user: false,
-    },
-  ];
+  // const chats = [
+  //   {
+  //     msg: "Hi good afternoon i would love to enquire about forges",
+  //     user: true,
+  //   },
+  //   {
+  //     msg: "Hello",
+  //     user: false,
+  //   },
+  //   {
+  //     msg: "Thank you for using station forge",
+  //     user: false,
+  //   },
+  //   {
+  //     msg: "Hi good afternoon i would love to enquire about forges",
+  //     user: true,
+  //   },
+  //   {
+  //     msg: "Hello",
+  //     user: false,
+  //   },
+  //   {
+  //     msg: "Thank you for using station forge",
+  //     user: false,
+  //   },
+  //   {
+  //     msg: "Hi good afternoon i would love to enquire about forges",
+  //     user: true,
+  //   },
+  //   {
+  //     msg: "Hello",
+  //     user: false,
+  //   },
+  //   {
+  //     msg: "Thank you for using station forge",
+  //     user: false,
+  //   },
+  // ];
 
   const [uuid, setuuid] = useState("");
   // useEffect(() => {
@@ -141,11 +141,13 @@ const Chats_modal = () => {
 
   useEffect(() => {
     function handleClickOutside(event: any) {
-      if (ref_modal.current && !ref_modal.current.contains(event.target)) {
-        sethide(true);
-        setTimeout(() => {
-          setshow_chat_modal(false);
-        }, 1000);
+      if (event.target.classList.contains("chats")) {
+        console.log("this is tracking");
+        console.log(ref_modal.current);
+        // sethide(true);
+        // setTimeout(() => {
+        //   setshow_chat_modal(false);
+        // }, 1000);
       }
     }
 
@@ -405,7 +407,7 @@ const Chats_modal = () => {
       </Head>
 
       <div
-        className={`w-[33vw] sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]   h-[96vh] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+        className={`w-[33vw] border2  chats sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]   h-[96vh] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
           hide ? "right-[-50vw] sm:right-[-110vw]" : "right-0 sm:right-0"
         } border transition duration-[1.5s]`}
         ref={ref_modal}

@@ -204,7 +204,7 @@ const Header = () => {
   return (
     <>
       {show_chat_modal && <Chats_modal />}
-
+      {/* <Chats_modal /> */}
       <header className="w-full h-[4.7vw] sm:h-[20vw]  bg-transparent absolute z-[99] top-[2.5vw] sm:top-0 flex justify-center ">
         {mobile_bg_changer && (
           <Mobile_header

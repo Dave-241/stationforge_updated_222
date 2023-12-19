@@ -56,7 +56,10 @@ export default function Home() {
       {page_loader && <Loader />}
       {forge_loader && <Forge />}
       {/* <Pay /> */}
-      <div className="w-full h-fit z-[99] sm:hidden  fixed top-[0.9vw] ">
+
+      <Profile_dropdown />
+
+      <div className="w-full h-fit z-[999] sm:hidden  fixed top-[0.3vw] ">
         <Header />
       </div>
 
@@ -65,7 +68,6 @@ export default function Home() {
         <Custom_subscription_Header />
       </div>
 
-      <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
       {/* <Chats_modal /> */}
 
