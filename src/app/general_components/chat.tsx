@@ -139,33 +139,23 @@ const Chats_modal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    function handleClickOutside(event: any) {
-      if (event.target.classList.contains("chats")) {
-        console.log("this is tracking");
-        console.log(ref_modal.current);
-        // sethide(true);
-        // setTimeout(() => {
-        //   setshow_chat_modal(false);
-        // }, 1000);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // useEffect(() => {
-  //   if (sess_id == "") {
-  //     return;
-  //   } else if (sess_id != "") {
-  //     create_chat_session(uuid);
+  //   function handleClickOutside(event: any) {
+  //     console.log(event.target, ref_modal.current);
+  //     if (event.target.classList.contains("chats")) {
+  //       console.log("this is tracking");
+  //       console.log(ref_modal.current);
+  //     }
   //   }
-  // }, [sess_id, uuid]);
+
+  //   document.addEventListener("mousedown", handleClickOutside);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   const currentUserUid = auth.currentUser?.uid;
 
   const create_new_session = () => {
@@ -405,140 +395,155 @@ const Chats_modal = () => {
         <meta name="robots" content="noindex,nofollow" />
         <meta name="googlebot" content="noindex,nofollow" />
       </Head>
-
       <div
-        className={`w-[33vw] border2  chats sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]   h-[96vh] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
-          hide ? "right-[-50vw] sm:right-[-110vw]" : "right-0 sm:right-0"
-        } border transition duration-[1.5s]`}
-        ref={ref_modal}
-        style={{ transition: "1.5s ease" }}
+        className={`w-full fixed top-0 left-0 h-full z-[9999] bg-black ${
+          hide ? "bg-opacity-[0%]" : "bg-opacity-[70%] "
+        } `}
+        style={{ transition: "1.2s ease" }}
+        onClick={() => {
+          sethide(true);
+          setTimeout(() => {
+            setshow_chat_modal(false);
+          }, 700);
+        }}
       >
-        {/* this is for the top relative box  */}
-        <div className="w-full fixed top-0 left-0 h-[5.5vw] bg-[#1F1E1E]  sm:h-[22vw]  bg-opacity-[50%] flex justify-start items-center neuer px-[1.3vw] gap-[1vw]  sm:px-[2vw] border-b-[0.2vw] border-white border-opacity-[60%]">
-          <div className="w-full flex gap-[1vw] h-full items-center sm:gap-[3vw]">
-            <i
-              className="bi bi-chevron-left cursor-pointer text-white text-[1.2vw] sm:text-[6vw]"
-              onClick={() => {
-                sethide(true);
-                setTimeout(() => {
-                  setshow_chat_modal(false);
-                }, 1000);
-              }}
-            ></i>
-
-            <div
-              className=" h-[3.2vw] w-[3.2vw] sm:h-[10vw] overflow-hidden sm:w-[10vw] rounded-[100%] avater_bg"
-              style={{ backgroundImage: "url(/chats/station_forge.webp)" }}
-            >
-              {" "}
-              {moderator_avater && (
-                <Image
-                  unoptimized
-                  width="0"
-                  height="0"
-                  src={moderator_avater}
-                  alt={moderator_name}
-                  className="w-full h-full"
-                />
-              )}
-            </div>
-
-            {/*the name of the moderator for now its  talk to support */}
-            <div className="w-fit  flex-col flex gap-[0.5vw] sm:gap-[1.2vw] ">
-              <p className="text-[1vw] text-white sm:text-[4vw] ">
-                {moderator_name ? `${moderator_name} ` : "Talk to support"}
-              </p>
-              <p className="text-[0.8vw]  text-white  sm:text-[3vw] italic text-opacity-[50%]">
-                {moderator_name ? "Online" : "24/7 Support line"}
-              </p>
-            </div>
-          </div>
-
-          {show_end_and_start_btn && (
-            <button
-              className="sm:w-[30vw] w-[10vw] h-[3vw] rounded-[1vw] hover:bg-opacity-[30%] bg-black text-white text-[1vw] sm:text-[3vw] sm:h-[10vw] sm:rounded-[3vw]  neuer   "
-              style={{
-                backgroundColor: chat_session_id.length ? "black" : "#CCFF00",
-                color: chat_session_id.length ? "white" : "black",
-              }}
-              onClick={() => {
-                if (!chat_session_id.length) {
-                  new_session.current = false;
-                  create_new_session();
-                } else {
-                  new_session.current = true;
-                  setcreate_new_sess(false);
-                  updateChatSessionEndedStatus();
-                }
-              }}
-            >
-              {chat_session_id.length ? "End session" : "Start chat"}
-            </button>
-          )}
-        </div>
-
-        {/* this is for the bottom input for sending messages relative box  */}
-        <div className="w-full h-[5.5vw] sm:h-[20vw] sm:bg-opacity-[100%]  fixed bottom-0 neuer left-0 bg-[#1F1E1E] rounded-t-[1.7vw]  bg-opacity-[50%] flex justify-center items-center px-[1.3vw]  ">
-          <form
-            onSubmit={handlesubmit}
-            className="h-[3.2vw] sm:h-[13vw]   w-full relative "
-          >
-            <input
-              type="text"
-              placeholder="Type text here"
-              className="w-full h-full pl-[1vw] sm:pl-[3vw] sm:pr-[19vw] pr-[5vw] sm:rounded-[6vw] text-white text-opacity-[85%] text-[1vw] sm:text-[3.5vw] bg-[#2C2C2C] bg-opacity-[56%] outline-none border-[0.14vw]  border-opacity-[30%] focus:border-opacity-[70%] border-white transition duration-[0.6s] rounded-[2vw]"
-              onChange={(e) => {
-                setchat_text(e.target.value);
-                setbtn_disabled(false);
-              }}
-              value={chat_text || ""}
-            />
-
-            <div className="absolute  flex items-center h-full right-[1vw] sm:right-[2vw] top-[50%] translate-y-[-50%]">
-              <button
-                type="submit"
-                disabled={btn_disabled}
-                className="  hover:bg-opacity-[80%] bg-[#CCFF00] px-[1vw] text-[0.9vw] py-[0.4vw] rounded-[2vw]  sm:text-[3.5vw] sm:px-[4vw] sm:py-[2vw] sm:rounded-[6vw] "
-              >
-                Send
-              </button>
-            </div>
-          </form>
-        </div>
-        {/* the date teh chat started  */}
-
-        {/* this is for the chats */}
         <div
-          className="w-full flex  overflow-y-scroll cover_scrollbar flex-col sm:px-[2vw] pb-[1vw] sm:pb-[18vw] sm:gap-[4vw] h-full gap-[0.6vw] "
-          ref={scrollAreaRef}
+          className={`w-[33vw] chats sm:max-h-[100vh] sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-l-[1vw]   h-[96vh] max-h-[96vh]  sm:py-[5vw] px-[1.5vw]  top-[50%] translate-y-[-50%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+            hide ? "right-[-50vw] sm:right-[-110vw]" : "right-0 sm:right-0"
+          } border transition duration-[1.5s]`}
+          ref={ref_modal}
+          style={{ transition: "1.5s ease" }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
-          <div className="w-full flex justify-center h-[2vw] sm:h-[9vw]  neuer">
-            <p className="text-white text-[0.9vw] h-full px-[1vw] py-[0.4vw] border-white border-[0.1vw] flex items-center rounded-[2vw] border-opacity-[50%] sm:text-[4vw]  sm:px-[5vw] sm:rounded-[4vw] ">
-              {time_date}
-            </p>
-          </div>
-          {chat_data_arr.map((e: any, index: any) => {
-            return (
+          {/* this is for the top relative box  */}
+          <div className="w-full fixed top-0 left-0 h-[5.5vw] bg-[#1F1E1E]  sm:h-[22vw]  bg-opacity-[50%] flex justify-start items-center neuer px-[1.3vw] gap-[1vw]  sm:px-[2vw] border-b-[0.2vw] border-white border-opacity-[60%]">
+            <div className="w-full flex gap-[1vw] h-full items-center sm:gap-[3vw]">
+              <i
+                className="bi bi-chevron-left cursor-pointer text-white text-[1.2vw] sm:text-[6vw]"
+                onClick={() => {
+                  sethide(true);
+                  setTimeout(() => {
+                    setshow_chat_modal(false);
+                  }, 1000);
+                }}
+              ></i>
+
               <div
-                className={`w-full flex   ${
-                  e.chatTextData.from != "user"
-                    ? "justify-start"
-                    : "justify-end"
-                }  h-auto bg-white"`}
-                key={index}
+                className=" h-[3.2vw] w-[3.2vw] sm:h-[10vw] overflow-hidden sm:w-[10vw] rounded-[100%] avater_bg"
+                style={{ backgroundImage: "url(/chats/station_forge.webp)" }}
               >
-                <div
-                  className={`w-fit rounded-[1vw] text-[0.8vw] sm:text-[3vw] sm:max-w-[41vw] sm:py-[1.5vw] sm:px-[2vw] sm:rounded-[2.5vw] py-[0.7vw] px-[0.8vw]  max-w-[12vw] h-auto border-[0.1vw] ${
-                    e.chatTextData.from != "user"
-                      ? "border-white border-opacity-[50%] text-white"
-                      : "border-[#CCFF00] bg-[#CCFF00] text-black "
-                  }  h-[2vw]`}
-                >
-                  <p className={` `}>{e.chatTextData.message}</p>
-                </div>
+                {" "}
+                {moderator_avater && (
+                  <Image
+                    unoptimized
+                    width="0"
+                    height="0"
+                    src={moderator_avater}
+                    alt={moderator_name}
+                    className="w-full h-full"
+                  />
+                )}
               </div>
-            );
-          })}
+
+              {/*the name of the moderator for now its  talk to support */}
+              <div className="w-fit  flex-col flex gap-[0.5vw] sm:gap-[1.2vw] ">
+                <p className="text-[1vw] text-white sm:text-[4vw] ">
+                  {moderator_name ? `${moderator_name} ` : "Talk to support"}
+                </p>
+                <p className="text-[0.8vw]  text-white  sm:text-[3vw] italic text-opacity-[50%]">
+                  {moderator_name ? "Online" : "24/7 Support line"}
+                </p>
+              </div>
+            </div>
+
+            {show_end_and_start_btn && (
+              <button
+                className="sm:w-[30vw] w-[10vw] h-[3vw] rounded-[1vw] hover:bg-opacity-[30%] bg-black text-white text-[1vw] sm:text-[3vw] sm:h-[10vw] sm:rounded-[3vw]  neuer   "
+                style={{
+                  backgroundColor: chat_session_id.length ? "black" : "#CCFF00",
+                  color: chat_session_id.length ? "white" : "black",
+                }}
+                onClick={() => {
+                  if (!chat_session_id.length) {
+                    new_session.current = false;
+                    create_new_session();
+                  } else {
+                    new_session.current = true;
+                    setcreate_new_sess(false);
+                    updateChatSessionEndedStatus();
+                  }
+                }}
+              >
+                {chat_session_id.length ? "End session" : "Start chat"}
+              </button>
+            )}
+          </div>
+
+          {/* this is for the bottom input for sending messages relative box  */}
+          <div className="w-full h-[5.5vw] sm:h-[20vw] sm:bg-opacity-[100%]  fixed bottom-0 neuer left-0 bg-[#1F1E1E] rounded-t-[1.7vw]  bg-opacity-[50%] flex justify-center items-center px-[1.3vw]  ">
+            <form
+              onSubmit={handlesubmit}
+              className="h-[3.2vw] sm:h-[13vw]   w-full relative "
+            >
+              <input
+                type="text"
+                placeholder="Type text here"
+                className="w-full h-full pl-[1vw] sm:pl-[3vw] sm:pr-[19vw] pr-[5vw] sm:rounded-[6vw] text-white text-opacity-[85%] text-[1vw] sm:text-[3.5vw] bg-[#2C2C2C] bg-opacity-[56%] outline-none border-[0.14vw]  border-opacity-[30%] focus:border-opacity-[70%] border-white transition duration-[0.6s] rounded-[2vw]"
+                onChange={(e) => {
+                  setchat_text(e.target.value);
+                  setbtn_disabled(false);
+                }}
+                value={chat_text || ""}
+              />
+
+              <div className="absolute  flex items-center h-full right-[1vw] sm:right-[2vw] top-[50%] translate-y-[-50%]">
+                <button
+                  type="submit"
+                  disabled={btn_disabled}
+                  className="  hover:bg-opacity-[80%] bg-[#CCFF00] px-[1vw] text-[0.9vw] py-[0.4vw] rounded-[2vw]  sm:text-[3.5vw] sm:px-[4vw] sm:py-[2vw] sm:rounded-[6vw] "
+                >
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
+          {/* the date teh chat started  */}
+
+          {/* this is for the chats */}
+          <div
+            className="w-full flex  overflow-y-scroll cover_scrollbar flex-col sm:px-[2vw] pb-[1vw] sm:pb-[18vw] sm:gap-[4vw] h-full gap-[0.6vw] "
+            ref={scrollAreaRef}
+          >
+            <div className="w-full flex justify-center h-[2vw] sm:h-[9vw]  neuer">
+              <p className="text-white text-[0.9vw] h-full px-[1vw] py-[0.4vw] border-white border-[0.1vw] flex items-center rounded-[2vw] border-opacity-[50%] sm:text-[4vw]  sm:px-[5vw] sm:rounded-[4vw] ">
+                {time_date}
+              </p>
+            </div>
+            {chat_data_arr.map((e: any, index: any) => {
+              return (
+                <div
+                  className={`w-full flex   ${
+                    e.chatTextData.from != "user"
+                      ? "justify-start"
+                      : "justify-end"
+                  }  h-auto bg-white"`}
+                  key={index}
+                >
+                  <div
+                    className={`w-fit rounded-[1vw] text-[0.8vw] sm:text-[3vw] sm:max-w-[41vw] sm:py-[1.5vw] sm:px-[2vw] sm:rounded-[2.5vw] py-[0.7vw] px-[0.8vw]  max-w-[12vw] h-auto border-[0.1vw] ${
+                      e.chatTextData.from != "user"
+                        ? "border-white border-opacity-[50%] text-white"
+                        : "border-[#CCFF00] bg-[#CCFF00] text-black "
+                    }  h-[2vw]`}
+                  >
+                    <p className={` `}>{e.chatTextData.message}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>

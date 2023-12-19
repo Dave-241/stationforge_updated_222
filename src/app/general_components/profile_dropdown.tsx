@@ -81,7 +81,7 @@ const Profile_dropdown = () => {
       {show ? (
         <>
           <div
-            className="fixed top-[8vw] right-[5%] w-[13vw] h-[13vw] border2   z-[99]"
+            className="fixed top-[8vw] right-[5%] w-[13vw] h-[13vw]    z-[99]"
             ref={ref}
           >
             <div className="bg-white h-full w-full rounded-[1vw] flex flex-col">
