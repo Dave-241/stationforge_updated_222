@@ -48,11 +48,18 @@ const StandardPlan = ({
 
   const router = useRouter();
 
+  function getNextMonthTimestamp() {
+    const currentDate = new Date();
+    const nextMonth = new Date(currentDate);
+    nextMonth.setMonth(currentDate.getMonth() + 1, 1); // Set to 1st day of next month
+    return Math.floor(nextMonth.getTime() / 1000); // Convert to Unix timestamp (in seconds)
+  }
+
   const paynow = async () => {
     if (uuid != "" && email != "") {
       try {
         setstandard_isloading(true);
-
+        // console.log("this was standard");
         const session_url = await pay_standard_Subscriptions(uuid, email);
 
         if (session_url.url) {
@@ -72,6 +79,14 @@ const StandardPlan = ({
 
       return;
     }
+
+    // const subscription_created = await stripe.subscriptions.update(
+    //   "sub_1OP47wHosKgwPfXjhpu1WMQe",
+    //   {
+    //     trial_end: getNextMonthTimestamp(),
+    //     proration_behavior: "none",
+    //   },
+    // );
   };
 
   const manage_merchant_subscriptions = async () => {

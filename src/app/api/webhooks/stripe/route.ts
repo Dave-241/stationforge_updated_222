@@ -24,9 +24,10 @@ export async function POST(request: Request) {
   // Function to calculate the Unix timestamp for the 1st day of the next month
   function getNextMonthTimestamp() {
     const currentDate = new Date();
-    const nextMonth = new Date(currentDate);
-    nextMonth.setMonth(currentDate.getMonth() + 1, 1); // Set to 1st day of next month
-    return Math.floor(nextMonth.getTime() / 1000); // Convert to Unix timestamp (in seconds)
+    const nextMonth = new Date(
+      Date.UTC(currentDate.getUTCFullYear(), currentDate.getUTCMonth() + 1, 1),
+    );
+    return Math.floor(nextMonth.getTime() / 1000);
   }
 
   const body = await request.text();
@@ -246,19 +247,13 @@ export async function POST(request: Request) {
     await transporter.sendMail(emailOptions);
   };
 
-  // if (event.type === "checkout.session.completed") {
-  //   console.log("tis is the session id " + session.metadata.userId);
-  //   // console.log(subscription);
-
-  // }
-
   switch (event.type) {
     case "checkout.session.completed":
       const checkoutSessionCompleted = event.data.object;
       const subscription: any = await stripe.subscriptions.retrieve(
         session.subscription as string,
       );
-      console.log(subscription);
+      // console.log(subscription);
       if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
         update_user_doc(
           4,
@@ -279,26 +274,7 @@ export async function POST(request: Request) {
         );
       }
 
-      // Your logic here
-      const today = new Date();
-      const firstDayNextMonth = new Date(
-        today.getFullYear(),
-        today.getMonth() + 1,
-        1,
-      );
-
-      const subscription_created_now = await stripe.subscriptions.update(
-        subscription.id, // Use subscription ID, not customer ID
-        {
-          billing_cycle_anchor: "now" as any,
-        },
-      );
-      const subscription_created = await stripe.subscriptions.update(
-        subscription.id, // Use subscription ID, not customer ID
-        {
-          billing_cycle_anchor: 63134000950 as any,
-        },
-      );
+      console.log("this is it " + subscription.id);
 
       //   console.log("Checkout was completed just now ");
       // Then define and call a function to handle the event checkout.session.completed
@@ -319,37 +295,39 @@ export async function POST(request: Request) {
       break;
     case "customer.subscription.created":
       const created_customer: any = event.data.object as Stripe.Subscription;
-      // Calculate the first day of the next month
-      console.log(created_customer.subscription);
-
-      // // Your logic here
-      // const today = new Date();
-      // const firstDayNextMonth = new Date(
-      //   today.getFullYear(),
-      //   today.getMonth() + 1,
-      //   1,
-      // );
-
-      // const subscription_created = await stripe.subscriptions.update(
-      //   created_customer.subscription, // Use subscription ID, not customer ID
-      //   {
-      //     billing_cycle_anchor: Math.floor(
-      //       firstDayNextMonth.getTime() / 1000,
-      //     ) as any,
-      //   },
-      // );
 
       break;
     case "customer.subscription.updated":
       const customerSubscriptionUpdated: any = event.data
         .object as Stripe.Subscription;
 
+      //  console.log(customerSubscriptionUpdated.trial_end);
+
+      const billing_anchor = customerSubscriptionUpdated.billing_cycle_anchor;
+
+      const trial_end = customerSubscriptionUpdated.trial_end;
+
+      const next_first_month = getNextMonthTimestamp();
+
+      if (billing_anchor == next_first_month) {
+        return;
+      } else {
+        const subscription_created = await stripe.subscriptions.update(
+          customerSubscriptionUpdated.id,
+          {
+            trial_end: getNextMonthTimestamp(),
+            proration_behavior: "none",
+          },
+        );
+      }
+
+      // checkBillingCycleAnchor(billing_anchor);
       // Check if the subscription status is "canceled"
       if (customerSubscriptionUpdated.items.data[0].status === "canceled") {
         break;
       } else {
         const plain_id = customerSubscriptionUpdated.items.data[0].price.id;
-        console.log(plain_id);
+        // console.log(plain_id);
 
         if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
           updateT(

@@ -11,9 +11,10 @@ export const stripe = new Stripe(
 // Function to calculate the Unix timestamp for the 1st day of the next month
 function getNextMonthTimestamp() {
   const currentDate = new Date();
-  const nextMonth = new Date(currentDate);
-  nextMonth.setMonth(currentDate.getMonth() + 1, 1); // Set to 1st day of next month
-  return Math.floor(nextMonth.getTime() / 1000); // Convert to Unix timestamp (in seconds)
+  const nextMonth = new Date(
+    Date.UTC(currentDate.getUTCFullYear(), currentDate.getUTCMonth() + 1, 1),
+  );
+  return Math.floor(nextMonth.getTime() / 1000);
 }
 
 export const pay_standard_Subscriptions: any = async (
@@ -40,6 +41,11 @@ export const pay_standard_Subscriptions: any = async (
     metadata: {
       userId: userid,
     },
+    // subscription_data: {
+    //   // Set the billing cycle anchor to the 1st of the next month
+    //   billing_cycle_anchor: getNextMonthTimestamp(),
+    //   // proration_behavior: "create_prorations",
+    // },
   });
 
   // console.log(stripeSession.url);
@@ -70,6 +76,11 @@ export const pay_merchant_Subscriptions: any = async (
     ],
     metadata: {
       userId: userid,
+    },
+    subscription_data: {
+      // Set the billing cycle anchor to the 1st of the next month
+      billing_cycle_anchor: getNextMonthTimestamp(),
+      // proration_behavior: "create_prorations",
     },
   });
 
