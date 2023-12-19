@@ -217,6 +217,10 @@ html.scroll-container {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 1vw;
 }
+.scroll-container_search_items::-webkit-scrollbar-thumb {
+  background: #ccff00;
+  border-radius: 2vw;
+}
 
 html.scroll-container {
   scrollbar-width: thin;

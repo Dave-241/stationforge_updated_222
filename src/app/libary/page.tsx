@@ -188,6 +188,7 @@ export default function Home() {
     <>
       {page_loader && <Loader />}
       {forge_loader && <Forge />}
+      <Profile_dropdown />
       <div className="w-full h-fit z-[99]  fixed top-[0vw] ">
         <Header />
       </div>
@@ -199,7 +200,6 @@ export default function Home() {
         />
       )}
 
-      <Profile_dropdown />
       {show_setting_modal && <Settings_modal />}
       {show_download_modal && (
         <Download_modal

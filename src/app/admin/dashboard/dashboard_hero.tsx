@@ -373,7 +373,7 @@ const Dashboard_hero_section = ({
             {/* the header of the first section on this row  */}
             <div className="w-full flex flex-col gap-[0.2vw]">
               <h1 className="neuem  text-[2.3vw] text-white ">
-                Good DY, {admin_username}
+                Good Day, {admin_username}
               </h1>
               <p className="neuer text-[1.2vw] text-white text-opacity-[40%] ">
                 Track and manage all forge digital and physical sales

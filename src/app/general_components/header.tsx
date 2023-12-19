@@ -190,8 +190,6 @@ const Header = () => {
         chatSessionData.isNotReadByUser
           ? update_message_notification()
           : setnew_message(false);
-
-        console.log(chatSessionData);
       });
     });
 

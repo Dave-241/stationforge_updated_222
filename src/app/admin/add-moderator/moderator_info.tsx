@@ -97,7 +97,7 @@ const Moderator_info = ({ username, password, setstage }: any) => {
             )}
           </div>
           <Link
-            href={"/"}
+            href={"/admin/chats"}
             className="w-full h-[3.3vw]  sm:h-[13vw] sm:rounded-[4vw] sm:text-[4vw] sm:px-[3vw] bg-[#CCFF00] transition duration-[0.2s] hover:bg-[#7e9426] neuem rounded-[1.1vw] mt-[0.2vw] text-[1.06vw] flex justify-center items-center"
           >
             Back to messages
