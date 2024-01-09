@@ -25,12 +25,20 @@ const Filters = ({
   ];
   const date = new Date();
   const currentYear = new Date().getFullYear(); // Get the current year
-  const years = [
+  const prev_years = [
+    currentYear - 5,
+    currentYear - 4,
+    currentYear - 3,
+    currentYear - 2,
+    currentYear - 1,
     currentYear,
-    currentYear + 1,
-    currentYear + 2,
-    currentYear + 3,
-  ]; // Add more years as needed
+  ];
+  // const years = [
+
+  //   currentYear + 1,
+  //   currentYear + 2,
+  //   currentYear + 3,
+  // ]; // Add more years as needed
   const currentMonthName = monthNames[date.getMonth()];
 
   useEffect(() => {
@@ -55,7 +63,11 @@ const Filters = ({
               setselected_year(parseInt(e.target.value));
             }}
           >
-            {years.map((year) => (
+            {" "}
+            <option value={currentYear}>
+              Select year : Currently {">"} {currentYear}{" "}
+            </option>
+            {prev_years.map((year) => (
               <option key={year} value={year}>
                 {year}
               </option>

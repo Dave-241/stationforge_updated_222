@@ -343,7 +343,9 @@ const Post = (props: any) => {
       userid: auth?.currentUser?.uid,
       createdAt: serverTimestamp(),
     })
-      .then(() => {})
+      .then(() => {
+        // console.log("this is engagement");
+      })
       .catch((err) => {
         console.log("New error" + err);
       });
