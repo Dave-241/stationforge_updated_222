@@ -303,8 +303,42 @@ const PostAnalytics = () => {
     },
   };
 
+  const [totalPosts, setTotalPosts] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalPosts = async () => {
+      try {
+        const collectionRef = collection(db, "posts");
+
+        // Calculate the start and end of the selected month
+        const startOfMonth = new Date(selectedYear, selectedMonth, 1);
+        const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0);
+
+        const totalPostsSnapshot = await getDocs(
+          query(
+            collectionRef,
+            where("createdAt", ">=", startOfMonth),
+            where("createdAt", "<=", endOfMonth),
+          ),
+        );
+
+        const totalPostsCount = totalPostsSnapshot.size;
+        setTotalPosts(totalPostsCount);
+
+        console.log(
+          `Total Posts for ${getMonthName(selectedMonth)} ${selectedYear}:`,
+          totalPostsCount,
+        );
+      } catch (error) {
+        console.error("Error fetching total posts:", error);
+      }
+    };
+
+    fetchTotalPosts();
+  }, [selectedYear, selectedMonth]); // Trigger effect when year or month changes
+
   return (
-    <div className=" px-[2vw] sm:mb-[15vw] mt-[10vw] ">
+    <div className=" px-[2vw] sm:mb-[15vw] sm:mt-[10vw] ">
       <div className="bg-white w-full rounded-[2vw] px-[3vw] sm:h-auto sm:gap-[5vw]  h-[40vw] flex flex-col gap-[1vw] py-[3vw] mb-[4vw]">
         <h2 className="neuem text-[3vw] font-[800] sm:text-[7vw]  ">
           Post Analytics
@@ -312,7 +346,7 @@ const PostAnalytics = () => {
 
         <div className="flex w-[30vw] gap-[6vw] sm:w-[80vw]   justify-between">
           <select
-            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[13vw] focus:outline-none"
+            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[12vw] sm:rounded-[3vw] focus:outline-none"
             value={selectedYear}
             onChange={(e) => setSelectedYear(parseInt(e.target.value))}
           >
@@ -324,7 +358,7 @@ const PostAnalytics = () => {
           </select>
 
           <select
-            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[13vw] focus:outline-none"
+            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[12vw] sm:rounded-[3vw] focus:outline-none"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
           >
@@ -335,8 +369,14 @@ const PostAnalytics = () => {
             ))}
           </select>
         </div>
-        <div className="w-full h-[35vw] sm:h-[100vw]">
+        <div className="w-full h-[38vw] sm:h-[100vw]">
           <Line data={chartData} ref={chartRef} options={options} />
+        </div>
+
+        <div className="flex text-[1.2vw] items-center gap-[1vw] sm:text-[3.5vw] sm:gap-[2vw] ">
+          <p>All post for the month of {getMonthName(selectedMonth)} : </p>
+
+          <p className="font-bold text-[1.5vw] sm:text-[4vw]"> {totalPosts}</p>
         </div>
       </div>
     </div>
