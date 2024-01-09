@@ -20,6 +20,7 @@ import {
   where,
 } from "firebase/firestore";
 import New_Subscribers_wrap from "./new_subscribers_wrap";
+import Digital_sales_analytics from "./digital_sales_analytics";
 
 export default function Home() {
   const {
@@ -102,7 +103,6 @@ export default function Home() {
             top={"1vw"}
             blur={false}
           />
-
           <div className="w-full h-[40vw] px-[2vw] py-[1vw] sm:h-[190vw] flex  sm:relative top-[1vw] left-0 ">
             <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:drop-shadow-none sm:rounded-[4vw] rounded-[2vw] relative h-full">
               <Dashboard_hero_section
@@ -112,7 +112,12 @@ export default function Home() {
               />
             </div>
           </div>
-
+          {/* // this is for analytics */}
+          <div className="flex border2">
+            <div className="w-[60vw] h-auto">
+              <Digital_sales_analytics />
+            </div>
+          </div>
           <div className="w-full px-[2vw] py-[2vw] sm:mt-[8vw]    h-auto">
             <New_Subscribers_wrap
               setall_subscribers_in_dashboard={setall_subscribers_in_dashboard}
