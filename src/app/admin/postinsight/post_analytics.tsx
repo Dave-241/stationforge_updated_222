@@ -22,7 +22,15 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  orderBy,
+  where,
+  query,
+  Timestamp,
+} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 const PostAnalytics = () => {
@@ -30,13 +38,15 @@ const PostAnalytics = () => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const chartRef = useRef(null);
+  const [selectedYear, setSelectedYear] = useState("2023");
+  const [selectedMonth, setSelectedMonth] = useState("01");
   const [chartData, setChartData] = useState({
     // ... existing data and labels
-    labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
       {
         label: "",
-        data: [0, 10, 120, 150, 180, 220, 200], // Make sure these are valid numbers
+        data: [0, 0, 0, 0], // Make sure these are valid numbers
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
         borderColor: "",
@@ -53,91 +63,83 @@ const PostAnalytics = () => {
       },
     ],
   });
-  useEffect(() => {
-    if (chartRef.current) {
-      const chart: any = chartRef.current;
-      const ctx: any = chart.ctx; // Or chart.canvas.getContext('2d') if necessary
-      const gradient = ctx.createLinearGradient(0, 0, 0, chart.height);
+  // useEffect(() => {
+  //   if (chartRef.current) {
+  //     const chart: any = chartRef.current;
+  //     const ctx: any = chart.ctx; // Or chart.canvas.getContext('2d') if necessary
+  //     const gradient = ctx.createLinearGradient(0, 0, 0, chart.height);
 
-      gradient.addColorStop(0.6, "rgba(76, 137, 229, 1)"); // Light blue with opacity
-      gradient.addColorStop(1, "rgba(204, 255, 0, 0.1)"); // Yellow with opacity
-      // Update chart data
-      setChartData({
-        labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
-        datasets: [
-          {
-            label: "",
-            data: [0, 1000, 350, 1900, 180, 220, 200], // Make sure these are valid numbers
-            fill: true,
-            backgroundColor: "rgba(75,192,192,0.2)",
-            borderWidth: 5, // Ensure this is greater than 0
-            tension: 0.4,
-            borderColor: gradient, // Smoothness of the line
-            pointBackgroundColor: "white",
-            pointBorderColor: "black",
-            pointHoverBackgroundColor: "white",
-            pointBorderWidth: 3, // Increase point border width
-            pointHoverBorderWidth: 4,
-            pointRadius: 5, // Increase point size
-            pointHoverRadius: 7, // Increase point size on hover
-            pointHoverBorderColor: "rgba(75,192,192,1)",
-          },
-        ],
-      });
-    }
-  }, [chartRef]);
+  //     gradient.addColorStop(0.6, "rgba(76, 137, 229, 1)"); // Light blue with opacity
+  //     gradient.addColorStop(1, "rgba(204, 255, 0, 0.1)"); // Yellow with opacity
+  //     // Update chart data
+  //     setChartData({
+  //       labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+  //       datasets: [
+  //         {
+  //           label: "",
+  //           data: [0, 180, 220, 200], // Make sure these are valid numbers
+  //           fill: true,
+  //           backgroundColor: "rgba(75,192,192,0.2)",
+  //           borderWidth: 5, // Ensure this is greater than 0
+  //           tension: 0.4,
+  //           borderColor: gradient, // Smoothness of the line
+  //           pointBackgroundColor: "white",
+  //           pointBorderColor: "black",
+  //           pointHoverBackgroundColor: "white",
+  //           pointBorderWidth: 3, // Increase point border width
+  //           pointHoverBorderWidth: 4,
+  //           pointRadius: 5, // Increase point size
+  //           pointHoverRadius: 7, // Increase point size on hover
+  //           pointHoverBorderColor: "rgba(75,192,192,1)",
+  //         },
+  //       ],
+  //     });
+  //   }
+  // }, [chartRef]);
 
-  const fetchPostData = async () => {
-    const postsCollectionRef = collection(db, "posts"); // Adjust 'posts' to your collection name
-    const data = await getDocs(postsCollectionRef);
+  // const fetchPostData = async () => {
+  //   const postsCollectionRef = collection(db, "posts"); // Adjust 'posts' to your collection name
+  //   const data = await getDocs(postsCollectionRef);
 
-    // Process your data here
-    // Example processing (adjust according to your data structure):
-    const analyticsData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
+  //   // Process your data here
+  //   // Example processing (adjust according to your data structure):
+  //   const analyticsData = data.docs.map((doc) => ({
+  //     ...doc.data(),
+  //     id: doc.id,
+  //   }));
 
-    // Extract labels and data for the chart
-    const labels = analyticsData.map((item: any) => item.label); // Replace 'item.label' with your actual label field
-    const dataPoints = analyticsData.map((item: any) => item.dataPoint); // Replace 'item.dataPoint' with your actual data field
+  //   // Extract labels and data for the chart
+  //   const labels = analyticsData.map((item: any) => item.label); // Replace 'item.label' with your actual label field
+  //   const dataPoints = analyticsData.map((item: any) => item.dataPoint); // Replace 'item.dataPoint' with your actual data field
 
-    // setChartData({
-    //   labels: labels,
-    //   datasets: [
-    //     {
-    //       label: "All posts for this month",
-    //       data: dataPoints,
-    //       fill: true,
-    //       backgroundColor: "rgba(75,192,192,0.2)",
-    //       borderColor: "rgba(75,192,192,1)",
-    //       tension: 0.4,
-    //     },
-    //   ],
-    // });
-  };
-  const data = {
-    labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
-    datasets: [
-      {
-        label: "",
-        data: [0, 10, 120, 150, 180, 220, 200], // Make sure these are valid numbers
-        fill: true,
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)",
-        borderWidth: 2, // Ensure this is greater than 0
-        tension: 0.4, // Smoothness of the line
-        pointBackgroundColor: "black",
-        pointBorderColor: "black",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(75,192,192,1)",
-      },
-    ],
-  };
+  //   // setChartData({
+  //   //   labels: labels,
+  //   //   datasets: [
+  //   //     {
+  //   //       label: "All posts for this month",
+  //   //       data: dataPoints,
+  //   //       fill: true,
+  //   //       backgroundColor: "rgba(75,192,192,0.2)",
+  //   //       borderColor: "rgba(75,192,192,1)",
+  //   //       tension: 0.4,
+  //   //     },
+  //   //   ],
+  //   // });
+  // };
 
-  useEffect(() => {
-    fetchPostData();
-  }, []);
+  //  setChartData((prevChartData) => ({
+  //    ...prevChartData,
+  //    datasets: [
+  //      {
+  //        ...prevChartData.datasets[0],
+  //        data: dataPoints,
+  //      },
+  //    ],
+  //  }));
+
+  // useEffect(() => {
+  //   fetchPostData();
+  // }, []);
 
   const options = {
     responsive: true,
@@ -202,6 +204,26 @@ const PostAnalytics = () => {
     <div className=" px-[2vw] ">
       <div className="bg-white w-full rounded-[2vw] px-[3vw]  h-[40vw] flex flex-col gap-[1vw] py-[3vw] mb-[4vw]">
         <h2 className="neuem text-[3vw] font-[800]  ">Post Analytics</h2>
+
+        {/* Year Dropdown */}
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+        >
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          {/* Add more years as needed */}
+        </select>
+
+        {/* Month Dropdown */}
+        <select
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        >
+          <option value="01">January</option>
+          <option value="02">February</option>
+          {/* Add more months as needed */}
+        </select>
         <div className="w-full h-[35vw]">
           <Line data={chartData} ref={chartRef} options={options} />
         </div>

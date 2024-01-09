@@ -222,7 +222,7 @@ const Moderator_Chats_modal = ({
       </Head>
 
       <div
-        className={`w-[40vw] sm:translate-y-[-50%] sm:top-[50%]  sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-[1vw]  h-[89%] max-h-[96vh] sm:max-h-full  sm:py-[5vw] px-[1.5vw]  top-[0]   translate-y-[10%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
+        className={`w-[45vw] sm:translate-y-[-50%] sm:top-[50%]  sm:h-full sm:w-full fixed pt-[6.5vw] sm:pt-[25vw] pb-[6vw] rounded-[1vw]  h-[89%] max-h-[96vh] sm:max-h-full  sm:py-[5vw] px-[1.5vw]  top-[0]   translate-y-[10%]  z-[999]   sm:gap-[4vw]  bg-[#111111] settings flex flex-col gap-[1.5vw] border-[#434343] overflow-hidden ${
           hide ? "right-[-50vw] sm:right-[-110vw]" : "right-[10vw] sm:right-0"
         } border transition duration-[1.5s]`}
         ref={ref_modal}

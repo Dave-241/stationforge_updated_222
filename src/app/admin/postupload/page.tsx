@@ -207,6 +207,7 @@ export default function Home() {
           setuploading_text("Cancelling Data  ...");
           setupload_progress("100%");
           // Check if upload is cancelled.current
+
           deleteDoc(doc(db, "posts", postDocRef.id))
             .then(() => {
               deleteFilesInFolder(`posts/${postId}`);
@@ -247,7 +248,7 @@ export default function Home() {
           if (cancelled.current) {
             setuploading_text("Cancelling Data  ...");
             setupload_progress("100%");
-
+            uploadTask.cancel(); // Cancel the Firebase upload
             const value = await deleteDoc(doc(db, "posts", postDocRef.id));
             deleteFilesInFolder(`posts/${postId}`);
             setuploading_text("Cancel Successfull ...");

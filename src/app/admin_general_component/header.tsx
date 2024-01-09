@@ -30,6 +30,7 @@ const Header = ({ position, padding, top, blur }: any) => {
   const [mobile_bg_changer, setmobile_bg_changer] = useState<any>(false);
   const [comedown, setcomedown] = useState(false);
   const [show_search_items, setshow_search_items] = useState(false);
+  const [search_text, setsearch_text] = useState("");
   const [nav_array, setnav_array] = useState([
     {
       link: "/admin/dashboard",
@@ -199,8 +200,8 @@ const Header = ({ position, padding, top, blur }: any) => {
             {/* the search , moderator and other actions */}
             <div className="w-auto flex items-center justify-center  gap-[1vw] ">
               {/* this is the input field  */}
-              <div className="w-auto  relative items-center  flex justify-center  relative ">
-                <div className="absolute h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
+              <div className="w-auto  relative items-center  flex justify-center   ">
+                <div className="absolute  h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
                   <Image
                     src={searchimg}
                     alt="Search icon image"
@@ -210,15 +211,20 @@ const Header = ({ position, padding, top, blur }: any) => {
                 <input
                   type="text"
                   placeholder="Search dashboard"
-                  className="h-[3vw] w-[23vw]  text-white neuer text-[0.9vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] backdrop-blur-[15px] bg-transparent  border-white border-opacity-[30%] border-[0.1vw]"
+                  className="h-[3vw] w-[23vw] search  text-white neuer text-[0.9vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] backdrop-blur-[15px] bg-transparent  border-white border-opacity-[30%] border-[0.1vw]"
                   onFocus={() => {
                     setshow_search_items(true);
+                  }}
+                  onChange={(e) => {
+                    setsearch_text(e.target.value);
                   }}
                 />
                 {show_search_items && (
                   <Search_Items
                     show_search_items={show_search_items}
                     setshow_search_items={setshow_search_items}
+                    search_text={search_text}
+                    setsearch_text={setsearch_text}
                   />
                 )}
               </div>

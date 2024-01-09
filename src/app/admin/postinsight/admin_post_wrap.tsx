@@ -257,7 +257,7 @@ const Admin_Post_wrap = () => {
     <>
       {!edit_post ? (
         <>
-          {/* <PostAnalytics /> */}
+          <PostAnalytics />
           <div className="w-full flex h-fit justify-center sm:flex-col items-center py-[1vw] sm:px-[4vw] sm:py-[3vw] sm:gap-[4vw] gap-[1.4vw]">
             <h2 className="text-center neuem text-[2.7vw] sm:text-[5vw] capitalize ">
               All Posts And Insights
