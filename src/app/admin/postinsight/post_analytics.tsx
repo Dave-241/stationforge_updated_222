@@ -305,14 +305,14 @@ const PostAnalytics = () => {
 
   return (
     <div className=" px-[2vw] sm:mb-[15vw] mt-[10vw] ">
-      <div className="bg-white w-full rounded-[2vw] px-[3vw] sm:h-auto  h-[40vw] flex flex-col gap-[1vw] py-[3vw] mb-[4vw]">
-        <h2 className="neuem text-[3vw] font-[800] sm:text-[5vw]  ">
+      <div className="bg-white w-full rounded-[2vw] px-[3vw] sm:h-auto sm:gap-[5vw]  h-[40vw] flex flex-col gap-[1vw] py-[3vw] mb-[4vw]">
+        <h2 className="neuem text-[3vw] font-[800] sm:text-[7vw]  ">
           Post Analytics
         </h2>
 
-        <div className="flex w-[30vw] gap-[6vw]   justify-between">
+        <div className="flex w-[30vw] gap-[6vw] sm:w-[80vw]   justify-between">
           <select
-            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] focus:outline-none"
+            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[13vw] focus:outline-none"
             value={selectedYear}
             onChange={(e) => setSelectedYear(parseInt(e.target.value))}
           >
@@ -324,7 +324,7 @@ const PostAnalytics = () => {
           </select>
 
           <select
-            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] focus:outline-none"
+            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[13vw] focus:outline-none"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
           >
