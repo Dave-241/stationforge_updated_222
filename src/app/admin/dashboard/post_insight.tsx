@@ -44,7 +44,7 @@ const Dashboard_post_analytics = () => {
   const chartRef = useRef(null);
   // const [selectedYear, setSelectedYear] = useState("2023");
   // const [selectedMonth, setSelectedMonth] = useState("01");
-  const [chartData, setChartData] = useState({
+  const [chartData, setChartData] = useState<any>({
     // ... existing data and labels
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
@@ -52,7 +52,7 @@ const Dashboard_post_analytics = () => {
         label: "",
         data: [0, 0, 0, 0], // Make sure these are valid numbers
         fill: true,
-        backgroundColor: "rgba(75,192,192,0.2)",
+        // backgroundColor: "rgba(75,192,192,0.2)",
         borderColor: "",
         borderWidth: 0, // Ensure this is greater than 0
         tension: 0.4, // Smoothness of the line
@@ -193,6 +193,7 @@ const Dashboard_post_analytics = () => {
               borderWidth: 0, // Ensure this is greater than 0
               tension: 0.1,
               borderColor: "#CCFF00", // Smoothness of the line
+              borderRadius: 10, // Set the border radius for the bars
               pointBackgroundColor: "white",
               pointBorderColor: "black",
               pointHoverBackgroundColor: "white",
@@ -252,7 +253,7 @@ const Dashboard_post_analytics = () => {
           tickWidth: 2,
           lineWidth: 2,
           offset: true,
-          drawTicks: true, // true is default
+          drawTicks: false, // true is default
           drawOnChartArea: false, // true is default
         },
 
@@ -268,7 +269,7 @@ const Dashboard_post_analytics = () => {
           tickWidth: 2,
           lineWidth: 2,
           offset: true,
-          drawTicks: true, // true is default
+          drawTicks: false, // true is default
           drawOnChartArea: false, // true is default
         },
 
@@ -294,6 +295,7 @@ const Dashboard_post_analytics = () => {
       line: {
         borderWidth: 3, // Thickness of the line
       },
+      //   cutout: false, // Set cutout to false to remove overflowing lines
     },
   };
 
