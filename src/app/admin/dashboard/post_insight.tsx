@@ -334,7 +334,7 @@ const Dashboard_post_analytics = () => {
   }, [selectedYear, selectedMonth]); // Trigger effect when year or month changes
 
   return (
-    <div className=" px-[1vw] sm:mb-[15vw]  sm:mt-[10vw] ">
+    <div className=" px-[1vw] ">
       <div className="bg-white w-full rounded-[2vw] px-[3vw] sm:h-auto sm:gap-[5vw]  h-[40vw] flex flex-col gap-[1.3vw] py-[2vw] ">
         <h2 className="neuem text-[2vw] font-[800] sm:text-[7vw]  ">
           Total posts Insights
@@ -365,13 +365,17 @@ const Dashboard_post_analytics = () => {
             ))}
           </select>
         </div>
-        <div className="w-full h-[38vw] sm:h-[100vw]">
+        <div className="w-full h-[38vw] sm:h-[60vw]">
           <Bar data={chartData} ref={chartRef} options={options} />
         </div>
 
         <div className="flex text-[1vw] items-center gap-[1vw] sm:text-[3vw] w-full justify-between sm:gap-[2vw] ">
-          <div className="flex items-center gap-[0.5vw]">
-            <Image src={downloads} alt="downloads" className="w-[3vw] h-fit" />{" "}
+          <div className="flex items-center sm:gap-[2vw] gap-[0.5vw]">
+            <Image
+              src={downloads}
+              alt="downloads"
+              className="w-[3vw] sm:w-[12vw] h-fit"
+            />{" "}
             <p className="font-bold">
               Total post engagement <br />
               <span className="font-medium">

@@ -104,7 +104,7 @@ export default function Home() {
             top={"1vw"}
             blur={false}
           />
-          <div className="w-full h-[40vw] px-[2vw] py-[1vw] sm:h-[190vw] flex  sm:relative top-[1vw] left-0 ">
+          <div className="w-full   h-[40vw] px-[2vw] py-[1vw] sm:h-[190vw] flex  sm:relative top-[1vw] left-0 ">
             <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:drop-shadow-none sm:rounded-[4vw] rounded-[2vw] relative h-full">
               <Dashboard_hero_section
                 admin_username={admin_username}
@@ -114,7 +114,7 @@ export default function Home() {
             </div>
           </div>
           {/* // this is for analytics */}
-          <div className="flex my-[2vw]  sm:flex-col">
+          <div className="flex my-[2vw] sm:gap-[10vw]  sm:py-[10vw] sm:flex-col">
             <div className="w-[58vw] sm:w-full h-auto">
               <Digital_sales_analytics />
             </div>
