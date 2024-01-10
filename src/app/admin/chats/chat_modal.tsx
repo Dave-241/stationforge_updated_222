@@ -269,7 +269,7 @@ const Moderator_Chats_modal = ({
             </div>
           </div>
 
-          {show_end_and_start_btn && (
+          {/* {show_end_and_start_btn && (
             <button
               className="sm:w-[30vw] w-[10vw] h-[3vw] rounded-[1vw] hover:bg-opacity-[30%] bg-black text-white text-[1vw] sm:text-[3vw] sm:h-[10vw] sm:rounded-[3vw]  neuer   "
               style={{
@@ -288,7 +288,7 @@ const Moderator_Chats_modal = ({
             >
               {chat_session_id.length ? "End session" : "Start chat"}
             </button>
-          )}
+          )} */}
         </div>
 
         {/* this is for the bottom input for sending messages relative box  */}

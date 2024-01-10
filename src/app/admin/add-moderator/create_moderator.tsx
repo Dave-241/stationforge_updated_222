@@ -249,7 +249,7 @@ export default function Create_moderator_component({
       >
         <form
           onSubmit={handleRegister}
-          className="w-[30vw] px-[2.5vw] sm:px-[2vw] sm:py-[8vw] rounded-[2vw] sm:rounded-[4vw] py-[2.5vw] bg-[#D9D9D9] bg-opacity-[10%] h-auto sm:w-[95vw] sm:px-[3vw]  z-[5] sm:gap-[5vw] gap-[1.2vw] flex flex-col justify-center"
+          className="w-[30vw] px-[2.5vw]  sm:py-[8vw] rounded-[2vw] sm:rounded-[4vw] py-[2.5vw] bg-[#D9D9D9] bg-opacity-[10%] h-auto sm:w-[95vw] sm:px-[3vw]  z-[5] sm:gap-[5vw] gap-[1.2vw] flex flex-col justify-center"
         >
           <h1 className="capitalize neuem text-[2vw] text-center text-white mb-[0.5vw]  font-[700] sm:text-[6vw]">
             Create log in info

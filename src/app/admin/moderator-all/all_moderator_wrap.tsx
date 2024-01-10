@@ -17,6 +17,7 @@ import firebaseConfig from "@/app/utils/fire_base_config";
 import { initializeApp } from "firebase/app";
 import Each_moderator from "./each_moderator";
 import Each_moderator_preloader from "./all_moderator_preloader";
+import Details_modal from "./details_modal";
 
 const All_moderator_wrap = ({
   setstage,
@@ -78,6 +79,14 @@ const All_moderator_wrap = ({
 
   const items = ["", "", "", "", "", ""];
 
+  const [show_modal, setshow_modal] = useState(false);
+  const [username, setusername] = useState("");
+  const [id, setid] = useState("");
+  const get_detials = (username: any, id: any) => {
+    setusername(username);
+    setid(id);
+    setshow_modal(true);
+  };
   return (
     <>
       <div className=" fixed h-full w-[calc(100vw/3)] sm:border-none sm:w-full border-r-white border-opacity-[20%] border-r-[0.14vw] z-[99] bg-black overflow-y-scroll scroll-container">
@@ -100,11 +109,22 @@ const All_moderator_wrap = ({
                     setshow_mobile_chats={setshow_mobile_chats}
                     fetchData={fetchData}
                     setmoderator_name={setmoderator_name}
+                    show_modal={show_modal}
+                    setshow_modal={setshow_modal}
+                    get_detials={get_detials}
                   />
                 );
               })}
         </div>
       </div>
+
+      {show_modal && (
+        <Details_modal
+          username={username}
+          e={id}
+          setshow_modal={setshow_modal}
+        />
+      )}
     </>
   );
 };

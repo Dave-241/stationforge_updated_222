@@ -1,6 +1,8 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
+import Details_modal from "./details_modal";
 
 const Each_moderator = ({
   data,
@@ -8,6 +10,9 @@ const Each_moderator = ({
   setshow_mobile_chats,
   fetchData,
   setmoderator_name,
+  show_modal,
+  setshow_modal,
+  get_detials,
 }: any) => {
   return (
     <>
@@ -52,7 +57,13 @@ const Each_moderator = ({
             View Chats
           </button>
 
-          <button className="text-[0.9vw] hover:text-white transition duration-[0.6s]  text-[#3f4916] underline underline-offset-2 w-full text-start sm:text-[3vw]">
+          <button
+            className="text-[0.9vw] hover:text-white transition duration-[0.6s]  text-[#3f4916] underline underline-offset-2 w-full text-start sm:text-[3vw]"
+            onClick={() => {
+              get_detials(data.moderator.Username, data.moderator.userid);
+              console.log(data.moderator.userid);
+            }}
+          >
             Details
           </button>
         </div>
