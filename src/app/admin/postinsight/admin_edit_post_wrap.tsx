@@ -308,11 +308,13 @@ const Admin_edit_post_wrap = (props: any) => {
           />
 
           {is_updating && (
-            <div className="w-full h-full fixed top-0 z-[9999] left-0 bg-black bg-opacity-[50%] flex justify-center items-center">
+            <div className="w-full h-full fixed top-0 z-[9999] left-0 bg-black bg-opacity-[50%] flex justify-center sm:px-[5vw] items-center">
               {" "}
-              <div className="w-[30vw] h-[12vw] px-[2vw] gap-[2vw] flex-col rounded-[2vw] bg-white flex justify-center items-center ">
-                <p className="neuer text-[1.4vw] capitalize">Updating Post</p>
-                <div className="w-full bg-[gray] h-[1.4vw] rounded-[2vw] overflow-hidden">
+              <div className="w-[30vw] h-[12vw] sm:h-[30vw] sm:w-full px-[2vw] gap-[2vw] flex-col rounded-[2vw] bg-white flex justify-center items-center ">
+                <p className="neuer text-[1.4vw] capitalize sm:text-[4vw]">
+                  Updating Post
+                </p>
+                <div className="w-full bg-[gray] h-[1.4vw] sm:h-[5vw] rounded-[2vw] overflow-hidden">
                   <div
                     className=" h-full bg-[#CCFF00]"
                     style={{

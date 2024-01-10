@@ -174,7 +174,7 @@ const Admin_edit_post = (props: any) => {
               in={true}
               style={{ width: "100%" }}
             >
-              <div className=" w-full  sm:overflow-hidden h-[25vw] sm:h-[60vw] sm:gap-[2vw]  relative flex flex-wrap justify-center items-center gap-[0.4vw]">
+              <div className=" w-full  overflow-hidden h-[25vw] sm:h-[60vw] sm:gap-[2vw]  relative flex flex-wrap justify-center items-center gap-[0.4vw]">
                 {trimmedMediaFiles.map((file: any, index: any) => {
                   // Check if the file is a video based on its link
                   const isVideoLink =

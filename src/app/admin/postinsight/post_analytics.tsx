@@ -341,7 +341,7 @@ const PostAnalytics = () => {
     <div className=" px-[2vw] sm:mb-[15vw] sm:mt-[10vw] ">
       <div className="bg-white w-full rounded-[2vw] px-[3vw] sm:h-auto sm:gap-[5vw]  h-[40vw] flex flex-col gap-[1vw] py-[3vw] mb-[4vw]">
         <h2 className="neuem text-[3vw] font-[800] sm:text-[7vw]  ">
-          Post Analytics
+          Post Engagment Analytics
         </h2>
 
         <div className="flex w-[30vw] gap-[6vw] sm:w-[80vw]   justify-between">
