@@ -188,7 +188,7 @@ const Digital_sales_analytics = () => {
               data: weeklyData, // Make sure these are valid numbers
               fill: true,
               backgroundColor: "#CCFF00",
-              borderWidth: 1, // Ensure this is greater than 0
+              borderWidth: 4, // Ensure this is greater than 0
               tension: 0.4,
               borderColor: "#CCFF00", // Smoothness of the line
               pointBackgroundColor: "white",
