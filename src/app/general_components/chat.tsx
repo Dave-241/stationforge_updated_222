@@ -218,12 +218,8 @@ const Chats_modal = () => {
         setmoderator_name("");
 
         // // make the post request to send emails to all moderators and admins
-        // let data = JSON.stringify({
-        //   user_id: currentUserUid,
-        // });
-        // axios.post("/api/contact", data, {
-        //   headers: { "Content-Type": "application/json" },
-        // });
+        show_test_funtion();
+
         addDoc(chatTextref, {
           createdAt: serverTimestamp(),
           from: "moderator",
@@ -323,7 +319,6 @@ const Chats_modal = () => {
   };
   const handlesubmit = (e: any) => {
     e.preventDefault();
-    show_test_funtion();
     setbtn_disabled(true);
     setchat_text("");
     setbtn_disabled(false);
