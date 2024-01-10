@@ -64,7 +64,7 @@ export default function Signin_component() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is authenticated, redirect to a protected route
-        router.push("/"); // Replace with your protected route
+        router.push("/onboarding"); // Replace with your protected route
       } else {
         // User is not authenticated, you can keep them on the current page or redirect them to a login page
       }
