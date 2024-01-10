@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { FadeInTransition } from "react-transitions-library";
+import love from "../../../public/subscription/love.png";
 
 const Comments_modal = (props: any) => {
   const { commentwrap, hide } = props;
@@ -67,22 +68,22 @@ const Comments_modal = (props: any) => {
                 return (
                   <div
                     key={index}
-                    className="w-full flex  gap-[1vw] items-center sm:gap-[3vw] h-auto "
+                    className="w-full  relative flex  gap-[1vw] items-center sm:gap-[3vw] h-auto "
                   >
                     <div
-                      className="w-[3.4vw] h-[3vw] sm:w-[12vw] sm:h-[10vw] overflow-hidden avater_bg  rounded-[100%] "
+                      className="w-[3.4vw] h-[3.4vw] sm:w-[12vw] sm:h-[12vw] overflow-hidden avater_bg  rounded-[100%] "
                       style={{ backgroundImage: "url(/cover.webp)" }}
                     >
                       <Image
                         src={e.avatar}
                         alt="comment images"
-                        className="w-full h-full"
+                        className="w-full h-fit scale-[1.1]"
                         unoptimized
                         width="0"
                         height="0"
                       />{" "}
                     </div>
-                    <div className="w-full h-auto ">
+                    <div className=" h-auto ">
                       <p className="text-[0.7vw] sm:text-[2.5vw] capitalize neuer text-white text-opacity-[90%]">
                         {e.name}
                       </p>
@@ -90,6 +91,12 @@ const Comments_modal = (props: any) => {
                         {e.text}
                       </p>
                     </div>
+
+                    {/* <Image
+                      src={love}
+                      alt="love"
+                      className="w-[1.2vw] h-fit sm:w-[5vw] absolute right-0 top-[50%] translate-y-[-50%]"
+                    /> */}
                   </div>
                 );
               })}
