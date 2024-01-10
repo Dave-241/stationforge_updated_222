@@ -86,7 +86,7 @@ export default function Home() {
     setlibary_is_loading(true);
 
     // Real-time listener for the user's library
-    setis_network_err(true);
+    // setis_network_err(true);
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       const postArray = [];
 
@@ -117,6 +117,7 @@ export default function Home() {
             setis_network_err(false);
           }
         } catch (error) {
+          setis_network_err(true);
           console.error("Error fetching product data:", error);
         }
       }
