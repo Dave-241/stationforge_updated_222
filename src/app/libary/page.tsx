@@ -89,7 +89,19 @@ export default function Home() {
     // setis_network_err(true);
     const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       const postArray = [];
-
+      // console.log("empty ohh");
+      if (!querySnapshot.empty) {
+        setis_network_err(false);
+        setis_libary_empty(false);
+      } else if (!navigator.onLine) {
+        //  console.log("empty ohh");
+        setis_libary_empty(false);
+        setis_network_err(true);
+      } else if (querySnapshot.empty) {
+        //  console.log("empty ohh");
+        setis_libary_empty(true);
+        setis_network_err(false);
+      }
       for (const change of querySnapshot.docs) {
         const libraryData = change.data();
         const productRef = doc(db, "products", libraryData.productid);
@@ -110,11 +122,7 @@ export default function Home() {
               downloaded: libraryData.downloaded,
             };
             postArray.push(libray_collections);
-            setis_network_err(false);
-            setis_libary_empty(false);
           } else {
-            setis_libary_empty(true);
-            setis_network_err(false);
           }
         } catch (error) {
           setis_network_err(true);
