@@ -34,7 +34,7 @@ const Comments_modal = (props: any) => {
         onClick={() => hide(false)}
       >
         <FadeInTransition
-          timeout={1500}
+          timeout={1000}
           from={0}
           to={1}
           in={true}
@@ -48,7 +48,7 @@ const Comments_modal = (props: any) => {
           }}
           onClick={handleModalClick}
         >
-          <div className="bg-[#111111] relative rounded-[2vw] sm:rounded-[4vw] pb-[2vw] w-[34vw] sm:w-[80vw] sm:h-[130vw] gap-[1vw] h-[34vw] flex items-start justify-start flex-col overflow-hidden ">
+          <div className="bg-[#111111] relative rounded-[2vw] sm:rounded-[4vw] pb-[2vw] w-[34vw] sm:w-[90vw] sm:h-[130vw] gap-[1vw] h-[34vw] flex items-start justify-start flex-col overflow-hidden ">
             <div className="flex sticky top-0 justify-between border-b-[white] border-opacity-[20%] border-b-[0.1vw] items-center px-[2vw]  w-full  py-[1vw] sm:py-[3vw] sm:px-[4vw] bg-[#111111]">
               <p className="text-white neuer text-[1.2vw] sm:text-[3vw] ">
                 Viewing {commentwrap.length} Comments
@@ -62,7 +62,7 @@ const Comments_modal = (props: any) => {
             </div>
 
             {/* the main comment section */}
-            <div className="w-full  flex flex-col gap-[1.5vw] sm:gap-[5vw]  overflow-y-scroll scroll-container px-[2vw] sm:px-[4vw] h-auto">
+            <div className="w-full     sm:mt-[2.5vw] flex flex-col gap-[1.5vw] sm:gap-[5vw]  overflow-y-scroll scroll-container px-[2vw] sm:px-[4vw] h-auto">
               {commentwrap.map((e: any, index: any) => {
                 return (
                   <div

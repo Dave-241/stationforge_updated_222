@@ -28,6 +28,7 @@ import DeletPost_modal from "./delete_post_modal";
 import { deleteObject, getStorage, listAll, ref } from "firebase/storage";
 import Pinned_modal from "./admin_pinned";
 import Display_media from "./display_media";
+import Comments_modal from "@/app/subscriptions/comment";
 
 const Admin_Post = (props: any) => {
   const [liked, setliked] = useState(false);
@@ -528,9 +529,10 @@ const Admin_Post = (props: any) => {
             onClick={() => {
               // setcomment_info_data(postdata.comments);
               setshowcomment(true);
+              // console.log(comment_info_data, postdata.comments);
             }}
           >
-            {showcomment ? "" : " See comments"}
+            {showcomment ? "" : `See  comments `}
           </button>
 
           {/* the form to handle comments  */}
@@ -559,9 +561,13 @@ const Admin_Post = (props: any) => {
         </div>
       </section>
 
-      {/* {showcomment && (
-        <Comments_modal commentwrap={comment_info_data} hide={setshowcomment} />
-      )} */}
+      {showcomment && (
+        <Comments_modal
+          commentwrap={comment_info_data}
+          hide={setshowcomment}
+          dark={true}
+        />
+      )}
 
       {showdeletemodal && (
         <DeletPost_modal
