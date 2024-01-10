@@ -35,6 +35,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { fromUnixTime } from "date-fns";
 import format from "date-fns/format";
+import axios from "axios";
 
 const Chats_modal = () => {
   const [loading, setloading] = useState(false);
@@ -156,6 +157,47 @@ const Chats_modal = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
+  const show_test_funtion = async () => {
+    const moderator_ref = collection(db, "users");
+    const q = query(
+      moderator_ref,
+      where("role", "==", "moderator"),
+      where("role", "==", "admin"),
+    );
+    const users_ref = collection(db, "users");
+    const user_q = query(users_ref, where("userid", "==", currentUserUid));
+    const querySnapshot = await getDocs(q);
+    const user_snapshot = await getDocs(user_q);
+
+    const moderatorUsers: any = [];
+    querySnapshot.forEach((doc) => {
+      moderatorUsers.push(doc.data().Email);
+    });
+
+    const name = user_snapshot.docs[0].data().Username;
+
+    // console.log(moderatorUsers);
+
+    // // make the post request to send emails to all moderators and admins
+    // let data = JSON.stringify({
+    //   user_id: currentUserUid,
+    // });
+    axios
+      .post(
+        "/api/contact",
+        { email: moderatorUsers, name: name },
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const currentUserUid = auth.currentUser?.uid;
 
   const create_new_session = () => {
@@ -174,6 +216,14 @@ const Chats_modal = () => {
         setshow_end_and_start_btn(true);
         setmoderator_avater("");
         setmoderator_name("");
+
+        // // make the post request to send emails to all moderators and admins
+        // let data = JSON.stringify({
+        //   user_id: currentUserUid,
+        // });
+        // axios.post("/api/contact", data, {
+        //   headers: { "Content-Type": "application/json" },
+        // });
         addDoc(chatTextref, {
           createdAt: serverTimestamp(),
           from: "moderator",
@@ -273,6 +323,7 @@ const Chats_modal = () => {
   };
   const handlesubmit = (e: any) => {
     e.preventDefault();
+    show_test_funtion();
     setbtn_disabled(true);
     setchat_text("");
     setbtn_disabled(false);

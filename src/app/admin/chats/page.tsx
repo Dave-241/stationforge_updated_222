@@ -103,7 +103,7 @@ export default function Home() {
 
         setpage_loader(false);
         setpage_loader(true);
-        route.push("/"); // User is not authenticated, you can keep them on the current page or redirect them to a login page
+        route.push("/login?ref=chats");
       }
     });
 
