@@ -1,12 +1,13 @@
 // pages/postAnalytics.js
 import React, { useState, useEffect, useRef } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -15,6 +16,7 @@ import downloads from "../../../../public/admin_section/dashboard/downloads.png"
 // Register chart components
 ChartJS.register(
   CategoryScale,
+  BarElement,
   LinearScale,
   PointElement,
   LineElement,
@@ -35,7 +37,7 @@ import {
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import Image from "next/image";
-const Digital_sales_analytics = () => {
+const Dashboard_post_analytics = () => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -155,7 +157,8 @@ const Digital_sales_analytics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const collectionRef = collection(db, "libray");
+        // const db = firebase.firestore();
+        const collectionRef = collection(db, "post_engagement");
 
         // Calculate the start and end of the selected month
         const startOfMonth = new Date(selectedYear, selectedMonth, 1);
@@ -164,20 +167,19 @@ const Digital_sales_analytics = () => {
         const querySnapshot = await getDocs(
           query(
             collectionRef,
-            where("downloadedAt", ">=", startOfMonth),
-            where("downloadedAt", "<=", endOfMonth),
-            where("downloaded", "==", true),
+            where("createdAt", ">=", startOfMonth),
+            where("createdAt", "<=", endOfMonth),
           ),
         );
 
         const weeklyData = [0, 0, 0, 0];
 
-        // Calculate weekly sums using downloadedAt
+        // Calculate weekly sums
         querySnapshot.forEach((doc) => {
-          const downloadedAt = doc.data().downloadedAt.toDate();
-          const week = Math.floor((downloadedAt.getDate() - 1) / 7); // Assuming a week starts from day 1
+          const createdAt = doc.data().createdAt.toDate();
+          const week = Math.floor((createdAt.getDate() - 1) / 7); // Assuming a week starts from day 1
 
-          weeklyData[week] += 1; // Increment by 1 for each downloaded document
+          weeklyData[week] += 1; // Increment by 1 for each post engagement
         });
 
         setChartData({
@@ -187,9 +189,9 @@ const Digital_sales_analytics = () => {
               label: "",
               data: weeklyData, // Make sure these are valid numbers
               fill: true,
-              backgroundColor: "#CCFF00",
-              borderWidth: 1, // Ensure this is greater than 0
-              tension: 0.4,
+              backgroundColor: ["#E0E0E0", "#CCFF00", "#E0E0E0", "#CCFF00"], // Specify colors for each bar
+              borderWidth: 0, // Ensure this is greater than 0
+              tension: 0.1,
               borderColor: "#CCFF00", // Smoothness of the line
               pointBackgroundColor: "white",
               pointBorderColor: "black",
@@ -246,12 +248,12 @@ const Digital_sales_analytics = () => {
           color: "#aaa", // for the grid lines
           tickColor: "#aaa", // for the tick mark
           tickBorderDash: [5, 4], // also for the tick, if long enough
-          tickLength: 1, // just to see the dotted line
-          tickWidth: 1,
-          lineWidth: 1,
-          // offset: true,
+          tickLength: 20, // just to see the dotted line
+          tickWidth: 2,
+          lineWidth: 2,
+          offset: true,
           drawTicks: true, // true is default
-          drawOnChartArea: true, // true is default
+          drawOnChartArea: false, // true is default
         },
 
         beginAtZero: true,
@@ -262,12 +264,12 @@ const Digital_sales_analytics = () => {
           color: "#aaa", // for the grid lines
           tickColor: "#aaa", // for the tick mark
           tickBorderDash: [5, 4], // also for the tick, if long enough
-          tickLength: 1, // just to see the dotted line
-          tickWidth: 1,
-          lineWidth: 1,
-          // offset: true,
+          tickLength: 20, // just to see the dotted line
+          tickWidth: 2,
+          lineWidth: 2,
+          offset: true,
           drawTicks: true, // true is default
-          drawOnChartArea: true, // true is default
+          drawOnChartArea: false, // true is default
         },
 
         beginAtZero: true,
@@ -300,7 +302,7 @@ const Digital_sales_analytics = () => {
   useEffect(() => {
     const fetchTotalPosts = async () => {
       try {
-        const collectionRef = collection(db, "libray");
+        const collectionRef = collection(db, "post_engagement");
 
         // Calculate the start and end of the selected month
         const startOfMonth = new Date(selectedYear, selectedMonth, 1);
@@ -309,9 +311,8 @@ const Digital_sales_analytics = () => {
         const totalPostsSnapshot = await getDocs(
           query(
             collectionRef,
-            where("downloadedAt", ">=", startOfMonth),
-            where("downloadedAt", "<=", endOfMonth),
-            where("downloaded", "==", true),
+            where("createdAt", ">=", startOfMonth),
+            where("createdAt", "<=", endOfMonth),
           ),
         );
 
@@ -334,10 +335,10 @@ const Digital_sales_analytics = () => {
     <div className=" px-[1vw] sm:mb-[15vw]  sm:mt-[10vw] ">
       <div className="bg-white w-full rounded-[2vw] px-[3vw] sm:h-auto sm:gap-[5vw]  h-[40vw] flex flex-col gap-[1.3vw] py-[2vw] ">
         <h2 className="neuem text-[2vw] font-[800] sm:text-[7vw]  ">
-          Digital Downloads Analytics
+          Total posts Insights
         </h2>
 
-        <div className="flex w-[30vw] gap-[6vw] sm:w-[80vw]   justify-between">
+        <div className="flex w-[20vw] gap-[2vw] sm:w-[80vw]   justify-between">
           <select
             className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[12vw] sm:rounded-[3vw] focus:outline-none"
             value={selectedYear}
@@ -363,14 +364,14 @@ const Digital_sales_analytics = () => {
           </select>
         </div>
         <div className="w-full h-[38vw] sm:h-[100vw]">
-          <Line data={chartData} ref={chartRef} options={options} />
+          <Bar data={chartData} ref={chartRef} options={options} />
         </div>
 
         <div className="flex text-[1vw] items-center gap-[1vw] sm:text-[3vw] w-full justify-between sm:gap-[2vw] ">
           <div className="flex items-center gap-[0.5vw]">
             <Image src={downloads} alt="downloads" className="w-[3vw] h-fit" />{" "}
             <p className="font-bold">
-              All Downloads for this month <br />
+              Total post engagement <br />
               <span className="font-medium">
                 {getMonthName(selectedMonth)}{" "}
               </span>
@@ -384,4 +385,4 @@ const Digital_sales_analytics = () => {
   );
 };
 
-export default Digital_sales_analytics;
+export default Dashboard_post_analytics;

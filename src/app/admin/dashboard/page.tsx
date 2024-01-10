@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 import New_Subscribers_wrap from "./new_subscribers_wrap";
 import Digital_sales_analytics from "./digital_sales_analytics";
+import Dashboard_post_analytics from "./post_insight";
 
 export default function Home() {
   const {
@@ -113,9 +114,12 @@ export default function Home() {
             </div>
           </div>
           {/* // this is for analytics */}
-          <div className="flex border2">
-            <div className="w-[60vw] h-auto">
+          <div className="flex my-[2vw]  sm:flex-col">
+            <div className="w-[58vw] sm:w-full h-auto">
               <Digital_sales_analytics />
+            </div>
+            <div className="w-[40vw] sm:w-full h-auto">
+              <Dashboard_post_analytics />
             </div>
           </div>
           <div className="w-full px-[2vw] py-[2vw] sm:mt-[8vw]    h-auto">
