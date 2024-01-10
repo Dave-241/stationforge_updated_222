@@ -218,7 +218,7 @@ const Admin_edit_post = (props: any) => {
                           // <img
                           //   src={file.link}
                           //   alt={`Media ${index + 1}`}
-                          //   className="w-full border2 translate-y-[-2vw] h-auto cursor-pointer"
+                          //   className="w-full  translate-y-[-2vw] h-auto cursor-pointer"
                           //   onClick={() => {
                           //     setvideo(false);
                           //     setmaindata(file);
@@ -370,17 +370,17 @@ const Admin_edit_post = (props: any) => {
         {/* text upload */}
         {/* text upload */}
         {/* text upload */}
-        <div className="w-full h-[40vw] relative px-[3vw] flex flex-col gap-[2vw] justify-center items-end bg-white rounded-[2vw]">
+        <div className="w-full h-[40vw] sm:rounded-[4vw] sm:gap-[5vw] sm:h-[135vw]  relative px-[3vw] flex flex-col gap-[2vw] justify-center items-end bg-white rounded-[2vw]">
           <div className="w-full  flex flex-col gap-[0.5vw] ">
             <label
               htmlFor=""
-              className="neuem font-[700] text-[1.2vw] capitalize"
+              className="neuem font-[700] text-[1.2vw] sm:text-[3.5vw]  capitalize"
             >
               Add Post Title
             </label>
             <input
               type="text"
-              className="w-full border-[#C8C8C8] duration-[0.6s] transition focus:outline-none focus:border-[#CCFF00] border-[0.1vw] neuer text-[1.2vw] rounded-[1.1vw] h-[3.2vw] pl-[1vw] capitalize"
+              className="w-full border-[#C8C8C8] sm:text-[3.5vw]  sm:px-[4vw] sm:h-[13vw] sm:rounded-[5vw] duration-[0.6s] transition focus:outline-none focus:border-[#CCFF00] border-[0.1vw] neuer text-[1.2vw] rounded-[1.1vw] h-[3.2vw] pl-[1vw] capitalize"
               onChange={(e) => {
                 setcopy_Title(e.target.value);
                 setlocal_post_err("");
@@ -391,16 +391,16 @@ const Admin_edit_post = (props: any) => {
           <div className="w-full  flex flex-col gap-[0.5vw] ">
             <label
               htmlFor=""
-              className="neuem font-[700] text-[1.2vw] capitalize"
+              className="neuem font-[700] text-[1.2vw] sm:text-[3.5vw]  capitalize"
             >
               Add Post Description{" "}
-              <span className="text-[0.9vw] text-[red]">
+              <span className="text-[0.9vw] sm:text-[2.5vw] text-[red]">
                 Kindly note : {"<br/>"} for line breaks
               </span>
             </label>
             <textarea
               placeholder="if you'd like to add a line break to your description, just use '<br/>'. For instance, using '<br/> <br/>' will move your text down two lines."
-              className="w-full border-[#C8C8C8] duration-[0.6s] transition neuer focus:outline-none focus:border-[#CCFF00] resize-none border-[0.1vw] rounded-[1.1vw] h-[10vw] py-[1vw] text-[1.2vw] px-[1.3vw]"
+              className="w-full border-[#C8C8C8] sm:text-[3.5vw]  sm:p-[5vw] sm:h-[50vw] sm:rounded-[5vw] duration-[0.6s] transition neuer focus:outline-none focus:border-[#CCFF00] resize-none border-[0.1vw] rounded-[1.1vw] h-[10vw] py-[1vw] text-[1.2vw] px-[1.3vw]"
               name=""
               id=""
               onChange={(e) => {
@@ -414,18 +414,18 @@ const Admin_edit_post = (props: any) => {
           <div className="w-full  flex flex-col gap-[0.5vw] ">
             <label
               htmlFor=""
-              className="neuem  font-[700] text-[1.2vw] capitalize"
+              className="neuem  font-[700] text-[1.2vw] sm:text-[3.5vw]  capitalize"
             >
               Add Tag
             </label>
             <input
               type="text"
-              className="w-full text-[1.2vw] border-[#C8C8C8] duration-[0.6s] transition focus:outline-none focus:border-[#CCFF00] neuer border-[0.1vw] rounded-[1.1vw] h-[3.2vw] pl-[1vw]"
+              className="w-full text-[1.2vw] border-[#C8C8C8] sm:text-[3.5vw]  sm:h-[10vw] sm:rounded-[5vw]  duration-[0.6s] transition focus:outline-none focus:border-[#CCFF00] neuer border-[0.1vw] rounded-[1.1vw] h-[3.2vw] pl-[1vw]"
             />
           </div>
 
           <button
-            className="w-fit py-[0.9vw] px-[5vw] neuem text-[1.2vw] bg-[#CCFF00] text-black mt-[1vw] hover:bg-opacity-[40%] transition duration-[0.6s] rounded-[1.4vw]"
+            className="w-fit sm:w-full sm:px-0 sm:py-0 sm:h-[13vw] sm:rounded-[3vw] py-[0.9vw] px-[5vw] neuem text-[1.2vw] sm:text-[4vw] bg-[#CCFF00] text-black mt-[1vw] hover:bg-opacity-[40%] transition duration-[0.6s] rounded-[1.4vw]"
             onClick={() => {
               update_post();
             }}
@@ -444,12 +444,12 @@ const Admin_edit_post = (props: any) => {
       {/*  */}
       {/*  */}
       {/*  */}
-      <div className="w-[30vw] z-[99] py-[2vw] px-[2vw] bg-white h-[35vw] rounded-[2vw] sm:relative border2 sm:top-0  fixed right-[3.5vw] top-[10vw] flex flex-col justify-between ">
+      <div className="w-[30vw] z-[99] sm:w-[94vw] sm:mx-auto py-[2vw]  px-[2vw] bg-white h-[35vw] rounded-[2vw] sm:relative  sm:top-[10vw] sm:h-[80vw] sm:gap-[3vw]  fixed right-[3.5vw] sm:right-0 sm:py-[5vw] sm:px-[5vw] sm:rounded-[4vw] top-[10vw] flex flex-col justify-between  ">
         <div className="w-full h-auto">
-          <h2 className="text-[1.4vw] pb-[2vw] neuem">
+          <h2 className="text-[1.4vw] pb-[2vw] neuem sm:text-[4vw] ">
             Who can see this post?
           </h2>
-          <ul className=" flex flex-col gap-[2vw] ">
+          <ul className=" flex flex-col gap-[2vw]  sm:gap-[4vw] ">
             {options.map((option) => (
               <li
                 key={option.id}
@@ -457,31 +457,31 @@ const Admin_edit_post = (props: any) => {
                   handleRadioChange(option.id);
                   setlocal_post_err("");
                 }}
-                className="flex justify-start cursor-pointer  py-[0.2vw] gap-[2vw] items-center"
+                className="flex justify-start cursor-pointer sm:gap-[4vw]  py-[0.2vw] gap-[2vw] items-center"
               >
                 <div
-                  className="w-[2vw] flex justify-center items-center  h-[2vw] border-[#B7B7B7] border-[0.1vw] rounded-[0.4vw]"
+                  className="w-[2vw] sm:w-[5vw] sm:h-[5vw] flex justify-center items-center  h-[2vw] border-[#B7B7B7] border-[0.1vw] rounded-[0.4vw]"
                   style={{
                     backgroundColor: copy_role == option.id ? "#CCFF00" : "",
                   }}
                 >
                   <i
-                    className="bi text-[2vw] bi-check-lg"
+                    className="bi text-[2vw] sm:text-[4vw] bi-check-lg"
                     style={{
                       display: copy_role == option.id ? "block" : "none",
                     }}
                   ></i>
                 </div>
-                <p className="neuem text-[1.4vw] cursor-pointer">
+                <p className="neuem text-[1.4vw] sm:text-[3.5vw]  cursor-pointer">
                   {option.label}
                 </p>
               </li>
             ))}
           </ul>
         </div>
-        <div className="w-full flex  gap-[2vw] justify-between items-center">
+        <div className="w-full flex  sm:gap-[5vw]  gap-[2vw] justify-between items-center">
           <button
-            className="bg-transparent hover:text-[#FF0000]  border-[0.1vw] border-black px-[2vw] py-[1vw] neuem text-[1vw]  w-fit text-center capitalize  transition duration-[0.6s] hover:bg-[#f8f8f8]"
+            className="bg-transparent hover:text-[#FF0000]  border-[0.1vw] border-black px-[2vw] py-[1vw] neuem text-[1vw] sm:w-full sm:h-[12vw] sm:rounded-[1vw] sm:text-[3.2vw]  w-fit text-center capitalize  transition duration-[0.6s] hover:bg-[#f8f8f8]"
             onClick={() => {
               reset_value();
             }}
@@ -489,7 +489,7 @@ const Admin_edit_post = (props: any) => {
             <i className="bi bi-arrow-clockwise"></i> Reset defaults
           </button>
           <button
-            className="bg-[#FF0000] text-white neuem text-[1vw] py-[1vw] px-[2vw]  w-fit text-center capitalize  hover:text-[black] transition duration-[0.6s]"
+            className="bg-[#FF0000] text-white neuem text-[1vw] sm:w-full sm:h-[12vw] sm:rounded-[1vw] sm:text-[3.2vw] py-[1vw] px-[2vw]  w-fit text-center capitalize  hover:text-[black] transition duration-[0.6s]"
             onClick={() => {
               goback();
             }}
@@ -512,6 +512,8 @@ const Admin_edit_post = (props: any) => {
           delete_media={deleteMedia}
         />
       )}
+
+      <div className="sm:h-[10vw] w-full h-0"></div>
     </>
   );
 };
