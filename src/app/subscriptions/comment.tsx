@@ -48,7 +48,7 @@ const Comments_modal = (props: any) => {
           }}
           onClick={handleModalClick}
         >
-          <div className="bg-[#111111] relative rounded-[2vw] sm:rounded-[4vw] pb-[2vw] w-[34vw] sm:w-[90vw] sm:h-[130vw] gap-[1vw] h-[34vw] flex items-start justify-start flex-col overflow-hidden ">
+          <div className="bg-[#111111] relative rounded-[2vw] sm:rounded-[4vw] pb-[2vw] w-[34vw] sm:w-[94vw] sm:h-[130vw] gap-[1vw] h-[34vw] flex items-start justify-start flex-col overflow-hidden ">
             <div className="flex sticky top-0 justify-between border-b-[white] border-opacity-[20%] border-b-[0.1vw] items-center px-[2vw]  w-full  py-[1vw] sm:py-[3vw] sm:px-[4vw] bg-[#111111]">
               <p className="text-white neuer text-[1.2vw] sm:text-[3vw] ">
                 Viewing {commentwrap.length} Comments
