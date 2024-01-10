@@ -10,7 +10,7 @@ const Fractions_onboarding = () => {
 
   return (
     <>
-      <div className="w-[32%] h-auto pb-[1vw] border-r-[white] border-r-[0.1vw] border-opacity-[10%]  flex flex-col gap-[1vw]">
+      <div className="w-[32%] sm:hidden h-auto pb-[1vw] border-r-[white] border-r-[0.1vw] border-opacity-[10%]  flex flex-col gap-[1vw]">
         <h3
           className="neuer text-[2vw] pb-[0.3vw] text-white"
           style={{ opacity: opacity }}

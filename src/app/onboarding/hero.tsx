@@ -14,7 +14,7 @@ const Home_hero_onboarding = () => {
   const [opacity, setopacity] = useState(0.5);
   const { step }: any = useOnboarding_Context();
   return (
-    <div className="w-full padding ">
+    <div className="w-full padding sm:hidden ">
       <div className="w-full h-[37vw] mt-[0.5vw] flex gap-[1vw]">
         {/* left container */}
         <section

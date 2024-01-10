@@ -33,6 +33,15 @@ export default function Home() {
   return (
     <>
       <Header />
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
+      {/* these designs are for the desktop screen find the mobile screen on here . at this point i know better knowledge but i am not ready to rewrite the onboarding for desktop  but you are sure going to enjoy the mobile version . fellow dev */}
       <Step_four />
       <div className="w-full h-full  z-[0] overflow-hidden  fixed top left-0"></div>
       <Home_hero_onboarding />

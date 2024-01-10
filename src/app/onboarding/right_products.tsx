@@ -60,7 +60,7 @@ const Products_onboarding = () => {
 
   return (
     <>
-      <div className="w-[68%]  h-auto pb-[1vw] border-r-[white] border-r-[0.1vw] border-opacity-[10%]  flex flex-col gap-[1vw]">
+      <div className="w-[68%] sm:mt-[30vw]  h-auto pb-[1vw] border-r-[white] border-r-[0.1vw] border-opacity-[10%]  flex flex-col gap-[1vw]">
         <div className="w-full flex justify-between items-center px-[2vw]">
           <h3
             className="neuer text-[2.2vw] text-white "
