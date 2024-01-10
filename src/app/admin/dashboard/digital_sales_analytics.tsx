@@ -362,7 +362,7 @@ const Digital_sales_analytics = () => {
             ))}
           </select>
         </div>
-        <div className="w-full h-[38vw] sm:h-[100vw]">
+        <div className="w-full h-[38vw] sm:h-[60vw]">
           <Line data={chartData} ref={chartRef} options={options} />
         </div>
 
