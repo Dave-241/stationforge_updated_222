@@ -241,7 +241,7 @@ const Post = (props: any) => {
           addDoc(imagesCollectionRef, update_like)
             .then((res) => {
               setlikes(postdata.likesCount);
-              update_engagement("likes");
+              update_engagement("likes", postdata.postId);
             })
             .catch((error) => {
               console.error(error);
@@ -315,7 +315,7 @@ const Post = (props: any) => {
       addDoc(comment_CollectionRef, commentinfo)
         .then((res) => {
           setcommentvalue("");
-          update_engagement("commented");
+          update_engagement("commented", postdata.postId);
         })
         .catch((err) => {
           console.error(err);
@@ -336,12 +336,13 @@ const Post = (props: any) => {
   }, [copied]); // Empty dependency array ensures the effect runs only once
 
   // update the engagement collection
-  const update_engagement = (e: string) => {
+  const update_engagement = (e: string, idp: any) => {
     const collection_ref = collection(db, "post_engagement");
     addDoc(collection_ref, {
       type: e,
       userid: auth?.currentUser?.uid,
       createdAt: serverTimestamp(),
+      post_id: idp,
     })
       .then(() => {
         // console.log("this is engagement");
@@ -374,7 +375,7 @@ const Post = (props: any) => {
           <div
             className="w-full flex flex-wrap gap-[1vw] sm:gap-[1.5vw] relative  justify-center items-center px-[0vw]"
             onClick={() => {
-              update_engagement("Media_view");
+              update_engagement("Media_view", postdata.postId);
             }}
           >
             {postdata.trimmedimages.map((e: any, index: any) => {
