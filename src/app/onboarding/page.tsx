@@ -7,6 +7,7 @@ import Home_hero_onboarding from "./hero";
 import Fractions_onboarding from "./left_fractions";
 import Products_onboarding from "./right_products";
 import Step_four from "./step4";
+import Mobile_card from "./mobile_card";
 
 // import Post_wrap from "./post_wrap";
 
@@ -51,6 +52,13 @@ export default function Home() {
           <Products_onboarding />
         </div>
       </div>
+
+      {/* THIS IS WHERE MOBILE STARTS NOW FOLLOW ALONG  */}
+      {/* the header is already imported so i am not importing again  */}
+      {/* i have my mobile setup in my products onboarding section */}
+
+      {/* the mobile section would have one card which would be usine to manupute the entiere thing back and forth */}
+      <Mobile_card />
     </>
   );
 }

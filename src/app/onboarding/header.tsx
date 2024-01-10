@@ -56,14 +56,20 @@ const Header = () => {
   ]);
 
   initializeApp(firebaseConfig);
-  const { step }: any = useOnboarding_Context();
+  const { step, mobile_step }: any = useOnboarding_Context();
 
   return (
     <header className="w-full z-[100] sm:top-0 h-[4.7vw] sm:h-[20vw] bg-transparent fixed  top-[2.5vw] flex justify-center ">
       <nav className="w-[90%]  sm:px-[5%] sm:w-full h-full pr-[1.3vw] sm:bg-[black]  bg-[#0A0B0B] border-[#CCFF00] border-opacity-[5%] border rounded-[1.06vw] flex justify-between relative items-center backdrop-blur-[14px] bg-opacity-[30%] ">
         {/* this is the mobile */}
         <div className="sm:block sm:w-fit  hidden">
-          <button className="= w-[10vw] h-auto flex">
+          <button
+            className="= w-[10vw] h-auto flex"
+            style={{
+              opacity: 0.7,
+              transition: "1s ease",
+            }}
+          >
             <Image
               src={mob_ham}
               alt="StationForge Logo"
@@ -73,7 +79,13 @@ const Header = () => {
           </button>
         </div>
 
-        <div className="sm:block sm:w-fit  hidden">
+        <div
+          className="sm:block sm:w-fit  hidden"
+          style={{
+            opacity: 0.7,
+            transition: "1s ease",
+          }}
+        >
           <Link
             href="/"
             aria-label="StationForge Home"
@@ -87,7 +99,13 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="sm:block sm:w-fit  hidden">
+        <div
+          className="sm:block sm:w-fit  hidden"
+          style={{
+            opacity: mobile_step == 1 ? 1 : 0.7,
+            transition: "1s ease",
+          }}
+        >
           <button
             className="= w-[10vw] h-auto flex"
             // onClick={() => {

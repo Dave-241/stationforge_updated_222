@@ -51,7 +51,7 @@ const Products = (props: any) => {
             All New Models <br className="sm:block hidden" /> (
             {currentMonthName})
           </h3>
-          <div className="w-auto relative sm:hidden z-[999999999]">
+          <div className="w-auto relative sm:hidden z-[999]">
             <div className="absolute h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
               <Image
                 src={searchimg}
