@@ -147,7 +147,7 @@ const Admin_edit_post = (props: any) => {
 
   return (
     <>
-      <div className="w-[60vw] gap-[3vw] flex flex-col justify-center h-auto pl-[3.5vw] ">
+      <div className="w-[60vw] sm:w-full gap-[3vw] sm:gap-[10vw] flex  flex-col justify-center h-auto pl-[3.5vw] sm:px-[3vw] sm:mt-[5vw] ">
         {/* this is for the media upload*/}
         {/* media upload now  */}
         {/* media upload now  */}
@@ -156,7 +156,7 @@ const Admin_edit_post = (props: any) => {
         {/* media upload now  */}
 
         <div
-          className="w-full h-[35vw] px-[5vw] flex flex-col gap-[1.5vw] justify-center items-center bg-white rounded-[2vw]"
+          className="w-full   sm:h-[100vw] sm:gap-[6vw] sm:rounded-[4vw]  h-[35vw] px-[5vw] flex flex-col gap-[1.5vw] justify-center items-center bg-white rounded-[2vw]"
           onDrop={handleDrop}
           onDragOver={(e) => {
             e.preventDefault();
@@ -174,7 +174,7 @@ const Admin_edit_post = (props: any) => {
               in={true}
               style={{ width: "100%" }}
             >
-              <div className=" w-full h-[25vw]  relative flex flex-wrap justify-center items-center gap-[0.4vw]">
+              <div className=" w-full  sm:overflow-hidden h-[25vw] sm:h-[60vw] sm:gap-[2vw]  relative flex flex-wrap justify-center items-center gap-[0.4vw]">
                 {trimmedMediaFiles.map((file: any, index: any) => {
                   // Check if the file is a video based on its link
                   const isVideoLink =
@@ -185,7 +185,7 @@ const Admin_edit_post = (props: any) => {
                   return (
                     <div
                       key={index}
-                      className="overflow-hidden avater_bg rounded-[0.5vw] w-[48%] h-[49%]"
+                      className="overflow-hidden  sm:rounded-[3vw] sm:overflow-hidden avater_bg rounded-[0.5vw] w-[48%] h-[49%]"
                       // style={{
                       //   backgroundImage: file.link
                       //     ? `url(${file.link})`
@@ -313,7 +313,7 @@ const Admin_edit_post = (props: any) => {
                 )} */}
                 {copy_Images.length > 4 && (
                   <div
-                    className="rounded-[0.5vw] absolute bottom-0 right-[1.7%] bg-black bg-opacity-[90%] w-[48%] flex justify-center items-center  h-[49%] cursor-pointer"
+                    className="rounded-[0.5vw] sm:rounded-[3vw] sm:bottom-[-1vw]  absolute bottom-0 right-[1.7%] bg-black bg-opacity-[90%] w-[48%] flex justify-center items-center  h-[49%] cursor-pointer"
                     onClick={() => {
                       setmaindata(mediaFiles[4]);
                       setdata(mediaFiles);
@@ -323,7 +323,7 @@ const Admin_edit_post = (props: any) => {
                       setdisplay_modal(true);
                     }}
                   >
-                    <span className="text-white text-[4vw] neuem">
+                    <span className="text-white text-[4vw] sm:text-[8vw] neuem">
                       +{copy_Images.length - 4}{" "}
                     </span>
                   </div>
@@ -342,7 +342,7 @@ const Admin_edit_post = (props: any) => {
             )}
             <label
               htmlFor="mediaInput"
-              className="cursor-pointer bg-[#F3F3F3] text-[#688200] text-[1vw] neuer py-[1vw] px-[2vw] rounded-[1.2vw]"
+              className="cursor-pointer sm:py-[4vw] sm:px-[9vw] sm:rounded-[5vw] bg-[#F3F3F3] text-[#688200] sm:text-[4vw]  text-[1vw] neuer py-[1vw] px-[2vw] rounded-[1.2vw]"
             >
               Add Media (Images & Videos)
             </label>
@@ -444,7 +444,7 @@ const Admin_edit_post = (props: any) => {
       {/*  */}
       {/*  */}
       {/*  */}
-      <div className="w-[30vw] z-[99] py-[2vw] px-[2vw] bg-white h-[35vw] rounded-[2vw] fixed right-[3.5vw] top-[10vw] flex flex-col justify-between ">
+      <div className="w-[30vw] z-[99] py-[2vw] px-[2vw] bg-white h-[35vw] rounded-[2vw] sm:relative border2 sm:top-0  fixed right-[3.5vw] top-[10vw] flex flex-col justify-between ">
         <div className="w-full h-auto">
           <h2 className="text-[1.4vw] pb-[2vw] neuem">
             Who can see this post?

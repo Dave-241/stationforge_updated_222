@@ -198,7 +198,7 @@ const PostAnalytics = () => {
               data: weeklyData, // Make sure these are valid numbers
               fill: true,
               backgroundColor: "rgba(75,192,192,0.2)",
-              borderWidth: 3, // Ensure this is greater than 0
+              borderWidth: 2, // Ensure this is greater than 0
               tension: 0.4,
               borderColor: "rgba(75,192,192,1)", // Smoothness of the line
               pointBackgroundColor: "white",
@@ -249,14 +249,14 @@ const PostAnalytics = () => {
     maintainAspectRatio: false, // You can set this to false to control the aspect ratio via CSS
     scales: {
       y: {
-        border: { dash: [20, 8] }, // for the grid lines
+        border: { dash: [6, 2] }, // for the grid lines
         grid: {
           color: "#aaa", // for the grid lines
           tickColor: "#aaa", // for the tick mark
           tickBorderDash: [5, 4], // also for the tick, if long enough
           tickLength: 20, // just to see the dotted line
           tickWidth: 2,
-          lineWidth: 2,
+          lineWidth: 1,
           offset: true,
           drawTicks: true, // true is default
           drawOnChartArea: true, // true is default
@@ -265,14 +265,14 @@ const PostAnalytics = () => {
         beginAtZero: true,
       },
       x: {
-        border: { dash: [20, 8] }, // for the grid lines
+        border: { dash: [6, 2] }, // for the grid lines
         grid: {
           color: "#aaa", // for the grid lines
           tickColor: "#aaa", // for the tick mark
           tickBorderDash: [5, 4], // also for the tick, if long enough
           tickLength: 20, // just to see the dotted line
           tickWidth: 2,
-          lineWidth: 2,
+          lineWidth: 1,
           offset: true,
           drawTicks: true, // true is default
           drawOnChartArea: true, // true is default
@@ -292,7 +292,7 @@ const PostAnalytics = () => {
     },
     elements: {
       point: {
-        radius: 4, // Size of the point
+        radius: 3, // Size of the point
         borderWidth: 2, // Border width of the point
         hoverRadius: 6, // Size of the point when hovered
         hoverBorderWidth: 3, // Border width when hovered
@@ -369,7 +369,7 @@ const PostAnalytics = () => {
             ))}
           </select>
         </div>
-        <div className="w-full h-[38vw] sm:h-[100vw]">
+        <div className="w-full h-[38vw] sm:h-[60vw]">
           <Line data={chartData} ref={chartRef} options={options} />
         </div>
 
