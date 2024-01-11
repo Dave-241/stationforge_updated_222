@@ -96,11 +96,11 @@ const Review = (props: any) => {
             </form>
           </div>
           {/* now this is for the reviews  */}
-          <div className=" h-auto w-full sm:gap-[5vw] flex justify-start flex-wrap items-center gap-[1.2vw]">
+          <div className="  h-auto w-full sm:gap-[5vw] flex justify-start flex-wrap items-center gap-[1.2vw]">
             {trimmedReviews.map((e: any, index: any) => {
               return (
                 <div
-                  className=" p-[2.5vw] sm:w-[43.2vw]  sm:gap-[5vw] sm:rounded-[6vw] relative  sm:py-[5vw] w-[21.7vw] border-[white] border-opacity-[40%] border-[0.1vw] rounded-[2vw] flex flex-col gap-[1.2vw] justify-center "
+                  className=" p-[2.5vw] sm:w-[43.2vw]  sm:gap-[5vw] sm:rounded-[6vw] relative  sm:py-[5vw] w-[21.5vw] border-[white] border-opacity-[40%] border-[0.1vw] rounded-[2vw] flex flex-col gap-[1.2vw] justify-center "
                   key={index}
                 >
                   <div
