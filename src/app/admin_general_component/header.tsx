@@ -88,7 +88,8 @@ const Header = ({ position, padding, top, blur }: any) => {
   }, []);
   const handlecustomclaim = async () => {};
 
-  const { show_setting, setshow_setting }: any = useAdmin_context();
+  const { show_setting, setnotification, setshow_setting }: any =
+    useAdmin_context();
 
   // this dashboard is for other pages but because of design we would have props passed into it to take either a fixed or absolute position
   return (
@@ -163,6 +164,9 @@ const Header = ({ position, padding, top, blur }: any) => {
 
             <div className=" w-full flex gap-[2vw] items-center justify-end">
               <button
+                onClick={() => {
+                  setnotification(true);
+                }}
                 className="w-[10vw] bg-white bg-opacity-[8%] h-[10vw]   border-opacity-[30%] flex justify-center items-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    text-white text-[4vw] rounded-[100%]"
                 // onClick={handlecustomclaim}
               >
@@ -242,7 +246,7 @@ const Header = ({ position, padding, top, blur }: any) => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Search dashboard"
+                  placeholder="Search pages"
                   className="h-[3vw] w-[23vw] search  text-white neuer text-[0.9vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] backdrop-blur-[15px] bg-transparent  border-white border-opacity-[30%] border-[0.1vw]"
                   onFocus={() => {
                     setshow_search_items(true);
@@ -272,8 +276,11 @@ const Header = ({ position, padding, top, blur }: any) => {
               </Link>
 
               <button
-                className="w-[2.5vw] h-[2.5vw] border-[0.1vw] border-white border-opacity-[30%] flex justify-center items-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    text-white text-[1.2vw] rounded-[100%]"
-                onClick={handlecustomclaim}
+                onClick={() => {
+                  setnotification(true);
+                }}
+                className="w-[2.5vw]  cursor-pointer   h-[2.5vw] border-[0.1vw] border-white border-opacity-[30%] flex justify-center items-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    text-white text-[1.2vw] rounded-[100%]"
+                // onClick={handlecustomclaim}
               >
                 {" "}
                 <i className="bi bi-bell"></i>

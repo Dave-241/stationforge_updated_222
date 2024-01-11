@@ -145,7 +145,7 @@ const Admin_Settings_modal = () => {
       const width_oh = globalThis.innerWidth;
 
       if (width_oh >= 650) {
-        return "bg-opacity-[60%]";
+        return "bg-opacity-[80%]";
       } else if (width_oh < 650) {
         return "bg-opacity-[90%]";
       }

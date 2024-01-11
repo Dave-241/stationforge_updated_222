@@ -35,6 +35,8 @@ import {
   where,
 } from "firebase/firestore";
 import Subscribers_wrap from "./subscribers_wrap";
+import Admin_Settings_modal from "@/app/admin_general_component/admin_settings";
+import { useAdmin_context } from "@/app/utils/admin_context";
 
 export default function Home() {
   const [options, setoptions] = useState([
@@ -99,6 +101,7 @@ export default function Home() {
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const { show_setting, setshow_setting }: any = useAdmin_context();
 
   return (
     <>
@@ -107,6 +110,7 @@ export default function Home() {
         <>
           {" "}
           <Header />
+          {show_setting && <Admin_Settings_modal />}
           <div className="w-full h-[10vw] sm:h-[27vw]"></div>
           {/* this is for the digital sales record  */}
           <div className="w-full px-[2vw] py-[2vw]   h-auto">

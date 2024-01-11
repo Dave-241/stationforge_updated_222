@@ -20,6 +20,7 @@ export const Admin_context_Info = (props: any) => {
   const { children } = props;
   const [show, setshow] = useState(false);
   const [show_setting, setshow_setting] = useState(false);
+  const [notification, setnotification] = useState(false);
   // this is for the settings context
   const [show_setting_modal, setshow_setting_modal] = useState(false);
   return (
@@ -28,6 +29,8 @@ export const Admin_context_Info = (props: any) => {
         show,
         show_setting,
         setshow_setting,
+        notification,
+        setnotification,
       }}
     >
       {children}

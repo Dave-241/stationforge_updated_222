@@ -37,6 +37,8 @@ import {
 import Admin_Product_wrap from "./admin_product_wrap";
 import Filters from "./filter";
 import Mobile_Filters from "./mobile_filters";
+import { useAdmin_context } from "@/app/utils/admin_context";
+import Admin_Settings_modal from "@/app/admin_general_component/admin_settings";
 
 export default function Home() {
   const { page_loader, setpage_loader, setfrom }: any = useProfile_Context();
@@ -168,6 +170,7 @@ export default function Home() {
       setproductStats_copy_filter(filteredData);
     }
   }, [search_value]);
+  const { show_setting, setshow_setting }: any = useAdmin_context();
 
   return (
     <>
@@ -176,6 +179,7 @@ export default function Home() {
         <>
           {" "}
           <Header />
+          {show_setting && <Admin_Settings_modal />}
           <div className="w-full h-[10vw] sm:h-[27vw]"></div>
           {/* this is for the digital sales record  */}
           <div className="w-full  flex justify-center  px-[2vw] py-[2vw]   h-auto">

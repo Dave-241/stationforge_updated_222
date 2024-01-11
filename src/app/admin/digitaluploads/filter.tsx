@@ -64,9 +64,7 @@ const Filters = ({
             }}
           >
             {" "}
-            <option value={currentYear}>
-              Select year : Currently {">"} {currentYear}{" "}
-            </option>
+            <option value={currentYear}>Select year {currentYear} </option>
             {prev_years.map((year) => (
               <option key={year} value={year}>
                 {year}

@@ -24,6 +24,7 @@ import Digital_sales_analytics from "./digital_sales_analytics";
 import Dashboard_post_analytics from "./post_insight";
 import Admin_Settings_modal from "@/app/admin_general_component/admin_settings";
 import { useAdmin_context } from "@/app/utils/admin_context";
+import Notification_modal from "@/app/admin_general_component/notifications";
 
 export default function Home() {
   const {
@@ -96,7 +97,8 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { show_setting, setshow_setting }: any = useAdmin_context();
+  const { show_setting, setshow_setting, notification }: any =
+    useAdmin_context();
 
   return (
     <>
@@ -111,6 +113,7 @@ export default function Home() {
           />
 
           {show_setting && <Admin_Settings_modal />}
+          {notification && <Notification_modal />}
 
           <div className="w-full   h-[40vw] px-[2vw] py-[1vw] sm:h-[190vw] flex  sm:relative top-[1vw] left-0 ">
             <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:drop-shadow-none sm:rounded-[4vw] rounded-[2vw] relative h-full">

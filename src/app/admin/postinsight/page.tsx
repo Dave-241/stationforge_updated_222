@@ -20,6 +20,8 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import Admin_Settings_modal from "@/app/admin_general_component/admin_settings";
+import { useAdmin_context } from "@/app/utils/admin_context";
 
 export default function Home() {
   const [options, setoptions] = useState([
@@ -82,12 +84,16 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { show_setting, setshow_setting }: any = useAdmin_context();
+
   return (
     <>
       {page_loader && <Loader />}
       {showdash ? (
         <>
           <Header />
+          {show_setting && <Admin_Settings_modal />}
+
           <div className="w-full h-[10vw] sm:h-[27vw]"></div>
           <FadeInTransition
             timeout={1500}
