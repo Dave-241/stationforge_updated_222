@@ -21,6 +21,14 @@ import axios from "axios";
 import { useProfile_Context } from "../utils/profile_context";
 import Admin_Mobile_header from "./mobile_header";
 import Search_Items from "./search_items";
+import { useAdmin_context } from "../utils/admin_context";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 
 type HeaderProp = {
   showModeratorBtn?: boolean;
@@ -31,6 +39,7 @@ const Header = ({ position, padding, top, blur }: any) => {
   const [comedown, setcomedown] = useState(false);
   const [show_search_items, setshow_search_items] = useState(false);
   const [search_text, setsearch_text] = useState("");
+  const [avater, setavater] = useState("");
   const [nav_array, setnav_array] = useState([
     {
       link: "/admin/dashboard",
@@ -56,8 +65,31 @@ const Header = ({ position, padding, top, blur }: any) => {
   // init authentication
   const auth: any = getAuth();
   const pathname = usePathname();
+  const db = getFirestore();
 
+  // this is just to get the user dp
+  useEffect(() => {
+    //  setpage_loader(true);
+
+    // User is authenticated, redirect to a protected route
+    const user_ref = collection(db, "users");
+    const user_query = query(
+      user_ref,
+      where("userid", "==", auth.currentUser.uid),
+    );
+
+    getDocs(user_query).then((e) => {
+      setavater(e.docs[0].data().avatar_url);
+    });
+
+    // console.log(admin_doc.doc)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handlecustomclaim = async () => {};
+
+  const { show_setting, setshow_setting }: any = useAdmin_context();
+
   // this dashboard is for other pages but because of design we would have props passed into it to take either a fixed or absolute position
   return (
     <>
@@ -256,12 +288,28 @@ const Header = ({ position, padding, top, blur }: any) => {
                 <i className="bi bi-chat-dots"></i>
               </Link>
               <div
-                className="w-[3vw] h-[3vw]  rounded-[100%] avater_bg "
+                onClick={() => {
+                  setshow_setting(true);
+                }}
+                className="w-[3vw] h-[3vw] overflow-hidden cursor-pointer  rounded-[100%] avater_bg "
                 style={{
                   backgroundImage:
                     "url(https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w)",
                 }}
-              ></div>
+              >
+                <Image
+                  unoptimized
+                  width="0"
+                  height="0"
+                  src={
+                    avater
+                      ? avater
+                      : "url(https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w)"
+                  }
+                  alt="bg"
+                  className="w-full h-full"
+                />
+              </div>
             </div>
           </div>
         </nav>

@@ -22,6 +22,8 @@ import {
 import New_Subscribers_wrap from "./new_subscribers_wrap";
 import Digital_sales_analytics from "./digital_sales_analytics";
 import Dashboard_post_analytics from "./post_insight";
+import Admin_Settings_modal from "@/app/admin_general_component/admin_settings";
+import { useAdmin_context } from "@/app/utils/admin_context";
 
 export default function Home() {
   const {
@@ -31,6 +33,7 @@ export default function Home() {
     setpage_loader,
     setfrom,
   }: any = useProfile_Context();
+
   const [showdash, setshowdash] = useState(false);
   const [admin_username, setadmin_username] = useState("");
 
@@ -93,6 +96,8 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { show_setting, setshow_setting }: any = useAdmin_context();
+
   return (
     <>
       {page_loader && <Loader />}
@@ -104,6 +109,9 @@ export default function Home() {
             top={"1vw"}
             blur={false}
           />
+
+          {show_setting && <Admin_Settings_modal />}
+
           <div className="w-full   h-[40vw] px-[2vw] py-[1vw] sm:h-[190vw] flex  sm:relative top-[1vw] left-0 ">
             <div className=" w-full  bg-[#000002] drop-shadow-2xl sm:drop-shadow-none sm:rounded-[4vw] rounded-[2vw] relative h-full">
               <Dashboard_hero_section

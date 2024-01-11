@@ -12,6 +12,7 @@ import Image from "next/image";
 import firebaseConfig from "../utils/fire_base_config";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import { useAdmin_context } from "../utils/admin_context";
 
 const Admin_Mobile_header = ({
   setmobile_bg_changer,
@@ -106,6 +107,9 @@ const Admin_Mobile_header = ({
       setprofile_comeup(false);
     });
   };
+
+  const { show_setting, setshow_setting }: any = useAdmin_context();
+
   return (
     <>
       <div
@@ -129,7 +133,15 @@ const Admin_Mobile_header = ({
           onClick={modalClick}
         >
           {/* for the links at the top */}
-          <div className="w-full pt-[2vw] flex px-[3vw] flex-wrap justify-center gap-[2vw] ">
+          <div className="w-full pt-[2vw] flex px-[1vw]  flex-wrap justify-center gap-[2vw] ">
+            <button
+              onClick={() => {
+                signOut(auth);
+              }}
+              className={` border-[0.3vw]  flex justify-center items-center text-[3.1vw] h-[10vw] capitalize rounded-[4vw] border-white border-opacity-[40%] text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] w-[28vw] mb-[3vw] text-white `}
+            >
+              logout
+            </button>
             {links.map((e: any, index: any) => {
               return (
                 <>
@@ -143,7 +155,7 @@ const Admin_Mobile_header = ({
                     }}
                     href={e.link}
                     key={index}
-                    className={` border-[0.3vw] flex justify-center items-center text-[3.1vw] h-[10vw] capitalize rounded-[4vw] border-white border-opacity-[40%] text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] w-[32vw] mb-[3vw] ${
+                    className={` border-[0.3vw] flex justify-center items-center text-[3.1vw] h-[10vw] capitalize rounded-[4vw] border-white border-opacity-[40%] text-opacity-[70%] transition duration-[0.3s] hover:text-opacity-[100%] w-[28vw] mb-[3vw] ${
                       pathname == e.link
                         ? "text-black bg-white py-[0.5vw] px-[1vw] rounded-[1.2vw] text-opacity-[100%]"
                         : "text-white"
@@ -173,19 +185,14 @@ const Admin_Mobile_header = ({
               >
                 Add a moderator
               </Link>
-              <Link
-                href={"/signin"}
+              <button
                 onClick={() => {
-                  if (pathname == "/signin") {
-                    setpage_loader(false);
-                  } else {
-                    setpage_loader(true);
-                  }
+                  setshow_setting(true);
                 }}
                 className="w-full neuer rounded-[4vw] border-white border-opacity-[40%]  flex justify-center items-center text-[4vw] border-[0.3vw] text-opacity-[70%] text-white  h-[14vw] hover:bg-opacity-[80%] transition duration-[0.3s]"
               >
                 Profile
-              </Link>
+              </button>
             </>
           </div>
         </div>
