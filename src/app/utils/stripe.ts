@@ -153,3 +153,55 @@ export const renew_subscription: any = async (
 //     billing_cycle_anchor: getNextMonthTimestamp,
 //   });
 // }
+
+export const cancelSubscription = async (customerId: any) => {
+  try {
+    // Retrieve customer's subscriptions
+    const subscriptions = await stripe.subscriptions.list({
+      customer: customerId,
+    });
+
+    // Check if the customer has any active subscriptions
+    if (subscriptions.data.length > 0) {
+      // Assuming you want to cancel the first active subscription,
+      // you can customize this logic based on your requirements
+      const subscriptionId = subscriptions.data[0].id;
+
+      const subscription = await stripe.subscriptions.update(subscriptionId, {
+        cancel_at_period_end: true,
+      });
+      return;
+      // return console.log(subscription);
+    } else {
+      // return console.log("No active subscriptions found for the customer");
+      return;
+    }
+  } catch (error) {
+    console.error("Error canceling subscription:", error);
+  }
+};
+
+export const getProductTotalAmountSpent = async (productId: any) => {
+  try {
+    // Retrieve all charges related to the specific product
+    const charges = await stripe.charges.list({
+      // product: productId,
+    });
+    console.log(charges);
+    // Sum up the amounts and convert to dollars
+    const totalAmountCents = charges.data.reduce(
+      (sum, charge) => sum + charge.amount,
+      0,
+    );
+    const totalAmountDollars = totalAmountCents / 100;
+
+    console.log(
+      "Total amount spent on the product in dollars:",
+      totalAmountDollars,
+    );
+    return totalAmountDollars;
+  } catch (error) {
+    console.error("Error retrieving total amount spent:", error);
+    throw error;
+  }
+};

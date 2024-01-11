@@ -36,6 +36,7 @@ import Image from "next/image";
 import { fromUnixTime } from "date-fns";
 import format from "date-fns/format";
 import axios from "axios";
+import Is_typing from "./typing";
 
 const Chats_modal = () => {
   const [loading, setloading] = useState(false);
@@ -47,8 +48,12 @@ const Chats_modal = () => {
   const [chat_session_id, setchat_session_id] = useState("");
   const [moderator_name, setmoderator_name] = useState("");
   const [moderator_avater, setmoderator_avater] = useState("");
+  const [mod_is_typing, setmod_is_typing] = useState(false);
   const [chat_text, setchat_text] = useState("");
   const [chat_data_arr, setchat_data_arr] = useState<any>([]);
+
+  const [userIsTyping, setuserIsTyping] = useState(false);
+
   // profile context
   const { setnew_message, update_message_notification }: any =
     useProfile_Context();
@@ -210,6 +215,7 @@ const Chats_modal = () => {
       Endedsession: false,
       JoinedUserid: currentUserUid,
       SessioncreatedAt: serverTimestamp(),
+      Moderator_is_typing: false,
       Joinedmoderatorid: "",
     })
       .then((doc) => {
@@ -266,6 +272,8 @@ const Chats_modal = () => {
       snapshot.forEach(async (doc) => {
         // Handle each document
         const chatSessionData = doc.data();
+        console.log("this is what i jus", chatSessionData.Moderator_is_typing);
+        setmod_is_typing(chatSessionData.Moderator_is_typing);
         setchat_session_id(doc.id);
         setshow_end_and_start_btn(true);
         // Convert Firebase Timestamp to JavaScript Date
@@ -435,6 +443,24 @@ const Chats_modal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const update_moderator_is_typing = async (e: any) => {
+    const chatSessionsRef = collection(db, "chat_sessions");
+    const chatSessionDocRef = doc(chatSessionsRef, chat_session_id);
+    await updateDoc(chatSessionDocRef, {
+      User_is_typing: e,
+    });
+  };
+
+  const resetTypingStatus = () => {
+    setuserIsTyping(false);
+    update_moderator_is_typing(false);
+  };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(resetTypingStatus, 3000); // Adjust the delay as needed (e.g., 3000 milliseconds)
+    return () => clearTimeout(timeoutId);
+  }, [userIsTyping]);
+
   return (
     <>
       <Head>
@@ -540,6 +566,8 @@ const Chats_modal = () => {
                 onChange={(e) => {
                   setchat_text(e.target.value);
                   setbtn_disabled(false);
+                  update_moderator_is_typing(true);
+                  setuserIsTyping(true);
                 }}
                 value={chat_text || ""}
               />
@@ -589,6 +617,8 @@ const Chats_modal = () => {
                 </div>
               );
             })}
+
+            <div className="">{mod_is_typing && <Is_typing />}</div>
           </div>
         </div>
       </div>

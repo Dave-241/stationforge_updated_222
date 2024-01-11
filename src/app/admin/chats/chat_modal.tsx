@@ -34,6 +34,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { fromUnixTime } from "date-fns";
 import format from "date-fns/format";
+import Is_typing from "@/app/general_components/typing";
 
 const Moderator_Chats_modal = ({
   setstage,
@@ -52,6 +53,8 @@ const Moderator_Chats_modal = ({
   const [moderator_avater, setmoderator_avater] = useState("");
   const [chat_text, setchat_text] = useState("");
   const [chat_data_arr, setchat_data_arr] = useState<any>([]);
+  const [moderatorIsTyping, setModeratorIsTyping] = useState(false);
+  const [userIsTyping, setuserIsTyping] = useState(false);
 
   // Explicitly define the type for useRef
   const new_session = useRef<any>(false);
@@ -214,6 +217,40 @@ const Moderator_Chats_modal = ({
     sethide(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const chatSessionsRef = collection(db, "chat_sessions");
+    const chat_session_ref = doc(chatSessionsRef, session_id);
+
+    const unsubscribe = onSnapshot(chat_session_ref, (snapshot) => {
+      if (snapshot.exists()) {
+        setuserIsTyping(snapshot.data().User_is_typing);
+      }
+    });
+
+    return () => {
+      // Unsubscribe when the component unmounts
+      unsubscribe();
+    };
+  }, [session_id]);
+  const update_moderator_is_typing = async (e: any) => {
+    const chatSessionsRef = collection(db, "chat_sessions");
+    const chatSessionDocRef = doc(chatSessionsRef, session_id);
+    await updateDoc(chatSessionDocRef, {
+      Moderator_is_typing: e,
+    });
+  };
+
+  const resetTypingStatus = () => {
+    setModeratorIsTyping(false);
+    update_moderator_is_typing(false);
+  };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(resetTypingStatus, 3000); // Adjust the delay as needed (e.g., 3000 milliseconds)
+    return () => clearTimeout(timeoutId);
+  }, [moderatorIsTyping]);
+
   return (
     <>
       <Head>
@@ -304,6 +341,9 @@ const Moderator_Chats_modal = ({
               onChange={(e) => {
                 setchat_text(e.target.value);
                 setbtn_disabled(false);
+                update_moderator_is_typing(true);
+                setModeratorIsTyping(true);
+                // updateModeratorTypingStatus(true);
               }}
               value={chat_text || ""}
             />
@@ -351,6 +391,10 @@ const Moderator_Chats_modal = ({
               </div>
             );
           })}
+
+          <div className="flex justify-end">
+            {userIsTyping && <Is_typing />}
+          </div>
         </div>
       </div>
     </>
