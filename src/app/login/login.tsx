@@ -280,6 +280,23 @@ export default function Login_component() {
               sign up here
             </Link>
           </p>
+          {/* Link to forgot passwod */}
+          <p className="text-[1.3vw] mt-[-1vw] sm:mt-[-2vw] neuem sm:text-[3.7vw] text-white text-center">
+            Forgot password ?{" "}
+            <Link
+              href={"/forgot_password"}
+              onClick={() => {
+                if (pathname == "/") {
+                  setpage_loader(false);
+                } else {
+                  setpage_loader(true);
+                }
+              }}
+              className="text-[#CCFF00] hover:text-[#7e9426] hover:underline hover:underline-offset-4"
+            >
+              Reset passwod
+            </Link>
+          </p>
         </form>
         {/* Background images */}
         <Image

@@ -71,24 +71,24 @@ const Reset_Component = () => {
     return errorMessage;
   };
 
-  // Use useEffect to check if the user is already authenticated
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        // User is authenticated, redirect to a protected route
-        // Set a timeout to redirect to the login page after 1 second
-        setTimeout(() => {
-          router.push("/login"); // Replace with the actual path to your login page
-        }, 1000);
-      } else {
-        // User is not authenticated, you can keep them on the current page or redirect them to a login page
-      }
-    });
+  // // Use useEffect to check if the user is already authenticated
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (!user) {
+  //       // User is authenticated, redirect to a protected route
+  //       // Set a timeout to redirect to the login page after 1 second
+  //       setTimeout(() => {
+  //         router.push("/login"); // Replace with the actual path to your login page
+  //       }, 1000);
+  //     } else {
+  //       // User is not authenticated, you can keep them on the current page or redirect them to a login page
+  //     }
+  //   });
 
-    // Clean up the listener when the component unmounts
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // Clean up the listener when the component unmounts
+  //   return () => unsubscribe();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
