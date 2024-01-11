@@ -63,6 +63,16 @@ export const Profile_Context_Dropdown = (props: any) => {
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // the funtion is for updating notifications on to the database that reads to the admin panel
+  const Add_notification = (e: any) => {
+    const chatTextref = collection(db, "notifications");
+
+    addDoc(chatTextref, {
+      createdAt: serverTimestamp(),
+      message: e,
+      user_id: auth.currentUser?.uid,
+    });
+  };
   // this is for downloading content from the libary
   // Function to update the "downloaded" field to true
   const updateDownloadedStatus = async (
@@ -84,6 +94,7 @@ export const Profile_Context_Dropdown = (props: any) => {
         localStorage.removeItem("downloadid");
         localStorage.removeItem("title");
         setdownloadProgress("");
+        Add_notification("Downloaded model from libary");
       })
       .catch((error: any) => {
         console.error("Error updating downloaded status:", error);
@@ -171,7 +182,8 @@ export const Profile_Context_Dropdown = (props: any) => {
     audio.play();
   };
 
-  // console.log();
+  // Add_notification("Signed up an account", auth.currentUser?.uid);
+
   return (
     <Profile_Context.Provider
       value={{
@@ -197,6 +209,7 @@ export const Profile_Context_Dropdown = (props: any) => {
         update_message_notification,
         // create_chat_session,
         sess_id,
+        Add_notification,
       }}
     >
       {children}

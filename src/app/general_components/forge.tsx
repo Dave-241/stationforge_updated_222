@@ -26,8 +26,12 @@ import { initializeApp } from "firebase/app";
 import Head from "next/head";
 import Link from "next/link";
 const Forge = (props: any) => {
-  const { setforge_loader, forge_loader, setpage_loader }: any =
-    useProfile_Context();
+  const {
+    setforge_loader,
+    forge_loader,
+    setpage_loader,
+    Add_notification,
+  }: any = useProfile_Context();
   const [comeup, setcomeup] = useState(false);
   const [go_right, setgo_right] = useState(false);
   const [go_width, setgo_width] = useState(false);
@@ -291,6 +295,7 @@ const Forge = (props: any) => {
           const deleteForgeDocPromise = deleteDoc(
             doc(db, "forge", documentToDelete.id),
           );
+          Add_notification("Added model to forge");
 
           // Update user allocation
           // const updateAllocationPromise = Update_User_Allocation(uid);

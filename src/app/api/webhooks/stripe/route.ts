@@ -19,6 +19,7 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import { useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useProfile_Context } from "@/app/utils/profile_context";
 
 export async function POST(request: Request) {
   // Function to calculate the Unix timestamp for the 1st day of the next month
@@ -38,6 +39,7 @@ export async function POST(request: Request) {
   // Initialize Firestore
   const db = getFirestore(app);
   const auth: any = getAuth();
+  const { Add_notification }: any = useProfile_Context();
 
   try {
     event = stripe.webhooks.constructEvent(
@@ -253,6 +255,9 @@ export async function POST(request: Request) {
       const subscription: any = await stripe.subscriptions.retrieve(
         session.subscription as string,
       );
+
+      Add_notification("has completed first subscription");
+
       // console.log(subscription);
       if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
         update_user_doc(

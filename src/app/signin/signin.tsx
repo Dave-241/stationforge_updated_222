@@ -48,7 +48,8 @@ export default function Signin_component() {
   const [showPassword, setShowPassword] = useState(false);
   const [alreadyusername, setalreadyusername] = useState(false);
 
-  const { toggleDropdown, setpage_loader }: any = useProfile_Context();
+  const { toggleDropdown, setpage_loader, Add_notification }: any =
+    useProfile_Context();
   const pathname = usePathname();
 
   // useEffect to set the animation when the component mounts
@@ -221,6 +222,8 @@ export default function Signin_component() {
               handleFirebaseError(err);
               setisLoading(false); // Handle Firebase error
             });
+
+          Add_notification("Signed up an account");
         })
         .catch((err) => {
           handleFirebaseError(err); // Handle Firebase error

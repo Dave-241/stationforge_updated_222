@@ -17,7 +17,6 @@ import Sub_user_profile from "@/app/admin_general_component/sub_user_profile";
 import Subscription_statistics from "./sub_statistics";
 import Each_subscriber_loadeer from "./each_sub_loader";
 import Display_forge_modal from "@/app/admin_general_component/forge_display";
-import { getProductTotalAmountSpent } from "@/app/utils/stripe";
 const Subscribers_wrap = () => {
   const subscribe_filter = [
     {
@@ -144,8 +143,6 @@ const Subscribers_wrap = () => {
         "Standard ": step3Users.length,
         "Premium ": step4Users.length,
       };
-
-      getProductTotalAmountSpent("");
 
       setsubscriber_stats(resultObject);
       setsubscriber_stats_is_loading(false);

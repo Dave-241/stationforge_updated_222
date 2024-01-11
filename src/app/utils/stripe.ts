@@ -77,11 +77,11 @@ export const pay_merchant_Subscriptions: any = async (
     metadata: {
       userId: userid,
     },
-    subscription_data: {
-      // Set the billing cycle anchor to the 1st of the next month
-      billing_cycle_anchor: getNextMonthTimestamp(),
-      // proration_behavior: "create_prorations",
-    },
+    // subscription_data: {
+    //   // Set the billing cycle anchor to the 1st of the next month
+    //   billing_cycle_anchor: getNextMonthTimestamp(),
+    //   // proration_behavior: "create_prorations",
+    // },
   });
 
   // console.log(stripeSession.url);
@@ -178,30 +178,5 @@ export const cancelSubscription = async (customerId: any) => {
     }
   } catch (error) {
     console.error("Error canceling subscription:", error);
-  }
-};
-
-export const getProductTotalAmountSpent = async (productId: any) => {
-  try {
-    // Retrieve all charges related to the specific product
-    const charges = await stripe.charges.list({
-      // product: productId,
-    });
-    console.log(charges);
-    // Sum up the amounts and convert to dollars
-    const totalAmountCents = charges.data.reduce(
-      (sum, charge) => sum + charge.amount,
-      0,
-    );
-    const totalAmountDollars = totalAmountCents / 100;
-
-    console.log(
-      "Total amount spent on the product in dollars:",
-      totalAmountDollars,
-    );
-    return totalAmountDollars;
-  } catch (error) {
-    console.error("Error retrieving total amount spent:", error);
-    throw error;
   }
 };
