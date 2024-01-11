@@ -202,10 +202,13 @@ const Notification_modal = () => {
                   >
                     {/* the first section the iamge and the names  */}
                     <div className="w-auto gap-[1vw] sm:gap-[4vw] flex justify-start items-center">
-                      <div className="w-[4vw] h-[4vw] sm:h-[16vw] sm:w-[16vw]  bg-white rounded-[100%]">
+                      <div className="w-[4vw] overflow-hidden h-[4vw] sm:h-[16vw] sm:w-[16vw]  bg-white rounded-[100%]">
                         <Image
                           src={e.userData.avatar_url}
                           alt={e.userData.Username}
+                          unoptimized
+                          width="0"
+                          height="0"
                           className="w-full h-fit scale-[1.2]"
                         />
                       </div>
