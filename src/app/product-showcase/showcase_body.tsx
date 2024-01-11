@@ -73,10 +73,6 @@ const Showcase_body = (props: any) => {
       setforgeerr(
         "Sorry, you don't permission to add this items to the forge. subscribe or upgrade for access",
       );
-
-      setTimeout(() => {
-        router.push("/");
-      }, 6000);
     } else if (userSTep > product_arr.role) {
       setforge_text("Adding to forge ...");
       setforgeerr("");
