@@ -182,8 +182,6 @@ export const Profile_Context_Dropdown = (props: any) => {
     audio.play();
   };
 
-  // Add_notification("Signed up an account", auth.currentUser?.uid);
-
   return (
     <Profile_Context.Provider
       value={{

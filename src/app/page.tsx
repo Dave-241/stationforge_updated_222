@@ -249,7 +249,7 @@ export default function Home() {
 
           axios
             .delete(
-              `https://pop-up-x6pg.onrender.com/banner/65954085026be0da5721b3f2`,
+              `https://pop-up-x6pg.onrender.com/banner/6595408b026be0da5721b3f4`,
             )
             .then((res) => {
               console.log(res.data);

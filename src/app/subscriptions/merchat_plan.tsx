@@ -24,11 +24,12 @@ const Merchant_plan = ({
   setmerchant_isloading,
 }: any) => {
   const router = useRouter();
-  const { setpage_loader }: any = useProfile_Context();
+  const { setpage_loader, Add_notification }: any = useProfile_Context();
   const paynow = async () => {
     if (uuid != "" && email != "") {
       try {
         setmerchant_isloading(true);
+        Add_notification("Initiated merchant subscription");
 
         const session_url = await pay_merchant_Subscriptions(uuid, email);
 

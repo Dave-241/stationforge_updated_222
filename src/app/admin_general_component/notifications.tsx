@@ -23,6 +23,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Head from "next/head";
 import Image from "next/image";
 import { useAdmin_context } from "../utils/admin_context";
+import { format, fromUnixTime } from "date-fns";
 // import axios from "axios";
 
 const Notification_modal = () => {
@@ -132,11 +133,16 @@ const Notification_modal = () => {
 
           if (!userSnapshot.empty) {
             const userData = userSnapshot.docs[0].data();
+            const formattedDate = format(
+              fromUnixTime(notificationData.createdAt.seconds),
+              "do MMMM yyyy, h:mma EEEE",
+            );
 
             return {
               id: doc.id,
               notificationData,
               userData,
+              formattedDate,
             };
           } else {
             console.warn(`User not found for notification with ID ${doc.id}`);
@@ -183,12 +189,12 @@ const Notification_modal = () => {
             </p>
 
             <div className="flex justify-center items-center sm:w-[10vw] sm:h-[8vw] sm:text-[3.5vw] sm:font-bold bg-[#CCFF00] w-[3.2vw] h-[2.6vw] rounded-[2.3vw] sm:rounded-[7vw] text-[1vw] text-black">
-              123
+              {notificationsData.length}
             </div>
           </div>
           <div className="h-[90%]   overflow-y-scroll scroll-container ">
             <div className=" w-full sm:py-[4vw] h-auto flex items-center flex-col gap-[2vw] sm:gap-[6vw]">
-              {items.map((e: any, index: any) => {
+              {notificationsData.map((e: any, index: any) => {
                 return (
                   <div
                     key={index}
@@ -196,15 +202,24 @@ const Notification_modal = () => {
                   >
                     {/* the first section the iamge and the names  */}
                     <div className="w-auto gap-[1vw] sm:gap-[4vw] flex justify-start items-center">
-                      <div className="w-[4vw] h-[4vw] sm:h-[16vw] sm:w-[16vw]  bg-white rounded-[100%]"></div>
+                      <div className="w-[4vw] h-[4vw] sm:h-[16vw] sm:w-[16vw]  bg-white rounded-[100%]">
+                        <Image
+                          src={e.userData.avatar_url}
+                          alt={e.userData.Username}
+                          className="w-full h-fit scale-[1.2]"
+                        />
+                      </div>
                       <div className="flex flex-col gap-[0.5vw] sm:gap-[1vw]">
                         <p className="text-[1vw] sm:text-[3.2vw] sm:font-medium font-semibold text-white">
-                          Goldie john just subscribed{" "}
+                          {e.userData.Username} {e.notificationData.message}
                         </p>
                         <p className="text-[0.8vw] capitalize sm:text-[3vw] text-[#CCFF00]">
-                          standard <br />
+                          {e.userData.subscription
+                            ? e.userData.subscription
+                            : "Public user"}
+                          <br />
                           <span className="text-white sm:text-[2.6vw]  text-[0.75vw] text-opacity-[50%] ">
-                            20th september 20223 , 1pm saturday
+                            {e.formattedDate}
                           </span>
                         </p>
                       </div>

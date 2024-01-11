@@ -25,7 +25,7 @@ const StandardPlan = ({
   standard_isloading,
   setstandard_isloading,
 }: any) => {
-  const { setpage_loader }: any = useProfile_Context();
+  const { setpage_loader, Add_notification }: any = useProfile_Context();
 
   const [list, setlist] = useState([
     {
@@ -59,6 +59,8 @@ const StandardPlan = ({
     if (uuid != "" && email != "") {
       try {
         setstandard_isloading(true);
+        Add_notification("Initiated standard subscription");
+
         // console.log("this was standard");
         const session_url = await pay_standard_Subscriptions(uuid, email);
 
