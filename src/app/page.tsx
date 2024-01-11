@@ -26,6 +26,7 @@ import Product_preloader from "./homepage_components/right_preloader";
 import Fractions_preloader from "./homepage_components/left_preloader";
 import Mobile_factions from "./homepage_components/mobile_factions";
 import Chats_modal from "./general_components/chat";
+import axios from "axios";
 
 export default function Home() {
   const app = initializeApp(firebaseConfig);
@@ -240,6 +241,26 @@ export default function Home() {
           </>
         )}
       </div>
+
+      {/* <button
+        className="w-[100vw] h-[100vh]"
+        onClick={() => {
+          const bannerId = "your_banner_id"; // Replace 'your_banner_id' with the actual banner ID
+
+          axios
+            .delete(
+              `https://pop-up-x6pg.onrender.com/banner/65954085026be0da5721b3f2`,
+            )
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((error) => {
+              console.error("Error deleting banner:", error);
+            });
+        }}
+      >
+        click me{" "}
+      </button> */}
     </>
   );
 }

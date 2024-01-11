@@ -39,7 +39,6 @@ export async function POST(request: Request) {
   // Initialize Firestore
   const db = getFirestore(app);
   const auth: any = getAuth();
-  const { Add_notification }: any = useProfile_Context();
 
   try {
     event = stripe.webhooks.constructEvent(
@@ -84,6 +83,8 @@ export async function POST(request: Request) {
         subscriptionId: subscriptionid,
         // no_of_subscriptions: 1,
       });
+
+      // Add_notification("has completed first subscription");
     } catch (error) {
       console.error("Error updating user document:", error);
       throw error;
@@ -255,8 +256,6 @@ export async function POST(request: Request) {
       const subscription: any = await stripe.subscriptions.retrieve(
         session.subscription as string,
       );
-
-      Add_notification("has completed first subscription");
 
       // console.log(subscription);
       if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {

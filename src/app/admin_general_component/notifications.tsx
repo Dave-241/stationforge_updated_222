@@ -107,6 +107,55 @@ const Notification_modal = () => {
 
   const items = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
 
+  const [notificationsData, setNotificationsData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // const db = getFirestore();
+        const notificationsCollection = collection(db, "notifications");
+        const notificationsSnapshot = await getDocs(notificationsCollection);
+        // console.log(notificationsSnapshot.docs[0].data());
+
+        const dataPromises = notificationsSnapshot.docs.map(async (doc) => {
+          const notificationData = doc.data();
+          const userId = notificationData.user_id;
+
+          // Retrieve user information using where clause
+          const usersCollection = collection(db, "users");
+          const userQuery = query(
+            usersCollection,
+            where("userid", "==", userId),
+          );
+          const userSnapshot = await getDocs(userQuery);
+
+          if (!userSnapshot.empty) {
+            const userData = userSnapshot.docs[0].data();
+
+            return {
+              id: doc.id,
+              notificationData,
+              userData,
+            };
+          } else {
+            console.warn(`User not found for notification with ID ${doc.id}`);
+            return null;
+          }
+        });
+        const combinedData = await Promise.all(dataPromises);
+        console.log(combinedData);
+        setNotificationsData(combinedData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures that this useEffect runs only once on component mount
+
   return (
     <>
       <Head>
