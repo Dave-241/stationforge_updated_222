@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import forge_download_img from "../../../../public/admin_section/digital_sales/forge_downloaded.webp";
 import Image from "next/image";
+import { format, fromUnixTime } from "date-fns";
 
 const New_Each_subscriber = ({
   userdata,
@@ -88,8 +89,18 @@ const New_Each_subscriber = ({
           </p>
         </div>
         <div className="w-[20%]  h-auto">{userdata.formattedDate}</div>
-        <div className="w-[20%]  h-auto">
-          1st {currentMonthName} {currentYear}
+        <div
+          className="w-[20%]  h-auto"
+          onClick={() => {
+            console.log(userdata);
+          }}
+        >
+          {userdata?.subscribedAt?.seconds
+            ? format(
+                fromUnixTime(userdata.subscribedAt.seconds),
+                "d MMMM yyyy h:mm a",
+              )
+            : "Subscription date not available"}
         </div>
         <div className="w-[20%] sm:gap-[2vw] h-auto flex items-center font-[900] gap-[0.5vw]">
           <Image

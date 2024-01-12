@@ -72,14 +72,14 @@ const New_Subscribers_wrap = ({
         // );
         // Calculate the timestamp for 2 weeks ago
         const twoWeeksAgo = new Date();
-        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 20);
         const twoWeeksAgoTimestamp = Timestamp.fromDate(twoWeeksAgo);
 
         // Query users who subscribed about 2 weeks ago
         const userSpecificQuery = query(
           usersCollectionRef,
           where("subscribedAt", ">=", twoWeeksAgoTimestamp),
-          // orderBy("createdAt", "desc"),
+          orderBy("subscribedAt", "desc"),
         );
 
         const usersSnapshot = await getDocs(userSpecificQuery);
@@ -95,6 +95,7 @@ const New_Subscribers_wrap = ({
           const name = data.name;
           const step = data.step;
           const createdAt = data.createdAt;
+          const subscribedAt = data.subscribedAt;
           const timestampFromFirebase = new Date(createdAt.toMillis()); // Convert to JavaScript Date object
 
           const formattedDate = format(timestampFromFirebase, "do MMMM yyyy");
@@ -120,6 +121,7 @@ const New_Subscribers_wrap = ({
                 formattedDate,
                 libraryData,
                 step,
+                subscribedAt,
               };
             },
           );

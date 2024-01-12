@@ -67,7 +67,7 @@ export async function POST(request: Request) {
         where("userid", "==", id),
       );
       const userDocs = await getDocs(userQuery);
-
+      // console.log(userDocs);
       if (userDocs.empty) {
         console.log("No user document found for the current user");
         return;
@@ -278,7 +278,7 @@ export async function POST(request: Request) {
         );
       }
 
-      console.log("this is it " + subscription.id);
+      // console.log("this is it " + subscription.id);
 
       //   console.log("Checkout was completed just now ");
       // Then define and call a function to handle the event checkout.session.completed
@@ -307,50 +307,50 @@ export async function POST(request: Request) {
 
       //  console.log(customerSubscriptionUpdated.trial_end);
 
-      const billing_anchor = customerSubscriptionUpdated.billing_cycle_anchor;
+      // const billing_anchor = customerSubscriptionUpdated.billing_cycle_anchor;
 
-      const trial_end = customerSubscriptionUpdated.trial_end;
+      // const trial_end = customerSubscriptionUpdated.trial_end;
 
-      const next_first_month = getNextMonthTimestamp();
+      // const next_first_month = getNextMonthTimestamp();
 
-      if (billing_anchor == next_first_month) {
-        return;
-      } else {
-        const subscription_created = await stripe.subscriptions.update(
-          customerSubscriptionUpdated.id,
-          {
-            trial_end: getNextMonthTimestamp(),
-            proration_behavior: "none",
-          },
-        );
-      }
+      // if (billing_anchor == next_first_month) {
+      //   return;
+      // } else {
+      //   const subscription_created = await stripe.subscriptions.update(
+      //     customerSubscriptionUpdated.id,
+      //     {
+      //       trial_end: getNextMonthTimestamp(),
+      //       proration_behavior: "none",
+      //     },
+      //   );
+      // }
 
       // checkBillingCycleAnchor(billing_anchor);
       // Check if the subscription status is "canceled"
-      if (customerSubscriptionUpdated.items.data[0].status === "canceled") {
-        break;
-      } else {
-        const plain_id = customerSubscriptionUpdated.items.data[0].price.id;
-        // console.log(plain_id);
+      // if (customerSubscriptionUpdated.items.data[0].status === "canceled") {
+      //   break;
+      // } else {
+      //   const plain_id = customerSubscriptionUpdated.items.data[0].price.id;
+      //   // console.log(plain_id);
 
-        if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-          updateT(
-            customerSubscriptionUpdated.customer,
-            false,
-            4,
-            true,
-            "Merchant tier",
-          );
-        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-          updateT(
-            customerSubscriptionUpdated.customer,
-            false,
-            3,
-            false,
-            "Standard tier",
-          );
-        }
-      }
+      //   if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+      //     updateT(
+      //       customerSubscriptionUpdated.customer,
+      //       false,
+      //       4,
+      //       true,
+      //       "Merchant tier",
+      //     );
+      //   } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+      //     updateT(
+      //       customerSubscriptionUpdated.customer,
+      //       false,
+      //       3,
+      //       false,
+      //       "Standard tier",
+      //     );
+      //   }
+      // }
 
       // Then define and call a function to handle the event customer.subscription.updated
       break;
