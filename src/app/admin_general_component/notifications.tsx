@@ -17,6 +17,7 @@ import {
   doc,
   updateDoc,
   onSnapshot,
+  deleteDoc,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -99,60 +100,68 @@ const Notification_modal = () => {
         // Code to be executed after the delay
         setnotification(false);
         setstart_hiding(false);
-      }, 1500);
+      }, 1300);
 
       // Clear the timer if the component unmounts or the effect is re-executed.
       return () => clearTimeout(timer);
     }
   }, [start_hiding]);
 
-  const items = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+  const items = ["", "", "", "", "", "", "", ""];
 
   const [notificationsData, setNotificationsData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       try {
-        // const db = getFirestore();
         const notificationsCollection = collection(db, "notifications");
-        const notificationsSnapshot = await getDocs(notificationsCollection);
-        // console.log(notificationsSnapshot.docs[0].data());
+        const notificationsQuery = query(notificationsCollection);
 
-        const dataPromises = notificationsSnapshot.docs.map(async (doc) => {
-          const notificationData = doc.data();
-          const userId = notificationData.user_id;
+        const unsubscribe = onSnapshot(
+          notificationsQuery,
+          async (notificationsSnapshot) => {
+            const dataPromises = notificationsSnapshot.docs.map(async (doc) => {
+              const notificationData = doc.data();
+              const userId = notificationData.user_id;
 
-          // Retrieve user information using where clause
-          const usersCollection = collection(db, "users");
-          const userQuery = query(
-            usersCollection,
-            where("userid", "==", userId),
-          );
-          const userSnapshot = await getDocs(userQuery);
+              // Retrieve user information using where clause
+              const usersCollection = collection(db, "users");
+              const userQuery = query(
+                usersCollection,
+                where("userid", "==", userId),
+              );
+              const userSnapshot = await getDocs(userQuery);
 
-          if (!userSnapshot.empty) {
-            const userData = userSnapshot.docs[0].data();
-            const formattedDate = format(
-              fromUnixTime(notificationData.createdAt.seconds),
-              "do MMMM yyyy, h:mma EEEE",
-            );
+              if (!userSnapshot.empty) {
+                const userData = userSnapshot.docs[0].data();
+                const formattedDate = format(
+                  fromUnixTime(notificationData.createdAt.seconds),
+                  "do MMMM yyyy, h:mma EEEE",
+                );
 
-            return {
-              id: doc.id,
-              notificationData,
-              userData,
-              formattedDate,
-            };
-          } else {
-            console.warn(`User not found for notification with ID ${doc.id}`);
-            return null;
-          }
-        });
-        const combinedData = await Promise.all(dataPromises);
-        console.log(combinedData);
-        setNotificationsData(combinedData);
-        setIsLoading(false);
+                return {
+                  id: doc.id,
+                  notificationData,
+                  userData,
+                  formattedDate,
+                };
+              } else {
+                console.warn(
+                  `User not found for notification with ID ${doc.id}`,
+                );
+                return null;
+              }
+            });
+
+            const combinedData = await Promise.all(dataPromises);
+            setNotificationsData(combinedData);
+            setIsLoading(false);
+          },
+        );
+
+        // Clean up the listener when the component unmounts
+        return () => unsubscribe();
       } catch (error) {
         console.error("Error fetching data:", error);
         setIsLoading(false);
@@ -160,8 +169,14 @@ const Notification_modal = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures that this useEffect runs only once on component mount
+  }, []);
+  const delete_funtion = (e: any) => {
+    const notification_ref = doc(db, "notifications", e);
 
+    deleteDoc(notification_ref).then(() => {
+      // window?.location?.reload();
+    });
+  };
   return (
     <>
       <Head>
@@ -169,7 +184,7 @@ const Notification_modal = () => {
         <meta name="googlebot" content="noindex,nofollow" />
       </Head>
       <div
-        className={`w-full min-h-full bg-black ${settings_is_opac} fixed top-0 left-0 z-[9999] transition duration-[1s] setting_modal sm:items-end flex justify-end items-start pt-[7vw] sm:py-0 sm:px-0 px-[2vw] overflow-hidden`}
+        className={`w-full min-h-full bg-black ${settings_is_opac} fixed top-0 left-0 z-[9999] transition duration-[1s] setting_modal sm:items-end flex justify-end items-start pt-[5.3vw] sm:py-0 sm:px-0 px-[2vw] overflow-hidden`}
       >
         <Image
           src={exit_modal}
@@ -178,7 +193,7 @@ const Notification_modal = () => {
           style={{ opacity: mob_ham_opac ? 1 : 0, transition: "1s ease" }}
         />
         <div
-          className={`w-[32vw] sm:h-[85vh] sm:w-full  h-[62vw] max-h-[80vh]  sm:py-[5vw] sm:px-[2vw] relative sm:gap-[4vw] rounded-[2.2vw] bg-[#111111] settings flex flex-col  border-[#434343] overflow-hidden ${
+          className={`w-[32vw] sm:h-[85vh] sm:w-full  h-[66vw] max-h-[85vh]  sm:py-[5vw] sm:px-[2vw] relative sm:gap-[4vw] rounded-[2.2vw] bg-[#111111] settings flex flex-col  border-[#434343] overflow-hidden ${
             globalThis.innerWidth > 650 ? shift_modal : up_modal
           } border transition duration-[1.5s]`}
           ref={ref_modal}
@@ -193,48 +208,90 @@ const Notification_modal = () => {
             </div>
           </div>
           <div className="h-[90%]   overflow-y-scroll scroll-container ">
-            <div className=" w-full sm:py-[4vw] h-auto flex items-center flex-col gap-[2vw] sm:gap-[6vw]">
-              {notificationsData.map((e: any, index: any) => {
-                return (
-                  <div
-                    key={index}
-                    className="w-[31vw]  px-[1vw] sm:px-[2vw]  flex items-center justify-between sm:w-full    "
-                  >
-                    {/* the first section the iamge and the names  */}
-                    <div className="w-auto gap-[1vw] sm:gap-[4vw] flex justify-start items-center">
-                      <div className="w-[4vw] overflow-hidden h-[4vw] sm:h-[16vw] sm:w-[16vw]  bg-white rounded-[100%]">
-                        <Image
-                          src={e.userData.avatar_url}
-                          alt={e.userData.Username}
-                          unoptimized
-                          width="0"
-                          height="0"
-                          className="w-full h-fit scale-[1.2]"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-[0.5vw] sm:gap-[1vw]">
-                        <p className="text-[1vw] sm:text-[3.2vw] sm:font-medium font-semibold text-white">
-                          {e.userData.Username} {e.notificationData.message}
-                        </p>
-                        <p className="text-[0.8vw] capitalize sm:text-[3vw] text-[#CCFF00]">
-                          {e.userData.subscription
-                            ? e.userData.subscription
-                            : "Public user"}
-                          <br />
-                          <span className="text-white sm:text-[2.6vw]  text-[0.75vw] text-opacity-[50%] ">
-                            {e.formattedDate}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
+            {isLoading ? (
+              <>
+                {" "}
+                <div className=" w-full sm:py-[4vw] h-auto flex items-center flex-col gap-[2vw] sm:gap-[8vw]">
+                  {items.map((e: any, index: any) => {
+                    return (
+                      <div
+                        key={index}
+                        className="w-[31vw]  px-[1vw] sm:px-[2vw]  flex items-center justify-between sm:w-full    "
+                      >
+                        {/* the first section the iamge and the names  */}
+                        <div className="w-auto gap-[1vw] sm:gap-[4vw] flex justify-start items-center">
+                          <div className="w-[4vw] animate-pulse overflow-hidden h-[4vw] sm:h-[16vw] sm:w-[16vw]  bg-white rounded-[100%]"></div>
+                          <div className="flex flex-col gap-[0.5vw] sm:gap-[1vw]">
+                            <p className="text-[0.8vw] sm:w-[40vw] rounded-[0.3vw] w-[15vw] h-[1.2vw] sm:h-[6vw] sm:rounded-[2vw] capitalize animate-pulse bg-[white] bg-opacity-[50%]"></p>
+                            <p className="text-[0.8vw] w-[5vw] h-[1vw] rounded-[0.3vw] sm:w-[20vw] sm:h-[4vw] sm:rounded-[2vw] capitalize animate-pulse bg-[#CCFF00]"></p>
+                            <p className="text-[0.8vw] w-[10vw] h-[1vw] rounded-[0.3vw] sm:w-[40vw] sm:h-[3vw] sm:rounded-[2vw] capitalize animate-pulse bg-[white] bg-opacity-[50%]"></p>
+                          </div>
+                        </div>
 
-                    <button className="w-[7vw] sm:w-[20vw] sm:h-[10vw] sm:border-[0.5vw] hover:bg-white hover:text-black text-white text-[0.9vw] sm:text-[2.8vw] h-[2.5vw] rounded-[2vw] border-opacity-[50%] border-[#CCFF00] border-[0.15vw]  ">
-                      Remove
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+                        <button
+                          className="w-[7vw] bg-white animate-pulse sm:w-[20vw] sm:h-[10vw] sm:border-[0.5vw]  text-white text-[0.9vw] sm:text-[2.8vw] h-[2.5vw] rounded-[2vw] border-opacity-[50%] border-[#CCFF00] border-[0.15vw]  "
+                          onClick={() => {
+                            delete_funtion(e.id);
+                          }}
+                        ></button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <div className=" w-full sm:py-[4vw] h-auto flex items-center flex-col gap-[2vw] sm:gap-[8vw]">
+                {notificationsData.map((e: any, index: any) => {
+                  return (
+                    <div
+                      key={index}
+                      className="w-[31vw]  px-[1vw] sm:px-[2vw]  flex items-center justify-between sm:w-full    "
+                    >
+                      {/* the first section the iamge and the names  */}
+                      <div className="w-auto gap-[1vw] sm:gap-[4vw] flex justify-start items-center">
+                        <div className="w-[4vw] overflow-hidden h-[4vw] sm:h-[16vw] sm:w-[16vw]  bg-white rounded-[100%]">
+                          <Image
+                            src={e.userData.avatar_url}
+                            alt={e.userData.Username}
+                            unoptimized
+                            width="0"
+                            height="0"
+                            className="w-full h-full"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-[0.3vw] sm:gap-[1vw]">
+                          <p className="text-[1vw] sm:text-[3.2vw] sm:font-medium neuem lowercase text-white">
+                            <span className="capitalize">
+                              {" "}
+                              {e.userData.Username}
+                            </span>{" "}
+                            {e.notificationData.message}
+                          </p>
+                          <p className="text-[0.8vw] capitalize sm:text-[2.5vw] text-[#CCFF00]">
+                            {e.userData.subscription
+                              ? e.userData.subscription
+                              : "Public user"}
+                            <br />
+                            <span className="text-white sm:text-[2.6vw]  text-[0.75vw] text-opacity-[50%] ">
+                              {e.formattedDate}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <button
+                        className="w-[7vw] sm:w-[20vw] sm:h-[10vw] sm:border-[0.5vw] hover:bg-white hover:text-black text-white text-[0.9vw] sm:text-[2.8vw] h-[2.5vw] rounded-[2vw] border-opacity-[50%] border-[#CCFF00] border-[0.15vw]  "
+                        onClick={() => {
+                          delete_funtion(e.id);
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -245,7 +245,6 @@ export default function Home() {
       {/* <button
         className="w-[100vw] h-[100vh]"
         onClick={() => {
-          const bannerId = "your_banner_id"; // Replace 'your_banner_id' with the actual banner ID
 
           axios
             .delete(
