@@ -25,6 +25,7 @@ import firebaseConfig from "../utils/fire_base_config";
 import Comments_modal from "./comment";
 import { headers } from "next/headers";
 import Image_display from "./img_display";
+import Subscrption_Likes_modal from "./likes_modal";
 
 const Post = (props: any) => {
   const [liked, setliked] = useState(false);
@@ -35,7 +36,7 @@ const Post = (props: any) => {
   const [commentvalue, setcommentvalue] = useState("");
 
   // the component coming from the parent
-  const { postdata, id, order, disable } = props;
+  const { postdata, id, order, disable, index } = props;
 
   const [err, seterr] = useState(false);
 
@@ -56,6 +57,9 @@ const Post = (props: any) => {
   const [pinned, setpinned] = useState(false);
   const [local_comments, setlocal_comments] = useState([{}]);
 
+  // likdes data
+  const [likes_data, setlikes_data] = useState<any>([]);
+
   const [video, setvideo] = useState(false);
   const videoExtensions = [
     "mp4",
@@ -70,7 +74,28 @@ const Post = (props: any) => {
     "ogv",
     "ogg",
   ];
+  // this handles the display of the like modal
+  const [activeModalIndex, setActiveModalIndex] = useState<any>(null);
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        activeModalIndex !== null &&
+        !document
+          .getElementById(`brand-${activeModalIndex}`)
+          ?.contains(event.target as Node)
+      ) {
+        setActiveModalIndex(null); // Close the modal if click is outside
+      }
+    };
 
+    // Add click event listener to the entire document
+    document.addEventListener("click", handleOutsideClick);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [activeModalIndex]);
   useEffect(() => {
     sethostlink(window.location.host);
     const likesCollectionRef = collection(
@@ -92,11 +117,80 @@ const Post = (props: any) => {
       postdata.postId,
       "pinned",
     );
+
     onSnapshot(likesCollectionRef, (likesSnapshot) => {
       // postWithSubcollections.likesCount = likesSnapshot.size;
-      setlikes(likesSnapshot.size);
-    });
 
+      // const likes_array: any[] = [];
+      setcomment_info_data([]);
+      const likes_array: any[] = [];
+      setcomment_info_data([]);
+
+      if (!likesSnapshot.empty) {
+        likesSnapshot.forEach((commentDoc: any) => {
+          const likes_data = commentDoc.data();
+          const userId = likes_data.user_id;
+
+          if (userId) {
+            const comment_query = query(
+              usersCollectionRef,
+              where("userid", "==", userId),
+            );
+
+            getDocs(comment_query)
+              .then((res) => {
+                if (!res.empty) {
+                  const userlike_info = res?.docs[0]?.data();
+                  likes_array.push({
+                    name: userlike_info.Username,
+                    avatar: userlike_info.avatar_url,
+                  });
+
+                  setlikes(likesSnapshot.size);
+                  setlikes_data(likes_array);
+                  console.log(likes_array);
+                }
+              })
+              .catch((err) => {
+                console.error("Error fetching user info: ", err);
+              });
+          }
+        });
+      }
+      // if (!likesSnapshot.empty) {
+      //   likesSnapshot.forEach((commentDoc: any) => {
+      //     const likes_data = commentDoc.data();
+      //     const userId = likes_data.user_id;
+
+      //     const comment_query = query(
+      //       usersCollectionRef,
+      //       where("userid", "==", userId),
+      //     );
+      //     // console.log(comment_query);
+
+      //     getDocs(comment_query)
+      //       .then((res) => {
+      //         const userCommentInfo = res?.docs[0]?.data();
+      //         // likes_array = [];
+      //         likes_array.push({
+      //           avatar: userCommentInfo.avatar_url,
+      //           name: userCommentInfo.Username,
+      //           // text: likes_data.comment,
+      //         });
+      //         // Once you've collected all comments, sort them by timestamp (newest first)
+      //         // commentArray.sort((a, b) => b.timestamp - a.timestamp);
+      //         // Now, update the comments array with the sorted data
+      //         // return (postWithSubcollections.comments = commentArray);
+      //         setlikes(likesSnapshot.size);
+      //         console.log(likes_array);
+      //         // setcomment_info_data(commentArray);
+      //       })
+      //       .catch((err) => {
+      //         // console.error("thodoo" + err);
+      //       });
+      //   });
+      // }
+    });
     if (auth?.currentUser) {
       const userQuery = query(
         likesCollectionRef,
@@ -475,7 +569,7 @@ const Post = (props: any) => {
           )}
 
           {/* the icons */}
-          <div className="w-full  py-[1vw]  h-auto  flex justify-between items-center">
+          <div className="w-full relative py-[1vw]  h-auto  flex justify-between items-center">
             <div className="w-auto flex justify-start gap-[2vw] sm:gap-[4vw]">
               {" "}
               <i
@@ -508,13 +602,27 @@ const Post = (props: any) => {
               ></i> */}
             </div>
 
-            <div className="w-auto flex gap-[1vw] justify-end items-center ">
+            <div
+              className="w-auto flex gap-[1vw] justify-end items-center cursor-pointer"
+              onClick={() => {
+                setActiveModalIndex(index);
+              }}
+            >
               <p className="text-[1vw] text-[#CCFF00] neuer sm:text-[3vw]">
                 {postdata.likesCount}{" "}
                 {postdata.likesCount < 2 ? "Like" : "Likes"}
               </p>
               <i className="bi bi-bar-chart-fill text-white text-[1.3vw] sm:text-[4vw] hover:opacity-[100%] duration-[0.6s] transition opacity-[70%] cursor-pointer"></i>
             </div>
+
+            {activeModalIndex == index && (
+              <Subscrption_Likes_modal
+                index={index}
+                likes={likes}
+                setActiveModalIndex={setActiveModalIndex}
+                likes_array={likes_data}
+              />
+            )}
           </div>
 
           <button

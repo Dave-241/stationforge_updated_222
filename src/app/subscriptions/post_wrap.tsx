@@ -253,6 +253,7 @@ const Post_wrap = () => {
                   key={index}
                   order={e.order ? 4 : 1}
                   id={e.postId}
+                  index={index}
                   postdata={e}
                   disable={comment_disabled}
                 />
