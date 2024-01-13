@@ -10,6 +10,7 @@ import Loader from "./general_components/loader";
 import Products from "./homepage_components/products";
 import Fractions from "./homepage_components/factions";
 import JsonSearch from "search-array";
+import imageCompression from "browser-image-compression";
 
 import {
   collection,
@@ -182,6 +183,7 @@ export default function Home() {
     // Cleanup the subscription when the component unmounts
     return () => unsubscribe();
   }, []); //
+
   return (
     <>
       {page_loader && <Loader />}

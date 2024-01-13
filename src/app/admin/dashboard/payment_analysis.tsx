@@ -296,7 +296,7 @@ const Payment_analysis = () => {
     },
   };
 
-  const [totalPosts, setTotalPosts] = useState(0);
+  const [total_transaction, settotal_transaction] = useState(0);
 
   //   useEffect(() => {
   //     const fetchData = async () => {
@@ -377,6 +377,7 @@ const Payment_analysis = () => {
         const collectionRef = collection(db, "transaction");
 
         const monthlyData = Array(12).fill(0); // Array to store monthly sums, initialized with zeros
+        let yearlySum = 0; // Variable to store the total sum for the year
 
         const querySnapshot = await getDocs(
           query(
@@ -400,11 +401,18 @@ const Payment_analysis = () => {
         });
 
         // Now 'monthlyData' contains the monthly sums for each month of the selected year
+        querySnapshot.forEach((doc) => {
+          const amount = doc.data().amount;
+          yearlySum += amount; // Accumulate amounts for the entire year
+        });
 
+        // Log the total sum for the year to the console
+        console.log(`Total Amount for ${selectedYear}:`, yearlySum);
         // Store 'monthlyData' in a const if needed
         const monthlySums = [...monthlyData];
 
         console.log(monthlySums);
+        settotal_transaction(yearlySum);
 
         setChartData({
           labels: [
@@ -457,7 +465,7 @@ const Payment_analysis = () => {
           Total Digital subsrciber sales
         </h2>
 
-        <div className="flex w-[30vw] gap-[6vw] sm:w-[80vw]   justify-between">
+        <div className="flex w-[10vw] gap-[6vw] sm:w-[50vw]   justify-between">
           <select
             className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[12vw] sm:rounded-[3vw] focus:outline-none"
             value={selectedYear}
@@ -469,20 +477,8 @@ const Payment_analysis = () => {
               </option>
             ))}
           </select>
-
-          <select
-            className="w-full h-[3vw] border rounded-[1vw] px-[1vw] cursor-pointer text-[1vw] sm:text-[4vw] sm:px-[5vw] sm:h-[12vw] sm:rounded-[3vw] focus:outline-none"
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
-          >
-            {months.map((month) => (
-              <option key={month} value={month}>
-                {getMonthName(month)}
-              </option>
-            ))}
-          </select>
         </div>
-        <div className="w-full h-[38vw] sm:h-[60vw]">
+        <div className="w-full h-[38vw] sm:h-[100vw]">
           <Line data={chartData} ref={chartRef} options={options} />
         </div>
 
@@ -494,14 +490,16 @@ const Payment_analysis = () => {
               className="w-[3vw] sm:w-[12vw] h-fit"
             />{" "}
             <p className="font-bold">
-              All Downloads for this month <br />
-              <span className="font-medium">
-                {getMonthName(selectedMonth)}{" "}
-              </span>
+              Total amount of money made <br />
+              <span className="font-medium">{selectedYear} </span>
             </p>
           </div>
 
-          <p className="font-bold text-[2.3vw] sm:text-[4vw]"> {totalPosts}</p>
+          <p className="font-bold text-[2.3vw] sm:text-[4vw]">
+            {" "}
+            ${total_transaction}.00{" "}
+            <sub className="text-[1vw] sm:text-[2.5vw]">approx</sub>
+          </p>
         </div>
       </div>
     </div>
