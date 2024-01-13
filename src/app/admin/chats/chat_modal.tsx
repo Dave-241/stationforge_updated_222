@@ -126,6 +126,7 @@ const Moderator_Chats_modal = ({
       })
         .then(async () => {
           // setchat_session_id(doc.id);
+          update_moderator_is_typing(false);
           setchat_text("");
           setbtn_disabled(false);
           scrollToBottom();

@@ -29,6 +29,7 @@ import { deleteObject, getStorage, listAll, ref } from "firebase/storage";
 import Pinned_modal from "./admin_pinned";
 import Display_media from "./display_media";
 import Comments_modal from "@/app/subscriptions/comment";
+import Likes_modal from "./likes_modal";
 
 const Admin_Post = (props: any) => {
   const [liked, setliked] = useState(false);
@@ -50,6 +51,7 @@ const Admin_Post = (props: any) => {
     sethide_pinned_modal,
     goback,
     setedit_postid,
+    index,
   } = props;
 
   const [err, seterr] = useState(false);
@@ -70,6 +72,7 @@ const Admin_Post = (props: any) => {
 
   const [pinned, setpinned] = useState(false);
   const [local_comments, setlocal_comments] = useState([{}]);
+  const [likes_data, setlikes_data] = useState<any>([]);
 
   //   for deleting data
   const [showdeletemodal, setshowdeletemodal] = useState(false);
@@ -90,6 +93,28 @@ const Admin_Post = (props: any) => {
     "ogg",
   ];
 
+  // this handles the display of the like modal
+  const [activeModalIndex, setActiveModalIndex] = useState<any>(null);
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        activeModalIndex !== null &&
+        !document
+          .getElementById(`brand-${activeModalIndex}`)
+          ?.contains(event.target as Node)
+      ) {
+        setActiveModalIndex(null); // Close the modal if click is outside
+      }
+    };
+
+    // Add click event listener to the entire document
+    document.addEventListener("click", handleOutsideClick);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [activeModalIndex]);
   useEffect(() => {
     // After fetching the posts, sort them by createdAt timestamp
     sethostlink(window.location.host);
@@ -106,25 +131,94 @@ const Admin_Post = (props: any) => {
       postdata.postId,
       "comments",
     );
-    const pinnedCollectionRef = doc(db, "posts", postdata.postId);
+
     onSnapshot(likesCollectionRef, (likesSnapshot) => {
       // postWithSubcollections.likesCount = likesSnapshot.size;
-      setlikes(likesSnapshot.size);
+
+      // const likes_array: any[] = [];
+      setcomment_info_data([]);
+      const likes_array: any[] = [];
+      setcomment_info_data([]);
+
+      if (!likesSnapshot.empty) {
+        likesSnapshot.forEach((commentDoc: any) => {
+          const likes_data = commentDoc.data();
+          const userId = likes_data.user_id;
+
+          if (userId) {
+            const comment_query = query(
+              usersCollectionRef,
+              where("userid", "==", userId),
+            );
+
+            getDocs(comment_query)
+              .then((res) => {
+                if (!res.empty) {
+                  const userlike_info = res?.docs[0]?.data();
+                  likes_array.push({
+                    name: userlike_info.Username,
+                    avatar: userlike_info.avatar_url,
+                  });
+
+                  setlikes(likesSnapshot.size);
+                  setlikes_data(likes_array);
+                  console.log(likes_array);
+                }
+              })
+              .catch((err) => {
+                console.error("Error fetching user info: ", err);
+              });
+          }
+        });
+      }
+      // if (!likesSnapshot.empty) {
+      //   likesSnapshot.forEach((commentDoc: any) => {
+      //     const likes_data = commentDoc.data();
+      //     const userId = likes_data.user_id;
+
+      //     const comment_query = query(
+      //       usersCollectionRef,
+      //       where("userid", "==", userId),
+      //     );
+      //     // console.log(comment_query);
+
+      //     getDocs(comment_query)
+      //       .then((res) => {
+      //         const userCommentInfo = res?.docs[0]?.data();
+      //         // likes_array = [];
+      //         likes_array.push({
+      //           avatar: userCommentInfo.avatar_url,
+      //           name: userCommentInfo.Username,
+      //           // text: likes_data.comment,
+      //         });
+      //         // Once you've collected all comments, sort them by timestamp (newest first)
+      //         // commentArray.sort((a, b) => b.timestamp - a.timestamp);
+      //         // Now, update the comments array with the sorted data
+      //         // return (postWithSubcollections.comments = commentArray);
+      //         setlikes(likesSnapshot.size);
+      //         console.log(likes_array);
+      //         // setcomment_info_data(commentArray);
+      //       })
+      //       .catch((err) => {
+      //         // console.error("thodoo" + err);
+      //       });
+      //   });
+      // }
     });
 
-    if (auth?.currentUser) {
-      const userQuery = query(
-        likesCollectionRef,
-        where("user_id", "==", auth?.currentUser?.uid),
-      );
-      onSnapshot(userQuery, (subcollectionSnapshot) => {
-        if (!subcollectionSnapshot.empty) {
-          setliked(true);
-        } else {
-          setliked(false);
-        }
-      });
-    }
+    // if (auth?.currentUser) {
+    //   const userQuery = query(
+    //     likesCollectionRef,
+    //     where("user_id", "==", auth?.currentUser?.uid),
+    //   );
+    //   onSnapshot(userQuery, (subcollectionSnapshot) => {
+    //     if (!subcollectionSnapshot.empty) {
+    //       setliked(true);
+    //     } else {
+    //       setliked(false);
+    //     }
+    //   });
+    // }
 
     // this is for the pinning section
 
@@ -192,10 +286,10 @@ const Admin_Post = (props: any) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    setlikes(postdata.likesCount);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [likes]);
+  // useEffect(() => {
+  //   setlikes(postdata.likesCount);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [likes]);
 
   // const [img_items, setimg_items] = useState<any>([]);
 
@@ -467,7 +561,7 @@ const Admin_Post = (props: any) => {
           )}
 
           {/* the icons */}
-          <div className="w-full  py-[1vw]  h-auto  flex justify-between items-center">
+          <div className="w-full  relative  py-[1vw]  h-auto  flex justify-between items-center">
             <div className="w-auto flex justify-start gap-[1.7vw] sm:gap-[4vw]">
               {" "}
               <i
@@ -515,13 +609,26 @@ const Admin_Post = (props: any) => {
               ></i>
             </div>
 
-            <div className="w-auto flex gap-[1vw] sm:gap-[1.6vw] justify-end items-center  ">
-              <p className="text-[1vw] text-[#CCFF00] neuer sm:text-[3vw]">
-                {postdata.likesCount}{" "}
-                {postdata.likesCount < 2 ? "Like" : "Likes"}
+            <div
+              className="w-auto flex gap-[1vw]  hover:text-[#CCFF00] text-[#010101] cursor-pointer sm:gap-[1.6vw] justify-end items-center  "
+              onClick={() => {
+                setActiveModalIndex(index);
+              }}
+            >
+              <p className="text-[1vw] transition  neuer sm:text-[3vw]">
+                {likes} {postdata.likesCount < 2 ? "Like" : "Likes"}
               </p>
-              <i className="bi hover:text-[#95B611] sm:text-[4vw]  bi-bar-chart-fill text-[#010101] text-[1.3vw] hover:opacity-[100%] duration-[0.6s] transition opacity-[70%] cursor-pointer"></i>
+              <i className="bi sm:text-[4vw]  bi-bar-chart-fill text-[1.3vw] hover:opacity-[100%]  transition opacity-[70%] cursor-pointer"></i>
             </div>
+
+            {activeModalIndex == index && (
+              <Likes_modal
+                index={index}
+                likes={likes}
+                setActiveModalIndex={setActiveModalIndex}
+                likes_array={likes_data}
+              />
+            )}
           </div>
 
           <button
@@ -532,7 +639,7 @@ const Admin_Post = (props: any) => {
               // console.log(comment_info_data, postdata.comments);
             }}
           >
-            {showcomment ? "" : `See  comments `}
+            {showcomment ? "" : `See comments `}
           </button>
 
           {/* the form to handle comments  */}

@@ -293,6 +293,7 @@ const Admin_Post_wrap = () => {
                   return (
                     <Admin_Post
                       key={index}
+                      index={index}
                       order={e.order ? 4 : 1}
                       id={e.postId}
                       postdata={e}
