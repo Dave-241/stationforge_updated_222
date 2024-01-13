@@ -193,7 +193,7 @@ const Notification_modal = () => {
           style={{ opacity: mob_ham_opac ? 1 : 0, transition: "1s ease" }}
         />
         <div
-          className={`w-[32vw] sm:h-[85vh] sm:w-full  h-[66vw] max-h-[85vh]  sm:py-[5vw] sm:px-[2vw] relative sm:gap-[4vw] rounded-[2.2vw] bg-[#111111] settings flex flex-col  border-[#434343] overflow-hidden ${
+          className={`w-[32vw] sm:h-[80vh] sm:w-full  h-[66vw] max-h-[85vh]  sm:py-[5vw] sm:px-[2vw] relative sm:gap-[4vw] rounded-[2.2vw] bg-[#111111] settings flex flex-col  border-[#434343] overflow-hidden ${
             globalThis.innerWidth > 650 ? shift_modal : up_modal
           } border transition duration-[1.5s]`}
           ref={ref_modal}

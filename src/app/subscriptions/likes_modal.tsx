@@ -49,7 +49,7 @@ const Subscrption_Likes_modal = ({
       <div
         className={` w-full h-full ${
           moveup ? "sm:translate-y-0" : "sm:translate-y-[200vw]"
-        }   sm:rounded-t-[5vw] sm:overflow-hidden bg-black sm:relative sm:h-[70vh]  `}
+        }   sm:rounded-t-[5vw] sm:overflow-hidden bg-black sm:relative sm:h-[65vh]  `}
         id={`brand-${index}`}
         style={{
           transition: "1s ease",
