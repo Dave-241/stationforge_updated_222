@@ -19,6 +19,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  startAfter,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./utils/fire_base_config";
@@ -66,6 +67,8 @@ export default function Home() {
   ]);
 
   const [active_faction, setactive_faction] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Adjust based on your pagination needs
   useEffect(() => {
     setpage_loader(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -158,31 +161,34 @@ export default function Home() {
     // setsecond_copy_products(products);
   }, [products]);
 
-  useEffect(() => {
-    const db = getFirestore();
-    const productsRef = collection(db, "products");
-    const col_qery = query(productsRef, orderBy("createdAt", "desc"));
-    setis_network_err(true);
-    const unsubscribe = onSnapshot(col_qery, (querySnapshot) => {
-      setproduct_is_loading(true);
-      const productsArray = querySnapshot.docs.map((doc) => {
-        const { cover_png, title, factions, subfactions } = doc.data();
-        setis_network_err(false);
-        return {
-          id: doc.id,
-          cover_png,
-          title,
-          factions,
-          subfactions,
-        };
-      });
-      setproducts(productsArray);
-      setproduct_is_loading(false);
-    });
+  // useEffect(() => {
+  //   const db = getFirestore();
+  //   const productsRef = collection(db, "products");
 
-    // Cleanup the subscription when the component unmounts
-    return () => unsubscribe();
-  }, []); //
+  //   // for pagiantion
+
+  //   const col_qery = query(productsRef, orderBy("createdAt", "desc"));
+  //   setis_network_err(true);
+  //   const unsubscribe = onSnapshot(col_qery, (querySnapshot) => {
+  //     setproduct_is_loading(true);
+  //     const productsArray = querySnapshot.docs.map((doc) => {
+  //       const { cover_png, title, factions, subfactions } = doc.data();
+  //       setis_network_err(false);
+  //       return {
+  //         id: doc.id,
+  //         cover_png,
+  //         title,
+  //         factions,
+  //         subfactions,
+  //       };
+  //     });
+  //     setproducts(productsArray);
+  //     setproduct_is_loading(false);
+  //   });
+
+  //   // Cleanup the subscription when the component unmounts
+  //   return () => unsubscribe();
+  // }, []); //
 
   return (
     <>
