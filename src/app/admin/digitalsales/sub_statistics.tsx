@@ -5,6 +5,8 @@ import React from "react";
 const Subscription_statistics = ({
   subscriber_stats,
   subscriber_stats_is_loading,
+  standard_amout,
+  merchant_amout,
 }: any) => {
   const loadere_arr = ["", "", ""];
   return (
@@ -34,7 +36,7 @@ const Subscription_statistics = ({
                   </p>
 
                   <div className="h-[4vw] neuem text-[1.2vw] sm:text-[3.5vw] sm:w-full sm:h-[13vw] border-[0.1vw] border-[#9F9F9F] w-[10vw] rounded-[1vw] bg-[#E7E6E8]  flex justify-center items-center">
-                    $0000{" "}
+                    ${standard_amout}
                   </div>
                 </div>
               </div>
@@ -61,7 +63,7 @@ const Subscription_statistics = ({
                   </p>
 
                   <div className="h-[4vw] neuem text-[1.2vw] sm:text-[3.5vw] sm:w-full sm:h-[13vw] border-[0.1vw] border-[#9F9F9F] w-[10vw] rounded-[1vw] bg-[#E7E6E8]  flex justify-center items-center">
-                    <p className="w-fit">$0000</p>
+                    <p className="w-fit"> ${merchant_amout}</p>
                   </div>
                 </div>
               </div>
@@ -91,7 +93,7 @@ const Subscription_statistics = ({
                   </p>
 
                   <div className="h-[4vw] neuem text-[1.2vw] sm:text-[3.5vw] sm:w-full sm:h-[13vw] border-[0.1vw] border-[#9F9F9F] w-[10vw] rounded-[1vw] bg-[#E7E6E8]  flex justify-center items-center">
-                    <p className="w-fit">$0000</p>
+                    <p className="w-fit"> ${merchant_amout + standard_amout}</p>
                   </div>
                 </div>
               </div>

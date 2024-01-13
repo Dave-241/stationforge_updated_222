@@ -52,6 +52,9 @@ const Subscribers_wrap = () => {
   const [uuid, setuuid] = useState("");
   const app = initializeApp(firebaseConfig);
 
+  const [standard_amout, setstandard_amout] = useState(0);
+  const [merchant_amout, setmerchant_amout] = useState(0);
+
   // Initialize Firestore
   const db = getFirestore(app);
   useEffect(() => {
@@ -171,8 +174,10 @@ const Subscribers_wrap = () => {
       );
 
       // Log the sums
-      console.log('Sum of amounts for "standard":', sumStandard);
-      console.log('Sum of amounts for "merchant":', sumMerchant);
+      // console.log('Sum of amounts for "standard":', sumStandard);
+      setstandard_amout(sumStandard);
+      setmerchant_amout(sumMerchant);
+      // console.log('Sum of amounts for "merchant":', sumMerchant);
 
       setsubscriber_stats(resultObject);
       setsubscriber_stats_is_loading(false);
@@ -205,6 +210,8 @@ const Subscribers_wrap = () => {
       <Subscription_statistics
         subscriber_stats={subscriber_stats}
         subscriber_stats_is_loading={subscriber_stats_is_loading}
+        standard_amout={standard_amout}
+        merchant_amout={merchant_amout}
       />
 
       {!hide_display_forge_modal && (
@@ -220,12 +227,12 @@ const Subscribers_wrap = () => {
           <h1 className="neuem text-[1.6vw] sm:text-[5vw] ">
             ALL USERS & SUBSCRIBERS
           </h1>
-          <div className="w-auto flex gap-[0.6vw] sm:rounded-[3vw] sm:gap[1vw] sm:px-[2vw] sm:py-[2vw] px-[0.6vw] py-[0.2vw] border-[0.1vw]  border-black border-opacity-[50%] rounded-[0.7vw]">
+          <div className="w-auto flex gap-[0.6vw] sm:rounded-[3vw] sm:gap[1vw] sm:px-[2vw] sm:py-[2vw] px-[0.6vw] py-[0.4vw] border-[0.1vw]  border-black border-opacity-[50%] rounded-[0.7vw]">
             {subscribe_filter.map((e: any, index: any) => {
               return (
                 <button
                   key={index}
-                  className="neuer sm:rounded-[3vw] sm:text-[3.5vw] sm:h-[8vw] sm:w-[20vw] text-[1vw] h-[3vw] rounded-[0.7vw] w-[6vw]  text-black text-opacity-[50%]"
+                  className="neuer sm:rounded-[3vw] sm:text-[3.5vw] sm:h-[8vw] sm:w-[20vw] text-[1vw] h-[2.6vw] rounded-[0.7vw] w-[6vw]  text-black text-opacity-[50%]"
                   style={{
                     backgroundColor:
                       e.step == selected_filer ? "#CCFF00" : "transparent",

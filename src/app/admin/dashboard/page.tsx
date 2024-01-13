@@ -25,6 +25,7 @@ import Dashboard_post_analytics from "./post_insight";
 import Admin_Settings_modal from "@/app/admin_general_component/admin_settings";
 import { useAdmin_context } from "@/app/utils/admin_context";
 import Notification_modal from "@/app/admin_general_component/notifications";
+import Payment_analysis from "./payment_analysis";
 
 export default function Home() {
   const {
@@ -133,12 +134,14 @@ export default function Home() {
               <Dashboard_post_analytics />
             </div>
           </div>
+
           <div className="w-full px-[2vw] py-[2vw] sm:mt-[8vw]    h-auto">
             <New_Subscribers_wrap
               setall_subscribers_in_dashboard={setall_subscribers_in_dashboard}
               setall_subscribers_is_loading={setall_subscribers_is_loading}
             />
           </div>
+          <Payment_analysis />
           <div className="w-full sm:h-[40vw] "></div>
         </>
       ) : null}
