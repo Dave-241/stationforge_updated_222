@@ -161,34 +161,34 @@ export default function Home() {
     // setsecond_copy_products(products);
   }, [products]);
 
-  // useEffect(() => {
-  //   const db = getFirestore();
-  //   const productsRef = collection(db, "products");
+  useEffect(() => {
+    const db = getFirestore();
+    const productsRef = collection(db, "products");
 
-  //   // for pagiantion
+    // for pagiantion
 
-  //   const col_qery = query(productsRef, orderBy("createdAt", "desc"));
-  //   setis_network_err(true);
-  //   const unsubscribe = onSnapshot(col_qery, (querySnapshot) => {
-  //     setproduct_is_loading(true);
-  //     const productsArray = querySnapshot.docs.map((doc) => {
-  //       const { cover_png, title, factions, subfactions } = doc.data();
-  //       setis_network_err(false);
-  //       return {
-  //         id: doc.id,
-  //         cover_png,
-  //         title,
-  //         factions,
-  //         subfactions,
-  //       };
-  //     });
-  //     setproducts(productsArray);
-  //     setproduct_is_loading(false);
-  //   });
+    const col_qery = query(productsRef, orderBy("createdAt", "desc"));
+    setis_network_err(true);
+    const unsubscribe = onSnapshot(col_qery, (querySnapshot) => {
+      setproduct_is_loading(true);
+      const productsArray = querySnapshot.docs.map((doc) => {
+        const { cover_png, title, factions, subfactions } = doc.data();
+        setis_network_err(false);
+        return {
+          id: doc.id,
+          cover_png,
+          title,
+          factions,
+          subfactions,
+        };
+      });
+      setproducts(productsArray);
+      setproduct_is_loading(false);
+    });
 
-  //   // Cleanup the subscription when the component unmounts
-  //   return () => unsubscribe();
-  // }, []); //
+    // Cleanup the subscription when the component unmounts
+    return () => unsubscribe();
+  }, []); //
 
   return (
     <>
