@@ -221,6 +221,26 @@ html.scroll-container {
   background: #ccff00;
   border-radius: 2vw;
 }
+.admin_scroll_container::-webkit-scrollbar {
+  width: 0.2rem;
+  /* height: 0.5vw; */
+}
+
+.admin_scroll_container::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 1vw;
+}
+.admin_scroll_container_search_items::-webkit-scrollbar-thumb {
+  background: #ccff00;
+  border-radius: 2vw;
+}
+
+@media screen and (max-width: 650px) {
+  .admin_scroll_container::-webkit-scrollbar {
+    width: 1vw;
+    height: 2vw;
+  }
+}
 
 html.scroll-container {
   scrollbar-width: thin;

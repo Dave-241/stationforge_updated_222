@@ -200,7 +200,7 @@ const New_Subscribers_wrap = ({
           forge_modal_heading={forge_modal_heading}
         />
       )}
-      <div className="w-full   sm:pb-[8vw] sm:pt-[5vw]  sm:rounded-[4vw] pt-[1vw]  pb-[3vw] px-[1.5vw]   rounded-[2vw] bg-white flex-col">
+      <div className="w-full   sm:pb-[8vw] sm:pt-[5vw]  sm:rounded-[4vw] pt-[1vw]  pb-[3vw] px-[1.5vw]    rounded-[2vw] bg-white flex-col">
         {/* this is for the mini header on here */}
         <div className="w-full sm:flex-col sm:gap-[3vw] sm:items-start pt-[1vw] pb-[2vw] h-auto gap-[1.5vw] flex justify-start items-center">
           <h1 className="neuem text-[1.6vw]  sm:text-[5vw] ">
@@ -209,7 +209,7 @@ const New_Subscribers_wrap = ({
               in the last 14 days
             </span>
           </h1>
-          <div className="w-auto flex gap-[0.6vw] sm:rounded-[3vw] sm:gap[1vw] sm:px-[2vw] sm:py-[2vw] px-[0.6vw] py-[0.2vw] border-[0.1vw]  border-black border-opacity-[50%] rounded-[0.7vw]">
+          <div className="w-auto  flex gap-[0.6vw] sm:rounded-[3vw] sm:gap[1vw] sm:px-[2vw] sm:py-[2vw] px-[0.6vw] py-[0.2vw] border-[0.1vw]  border-black border-opacity-[50%] rounded-[0.7vw]">
             {subscribe_filter.map((e: any, index: any) => {
               return (
                 <button
@@ -242,9 +242,9 @@ const New_Subscribers_wrap = ({
           </p>
         </div>
 
-        <div className="w-full sm:overflow-x-scroll">
+        <div className="w-full sm:overflow-x-scroll sm:max-h-[70vh]  max-h-[50vh] overflow-y-scroll admin_scroll_container">
           <div className="w-full  sm:w-[250vw]   sm:gap-[5vw] flex-col  flex gap-[1.3vw]">
-            <div className="w-full sm:py-[3vw]  flex justify-between items-center neuer py-[1vw] text-[1vw] sm:text-[3.2vw] font-[900]">
+            <div className="w-full sm:py-[3vw]   flex justify-between items-center neuer py-[1vw] text-[1vw] sm:text-[3.2vw] font-[900]">
               <div className="w-[25%]  h-auto">Name</div>
               <div className="w-[20%]  h-auto">Join Date</div>
               <div className="w-[20%]  h-auto">Last Subscription</div>

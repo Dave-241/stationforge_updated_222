@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 
 import type Stripe from "stripe";
 import {
+  addDoc,
   collection,
   doc,
   getDocs,
@@ -250,6 +251,18 @@ export async function POST(request: Request) {
     await transporter.sendMail(emailOptions);
   };
 
+  const update_transaction = (amount: number, plan: any) => {
+    const transaction_ref = collection(db, "transaction");
+
+    addDoc(transaction_ref, {
+      amount: amount / 100,
+      createdAt: serverTimestamp(),
+      plan: plan,
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
   switch (event.type) {
     case "checkout.session.completed":
       const checkoutSessionCompleted = event.data.object;
@@ -307,13 +320,36 @@ export async function POST(request: Request) {
 
       //  console.log(customerSubscriptionUpdated.trial_end);
 
-      // const billing_anchor = customerSubscriptionUpdated.billing_cycle_anchor;
+      const billing_anchor = customerSubscriptionUpdated.billing_cycle_anchor;
 
-      // const trial_end = customerSubscriptionUpdated.trial_end;
+      const trial_end = customerSubscriptionUpdated.trial_end;
 
-      // const next_first_month = getNextMonthTimestamp();
+      const next_first_month = getNextMonthTimestamp();
 
-      // if (billing_anchor == next_first_month) {
+      const currentTimestamp = Math.floor(new Date().getTime() / 1000);
+      // console.log(trial_end, next_first_month, billing_anchor);
+      // Check if the subscription is still in trial
+
+      // Subscription has moved past the trial period
+      if (billing_anchor == next_first_month) {
+        // console.log("Billing cycle anchor is for the next month");
+        // return;
+        break;
+      } else if (
+        trial_end != next_first_month &&
+        billing_anchor != next_first_month
+      ) {
+        // console.log("it has updateed");
+        const subscription_created = await stripe.subscriptions.update(
+          customerSubscriptionUpdated.id,
+          {
+            trial_end: getNextMonthTimestamp(),
+            proration_behavior: "none",
+          },
+        );
+      }
+
+      // if (!billing_anchor || billing_anchor == next_first_month) {
       //   return;
       // } else {
       //   const subscription_created = await stripe.subscriptions.update(
@@ -323,6 +359,8 @@ export async function POST(request: Request) {
       //       proration_behavior: "none",
       //     },
       //   );
+
+      //   console.log(subscription_created);
       // }
 
       // checkBillingCycleAnchor(billing_anchor);
@@ -356,6 +394,7 @@ export async function POST(request: Request) {
       break;
     case "invoice.payment_succeeded":
       const invoicePaymentSucceeded: any = event.data.object;
+      // console.log("this just ran sha ", invoicePaymentSucceeded.amount_paid);
       // Check if subscription is available in the invoicePaymentSucceeded object
       const subscriptionId = invoicePaymentSucceeded.subscription;
       // Fetch the subscription details from Stripe
@@ -401,6 +440,11 @@ export async function POST(request: Request) {
             true,
             "Merchant tier",
           );
+          update_transaction(
+            invoicePaymentSucceeded.amount_paid > 0 &&
+              invoicePaymentSucceeded.amount_paid,
+            "Merchant",
+          );
         } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
           updateT(
             invoicePaymentSucceeded.customer,
@@ -408,6 +452,11 @@ export async function POST(request: Request) {
             3,
             false,
             "Standard tier",
+          );
+          update_transaction(
+            invoicePaymentSucceeded.amount_paid > 0 &&
+              invoicePaymentSucceeded.amount_paid,
+            "Standard",
           );
         }
 

@@ -127,7 +127,7 @@ const Subscribers_wrap = () => {
 
   // useEffect to filter and log the desired results when allusers state changes
   useEffect(() => {
-    const filterAndLogResults = () => {
+    const filterAndLogResults = async () => {
       if (!allusers || allusers.length === 0) {
         return;
       }
@@ -143,6 +143,36 @@ const Subscribers_wrap = () => {
         "Standard ": step3Users.length,
         "Premium ": step4Users.length,
       };
+
+      // Fetch transactions with plan equal to "standard"
+      const standardQuery = query(
+        collection(db, "transaction"),
+        where("plan", "==", "Standard"),
+      );
+      const standardSnapshot = await getDocs(standardQuery);
+
+      // Calculate sum for "standard"
+      const sumStandard = standardSnapshot.docs.reduce(
+        (total, doc) => total + doc.data().amount,
+        0,
+      );
+
+      // Fetch transactions with plan equal to "merchant"
+      const merchantQuery = query(
+        collection(db, "transaction"),
+        where("plan", "==", "Merchant"),
+      );
+      const merchantSnapshot = await getDocs(merchantQuery);
+
+      // Calculate sum for "merchant"
+      const sumMerchant = merchantSnapshot.docs.reduce(
+        (total, doc) => total + doc.data().amount,
+        0,
+      );
+
+      // Log the sums
+      console.log('Sum of amounts for "standard":', sumStandard);
+      console.log('Sum of amounts for "merchant":', sumMerchant);
 
       setsubscriber_stats(resultObject);
       setsubscriber_stats_is_loading(false);

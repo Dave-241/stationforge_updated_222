@@ -175,7 +175,7 @@ const StandardPlan = ({
         <div className="w-full">
           <h3 className="text-white text-[2.3vw] neuem sm:text-[4vw]">
             $10{" "}
-            <span className="text-opacity-[40%] text-white text-[1.2vw] sm:text-[3vw]">
+            <span className="text-opacity-[40%] text-white  text-[1.2vw] sm:text-[3vw]">
               /Month
             </span>
           </h3>
