@@ -290,6 +290,14 @@ export async function POST(request: Request) {
           session.customer,
           false,
         );
+      } else {
+         update_user_doc(
+           3,
+           session.metadata.userId,
+           "Standard tier",
+           session.customer,
+           false,
+         );
       }
 
       // console.log("this is it " + subscription.id);
