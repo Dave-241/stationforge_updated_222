@@ -1,4 +1,19 @@
+import { initializeApp } from "firebase/app";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import Stripe from "stripe";
+import firebaseConfig from "./fire_base_config";
+import { getAuth } from "firebase-admin/auth";
 
 export const stripe = new Stripe(
   process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY ?? "",
@@ -178,5 +193,50 @@ export const cancelSubscription = async (customerId: any) => {
     }
   } catch (error) {
     console.error("Error canceling subscription:", error);
+  }
+};
+
+// this is just to test out stripe webhook
+// this is just to test out stripe webhook
+// this is just to test out stripe webhook
+// this is just to test out stripe webhook
+// this is just to test out stripe webhook
+
+export const update_user_doc = async (
+  e: number,
+  id: string,
+  type: string,
+  subscriptionid: string,
+  subscriptionCancel: boolean,
+) => {
+  try {
+    const app = initializeApp(firebaseConfig);
+
+    // Initialize Firestore
+    const db = getFirestore(app);
+    const auth: any = getAuth();
+    const userQuery = query(collection(db, "users"), where("userid", "==", id));
+    const userDocs = await getDocs(userQuery);
+    // console.log(userDocs);
+    if (userDocs.empty) {
+      console.log("No user document found for the current user");
+      return;
+    }
+
+    const userDocRef = doc(db, "users", userDocs.docs[0].id);
+    await updateDoc(userDocRef, {
+      subscribedAt: serverTimestamp(),
+      step: e,
+      subscriptionCancelled: subscriptionCancel,
+      subscription: type,
+      allocations: 30,
+      subscriptionId: subscriptionid,
+      // no_of_subscriptions: 1,
+    });
+
+    // Add_notification("has completed first subscription");
+  } catch (error) {
+    console.error("Error updating user document:", error);
+    throw error;
   }
 };

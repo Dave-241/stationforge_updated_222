@@ -1,4 +1,4 @@
-import { stripe } from "@/app/utils/stripe";
+import { stripe, update_user_doc } from "@/app/utils/stripe";
 import { Console } from "console";
 import { headers } from "next/headers";
 import Cors from "micro-cors";
@@ -56,42 +56,42 @@ export async function POST(request: Request) {
   }
 
   //   this is the funtion to update on after the webhook
-  const update_user_doc = async (
-    e: number,
-    id: string,
-    type: string,
-    subscriptionid: string,
-    subscriptionCancel: boolean,
-  ) => {
-    try {
-      const userQuery = query(
-        collection(db, "users"),
-        where("userid", "==", id),
-      );
-      const userDocs = await getDocs(userQuery);
-      // console.log(userDocs);
-      if (userDocs.empty) {
-        console.log("No user document found for the current user");
-        return;
-      }
+  // const update_user_doc = async (
+  //   e: number,
+  //   id: string,
+  //   type: string,
+  //   subscriptionid: string,
+  //   subscriptionCancel: boolean,
+  // ) => {
+  //   try {
+  //     const userQuery = query(
+  //       collection(db, "users"),
+  //       where("userid", "==", id),
+  //     );
+  //     const userDocs = await getDocs(userQuery);
+  //     // console.log(userDocs);
+  //     if (userDocs.empty) {
+  //       console.log("No user document found for the current user");
+  //       return;
+  //     }
 
-      const userDocRef = doc(db, "users", userDocs.docs[0].id);
-      await updateDoc(userDocRef, {
-        subscribedAt: serverTimestamp(),
-        step: e,
-        subscriptionCancelled: subscriptionCancel,
-        subscription: type,
-        allocations: 30,
-        subscriptionId: subscriptionid,
-        // no_of_subscriptions: 1,
-      });
+  //     const userDocRef = doc(db, "users", userDocs.docs[0].id);
+  //     await updateDoc(userDocRef, {
+  //       subscribedAt: serverTimestamp(),
+  //       step: e,
+  //       subscriptionCancelled: subscriptionCancel,
+  //       subscription: type,
+  //       allocations: 30,
+  //       subscriptionId: subscriptionid,
+  //       // no_of_subscriptions: 1,
+  //     });
 
-      // Add_notification("has completed first subscription");
-    } catch (error) {
-      console.error("Error updating user document:", error);
-      throw error;
-    }
-  };
+  //     // Add_notification("has completed first subscription");
+  //   } catch (error) {
+  //     console.error("Error updating user document:", error);
+  //     throw error;
+  //   }
+  // };
 
   //   this function updates t when the user either cancels or renews subscriptions
   const Cancel_subscription = async (
@@ -270,7 +270,13 @@ export async function POST(request: Request) {
       const subscription: any = await stripe.subscriptions.retrieve(
         session.subscription as string,
       );
-
+      update_user_doc(
+        4,
+        session.metadata.userId,
+        "Merchant tier",
+        session.customer,
+        false,
+      );
       // console.log(subscription);
       if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
         update_user_doc(
@@ -290,16 +296,7 @@ export async function POST(request: Request) {
           session.customer,
           false,
         );
-      } else {
-         update_user_doc(
-           3,
-           session.metadata.userId,
-           "Standard tier",
-           session.customer,
-           false,
-         );
       }
-
       // console.log("this is it " + subscription.id);
 
       //   console.log("Checkout was completed just now ");
