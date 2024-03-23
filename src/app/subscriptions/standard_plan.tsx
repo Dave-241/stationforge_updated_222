@@ -8,6 +8,7 @@ import stan_3 from "../../../public/subscription/stan_3.webp";
 import stan_4 from "../../../public/subscription/stan_4.webp";
 import stan_5 from "../../../public/subscription/stan_5.webp";
 import { useRouter } from "next/navigation";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   manage_subscription,
   pay_standard_Subscriptions,
@@ -62,10 +63,16 @@ const StandardPlan = ({
         Add_notification("Initiated standard subscription");
 
         // console.log("this was standard");
+        const pusblishablekey: any =
+          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+        const stripe_promise = loadStripe(pusblishablekey);
+        const stripe = await stripe_promise;
         const session_url = await pay_standard_Subscriptions(uuid, email);
 
-        if (session_url.url) {
-          router.push(session_url.url);
+        if (session_url.id) {
+          const result = await stripe?.redirectToCheckout({
+            sessionId: session_url.id,
+          });
         }
       } catch (error: any) {
         setstandard_isloading(false);

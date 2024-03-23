@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import mer_1 from "../../../public/subscription/mer_1.webp";
 import Image from "next/image";
+import { loadStripe } from "@stripe/stripe-js";
+
 import { useRouter } from "next/navigation";
 import {
   manage_subscription,
@@ -30,11 +32,16 @@ const Merchant_plan = ({
       try {
         setmerchant_isloading(true);
         Add_notification("Initiated merchant subscription");
-
+        const pusblishablekey: any =
+          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+        const stripe_promise = loadStripe(pusblishablekey);
+        const stripe = await stripe_promise;
         const session_url = await pay_merchant_Subscriptions(uuid, email);
 
-        if (session_url.url) {
-          router.push(session_url.url);
+        if (session_url.id) {
+          const result = await stripe?.redirectToCheckout({
+            sessionId: session_url.id,
+          });
         }
       } catch (error: any) {
         setmerchant_isloading(false);

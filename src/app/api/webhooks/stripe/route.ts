@@ -1,6 +1,7 @@
 import { stripe } from "@/app/utils/stripe";
 import { Console } from "console";
 import { headers } from "next/headers";
+import Cors from "micro-cors";
 import nodemailer from "nodemailer";
 
 import type Stripe from "stripe";
@@ -21,6 +22,9 @@ import firebaseConfig from "@/app/utils/fire_base_config";
 import { useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useProfile_Context } from "@/app/utils/profile_context";
+const cors = Cors({
+  allowMethods: ["POST", "HEAD"],
+});
 
 export async function POST(request: Request) {
   // Function to calculate the Unix timestamp for the 1st day of the next month
@@ -31,6 +35,7 @@ export async function POST(request: Request) {
     );
     return Math.floor(nextMonth.getTime() / 1000);
   }
+  const secret = process.env.STRIPE_WEBHOOK_KEY || "";
 
   const body = await request.text();
   const signature = headers().get("Stripe-Signature") ?? "";
@@ -42,11 +47,7 @@ export async function POST(request: Request) {
   const auth: any = getAuth();
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_KEY || "",
-    );
+    event = stripe.webhooks.constructEvent(body, signature, secret);
   } catch (err) {
     return new Response(
       `Webhook Error: ${err instanceof Error ? err.message : "Unknown Error"}`,
