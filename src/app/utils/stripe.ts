@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import Stripe from "stripe";
 import firebaseConfig from "./fire_base_config";
-import { getAuth } from "firebase-admin/auth";
+import { getAuth } from "firebase/auth";
 
 export const stripe = new Stripe(
   process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY ?? "",
