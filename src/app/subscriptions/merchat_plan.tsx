@@ -107,7 +107,7 @@ const Merchant_plan = ({
       }
     } else {
       setmerchant_isloading(false);
-
+      // loading merchant
       return;
     }
   };
