@@ -25,7 +25,11 @@ import { useProfile_Context } from "@/app/utils/profile_context";
 const cors = Cors({
   allowMethods: ["POST", "HEAD"],
 });
+const app = initializeApp(firebaseConfig);
 
+// Initialize Firestore
+const db = getFirestore(app);
+const auth: any = getAuth();
 export async function POST(request: Request) {
   // Function to calculate the Unix timestamp for the 1st day of the next month
   function getNextMonthTimestamp() {
@@ -40,11 +44,6 @@ export async function POST(request: Request) {
   const body = await request.text();
   const signature = headers().get("Stripe-Signature") ?? "";
   let event: Stripe.Event;
-  const app = initializeApp(firebaseConfig);
-
-  // Initialize Firestore
-  const db = getFirestore(app);
-  const auth: any = getAuth();
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, secret);
@@ -348,19 +347,20 @@ export async function POST(request: Request) {
 
       break;
     case "customer.subscription.updated":
-      const customerSubscriptionUpdated: any = event.data
-        .object as Stripe.Subscription;
+      const customerSubscriptionUpdated: any = (await event.data
+        .object) as Stripe.Subscription;
 
       //  console.log(customerSubscriptionUpdated.trial_end);
 
-      const billing_anchor = customerSubscriptionUpdated.billing_cycle_anchor;
+      const billing_anchor =
+        await customerSubscriptionUpdated.billing_cycle_anchor;
 
-      const trial_end = customerSubscriptionUpdated.trial_end;
+      const trial_end = await customerSubscriptionUpdated.trial_end;
 
-      const next_first_month = getNextMonthTimestamp();
+      const next_first_month = await getNextMonthTimestamp();
 
       const currentTimestamp = Math.floor(new Date().getTime() / 1000);
-      // console.log(trial_end, next_first_month, billing_anchor);
+      console.log(trial_end, next_first_month, billing_anchor);
       // Check if the subscription is still in trial
 
       // Subscription has moved past the trial period
