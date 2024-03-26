@@ -112,7 +112,7 @@ export const manage_subscription: any = async (customerid: string) => {
     customer: customerid,
     return_url: billing_url,
   });
-  return { id: stripeSession.id };
+  return { url: stripeSession.url };
 };
 
 // export const upgrade_subscriptions: any = async (customerid: string) => {
@@ -162,13 +162,6 @@ export const renew_subscription: any = async (
   return { id: stripeSession.id };
 };
 
-// export const update_subscription = async (subid:any) => {
-//   // Set the billing cycle anchor to the first day of the next month
-//   const subscription = await stripe.subscriptions.update(subid, {
-//     billing_cycle_anchor: getNextMonthTimestamp,
-//   });
-// }
-
 export const cancelSubscription = async (customerId: any) => {
   try {
     // Retrieve customer's subscriptions
@@ -213,13 +206,17 @@ export const update_user_doc = async (
     const app = initializeApp(firebaseConfig);
 
     // Initialize Firestore
+    console.log(id);
     const db = getFirestore(app);
     const auth: any = getAuth();
     const userQuery = query(collection(db, "users"), where("userid", "==", id));
     const userDocs = await getDocs(userQuery);
     // console.log(userDocs);
     if (userDocs.empty) {
-      console.log("No user document found for the current user");
+      console.log(
+        "No user document found for the current user",
+        "because the usedocs is empty",
+      );
       return;
     }
 

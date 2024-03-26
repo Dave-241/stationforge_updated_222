@@ -88,14 +88,6 @@ const StandardPlan = ({
 
       return;
     }
-
-    // const subscription_created = await stripe.subscriptions.update(
-    //   "sub_1OP47wHosKgwPfXjhpu1WMQe",
-    //   {
-    //     trial_end: getNextMonthTimestamp(),
-    //     proration_behavior: "none",
-    //   },
-    // );
   };
 
   const manage_merchant_subscriptions = async () => {
@@ -104,7 +96,12 @@ const StandardPlan = ({
         setstandard_isloading(true);
 
         const manage_session = await manage_subscription(customer);
-        if (manage_session.url) {
+        const pusblishablekey: any =
+          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+        const stripe_promise = loadStripe(pusblishablekey);
+
+        const stripe = await stripe_promise;
+        if (manage_session.url && stripe) {
           router.push(manage_session.url);
         }
       } catch (error: any) {
@@ -127,15 +124,20 @@ const StandardPlan = ({
     if (customer != "") {
       try {
         setstandard_isloading(true);
-
-        const manage_session = await renew_subscription(
+        const pusblishablekey: any =
+          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+        const stripe_promise = loadStripe(pusblishablekey);
+        const stripe = await stripe_promise;
+        const session_url = await renew_subscription(
           customer,
           uuid,
           email,
           process.env.NEXT_PUBLIC_STANDARD_PRICE,
         );
-        if (manage_session.url) {
-          router.push(manage_session.url);
+        if (session_url.id) {
+          const result = await stripe?.redirectToCheckout({
+            sessionId: session_url.id,
+          });
         }
       } catch (error: any) {
         setstandard_isloading(false);

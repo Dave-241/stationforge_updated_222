@@ -61,9 +61,12 @@ const Merchant_plan = ({
     if (customer != "") {
       try {
         setmerchant_isloading(true);
-
+        const pusblishablekey: any =
+          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+        const stripe_promise = loadStripe(pusblishablekey);
+        const stripe = await stripe_promise;
         const manage_session = await manage_subscription(customer);
-        if (manage_session.url) {
+        if (manage_session.url && stripe) {
           router.push(manage_session.url);
         }
       } catch (error: any) {
@@ -86,15 +89,20 @@ const Merchant_plan = ({
     if (customer != "") {
       try {
         setmerchant_isloading(true);
-
-        const manage_session = await renew_subscription(
+        const pusblishablekey: any =
+          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+        const stripe_promise = loadStripe(pusblishablekey);
+        const stripe = await stripe_promise;
+        const session_url = await renew_subscription(
           customer,
           uuid,
           email,
           process.env.NEXT_PUBLIC_MERCHANT_PRICE,
         );
-        if (manage_session.url) {
-          router.push(manage_session.url);
+        if (session_url.id) {
+          const result = await stripe?.redirectToCheckout({
+            sessionId: session_url.id,
+          });
         }
       } catch (error: any) {
         setmerchant_isloading(false);

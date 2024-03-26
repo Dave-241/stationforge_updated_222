@@ -127,31 +127,64 @@ export async function POST(request: Request) {
     }
   };
   //   this function updates t when the user either cancels or renews subscriptions
-  const updateT = async (
-    subscriptionid: string,
+  const update_users_info = async (
+    Email: string,
     cancelled: boolean,
     step: number,
-    update_allocation: boolean,
+    subscriptionid: boolean,
     subscription: string,
   ) => {
     try {
       const userQuery = query(
         collection(db, "users"),
-        where("subscriptionId", "==", subscriptionid),
+        where("Email", "==", Email),
       );
       const userDocs = await getDocs(userQuery);
       if (userDocs.empty) {
         console.log("No user document found for the current user");
         return;
       }
-      const current_number = userDocs.docs[0].data().no_of_subscriptions;
+      // const current_number = userDocs.docs[0].data().no_of_subscriptions;
 
       const userDocRef = doc(db, "users", userDocs.docs[0].id);
       await updateDoc(userDocRef, {
         subscribedAt: serverTimestamp(),
         step: step,
         subscriptionCancelled: cancelled,
-        // no_of_subscriptions: current_number + subscription_no,
+        subscriptionId: subscriptionid,
+        subscription: subscription,
+        allocations: 30,
+      });
+    } catch (error) {
+      console.error("Error updating user document:", error);
+      throw error;
+    }
+  };
+  const update_users_info_without_increasing_allocation = async (
+    Email: string,
+    cancelled: boolean,
+    step: number,
+    subscriptionid: boolean,
+    subscription: string,
+  ) => {
+    try {
+      const userQuery = query(
+        collection(db, "users"),
+        where("Email", "==", Email),
+      );
+      const userDocs = await getDocs(userQuery);
+      if (userDocs.empty) {
+        console.log("No user document found for the current user");
+        return;
+      }
+      // const current_number = userDocs.docs[0].data().no_of_subscriptions;
+
+      const userDocRef = doc(db, "users", userDocs.docs[0].id);
+      await updateDoc(userDocRef, {
+        subscribedAt: serverTimestamp(),
+        step: step,
+        subscriptionCancelled: cancelled,
+        subscriptionId: subscriptionid,
         subscription: subscription,
       });
     } catch (error) {
@@ -271,26 +304,26 @@ export async function POST(request: Request) {
         session.subscription as string,
       );
 
-      console.log(subscription.plan.id, session.metadata.userId);
-      if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-        update_user_doc(
-          4,
-          session.metadata.userId,
-          "Merchant tier",
-          session.customer,
-          false,
-        );
-      } else if (
-        subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
-      ) {
-        update_user_doc(
-          3,
-          session.metadata.userId,
-          "Standard tier",
-          session.customer,
-          false,
-        );
-      }
+      // console.log(subscription.plan.id, session.metadata.userId);
+      // if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+      //   update_user_doc(
+      //     4,
+      //     session.metadata.userId,
+      //     "Merchant tier",
+      //     session.customer,
+      //     false,
+      //   );
+      // } else if (
+      //   subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
+      // ) {
+      //   update_user_doc(
+      //     3,
+      //     session.metadata.userId,
+      //     "Standard tier",
+      //     session.customer,
+      //     false,
+      //   );
+      // }
       // console.log("this is it " + subscription.id);
 
       //   console.log("Checkout was completed just now ");
@@ -298,7 +331,7 @@ export async function POST(request: Request) {
       break;
     case "customer.subscription.deleted":
       //   console.log("this was urrent");
-      const customerSubscriptionDeleted: any = event.data.object;
+      const customerSubscriptionDeleted: any = await event.data.object;
 
       Cancel_subscription(
         customerSubscriptionDeleted.customer,
@@ -372,7 +405,7 @@ export async function POST(request: Request) {
       //   // console.log(plain_id);
 
       //   if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-      //     updateT(
+      //     update_users_info(
       //       customerSubscriptionUpdated.customer,
       //       false,
       //       4,
@@ -380,7 +413,7 @@ export async function POST(request: Request) {
       //       "Merchant tier",
       //     );
       //   } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-      //     updateT(
+      //     update_users_info(
       //       customerSubscriptionUpdated.customer,
       //       false,
       //       3,
@@ -393,75 +426,110 @@ export async function POST(request: Request) {
       // Then define and call a function to handle the event customer.subscription.updated
       break;
     case "invoice.payment_succeeded":
-      const invoicePaymentSucceeded: any = event.data.object;
+      const invoicePaymentSucceeded: any = await event.data.object;
       // console.log("this just ran sha ", invoicePaymentSucceeded.amount_paid);
       // Check if subscription is available in the invoicePaymentSucceeded object
-      const subscriptionId = invoicePaymentSucceeded.subscription;
+      const subscriptionId = await invoicePaymentSucceeded.subscription;
       // Fetch the subscription details from Stripe
       const subscription_payment_succedded =
         await stripe.subscriptions.retrieve(subscriptionId);
       // Now you can access the current plan ID
-      const plain_id = subscription_payment_succedded.items.data[0].price.id;
+      const plain_id = await subscription_payment_succedded.items.data[0].price
+        .id;
 
       // Use currentPlanId for further processing
+      console.log(invoicePaymentSucceeded.billing_reason);
 
-      if (invoicePaymentSucceeded.billing_reason == "subscription_create") {
-        break;
-      } else if (
-        invoicePaymentSucceeded.billing_reason == "subscription_cycle"
+      // this must run
+      if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+        update_transaction(
+          invoicePaymentSucceeded.amount_paid > 0 &&
+            invoicePaymentSucceeded.amount_paid,
+          "Merchant",
+        );
+      } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+        update_transaction(
+          invoicePaymentSucceeded.amount_paid > 0 &&
+            invoicePaymentSucceeded.amount_paid,
+          "Standard",
+        );
+      }
+
+      if (
+        invoicePaymentSucceeded.billing_reason == "subscription_cycle" ||
+        invoicePaymentSucceeded.billing_reason == "subscription_create"
       ) {
         if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-          update_sub_renewal(
-            invoicePaymentSucceeded.customer,
+          update_users_info(
+            invoicePaymentSucceeded.customer_email,
             false,
             4,
-            true,
+            invoicePaymentSucceeded.customer,
             "Merchant tier",
           );
         } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-          update_sub_renewal(
-            invoicePaymentSucceeded.customer,
+          update_users_info(
+            invoicePaymentSucceeded.customer_email,
             false,
             3,
-            false,
+            invoicePaymentSucceeded.customer,
             "Standard tier",
           );
         }
-
-        break;
-      } else {
-        // Retrieve customer details to get metadata
-
+      } else if (
+        invoicePaymentSucceeded.billing_reason == "subscription_update"
+      ) {
         if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-          updateT(
-            invoicePaymentSucceeded.customer,
+          update_users_info_without_increasing_allocation(
+            invoicePaymentSucceeded.customer_email,
             false,
             4,
-            true,
+            invoicePaymentSucceeded.customer,
             "Merchant tier",
           );
-          update_transaction(
-            invoicePaymentSucceeded.amount_paid > 0 &&
-              invoicePaymentSucceeded.amount_paid,
-            "Merchant",
-          );
         } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-          updateT(
-            invoicePaymentSucceeded.customer,
+          update_users_info_without_increasing_allocation(
+            invoicePaymentSucceeded.customer_email,
             false,
             3,
-            false,
+            invoicePaymentSucceeded.customer,
             "Standard tier",
           );
-          update_transaction(
-            invoicePaymentSucceeded.amount_paid > 0 &&
-              invoicePaymentSucceeded.amount_paid,
-            "Standard",
-          );
         }
-
-        break;
       }
+      //  else {
+      //   // Retrieve customer details to get metadata
+      //   // continue from here
+      //   if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+      //     update_users_info(
+      //       invoicePaymentSucceeded.customer,
+      //       false,
+      //       4,
+      //       true,
+      //       "Merchant tier",
+      //     );
+      //     update_transaction(
+      //       invoicePaymentSucceeded.amount_paid > 0 &&
+      //         invoicePaymentSucceeded.amount_paid,
+      //       "Merchant",
+      //     );
+      //   } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+      //     update_users_info(
+      //       invoicePaymentSucceeded.customer,
+      //       false,
+      //       3,
+      //       false,
+      //       "Standard tier",
+      //     );
+      //     update_transaction(
+      //       invoicePaymentSucceeded.amount_paid > 0 &&
+      //         invoicePaymentSucceeded.amount_paid,
+      //       "Standard",
+      //     );
+      //   }
+
+      //   break;
+      // }
 
       // console.log(invoicePaymentSucceeded.billing_reason, plain_id);
 
