@@ -197,7 +197,7 @@ export async function POST(request: Request) {
   const billing_url = `${
     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/"
   }${"subscriptions"}`;
-  const session: any = event.data.object as Stripe.Checkout.Session;
+  const session: any = (await event.data.object) as Stripe.Checkout.Session;
 
   //   this is for sending mails
 
@@ -270,14 +270,8 @@ export async function POST(request: Request) {
       const subscription: any = await stripe.subscriptions.retrieve(
         session.subscription as string,
       );
-      update_user_doc(
-        4,
-        session.metadata.userId,
-        "Merchant tier",
-        session.customer,
-        false,
-      );
-      // console.log(subscription);
+
+      console.log(subscription.plan.id, session.metadata.userId);
       if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
         update_user_doc(
           4,
