@@ -35,25 +35,25 @@ export async function POST(request: Request) {
     );
     return Math.floor(nextMonth.getTime() / 1000);
   }
-  // const secret = process.env.STRIPE_WEBHOOK_KEY || "";
+  const secret = process.env.STRIPE_WEBHOOK_KEY || "";
 
-  // const body = await request.text();
-  // const signature = headers().get("Stripe-Signature") ?? "";
-  // let event: Stripe.Event;
+  const body = await request.text();
+  const signature = headers().get("Stripe-Signature") ?? "";
+  let event: Stripe.Event;
   const app = initializeApp(firebaseConfig);
 
   // Initialize Firestore
   const db = getFirestore(app);
   const auth: any = getAuth();
 
-  // try {
-  //   event = stripe.webhooks.constructEvent(body, signature, secret);
-  // } catch (err) {
-  //   return new Response(
-  //     `Webhook Error: ${err instanceof Error ? err.message : "Unknown Error"}`,
-  //     { status: 400 },
-  //   );
-  // }
+  try {
+    event = stripe.webhooks.constructEvent(body, signature, secret);
+  } catch (err) {
+    return new Response(
+      `Webhook Error: ${err instanceof Error ? err.message : "Unknown Error"}`,
+      { status: 400 },
+    );
+  }
 
   //   this is the funtion to update on after the webhook
   // const update_user_doc = async (
@@ -197,7 +197,7 @@ export async function POST(request: Request) {
   const billing_url = `${
     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/"
   }${"subscriptions"}`;
-  // const session: any = event.data.object as Stripe.Checkout.Session;
+  const session: any = event.data.object as Stripe.Checkout.Session;
 
   //   this is for sending mails
 
@@ -264,235 +264,235 @@ export async function POST(request: Request) {
     });
   };
 
-  // switch (event.type) {
-  //   case "checkout.session.completed":
-  //     const checkoutSessionCompleted = event.data.object;
-  //     const subscription: any = await stripe.subscriptions.retrieve(
-  //       session.subscription as string,
-  //     );
-  //     update_user_doc(
-  //       4,
-  //       session.metadata.userId,
-  //       "Merchant tier",
-  //       session.customer,
-  //       false,
-  //     );
-  //     // console.log(subscription);
-  //     if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-  //       update_user_doc(
-  //         4,
-  //         session.metadata.userId,
-  //         "Merchant tier",
-  //         session.customer,
-  //         false,
-  //       );
-  //     } else if (
-  //       subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
-  //     ) {
-  //       update_user_doc(
-  //         3,
-  //         session.metadata.userId,
-  //         "Standard tier",
-  //         session.customer,
-  //         false,
-  //       );
-  //     }
-  //     // console.log("this is it " + subscription.id);
+  switch (event.type) {
+    case "checkout.session.completed":
+      const checkoutSessionCompleted = event.data.object;
+      const subscription: any = await stripe.subscriptions.retrieve(
+        session.subscription as string,
+      );
+      update_user_doc(
+        4,
+        session.metadata.userId,
+        "Merchant tier",
+        session.customer,
+        false,
+      );
+      // console.log(subscription);
+      if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+        update_user_doc(
+          4,
+          session.metadata.userId,
+          "Merchant tier",
+          session.customer,
+          false,
+        );
+      } else if (
+        subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
+      ) {
+        update_user_doc(
+          3,
+          session.metadata.userId,
+          "Standard tier",
+          session.customer,
+          false,
+        );
+      }
+      // console.log("this is it " + subscription.id);
 
-  //     //   console.log("Checkout was completed just now ");
-  //     // Then define and call a function to handle the event checkout.session.completed
-  //     break;
-  //   case "customer.subscription.deleted":
-  //     //   console.log("this was urrent");
-  //     const customerSubscriptionDeleted: any = event.data.object;
+      //   console.log("Checkout was completed just now ");
+      // Then define and call a function to handle the event checkout.session.completed
+      break;
+    case "customer.subscription.deleted":
+      //   console.log("this was urrent");
+      const customerSubscriptionDeleted: any = event.data.object;
 
-  //     Cancel_subscription(
-  //       customerSubscriptionDeleted.customer,
-  //       true,
-  //       1,
-  //       0,
-  //       "Public user",
-  //     );
+      Cancel_subscription(
+        customerSubscriptionDeleted.customer,
+        true,
+        1,
+        0,
+        "Public user",
+      );
 
-  //     // Then define and call a function to handle the event customer.subscription.deleted
-  //     break;
-  //   case "customer.subscription.created":
-  //     const created_customer: any = event.data.object as Stripe.Subscription;
+      // Then define and call a function to handle the event customer.subscription.deleted
+      break;
+    case "customer.subscription.created":
+      const created_customer: any = event.data.object as Stripe.Subscription;
 
-  //     break;
-  //   case "customer.subscription.updated":
-  //     const customerSubscriptionUpdated: any = event.data
-  //       .object as Stripe.Subscription;
+      break;
+    case "customer.subscription.updated":
+      const customerSubscriptionUpdated: any = event.data
+        .object as Stripe.Subscription;
 
-  //     //  console.log(customerSubscriptionUpdated.trial_end);
+      //  console.log(customerSubscriptionUpdated.trial_end);
 
-  //     const billing_anchor = customerSubscriptionUpdated.billing_cycle_anchor;
+      const billing_anchor = customerSubscriptionUpdated.billing_cycle_anchor;
 
-  //     const trial_end = customerSubscriptionUpdated.trial_end;
+      const trial_end = customerSubscriptionUpdated.trial_end;
 
-  //     const next_first_month = getNextMonthTimestamp();
+      const next_first_month = getNextMonthTimestamp();
 
-  //     const currentTimestamp = Math.floor(new Date().getTime() / 1000);
-  //     // console.log(trial_end, next_first_month, billing_anchor);
-  //     // Check if the subscription is still in trial
+      const currentTimestamp = Math.floor(new Date().getTime() / 1000);
+      // console.log(trial_end, next_first_month, billing_anchor);
+      // Check if the subscription is still in trial
 
-  //     // Subscription has moved past the trial period
-  //     if (billing_anchor == next_first_month) {
-  //       // console.log("Billing cycle anchor is for the next month");
-  //       // return;
-  //       break;
-  //     } else if (
-  //       trial_end != next_first_month &&
-  //       billing_anchor != next_first_month
-  //     ) {
-  //       // console.log("it has updateed");
-  //       const subscription_created = await stripe.subscriptions.update(
-  //         customerSubscriptionUpdated.id,
-  //         {
-  //           trial_end: getNextMonthTimestamp(),
-  //           proration_behavior: "none",
-  //         },
-  //       );
-  //     }
+      // Subscription has moved past the trial period
+      if (billing_anchor == next_first_month) {
+        // console.log("Billing cycle anchor is for the next month");
+        // return;
+        break;
+      } else if (
+        trial_end != next_first_month &&
+        billing_anchor != next_first_month
+      ) {
+        // console.log("it has updateed");
+        const subscription_created = await stripe.subscriptions.update(
+          customerSubscriptionUpdated.id,
+          {
+            trial_end: getNextMonthTimestamp(),
+            proration_behavior: "none",
+          },
+        );
+      }
 
-  //     // if (!billing_anchor || billing_anchor == next_first_month) {
-  //     //   return;
-  //     // } else {
-  //     //   const subscription_created = await stripe.subscriptions.update(
-  //     //     customerSubscriptionUpdated.id,
-  //     //     {
-  //     //       trial_end: getNextMonthTimestamp(),
-  //     //       proration_behavior: "none",
-  //     //     },
-  //     //   );
+      // if (!billing_anchor || billing_anchor == next_first_month) {
+      //   return;
+      // } else {
+      //   const subscription_created = await stripe.subscriptions.update(
+      //     customerSubscriptionUpdated.id,
+      //     {
+      //       trial_end: getNextMonthTimestamp(),
+      //       proration_behavior: "none",
+      //     },
+      //   );
 
-  //     //   console.log(subscription_created);
-  //     // }
+      //   console.log(subscription_created);
+      // }
 
-  //     // checkBillingCycleAnchor(billing_anchor);
-  //     // Check if the subscription status is "canceled"
-  //     // if (customerSubscriptionUpdated.items.data[0].status === "canceled") {
-  //     //   break;
-  //     // } else {
-  //     //   const plain_id = customerSubscriptionUpdated.items.data[0].price.id;
-  //     //   // console.log(plain_id);
+      // checkBillingCycleAnchor(billing_anchor);
+      // Check if the subscription status is "canceled"
+      // if (customerSubscriptionUpdated.items.data[0].status === "canceled") {
+      //   break;
+      // } else {
+      //   const plain_id = customerSubscriptionUpdated.items.data[0].price.id;
+      //   // console.log(plain_id);
 
-  //     //   if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-  //     //     updateT(
-  //     //       customerSubscriptionUpdated.customer,
-  //     //       false,
-  //     //       4,
-  //     //       true,
-  //     //       "Merchant tier",
-  //     //     );
-  //     //   } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-  //     //     updateT(
-  //     //       customerSubscriptionUpdated.customer,
-  //     //       false,
-  //     //       3,
-  //     //       false,
-  //     //       "Standard tier",
-  //     //     );
-  //     //   }
-  //     // }
+      //   if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+      //     updateT(
+      //       customerSubscriptionUpdated.customer,
+      //       false,
+      //       4,
+      //       true,
+      //       "Merchant tier",
+      //     );
+      //   } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+      //     updateT(
+      //       customerSubscriptionUpdated.customer,
+      //       false,
+      //       3,
+      //       false,
+      //       "Standard tier",
+      //     );
+      //   }
+      // }
 
-  //     // Then define and call a function to handle the event customer.subscription.updated
-  //     break;
-  //   case "invoice.payment_succeeded":
-  //     const invoicePaymentSucceeded: any = event.data.object;
-  //     // console.log("this just ran sha ", invoicePaymentSucceeded.amount_paid);
-  //     // Check if subscription is available in the invoicePaymentSucceeded object
-  //     const subscriptionId = invoicePaymentSucceeded.subscription;
-  //     // Fetch the subscription details from Stripe
-  //     const subscription_payment_succedded =
-  //       await stripe.subscriptions.retrieve(subscriptionId);
-  //     // Now you can access the current plan ID
-  //     const plain_id = subscription_payment_succedded.items.data[0].price.id;
+      // Then define and call a function to handle the event customer.subscription.updated
+      break;
+    case "invoice.payment_succeeded":
+      const invoicePaymentSucceeded: any = event.data.object;
+      // console.log("this just ran sha ", invoicePaymentSucceeded.amount_paid);
+      // Check if subscription is available in the invoicePaymentSucceeded object
+      const subscriptionId = invoicePaymentSucceeded.subscription;
+      // Fetch the subscription details from Stripe
+      const subscription_payment_succedded =
+        await stripe.subscriptions.retrieve(subscriptionId);
+      // Now you can access the current plan ID
+      const plain_id = subscription_payment_succedded.items.data[0].price.id;
 
-  //     // Use currentPlanId for further processing
+      // Use currentPlanId for further processing
 
-  //     if (invoicePaymentSucceeded.billing_reason == "subscription_create") {
-  //       break;
-  //     } else if (
-  //       invoicePaymentSucceeded.billing_reason == "subscription_cycle"
-  //     ) {
-  //       if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-  //         update_sub_renewal(
-  //           invoicePaymentSucceeded.customer,
-  //           false,
-  //           4,
-  //           true,
-  //           "Merchant tier",
-  //         );
-  //       } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-  //         update_sub_renewal(
-  //           invoicePaymentSucceeded.customer,
-  //           false,
-  //           3,
-  //           false,
-  //           "Standard tier",
-  //         );
-  //       }
+      if (invoicePaymentSucceeded.billing_reason == "subscription_create") {
+        break;
+      } else if (
+        invoicePaymentSucceeded.billing_reason == "subscription_cycle"
+      ) {
+        if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+          update_sub_renewal(
+            invoicePaymentSucceeded.customer,
+            false,
+            4,
+            true,
+            "Merchant tier",
+          );
+        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+          update_sub_renewal(
+            invoicePaymentSucceeded.customer,
+            false,
+            3,
+            false,
+            "Standard tier",
+          );
+        }
 
-  //       break;
-  //     } else {
-  //       // Retrieve customer details to get metadata
+        break;
+      } else {
+        // Retrieve customer details to get metadata
 
-  //       if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-  //         updateT(
-  //           invoicePaymentSucceeded.customer,
-  //           false,
-  //           4,
-  //           true,
-  //           "Merchant tier",
-  //         );
-  //         update_transaction(
-  //           invoicePaymentSucceeded.amount_paid > 0 &&
-  //             invoicePaymentSucceeded.amount_paid,
-  //           "Merchant",
-  //         );
-  //       } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-  //         updateT(
-  //           invoicePaymentSucceeded.customer,
-  //           false,
-  //           3,
-  //           false,
-  //           "Standard tier",
-  //         );
-  //         update_transaction(
-  //           invoicePaymentSucceeded.amount_paid > 0 &&
-  //             invoicePaymentSucceeded.amount_paid,
-  //           "Standard",
-  //         );
-  //       }
+        if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
+          updateT(
+            invoicePaymentSucceeded.customer,
+            false,
+            4,
+            true,
+            "Merchant tier",
+          );
+          update_transaction(
+            invoicePaymentSucceeded.amount_paid > 0 &&
+              invoicePaymentSucceeded.amount_paid,
+            "Merchant",
+          );
+        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
+          updateT(
+            invoicePaymentSucceeded.customer,
+            false,
+            3,
+            false,
+            "Standard tier",
+          );
+          update_transaction(
+            invoicePaymentSucceeded.amount_paid > 0 &&
+              invoicePaymentSucceeded.amount_paid,
+            "Standard",
+          );
+        }
 
-  //       break;
-  //     }
+        break;
+      }
 
-  //     // console.log(invoicePaymentSucceeded.billing_reason, plain_id);
+      // console.log(invoicePaymentSucceeded.billing_reason, plain_id);
 
-  //     // Then define and call a function to handle the event invoice.payment_succeeded
-  //     break;
-  //   // ... handle other event types
-  //   case "invoice.payment_failed":
-  //     const invoicePaymentfailed: any = event.data.object;
-  //     // Generate a link to the billing portal
-  //     const portalLink = await stripe.billingPortal.sessions.create({
-  //       customer: invoicePaymentfailed.customer,
-  //       return_url: billing_url, // Specify the return URL after the customer updates their information
-  //     });
+      // Then define and call a function to handle the event invoice.payment_succeeded
+      break;
+    // ... handle other event types
+    case "invoice.payment_failed":
+      const invoicePaymentfailed: any = event.data.object;
+      // Generate a link to the billing portal
+      const portalLink = await stripe.billingPortal.sessions.create({
+        customer: invoicePaymentfailed.customer,
+        return_url: billing_url, // Specify the return URL after the customer updates their information
+      });
 
-  //     //   console.log(invoicePaymentfailed.customer); // Then define and call a function to handle the event invoice.payment_succeeded
+      //   console.log(invoicePaymentfailed.customer); // Then define and call a function to handle the event invoice.payment_succeeded
 
-  //     sendmails_when_invoice_fails(
-  //       invoicePaymentfailed.customer,
-  //       portalLink.url,
-  //     );
-  //     break;
-  //   // ... handle other event types
-  //   default:
-  //     console.log(`Unhandled event type ${event.type}`);
-  // }
+      sendmails_when_invoice_fails(
+        invoicePaymentfailed.customer,
+        portalLink.url,
+      );
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
 
   return new Response(null, { status: 200 });
 }
