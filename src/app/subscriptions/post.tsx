@@ -111,20 +111,14 @@ const Post = (props: any) => {
       postdata.postId,
       "comments",
     );
-    const pinnedCollectionRef = collection(
-      db,
-      "posts",
-      postdata.postId,
-      "pinned",
-    );
 
     onSnapshot(likesCollectionRef, (likesSnapshot) => {
       // postWithSubcollections.likesCount = likesSnapshot.size;
 
       // const likes_array: any[] = [];
-      setcomment_info_data([]);
+      // setcomment_info_data([]);
       const likes_array: any[] = [];
-      setcomment_info_data([]);
+      // setcomment_info_data([]);
 
       if (!likesSnapshot.empty) {
         likesSnapshot.forEach((commentDoc: any) => {
@@ -157,40 +151,8 @@ const Post = (props: any) => {
           }
         });
       }
-      // if (!likesSnapshot.empty) {
-      //   likesSnapshot.forEach((commentDoc: any) => {
-      //     const likes_data = commentDoc.data();
-      //     const userId = likes_data.user_id;
-
-      //     const comment_query = query(
-      //       usersCollectionRef,
-      //       where("userid", "==", userId),
-      //     );
-      //     // console.log(comment_query);
-
-      //     getDocs(comment_query)
-      //       .then((res) => {
-      //         const userCommentInfo = res?.docs[0]?.data();
-      //         // likes_array = [];
-      //         likes_array.push({
-      //           avatar: userCommentInfo.avatar_url,
-      //           name: userCommentInfo.Username,
-      //           // text: likes_data.comment,
-      //         });
-      //         // Once you've collected all comments, sort them by timestamp (newest first)
-      //         // commentArray.sort((a, b) => b.timestamp - a.timestamp);
-      //         // Now, update the comments array with the sorted data
-      //         // return (postWithSubcollections.comments = commentArray);
-      //         setlikes(likesSnapshot.size);
-      //         console.log(likes_array);
-      //         // setcomment_info_data(commentArray);
-      //       })
-      //       .catch((err) => {
-      //         // console.error("thodoo" + err);
-      //       });
-      //   });
-      // }
     });
+
     if (auth?.currentUser) {
       const userQuery = query(
         likesCollectionRef,
@@ -207,7 +169,7 @@ const Post = (props: any) => {
 
     onSnapshot(commentsCollectionRef, (commentSnapshot) => {
       const commentArray: any[] = [];
-      setcomment_info_data([]);
+      // setcomment_info_data([]);
       commentSnapshot.forEach((commentDoc: any) => {
         const commentData = commentDoc.data();
 
@@ -346,62 +308,11 @@ const Post = (props: any) => {
       setliked(!liked);
     }
   };
-  // const handlepinned = async (postid: any) => {
-  //   if (auth.currentUser) {
-  //     const pinnedCollectionRef = collection(
-  //       db,
-  //       "posts",
-  //       postdata.postId,
-  //       "pinned",
-  //     );
-  //     const likeDocRef = doc(pinnedCollectionRef, auth.currentUser?.uid);
-  //     // Query the Firestore collection to find the user
-  //     const userQuery = query(
-  //       pinnedCollectionRef,
-  //       where("user_id", "==", auth.currentUser?.uid),
-  //     );
-  //     // Check if the user's like already exists
-  //     const likeDoc = await getDoc(likeDocRef);
-  //     const update_like = { user_id: auth?.currentUser?.uid };
-
-  //     getDocs(userQuery).then((querySnapshot) => {
-  //       if (!querySnapshot.empty) {
-  //         // Assuming each username is unique, there should be only one matching user
-  //         const userDoc = querySnapshot.docs[0];
-  //         // const userData = userDoc.data();
-  //         const docid = userDoc.id;
-
-  //         const delete_doc_reference = doc(
-  //           db,
-  //           "posts",
-  //           postdata.postId,
-  //           "pinned",
-  //           docid,
-  //         );
-  //         deleteDoc(delete_doc_reference)
-  //           .then(() => {
-  //             setpinned(false);
-  //           })
-  //           .catch((error) => {
-  //             console.error("Error removing like: ", error);
-  //           });
-  //       } else {
-  //         addDoc(pinnedCollectionRef, update_like)
-  //           .then((res) => {
-  //             setpinned(true);
-  //           })
-  //           .catch((error) => {
-  //             console.error(error);
-  //           });
-  //       }
-  //     });
-  //   } else {
-  //     // setliked(!liked);
-  //   }
-  // };
 
   const handlecomment = (e: any) => {
     if (commentvalue != "") {
+      setcomment_info_data(comment_info_data);
+
       const comment_CollectionRef = collection(db, "posts", e, "comments");
       const authid = auth.currentUser?.uid;
       const commentinfo = { comment: commentvalue, userid: authid };
@@ -409,6 +320,7 @@ const Post = (props: any) => {
       addDoc(comment_CollectionRef, commentinfo)
         .then((res) => {
           setcommentvalue("");
+          setcomment_info_data(comment_info_data);
           update_engagement("commented", postdata.postId);
         })
         .catch((err) => {
@@ -638,7 +550,13 @@ const Post = (props: any) => {
           </button>
 
           {/* the form to handle comments  */}
-          <div className="w-full h-auto  mt-[0vw] relative text-[1vw] sm:text-[3vw]">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handlecomment(postdata.postId);
+            }}
+            className="w-full h-auto   mt-[0vw] relative text-[1vw] sm:text-[3vw]"
+          >
             <input
               type="text"
               placeholder={err ? "Login to comment" : "Write a  comment"}
@@ -653,13 +571,10 @@ const Post = (props: any) => {
               type="submit"
               disabled={disable}
               className="text-[#CCFF00] sm:text-[3vw] neuer text-[1.2vw]  absolute sm:right-[4vw] right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
-              onClick={() => {
-                handlecomment(postdata.postId);
-              }}
             >
               Post{" "}
             </button>
-          </div>
+          </form>
         </div>
       </section>
 
