@@ -167,22 +167,22 @@ const Post = (props: any) => {
       });
     }
 
-    onSnapshot(commentsCollectionRef, (commentSnapshot) => {
+    onSnapshot(commentsCollectionRef, async (commentSnapshot) => {
       const commentArray: any[] = [];
-      // setcomment_info_data([]);
+      const promises: Promise<any>[] = [];
+
       commentSnapshot.forEach((commentDoc: any) => {
         const commentData = commentDoc.data();
-
         const userId = commentData.userid;
 
         const comment_query = query(
           usersCollectionRef,
           where("userid", "==", userId),
         );
-        getDocs(comment_query)
+
+        const promise = getDocs(comment_query)
           .then((res) => {
             const userCommentInfo = res?.docs[0]?.data();
-            // commentArray = [];
             commentArray.push({
               avatar: userCommentInfo.avatar_url,
               name:
@@ -191,17 +191,23 @@ const Post = (props: any) => {
                   : "User***** ",
               text: commentData.comment,
             });
-            // Once you've collected all comments, sort them by timestamp (newest first)
-            // commentArray.sort((a, b) => b.timestamp - a.timestamp);
-            // Now, update the comments array with the sorted data
-            // return (postWithSubcollections.comments = commentArray);
-
-            setcomment_info_data(commentArray);
           })
           .catch((err) => {
-            // console.error("thodoo" + err);
+            console.error("Error fetching user information:", err);
           });
+
+        promises.push(promise);
       });
+
+      try {
+        await Promise.all(promises);
+        // Once all promises are resolved, set the comment data
+        setcomment_info_data(commentArray);
+        console.log(commentArray.length);
+      } catch (error) {
+        // Handle any errors here
+        console.error("Error fetching comments:", error);
+      }
     });
 
     if (auth?.currentUser) {
@@ -311,7 +317,7 @@ const Post = (props: any) => {
 
   const handlecomment = (e: any) => {
     if (commentvalue != "") {
-      setcomment_info_data(comment_info_data);
+      // setcomment_info_data(comment_info_data);
 
       const comment_CollectionRef = collection(db, "posts", e, "comments");
       const authid = auth.currentUser?.uid;
@@ -319,13 +325,54 @@ const Post = (props: any) => {
 
       addDoc(comment_CollectionRef, commentinfo)
         .then((res) => {
-          setcommentvalue("");
           setcomment_info_data(comment_info_data);
+          setcommentvalue("");
           update_engagement("commented", postdata.postId);
+          get_current_comments(e);
         })
         .catch((err) => {
           console.error(err);
         });
+    }
+  };
+
+  const get_current_comments = async (e: any) => {
+    const commentsCollectionRef = collection(db, "posts", e, "comments");
+    const usersCollectionRef = collection(db, "users");
+
+    try {
+      const commentSnapshot = await getDocs(commentsCollectionRef);
+      const commentArray: any[] = [];
+
+      await Promise.all(
+        commentSnapshot.docs.map(async (commentDoc: any) => {
+          const commentData = commentDoc.data();
+          const userId = commentData.userid;
+          const comment_query = query(
+            usersCollectionRef,
+            where("userid", "==", userId),
+          );
+
+          const res = await getDocs(comment_query);
+          const userCommentInfo = res?.docs[0]?.data();
+
+          commentArray.push({
+            avatar: userCommentInfo.avatar_url,
+            name:
+              userCommentInfo.name.length > 1
+                ? userCommentInfo.name
+                : "User***** ",
+            text: commentData.comment,
+          });
+        }),
+      );
+
+      // Once all comments are collected, set them and log the length
+      setcomment_info_data(commentArray);
+      console.log(commentArray.length);
+    } catch (error) {
+      // Handle any errors here
+      console.error("Error fetching comments:", error);
     }
   };
 

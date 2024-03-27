@@ -116,51 +116,6 @@ const Post_wrap = () => {
           return setpost_loading(false);
         });
 
-        // fetch the comments from teh subcollection comments
-        // Fetch images from the "images" subcollection
-        // const q = query(
-        //   collection(db, "posts", postId, "comments"),
-        //   orderBy("timeStamp"),
-        // );
-        // onSnapshot(commentsCollectionRef, (commentSnapshot) => {
-        //   const commentArray: any[] = [];
-        //   commentSnapshot.forEach((commentDoc: any) => {
-        //     const commentData = commentDoc.data();
-
-        //     const userId = commentData.userid;
-
-        //     const comment_query = query(
-        //       usersCollectionRef,
-        //       where("userid", "==", userId),
-        //     );
-        //     getDocs(comment_query)
-        //       .then((res) => {
-        //         const userCommentInfo = res.docs[0].data();
-        //         commentArray.push({
-        //           avatar:
-        //             userCommentInfo.avatar_url.length > 2
-        //               ? userCommentInfo.avatar_url
-        //               : "https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*1fp3284*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODA5NzgyNC4zOC4xLjE2OTgxMDYzNjguMTcuMC4w",
-        //           name:
-        //             userCommentInfo.name.length > 1
-        //               ? userCommentInfo.name
-        //               : "User***** ",
-        //           text: commentData.comment,
-        //         });
-
-        //         // Once you've collected all comments, sort them by timestamp (newest first)
-        //         // commentArray.sort((a, b) => b.timestamp - a.timestamp);
-
-        //         // Now, update the comments array with the sorted data
-        //         // console.log(commentArray);
-        //         return (postWithSubcollections.comments = commentArray);
-        //       })
-        //       .catch((err) => {
-        //         console.error(err);
-        //       });
-        //   });
-        // });
-
         // THIS IS FOR THE PINNED POST
         if (auth?.currentUser) {
           const userQuery = query(
@@ -170,11 +125,9 @@ const Post_wrap = () => {
           onSnapshot(userQuery, (subcollectionSnapshot) => {
             if (!subcollectionSnapshot.empty) {
               // setliked(true);
-              console.log("it has been pined");
 
               postWithSubcollections.order = true;
             } else {
-              console.log("it has been unnnnnnpined");
               postWithSubcollections.order = false;
               setpost_loading(false);
             }
