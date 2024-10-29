@@ -1,12 +1,13 @@
-// firebase-config.js or firebase-config.ts
-
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA8tC6NhA3FehG0YE_nKPPSt4cYKm2YwkI",
-  authDomain: "fir-9-dojo-24129.firebaseapp.com",
-  projectId: "fir-9-dojo-24129",
-  storageBucket: "fir-9-dojo-24129.appspot.com",
-  messagingSenderId: "704117354230",
-  appId: "1:704117354230:web:eed710675958bfc820c6d7",
+  apiKey: "AIzaSyAa4lCUNj0tlIkNo2emCuk5fQUvhc5kMss",
+  authDomain: "station-forge.firebaseapp.com",
+  projectId: "station-forge",
+  storageBucket: "station-forge.appspot.com",
+  messagingSenderId: "478509840754",
+  appId: "1:478509840754:web:d13c6082f42c14d2a045eb",
+  measurementId: "G-3WXFK55CPH",
 };
 
 export default firebaseConfig;

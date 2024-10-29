@@ -31,10 +31,10 @@ const Subscription_Hero = () => {
 
   return (
     <>
-      <div className="w-full h-auto px-[2vw]  pt-[2vw]">
+      <div className="w-full  flex justify-center  h-auto px-[2%]  pt-[2%]">
         <Image
           src={hero_img}
-          className="w-full sm:hidden h-fit"
+          className="md:w-[100rem]  md:max-w-full  sm:hidden h-fit"
           alt="Subscription hero image"
         />
         <Image
@@ -44,28 +44,28 @@ const Subscription_Hero = () => {
         />
       </div>
 
-      <div className="w-full justify-center flex items-center pb-[4vw] sm:pb-[8vw]  ">
-        <div className="w-auto h-auto  gap-[2.7vw] sm:gap-[5vw]  flex-col justify-center flex items-center pt-[3vw] sm:pt-[6vw]">
+      <div className="w-full  justify-center flex items-center pb-[4%] sm:pb-[8vw]  ">
+        <div className="w-auto h-auto   md:gap-[2rem] lg:gap-[2.5rem] sm:gap-[5vw]  flex-col justify-center flex items-center pt-[3vw] sm:pt-[6vw]">
           {/* members and post numbers */}
-          <div className="w-auto gap-[3vw] sm:gap-[7vw]  relative h-auto flex justify-center items-center ">
+          <div className="w-auto gap-0   relative h-auto flex justify-center items-center ">
             {" "}
-            <span className="capitalize neuer text-[#F6F6F6]  bg-white bg-opacity-[8%] h-[3vw] w-[10vw] sm:w-[30vw] sm:rounded-[5vw] sm:h-[10vw] sm:text-[3vw] flex justify-center items-center border-[0.06vw] border-[#F6F6F6] rounded-[1.3vw]  text-[1.2vw] border-opacity-[80%] z-[20]">
+            <span className="capitalize neuer text-[#F6F6F6]  bg-white bg-opacity-[8%] sm:px-0 sm:py-0 px-[2rem] py-[0.5rem] sm:w-[30vw] sm:rounded-[5vw] sm:h-[10vw] sm:text-[3vw] flex justify-center items-center border-[0.06vw] border-[#F6F6F6] rounded-[1.3rem]  text-lg  border-opacity-[80%] z-[20]">
               2370 Members
             </span>
-            <span className="capitalize neuer text-[#F6F6F6]  bg-white bg-opacity-[8%] h-[3vw] w-[10vw] sm:w-[30vw] sm:rounded-[5vw] sm:h-[10vw] sm:text-[3vw] flex justify-center items-center  border-[0.06vw] border-[#F6F6F6] rounded-[1.3vw] text-[1.2vw] border-opacity-[80%] z-[20]">
+            <div className="border-b-[0.2vw] sm:w-[7vw] sm:border-b-[0.6vw]  border-white border-opacity-[20%] w-[3rem] border-dotted z-[4]"></div>
+            <span className="capitalize neuer text-[#F6F6F6]  bg-white bg-opacity-[8%] sm:px-0 sm:py-0 px-[2rem] py-[0.5rem] sm:w-[30vw] sm:rounded-[5vw] sm:h-[10vw] sm:text-[3vw] flex justify-center items-center  border-[0.06vw] border-[#F6F6F6] rounded-[1.3rem] text-lg border-opacity-[80%] z-[20]">
               230 Posts
             </span>
-            <div className="border-b-[0.2vw] sm:w-[7vw] sm:border-b-[0.6vw] absolute left-[50%] translate-x-[-50%] border-white border-opacity-[20%] w-[3vw] border-dotted z-[4]"></div>
           </div>
 
-          <p className="neuer sm:text-[3vw] text-[1.2vw] capitalize text-white text-center">
+          <p className="neuer sm:text-[3vw] text-lg capitalize text-white text-center">
             Creating 3D-Printable Tabletop Miniatures
           </p>
 
-          <h3 className="neuem text-black bg-[#CCFF00] flex justify-center items-center text-[1.7vw] rounded-[1vw] sm:rounded-[3vw] w-full h-[4vw] sm:h-[10vw] sm:text-[3.2vw]">
-            Become a member
+          <h3 className="neuem text-black bg-[#CCFF00] flex justify-center items-center text-2xl  rounded-[1vw] sm:rounded-[3vw] w-full sm:py-0 py-[0.5rem] sm:h-[10vw] sm:text-[3.2vw]">
+            Become a member with davis
           </h3>
-          <div className="w-full flex justify-center items-start gap-[2.5vw] sm:text-[5vw] text-[1.3vw] sm:gap-[4vw] sm:py-[1vw]">
+          <div className="w-full flex justify-center items-start gap-[2.5rem] sm:text-[5vw] text-xl sm:gap-[4vw] sm:py-[1vw]">
             <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-discord "></i>
             <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-instagram "></i>
             <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-upload "></i>
