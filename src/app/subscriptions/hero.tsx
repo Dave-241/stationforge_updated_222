@@ -62,8 +62,8 @@ const Subscription_Hero = () => {
             Creating 3D-Printable Tabletop Miniatures
           </p>
 
-          <h3 className="neuem text-black bg-[#CCFF00] flex justify-center items-center text-2xl  rounded-[1vw] sm:rounded-[3vw] w-full sm:py-0 py-[0.5rem] sm:h-[10vw] sm:text-[3.2vw]">
-            Become a member with davis
+          <h3 className="neuem  md:w-fit md:px-[4rem] text-black bg-[#CCFF00] flex justify-center items-center text-2xl  rounded-[1rem] sm:rounded-[3vw] w-full sm:py-0 py-[0.5rem] sm:h-[10vw] sm:text-[3.2vw]">
+            Become a member
           </h3>
           <div className="w-full flex justify-center items-start gap-[2.5rem] sm:text-[5vw] text-xl sm:gap-[4vw] sm:py-[1vw]">
             <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-discord "></i>
