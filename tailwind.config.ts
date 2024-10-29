@@ -15,9 +15,10 @@ const config: Config = {
       },
     },
     screens: {
-      sm: { max: "650px" },
-
-      // => @media (min-height: 800px) { ... }
+      sm: { max: "650px" }, // Styles for small screens (mobile) up to 650px
+      md: "651px", // Styles for tablet screens from 651px and above
+      lg: "1024px", // Styles for large screens from 1024px and above
+      xl: "1280px", // Styles for extra-large screens from 1280px and above
     },
   },
 };
