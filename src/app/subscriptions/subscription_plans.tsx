@@ -189,8 +189,8 @@ const Subscription_Plans = () => {
           </p>
 
           {/* this is where the pricing would be  */}
-          <div className="h-auto sm:h-[150vw] cover_scrollbar w-full sm:relative sm:overflow-x-scroll ">
-            <div className="w-auto  md:w-[100rem] md:max-w-full md:mx-auto sm:px-[4vw] md:pt-[3rem] sm:pt-[6.5vw] sm:top-0 sm:left-0  sm:absolute justify-center items-center flex md:gap-[5%] sm:gap-[5vw]">
+          <div className="h-auto   cover_scrollbar w-full sm:relative sm:overflow-x-scroll ">
+            <div className="sm:w-full  md:w-[100rem] md:max-w-full md:mx-auto sm:px-[4vw] md:pt-[3rem] sm:pt-[6.5vw]  md:justify-center items-center flex md:gap-[5%] sm:gap-[5vw]">
               <StandardPlan
                 email={email}
                 uuid={uuid}

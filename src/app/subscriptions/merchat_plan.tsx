@@ -122,7 +122,7 @@ const Merchant_plan = ({
   };
   return (
     <>
-      <div className="md:w-[40%] lg:w-[30%] sm:w-[80vw] sm:h-[130vw] md:h-auto md:py-[2rem] lg:py-[4rem]  md:px-[1.2rem] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] md:rounded-[1.2rem] sm:border-l-[1.6vw] md:border-l-[0.5rem] md:gap-[2rem] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
+      <div className="md:w-[40%] lg:w-[30%] sm:w-[80vw] sm:flex-shrink-0 sm:py-[12vw]  md:h-auto md:py-[2rem] lg:py-[4rem]  md:px-[1.2rem] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] md:rounded-[1.2rem] sm:border-l-[1.6vw] md:border-l-[0.5rem] md:gap-[2rem] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
         {/* first row div */}
         <div className="w-full flex justify-between items-center">
           <Image
