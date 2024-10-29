@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import mer_1 from "../../../public/subscription/mer_1.webp";
 import Image from "next/image";
 import { loadStripe } from "@stripe/stripe-js";
+import stan_1 from "../../../public/subscription/stan_1.webp";
 
 import { useRouter } from "next/navigation";
 import {
@@ -121,38 +122,38 @@ const Merchant_plan = ({
   };
   return (
     <>
-      <div className="w-[29vw] sm:w-[80vw] sm:h-[130vw] sm:border-l-[1.6vw]  sm:gap-[4vw] sm:px-[6vw] sm:rounded-[4vw]   h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] flex flex-col justify-center items-center  subscription_merchant_background_color rounded-[1.2vw] border-l-[0.5vw] gap-[2vw]  border-[#CCFF00]">
+      <div className="md:w-[40%] lg:w-[30%] sm:w-[80vw] sm:h-[130vw] md:h-auto md:py-[2rem] lg:py-[4rem]  md:px-[1.2rem] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] md:rounded-[1.2rem] sm:border-l-[1.6vw] md:border-l-[0.5rem] md:gap-[2rem] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
         {/* first row div */}
         <div className="w-full flex justify-between items-center">
           <Image
-            src={mer_1}
-            className="w-[3vw]  sm:w-[15vw] h-fit"
+            src={stan_1}
+            className="md:w-[3rem] sm:w-[15vw] h-fit"
             alt="most popular image placeholder"
           />
         </div>
         {/* second row div */}
         <div className="w-full flex  flex-col gap-[0.2vw]  ">
-          <h2 className="text-[2.1vw] text-black neuem sm:text-[6vw]">
+          <h2 className="md:text-3xl  neuem text-white sm:text-[6vw]">
             Merchant Tier
           </h2>
-          <h3 className="text-[#000000] sm:text-[2.6vw] neuer text-opacity-[60%] text-[0.9vw]">
+          {/* <h3 className="text-[#000000] sm:text-[2.6vw] neuer text-opacity-[60%] text-[0.9vw]">
             The merchant tier2 is a second wave of merchants that gives you
             commercial license to 3D prints and sell station forge models in
             physical forms only as long as subscribed this tier is only limited
             to 50 individuals as was the previous tier
-          </h3>
+          </h3> */}
         </div>
         {/* thired div  */}
         <div className="w-full">
-          <h3 className="text-black text-[2.3vw] neuem sm:text-[4vw] ">
+          <h3 className="text-white md:text-3xl neuem sm:text-[4vw] ">
             $50{" "}
-            <span className="text-opacity-[60%] text-black text-[1.2vw] sm:text-[3vw]">
+            <span className="text-opacity-[60%] text-white md:text-xl sm:text-[3vw]">
               /Month
             </span>
           </h3>
         </div>
         {/* fourthe div */}
-        <p className="text-[1vw] neuer sm:text-[2.9vw]">
+        <p className="md:text-xs neuer sm:text-[2.9vw] text-white">
           Permission to print and distribute physical models (not the STL.
           files) through your website/marketplaces. Use the original pictures
           only from the page with the Station Forge logo. Re-rendering photos is
@@ -165,7 +166,7 @@ const Merchant_plan = ({
         </p>
         {/* fivth div  also known as button */}
         <button
-          className="w-full h-[4vw]  flex justify-center items-center sm:gap-[4vw] gap-[1vw] text-[1.4vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[3.7vw] sm:h-[10vw] "
+          className="w-full md:py-[1rem]  flex justify-center items-center sm:gap-[4vw] gap-[1vw] md:text-sm lg:text-xl neuem md:rounded-[3.7rem] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[3.7vw] sm:h-[10vw] "
           onClick={() => {
             if (!uuid) {
               setpage_loader(true);

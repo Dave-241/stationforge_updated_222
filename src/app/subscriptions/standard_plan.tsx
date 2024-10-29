@@ -156,42 +156,42 @@ const StandardPlan = ({
   };
   return (
     <>
-      <div className="w-[29vw] sm:w-[80vw] sm:h-[130vw]  h-[50vw] pt-[2vw] pb-[2vw] px-[1.2vw] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] rounded-[1.2vw] sm:border-l-[1.6vw] border-l-[0.5vw] gap-[2vw] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
+      <div className="md:w-[40%] lg:w-[30%] sm:w-[80vw] sm:h-[130vw] md:h-auto md:py-[2rem] lg:py-[4rem]  md:px-[1.2rem] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] md:rounded-[1.2rem] sm:border-l-[1.6vw] md:border-l-[0.5rem] md:gap-[2rem] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
         {/* first row div */}
         <div className="w-full flex justify-between items-center">
           <Image
             src={stan_1}
-            className="w-[3vw] sm:w-[15vw] h-fit"
+            className="md:w-[3rem] sm:w-[15vw] h-fit"
             alt="most popular image placeholder"
           />
 
-          <h3 className="neuer text-[1.2vw] sm:text-[3vw] sm:py-[2vw] sm:px-[4vw] sm:rounded-[4vw] text-black bg-white py-[0.7vw] px-[1.4vw] rounded-[2.7vw]">
+          {/* <h3 className="neuer text-[1.2vw] sm:text-[3vw] sm:py-[2vw] sm:px-[4vw] sm:rounded-[4vw] text-black bg-white py-[0.7vw] px-[1.4vw] rounded-[2.7vw]">
             Most popular{" "}
-          </h3>
+          </h3> */}
         </div>
         {/* second row div */}
-        <div className="w-full flex   flex-col gap-[0.4vw] sm:gap-[1vw] pb-[1vw] ">
-          <h2 className="text-[2.1vw] text-white neuem sm:text-[6vw]">
+        <div className="w-full flex   flex-col gap-[0.4vw] sm:gap-[1vw] ">
+          <h2 className="md:text-3xl text-white neuem sm:text-[6vw]">
             Standard Tier
           </h2>
-          <h3 className="text-white neuer text-opacity-[40%] sm:text-[2.7vw] text-[1vw]">
+          {/* <h3 className="text-white neuer text-opacity-[40%] sm:text-[2.7vw] text-[1vw]">
             Access to monthly releases <br className="sm:hidden" />
             (files <br className="sm:block hidden" /> are pre-supported)
-          </h3>
+          </h3> */}
         </div>
 
         {/* thired div  */}
         <div className="w-full">
-          <h3 className="text-white text-[2.3vw] neuem sm:text-[4vw]">
+          <h3 className="text-white md:text-3xl neuem sm:text-[4vw] ">
             $10{" "}
-            <span className="text-opacity-[40%] text-white  text-[1.2vw] sm:text-[3vw]">
+            <span className="text-opacity-[60%] text-white md:text-xl sm:text-[3vw]">
               /Month
             </span>
           </h3>
         </div>
 
         {/* fourth div */}
-        <ul className="w-full h-auto flex-col flex gap-[1vw] sm:gap-[3vw] pb-[1.5vw]">
+        {/* <ul className="w-full h-auto flex-col flex gap-[1vw] sm:gap-[3vw] pb-[1.5vw]">
           {list.map((e: any, index: any) => {
             return (
               <li key={index} className="flex gap-[1.2vw] items-center">
@@ -206,11 +206,24 @@ const StandardPlan = ({
               </li>
             );
           })}
-        </ul>
+        </ul> */}
+
+        {/* description */}
+        <p className="md:text-xs  text-white neuer sm:text-[2.9vw]">
+          Permission to print and distribute physical models (not the STL.
+          files) through your website/marketplaces. Use the original pictures
+          only from the page with the Station Forge logo. Re-rendering photos is
+          not permitted and will be taken down by our team. Renaming the Station
+          Forge models, removing watermarks, or using other brand names for our
+          models is not allowed. Taking precautions against piracy after
+          pledging to this tier you must provide us with the links to the
+          websites of your profile on where you are planning to sell our
+          <span className="text-[#CCFF00]"> Read more</span>
+        </p>
 
         {/* fivth div  also known as button */}
         <button
-          className="w-full h-[4vw]  flex justify-center items-center sm:gap-[4vw] gap-[1vw] text-[1.4vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[3.7vw] sm:h-[10vw] "
+          className="w-full md:py-[1rem]  flex justify-center items-center sm:gap-[4vw] gap-[1vw] md:text-sm lg:text-xl neuem md:rounded-[3.7rem] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[3.7vw] sm:h-[10vw] "
           onClick={() => {
             if (!uuid) {
               setpage_loader(true);
@@ -240,7 +253,7 @@ const StandardPlan = ({
             "Downgrade "} */}
 
           {standard_isloading && (
-            <div className="rounded-[100%] sm:h-[7vw] sm:border-t-[1vw] sm:w-[7vw] h-[2vw] w-[2vw]  border-solid  border-t-[0.3vw] border-[black] animate-spin"></div>
+            <div className="rounded-[100%] sm:h-[7vw] sm:border-t-[1vw] sm:w-[7vw] md:h-[2rem] md:w-[2rem]  border-solid  md:border-t-[0.3rem] border-[black] animate-spin"></div>
           )}
         </button>
 

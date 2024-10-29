@@ -71,13 +71,13 @@ const Subscription_Hero = () => {
             <i className="bi text-white  cursor-pointer hover:text-opacity-[90%] transition duration-[0.4s] bi-upload "></i>
           </div>
 
-          <div className="w-fit py-[0.6vw] sm:py-[2.2vw] sm:px-[5vw] px-[1.2vw] neuem bg-white rounded-[2vw] flex justify-center sm:rounded-[6vw] items-center gap-[0.5vw]">
+          <div className="w-fit py-[0.7rem] sm:py-[2.2vw] sm:px-[5vw] px-[1.2rem] neuem bg-white rounded-[2rem] flex justify-center sm:rounded-[6vw] items-center gap-[0.5vw]">
             <Link
               href={"/subscriptions"}
               scroll={false}
-              className={`text-[1.2vw] sm:text-[3.5vw] sm:rounded-[3.2vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] sm:px-[2.5vw] ${
+              className={`md:text-base sm:text-[3.5vw] sm:rounded-[3.2vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5rem] sm:px-[2.5vw] ${
                 page_path != 2 ? "text-white" : "text-black"
-              }  py-[0.4vw] px-[1vw] ${page_path != 2 ? "bg-black" : ""} `}
+              }  py-[0.4rem] px-[1rem] ${page_path != 2 ? "bg-black" : ""} `}
               onClick={() => {
                 if (pathname == "/subscriptions") {
                   setpage_loader(false);
@@ -94,7 +94,7 @@ const Subscription_Hero = () => {
             <Link
               href={"/about"}
               scroll={false}
-              className={`text-[1.2vw] sm:text-[3.5vw] sm:rounded-[3.2vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5vw] sm:px-[2.5vw]  py-[0.4vw] px-[1vw]  ${
+              className={`md:text-base sm:text-[3.5vw] sm:rounded-[3.2vw] sm:py-[1vw] hover:text-[#CCFF00] transition duration-[0.6s] rounded-[1.5rem] sm:px-[2.5vw]  py-[0.4rem] px-[1rem]  ${
                 page_path == 2 ? "text-white" : "text-black"
               }  py-[0.4vw] px-[1vw] ${page_path == 2 ? "bg-black" : ""} `}
               onClick={() => {

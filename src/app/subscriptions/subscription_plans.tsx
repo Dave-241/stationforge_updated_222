@@ -173,24 +173,24 @@ const Subscription_Plans = () => {
   // };
   return (
     <>
-      <div className="w-full h-auto justify-center flex flex-col items-center sm:pb[6vw] pb-[3vw] relative">
-        <div className="w-auto py-[2vw] sm:rounded-[2.6vw] sm:py-[5vw] sm:px-[5vw] px-[4vw] rounded-[0.8vw] border-[0.15vw]  border-opacity-[40%] border-white flex flex-col gap-[0.7vw] z-[9] bg-black">
-          <h1 className="text-[2.4vw] sm:text-[5vw] neuem text-white text-center">
+      <div className="w-full h-auto justify-center  flex flex-col items-center sm:pb[6vw] md:pb-[3rem] relative">
+        <div className="w-auto md:py-[2.5rem] sm:rounded-[2.6vw] sm:py-[5vw] sm:px-[5vw] md:px-[4rem] md:rounded-[0.8rem] md:border-[0.1rem]  border-opacity-[40%] border-white flex flex-col md:gap-[0.7rem] z-[9] bg-black">
+          <h1 className="md:text-3xl sm:text-[5vw] neuem text-white text-center">
             choose a plan
           </h1>
-          <h2 className="text-white sm:text-[3vw] text-[1.3vw] text-center neuem text-opacity-[30%]">
+          <h2 className="text-white sm:text-[3vw] md:text-xl text-center neuem text-opacity-[30%]">
             We have a two part selection subscription plan <br /> that gives you
             the best fit for for you
           </h2>
         </div>
-        <div className="w-full  justify-center flex flex-col items-center z-[9]  sm:pt-[7vw] pt-[3vw]">
-          <p className="text-[3.2vw] neuem text-white sm:text-[7vw]">
+        <div className="w-full  justify-center flex flex-col items-center z-[9]  sm:pt-[7vw] md:pt-[3rem]">
+          <p className="md:text-5xl neuem text-white sm:text-[7vw]">
             StationForge
           </p>
 
           {/* this is where the pricing would be  */}
           <div className="h-auto sm:h-[150vw] cover_scrollbar w-full sm:relative sm:overflow-x-scroll ">
-            <div className="w-auto sm:px-[4vw] pt-[3vw] sm:pt-[6.5vw] sm:top-0 sm:left-0  sm:absolute justify-center items-center flex gap-[3vw] sm:gap-[5vw]">
+            <div className="w-auto  md:w-[100rem] md:max-w-full md:mx-auto sm:px-[4vw] md:pt-[3rem] sm:pt-[6.5vw] sm:top-0 sm:left-0  sm:absolute justify-center items-center flex md:gap-[5%] sm:gap-[5vw]">
               <StandardPlan
                 email={email}
                 uuid={uuid}
@@ -215,12 +215,12 @@ const Subscription_Plans = () => {
         <Image
           src={bg_image}
           alt="background image"
-          className="absolute w-full h-full sm:hidden top-0 left-0 z-[5]"
+          className="absolute w-full h-full object-cover sm:hidden top-0 left-0 z-[5]"
         />
         <Image
           src={mob_bg}
           alt="background image"
-          className="absolute w-full h-full hidden sm:block  top-0 left-0 z-[5]"
+          className="absolute w-full h-full hidden object-cover sm:block  top-0 left-0 z-[5]"
         />
       </div>
     </>
