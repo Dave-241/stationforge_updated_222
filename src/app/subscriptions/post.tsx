@@ -438,7 +438,7 @@ const Post = (props: any) => {
         {/* the images */}
         {postdata.images.length > 0 && (
           <div
-            className="w-full bg-[#ACABA9] rounded-[1.5rem] flex flex-col md:gap-[2rem] overflow-hidden  sm:gap-[1.5rem] py-[2rem] md:py-[2.5rem]  relative   px-[0vw]"
+            className="w-full bg-[#ACABA9] rounded-[1.5rem] flex flex-col md:gap-[2rem] md:overflow-hidden sm:gap-[1.5rem] py-[2rem] md:py-[2.5rem]  relative   px-[0vw]"
             onClick={() => {
               update_engagement("Media_view", postdata.postId);
             }}
