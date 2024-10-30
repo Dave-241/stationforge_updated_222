@@ -537,12 +537,12 @@ const Post = (props: any) => {
               width="0"
               height="0"
             />
-            <div className="w-full relative h-auto">
+            <div className="w-full sm:overflow-x-scroll sm:flex relative h-auto">
               {/* Thumbnails */}
               {currentIndex > 0 && (
                 <button
                   onClick={handleLeftClick}
-                  className="absolute md:left-[2%] translate-y-[-50%] top-[50%] sm:left-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] md:px-[0.4rem] md:py-[0.6rem]"
+                  className="absolute md:left-[2%] translate-y-[-50%] top-[50%] sm:left-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
                 >
                   <i className="bi bi-chevron-left text-white font-bold text-xl"></i>
                 </button>
@@ -551,7 +551,7 @@ const Post = (props: any) => {
               {currentIndex < postdata.images.length - 1 && (
                 <button
                   onClick={handleRightClick}
-                  className="absolute md:right-[2%] translate-y-[-50%] top-[50%] sm:right-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] md:px-[0.4rem] md:py-[0.6rem]"
+                  className="absolute md:right-[2%] translate-y-[-50%] top-[50%] sm:right-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
                 >
                   <i className="bi bi-chevron-right text-white font-bold text-xl"></i>
                 </button>
