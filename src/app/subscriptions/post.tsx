@@ -429,7 +429,7 @@ const Post = (props: any) => {
   return (
     <>
       <section
-        className={` md:w-[50rem] md:max-w-[90%] sm:w-full sm:gap-[5vw] sm:rounded-[3vw] h-auto flex flex-col md:pb-[4vw] gap-[3vw] sm:py-[10vw] bg-[#111111] md:p-[0.4rem] overflow-hidden rounded-[1.5vw]`}
+        className={` md:w-[50rem] md:max-w-[90%] sm:w-full sm:gap-[5vw]  h-auto flex flex-col md:pb-[4vw] gap-[3vw] sm:pb-[10vw]  bg-[#111111] p-[0.4rem]  overflow-hidden rounded-[1.5rem]`}
         id={id}
         style={{ order: order }}
       >
@@ -438,7 +438,7 @@ const Post = (props: any) => {
         {/* the images */}
         {postdata.images.length > 0 && (
           <div
-            className="w-full bg-[#ACABA9] rounded-[1.5vw] flex flex-col md:gap-[2rem] overflow-hidden  sm:gap-[1.5vw] md:py-[2.5rem]  relative   px-[0vw]"
+            className="w-full bg-[#ACABA9] rounded-[1.5rem] flex flex-col md:gap-[2rem] overflow-hidden  sm:gap-[1.5vw] py-[2.5rem]  relative   px-[0vw]"
             onClick={() => {
               update_engagement("Media_view", postdata.postId);
             }}
@@ -531,7 +531,7 @@ const Post = (props: any) => {
             })} */}
             <Image
               src={main_img}
-              className="md:w-[55%] shadow-md drop-shadow-2xl md:rounded-[22px] mx-auto h-fit"
+              className="md:w-[55%] shadow-md drop-shadow-2xl rounded-[22px] sm:w-[85%] mx-auto h-fit"
               alt="main image"
               unoptimized
               width="0"
