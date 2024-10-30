@@ -26,6 +26,8 @@ import Comments_modal from "./comment";
 import { headers } from "next/headers";
 import Image_display from "./img_display";
 import Subscrption_Likes_modal from "./likes_modal";
+import prev_img from "../../../public/showcase/prev.webp";
+import next_img from "../../../public/showcase/next.webp";
 
 const Post = (props: any) => {
   const [liked, setliked] = useState(false);
@@ -436,7 +438,7 @@ const Post = (props: any) => {
         {/* the images */}
         {postdata.images.length > 0 && (
           <div
-            className="w-full bg-[#ACABA9] rounded-[1.5vw] flex flex-col md:gap-[2rem] overflow-hidden sm:gap-[1.5vw] md:py-[2.5rem] md:px-[1rem] relative   px-[0vw]"
+            className="w-full bg-[#ACABA9] rounded-[1.5vw] flex flex-col md:gap-[2rem] overflow-hidden sm:gap-[1.5vw] md:py-[2.5rem]  relative   px-[0vw]"
             onClick={() => {
               update_engagement("Media_view", postdata.postId);
             }}
@@ -530,11 +532,37 @@ const Post = (props: any) => {
               width="0"
               height="0"
             />
-            <div className="w-full overflow-hidden">
+            <div className="w-full h-auto">
+              {/* Thumbnails */}
+              {currentIndex > 0 && (
+                <button
+                  onClick={handleLeftClick}
+                  className="absolute left-[0.8vw] sm:left-[2vw] z-[9]"
+                >
+                  <Image
+                    src={prev_img}
+                    alt="prev icon"
+                    className="w-[2.6vw] sm:w-[8.3vw] h-fit"
+                  />
+                </button>
+              )}
+
+              {currentIndex < postdata.images.length - 1 && (
+                <button
+                  onClick={handleRightClick}
+                  className="absolute right-[0.8vw] sm:right-[2vw] z-[9]"
+                >
+                  <Image
+                    src={next_img}
+                    alt="prev icon"
+                    className="w-[2.6vw] sm:w-[8.3vw] h-fit"
+                  />
+                </button>
+              )}
               <div
-                className=" flex h-full w-auto  items-center gap-[2vw] px-[2vw] sm:gap-[3.5vw] border2  "
+                className=" flex  w-auto md:px-[2rem] items-center md:gap-[1rem]  sm:gap-[3.5vw]   "
                 style={{
-                  // transform: `translateX(${translateX}%)`,
+                  transform: `translateX(${translateX}%)`,
                   transition: "0.7s ease",
                 }}
               >
@@ -542,12 +570,12 @@ const Post = (props: any) => {
                   return (
                     <>
                       <div
-                        className={`w-[10vw] md:rounded-[2rem] flex-shrink-0 cursor-pointer sm:w-[20vw]  avater_bg sm:h-[20vw] h-[10vw]`}
+                        className={`md:w-[10rem] md:rounded-[1rem] flex-shrink-0 cursor-pointer sm:w-[20vw] shadow-md drop-shadow-2xl overflow-hidden avater_bg sm:h-[20vw]md:h-[16rem]`}
                         key={index}
                         style={{ backgroundImage: "url(/cover.webp)" }}
-                        // onClick={() => {
-                        //   setcover_img_link(e.link);
-                        // }}
+                        onClick={() => {
+                          setmain_img(e.link);
+                        }}
                       >
                         {" "}
                         <Image
@@ -558,9 +586,9 @@ const Post = (props: any) => {
                           alt="product cover images"
                           className={`${
                             e.link == main_img
-                              ? "border-[0.5vw] shadow-md drop-shadow-2xl sm:border-[1vw] border-[#CCFF00]"
+                              ? "md:border-[0.3rem]  sm:border-[1vw] md:rounded-[1rem]  border-[white]"
                               : ""
-                          } w-full h-full`}
+                          } w-full h-full object-cover`}
                         />
                       </div>
 
