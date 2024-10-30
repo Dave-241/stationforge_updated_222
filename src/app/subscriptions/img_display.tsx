@@ -60,15 +60,15 @@ const Image_display = (props: any) => {
           setimg_display_show(false);
         }}
       >
-        <div className="w-full h-[6vw] absolute px-[3vw] flex sm:top-[5vw] justify-between items-center sm:justify-end  top-0 left-0">
-          <Image
+        <div className="w-full h-[6vw] absolute px-[3vw] flex sm:top-[5vw] justify-end items-center  top-0 left-0">
+          {/* <Image
             src={logo}
             alt="Station forge logo"
-            className="w-[10vw] sm:hidden h-fit"
-          />
+            className="w-[10rem]  h-fit"
+          /> */}
 
           <i
-            className="text-[2vw] sm:text-[7vw] h-fit hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] text-white bi bi-x-circle"
+            className="md:text-4xl sm:text-[7vw] h-fit hover:text-opacity-[90%] cursor-pointer duration-[0.6s] transition text-opacity-[50%] text-white bi bi-x-circle"
             onClick={() => {
               setimg_display_show(false);
             }}
@@ -81,7 +81,7 @@ const Image_display = (props: any) => {
             onClick={(e) => {
               handleLeftClick(e);
             }}
-            className="absolute md:left-[2%] translate-y-[-50%] top-[50%] sm:left-[2vw] z-[9] bg-[black] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
+            className="absolute md:left-[2%] translate-y-[-50%] top-[50%] sm:left-[2vw] z-[9] bg-[white] bg-opacity-[39%] backdrop-blur-md rounded-[13px]  px-[0.6rem] py-[0.8rem]"
           >
             <i className="bi bi-chevron-left text-white font-bold text-xl"></i>
           </button>
@@ -92,7 +92,7 @@ const Image_display = (props: any) => {
             onClick={(e) => {
               handleRightClick(e);
             }}
-            className="absolute md:right-[2%] translate-y-[-50%] top-[50%] sm:right-[2vw] z-[9] bg-[black] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
+            className="absolute md:right-[2%] translate-y-[-50%] top-[50%] sm:right-[2vw] z-[9] bg-[white] bg-opacity-[39%] backdrop-blur-md rounded-[13px]   px-[0.6rem] py-[0.8rem]"
           >
             <i className="bi bi-chevron-right text-white font-bold text-xl"></i>
           </button>
@@ -104,7 +104,7 @@ const Image_display = (props: any) => {
           in={true}
           //   ref={ref}
           style={{
-            width: "auto",
+            width: "100%",
             gap: "2rem",
             display: "flex",
             justifyContent: "center",
@@ -140,7 +140,7 @@ const Image_display = (props: any) => {
           </div> */}
 
           <div
-            className="relative border2 max-h-[90vh] h-[30rem] md:w-[30rem]"
+            className="relative  max-h-[90vh] h-[30rem] sm:w-[90%] md:w-[30rem]"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -211,7 +211,7 @@ const Image_display = (props: any) => {
                   //   setvideo(false);
                   //   setimg_display(e.link);
                   // }}
-                  // style={{ backgroundImage: `url(${e.link})` }}
+                  style={{ transition: "0.5s ease" }}
                 >
                   <img
                     src={e.link}
