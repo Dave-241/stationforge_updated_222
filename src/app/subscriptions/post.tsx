@@ -408,7 +408,7 @@ const Post = (props: any) => {
   };
 
   // THIS HANDLES TH NEW UPDATE FOR THE DISPLAYING OF IMAGES
-  const [main_img, setmain_img] = useState(postdata.images[0].link);
+  const [main_img, setmain_img] = useState(postdata?.images[0]?.link);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   // THIS IS FOR THE LEFT CLICK AND THE RIGHT CLIECK
@@ -531,11 +531,16 @@ const Post = (props: any) => {
             })} */}
             <Image
               src={main_img}
-              className="md:w-[55%] shadow-md drop-shadow-2xl rounded-[22px] sm:w-[85%] mx-auto h-fit"
+              className="md:w-[55%] shadow-md drop-shadow-2xl rounded-[22px] sm:w-[85%] mx-auto h-fit cursor-pointer"
               alt="main image"
               unoptimized
               width="0"
               height="0"
+              onClick={() => {
+                setimg_display_arr(postdata.images);
+                setimg_display(main_img);
+                setimg_display_show(true);
+              }}
             />
             <div className="w-full sm:overflow-x-scroll sm:flex relative h-auto">
               {/* Thumbnails */}
@@ -572,6 +577,9 @@ const Post = (props: any) => {
                         style={{ backgroundImage: "url(/cover.webp)" }}
                         onClick={() => {
                           setmain_img(e.link);
+                          // setimg_display_arr(postdata.images);
+                          // setimg_display(e.link);
+                          // setimg_display_show(true);
                         }}
                       >
                         {" "}

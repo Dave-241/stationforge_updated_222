@@ -31,6 +31,26 @@ const Image_display = (props: any) => {
     "ogg",
   ];
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
+  // THIS IS FOR THE LEFT CLICK AND THE RIGHT CLIECK
+  const handleLeftClick = (e: any) => {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      setTranslateX(translateX + 100 / img_display_arr.length); // Adjust 100 to your container width
+    }
+  };
+
+  const handleRightClick = (e: any) => {
+    e.stopPropagation();
+
+    if (currentIndex < img_display_arr.length - 1) {
+      // Adjust based on the number of img_display_arr you want to show at once
+      setCurrentIndex(currentIndex + 1);
+      setTranslateX(translateX - 100 / img_display_arr.length); // Adjust 100 to your container width
+    }
+  };
   return (
     <>
       {" "}
@@ -55,6 +75,28 @@ const Image_display = (props: any) => {
           ></i>
         </div>
 
+        {/* Thumbnails */}
+        {currentIndex > 0 && (
+          <button
+            onClick={(e) => {
+              handleLeftClick(e);
+            }}
+            className="absolute md:left-[2%] translate-y-[-50%] top-[50%] sm:left-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
+          >
+            <i className="bi bi-chevron-left text-white font-bold text-xl"></i>
+          </button>
+        )}
+
+        {currentIndex < img_display_arr.length - 1 && (
+          <button
+            onClick={(e) => {
+              handleRightClick(e);
+            }}
+            className="absolute md:right-[2%] translate-y-[-50%] top-[50%] sm:right-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
+          >
+            <i className="bi bi-chevron-right text-white font-bold text-xl"></i>
+          </button>
+        )}
         <FadeInTransition
           timeout={1500}
           from={0}
@@ -63,15 +105,16 @@ const Image_display = (props: any) => {
           //   ref={ref}
           style={{
             width: "auto",
-            gap: globalThis.innerWidth > 650 ? "3vw" : "8vw",
+            gap: globalThis.innerWidth > 650 ? "3rem" : "3rem",
             display: "flex",
             justifyContent: "center",
-            flexDirection: globalThis.innerWidth > 650 ? "row" : "column",
+            flexDirection: "column",
             alignItems: "center",
+            position: "relative",
           }}
           //   onClick={handleModalClick}
         >
-          <div
+          {/* <div
             className="w-[40vw] max-h-[95vh] sm:max-h-[70vh]  sm:w-[80vw] h-full  overflow-hidden flex justify-center items-center"
             onClick={(e) => {
               e.stopPropagation();
@@ -94,10 +137,10 @@ const Image_display = (props: any) => {
                 unoptimized
               />
             )}
-          </div>
+          </div> */}
 
           <div
-            className="w-[30vw] sm:w-[90vw] sm:max-h-[40vw] sm:py-[5vw] border-white border-opacity-[20%] rounded-[1.2vw] border-[0.1vw]  h-full overflow-y-scroll scroll-container flex flex-wrap justify-center gap-[1vw] py-[2vw] px-[3vw] items-center "
+            className="relative border2 max-h-[90vh] h-[30rem] md:w-[30rem]"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -106,59 +149,83 @@ const Image_display = (props: any) => {
               const isVideoLink = videoExtensions.some((ext) =>
                 e.link.includes(`.${ext}`),
               );
-              if (isVideoLink) {
-                return (
-                  <div
-                    key={index}
-                    className={`w-[5vw] h-[5vw] sm:w-[15vw] sm:h-[15vw] hover:scale-[1.07] transition duration-[0.6s]
-                    ${
-                      e.link == img_display
-                        ? "border-[0.3vw] sm:border-[1vw] border-opacity-[80%] border-[#CCFF00] "
-                        : " border-[0.1vw]  border-opacity-[20%] border-white "
-                    } 
-                    overflow-hidden  cursor-pointer avater_bg rounded-[0.8vw]`}
-                    onClick={() => {
-                      setvideo(true);
-                      setimg_display(e.link);
-                    }}
-                    style={{
-                      backgroundImage: `url(/subscription/video_loader.webp)`,
-                    }}
-                  >
-                    {" "}
-                    <video
-                      src={e.link}
-                      playsInline
-                      className="aspect-[1/0.9] scale-y-[2.3] scale-x-[1.8] w-full"
-                    ></video>
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    key={index}
-                    className={`w-[5vw] h-[5vw] sm:w-[15vw] sm:h-[15vw]  hover:scale-[1.07] transition duration-[0.6s] 
-                     ${
-                       e.link == img_display
-                         ? "border-[0.3vw] sm:border-[1vw] border-opacity-[80%] border-[#CCFF00] "
-                         : " border-[0.1vw]  border-opacity-[20%] border-white "
-                     } cursor-pointer avater_bg rounded-[0.8vw] overflow-hidden `}
-                    onClick={() => {
-                      setvideo(false);
-                      setimg_display(e.link);
-                    }}
-                    // style={{ backgroundImage: `url(${e.link})` }}
-                  >
-                    <img
-                      src={e.link}
-                      alt={index + "bg images"}
-                      className="h-full w-full  cursor-pointer"
-                    />
-                  </div>
-                );
-              }
+              // if (isVideoLink) {
+              //   return (
+              //     <div
+              //       key={index}
+              //       className={`w-[5vw] h-[5vw] sm:w-[15vw] sm:h-[15vw] hover:scale-[1.07] transition duration-[0.6s]
+              //       ${
+              //         e.link == img_display
+              //           ? "border-[0.3vw] sm:border-[1vw] border-opacity-[80%] border-[#CCFF00] "
+              //           : " border-[0.1vw]  border-opacity-[20%] border-white "
+              //       }
+              //       overflow-hidden  cursor-pointer avater_bg rounded-[0.8vw]`}
+              //       onClick={() => {
+              //         setvideo(true);
+              //         setimg_display(e.link);
+              //       }}
+              //       style={{
+              //         backgroundImage: `url(/subscription/video_loader.webp)`,
+              //       }}
+              //     >
+              //       {" "}
+              //       <video
+              //         src={e.link}
+              //         playsInline
+              //         className="aspect-[1/0.9] scale-y-[2.3] scale-x-[1.8] w-full"
+              //       ></video>
+              //     </div>
+              //   );
+              // } else {
+              //   return (
+              //     <div
+              //       key={index}
+              //       className={`w-[5vw] h-[5vw] sm:w-[15vw] sm:h-[15vw]  hover:scale-[1.07] transition duration-[0.6s]
+              //        ${
+              //          e.link == img_display
+              //            ? "border-[0.3vw] sm:border-[1vw] border-opacity-[80%] border-[#CCFF00] "
+              //            : " border-[0.1vw]  border-opacity-[20%] border-white "
+              //        } cursor-pointer avater_bg rounded-[0.8vw] overflow-hidden `}
+              //       onClick={() => {
+              //         setvideo(false);
+              //         setimg_display(e.link);
+              //       }}
+              //       // style={{ backgroundImage: `url(${e.link})` }}
+              //     >
+              //       <img
+              //         src={e.link}
+              //         alt={index + "bg images"}
+              //         className="h-full w-full  cursor-pointer"
+              //       />
+              //     </div>
+              //   );
+              // }
+
+              return (
+                <div
+                  key={index}
+                  className={`  w-full ${
+                    currentIndex == index ? "" : "opacity-0"
+                  } top-[50%] translate-x-[-50%] left-[50%] absolute translate-y-[-50%]`}
+                  // onClick={() => {
+                  //   setvideo(false);
+                  //   setimg_display(e.link);
+                  // }}
+                  // style={{ backgroundImage: `url(${e.link})` }}
+                >
+                  <img
+                    src={e.link}
+                    alt={index + "bg images"}
+                    className=" w-full  cursor-pointer"
+                  />
+                </div>
+              );
             })}
           </div>
+
+          <p className="text-white">
+            {currentIndex + 1}/ {img_display_arr.length}
+          </p>
         </FadeInTransition>
       </div>
     </>
