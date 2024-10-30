@@ -438,13 +438,13 @@ const Post = (props: any) => {
         {/* the images */}
         {postdata.images.length > 0 && (
           <div
-            className="w-full bg-[#ACABA9] rounded-[1.5rem] flex flex-col md:gap-[2rem] overflow-hidden  sm:gap-[1.5vw] py-[2.5rem]  relative   px-[0vw]"
+            className="w-full bg-[#ACABA9] rounded-[1.5rem] flex flex-col md:gap-[2rem] overflow-hidden  sm:gap-[1.5rem] py-[2rem] md:py-[2.5rem]  relative   px-[0vw]"
             onClick={() => {
               update_engagement("Media_view", postdata.postId);
             }}
           >
             {/* total number of images */}
-            <div className="bg-white md:py-[0.25rem] md:px-[1rem] absolute bottom-[0.5rem] md:left-[5%] w-fit z-[10] rounded-[5px] flex items-center gap-[0.5rem] md:text-sm">
+            <div className="bg-white py-[0.25rem] px-[1rem] absolute bottom-[0.5rem] left-[5%] w-fit z-[10] rounded-[5px] flex items-center gap-[0.5rem] text-sm">
               <i className=" bi bi-image-fill"></i>
               <p className="neuem">{postdata.images.length}</p>
             </div>
@@ -557,7 +557,7 @@ const Post = (props: any) => {
                 </button>
               )}
               <div
-                className=" flex  w-auto md:px-[2rem] items-center md:gap-[1rem]  sm:gap-[3.5vw]   "
+                className=" flex  w-auto md:px-[2rem] sm:px-[3%] items-center md:gap-[1rem]  sm:gap-[3.5vw]   "
                 style={{
                   transform: `translateX(${translateX}%)`,
                   transition: "0.7s ease",
@@ -567,7 +567,7 @@ const Post = (props: any) => {
                   return (
                     <>
                       <div
-                        className={`md:w-[10rem] md:rounded-[1rem] flex-shrink-0 cursor-pointer sm:w-[20vw] shadow-md drop-shadow-2xl overflow-hidden avater_bg sm:h-[20vw]md:h-[16rem]`}
+                        className={`md:w-[10rem] rounded-[1rem] flex-shrink-0 cursor-pointer sm:w-[20vw] shadow-md drop-shadow-2xl overflow-hidden avater_bg sm:h-[20vw]md:h-[16rem]`}
                         key={index}
                         style={{ backgroundImage: "url(/cover.webp)" }}
                         onClick={() => {
@@ -583,13 +583,13 @@ const Post = (props: any) => {
                           alt="product cover images"
                           className={`${
                             e.link == main_img
-                              ? "md:border-[0.15rem]  sm:border-[1vw] md:rounded-[1rem]  border-[white]"
+                              ? "border-[0.15rem] rounded-[1rem]  border-[white]"
                               : ""
                           } w-full h-full object-cover`}
                         />
                       </div>
-
-                      <div className="h-full w-[0.15vw] sm:w-[0.5vw] bg-[white] bg-opacity-[31%]"></div>
+                      {/* 
+                      <div className="h-full w-[0.15vw] sm:w-[0.5vw] bg-[white] bg-opacity-[31%]"></div> */}
                     </>
                   );
                 })}
