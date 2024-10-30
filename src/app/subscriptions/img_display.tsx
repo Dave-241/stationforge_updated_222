@@ -81,7 +81,7 @@ const Image_display = (props: any) => {
             onClick={(e) => {
               handleLeftClick(e);
             }}
-            className="absolute md:left-[2%] translate-y-[-50%] top-[50%] sm:left-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
+            className="absolute md:left-[2%] translate-y-[-50%] top-[50%] sm:left-[2vw] z-[9] bg-[black] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
           >
             <i className="bi bi-chevron-left text-white font-bold text-xl"></i>
           </button>
@@ -92,7 +92,7 @@ const Image_display = (props: any) => {
             onClick={(e) => {
               handleRightClick(e);
             }}
-            className="absolute md:right-[2%] translate-y-[-50%] top-[50%] sm:right-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
+            className="absolute md:right-[2%] translate-y-[-50%] top-[50%] sm:right-[2vw] z-[9] bg-[black] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] sm:hidden md:px-[0.4rem] md:py-[0.6rem]"
           >
             <i className="bi bi-chevron-right text-white font-bold text-xl"></i>
           </button>
@@ -105,7 +105,7 @@ const Image_display = (props: any) => {
           //   ref={ref}
           style={{
             width: "auto",
-            gap: globalThis.innerWidth > 650 ? "3rem" : "3rem",
+            gap: "2rem",
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
@@ -216,7 +216,7 @@ const Image_display = (props: any) => {
                   <img
                     src={e.link}
                     alt={index + "bg images"}
-                    className=" w-full  cursor-pointer"
+                    className=" w-full "
                   />
                 </div>
               );
