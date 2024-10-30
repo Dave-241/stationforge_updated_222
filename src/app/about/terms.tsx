@@ -12,7 +12,7 @@ const Terms = () => {
         <h2 className="text-center md:text-5xl sm:text-[7vw] text-[#CCFF00]  neuem ">
           Terms an Conditions
         </h2>
-        <p className="text-white md:w-[60rem] md:max-w-[90%] pt-[3rem] sm:pt-[6vw] pb-[7rem] text-opacity-[30%] md:text-xl neuer text-center capitalize sm:text-[3.5vw]">
+        <p className="text-white md:w-[60rem] md:max-w-[90%] pt-[1rem] sm:pt-[6vw] pb-[7rem] text-opacity-[30%] md:text-xl neuer text-center capitalize sm:text-[3.5vw]">
           StationForge owns all of the provided files. Using the{" "}
           <br className="sm:block hidden " /> content is only allowed for
           personal use. <br className="sm:block hidden " /> These files may not
