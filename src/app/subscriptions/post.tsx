@@ -190,7 +190,7 @@ const Post = (props: any) => {
               name:
                 userCommentInfo.name.length > 1
                   ? userCommentInfo.name
-                  : "User***** ",
+                  : "Forge user ",
               text: commentData.comment,
             });
           })
