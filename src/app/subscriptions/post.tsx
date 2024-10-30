@@ -429,7 +429,7 @@ const Post = (props: any) => {
   return (
     <>
       <section
-        className={` md:w-[50rem] md:max-w-[90%] sm:w-full sm:gap-[5vw]  h-auto flex flex-col md:pb-[4vw] gap-[3vw] sm:pb-[10vw]  bg-[#111111] p-[0.4rem]  overflow-hidden rounded-[1.5rem]`}
+        className={` md:w-[50rem] md:max-w-[90%] sm:w-full sm:gap-[5vw]  h-auto flex flex-col md:pb-[4rem] gap-[3rem] sm:pb-[10vw]  bg-[#111111] p-[0.4rem]  overflow-hidden rounded-[1.5rem]`}
         id={id}
         style={{ order: order }}
       >
@@ -613,35 +613,34 @@ const Post = (props: any) => {
           </div>
         )}
 
-        <div className="w-full px-[4vw] border2 flex flex-col gap-[0.7vw]  items-start">
-          <div className="w-full flex items-center text-[1vw] gap-[0.5vw] sm:gap-[1vw] sm:text-[2.6vw] text-opacity-[70%]  text-white neuer">
+        {/* <div className="w-full px-[4vw] border2 flex flex-col gap-[0.7vw]  items-start"></div> */}
+
+        <div className="w-full md:px-[4rem] border2 text-white sm:gap-[3vw] text-opacity-[50%] sm:text-[3.5vw]  flex flex-col md:gap-[1rem] items-start ">
+          <div className="w-full flex items-center md:text-sm gap-[0.5vw] sm:gap-[1vw] sm:text-[2.6vw]   text-white neuer">
             <p className="">{postdata.timeAgo}</p>
-            <div className="rounded-[100%] bg-white bg-opacity-[30%] h-[0.3vw] w-[0.3vw] sm:h-[0.9vw] sm:w-[0.9vw]"></div>{" "}
+            <div className="rounded-[100%] bg-white bg-opacity-[30%] md:h-[0.3rem] md:w-[0.3rem] sm:h-[0.9vw] sm:w-[0.9vw]"></div>{" "}
             <p>{postdata.exactTime}</p>
           </div>
-          <h2 className="text-white capitalize text-[2.2vw] sm:text-[5vw] neuem">
+          <h2 className="text-white capitalize md:text-3xl sm:text-[5vw] neuem">
             {postdata.postData.title}
           </h2>
-        </div>
-
-        <div className="w-full px-[4vw] text-white sm:gap-[3vw] text-opacity-[50%] sm:text-[3.5vw] text-[1.2vw] flex flex-col gap-[0.7vw] items-start ">
           {showmore ? (
             <p
-              className="w-[100%] neuer"
+              className="w-[100%] md:text-sm neuer"
               dangerouslySetInnerHTML={{
                 __html: postdata.postData.description,
               }}
             ></p>
           ) : (
             <p
-              className="w-[100%] neuer"
+              className="w-[100%] md:text-sm neuer"
               dangerouslySetInnerHTML={{ __html: postdata.trimmedDescription }}
             ></p>
           )}
 
           {postdata.postData.description.length >= 249 && (
             <span
-              className="text-[#CCFF00] cursor-pointer hover:underline hover:underline-offset-4 transition duration-[0.6s] neuem"
+              className="text-[#CCFF00] cursor-pointer hover:underline hover:underline-offset-4 transition duration-[0.6s] md:text-base neuem"
               onClick={() => {
                 setshowmore(!showmore);
               }}
@@ -651,18 +650,18 @@ const Post = (props: any) => {
           )}
 
           {/* the icons */}
-          <div className="w-full relative py-[1vw]  h-auto  flex justify-between items-center">
-            <div className="w-auto flex justify-start gap-[2vw] sm:gap-[4vw]">
+          <div className="w-full relative py-[1rem]  h-auto  flex justify-between items-center">
+            <div className="w-auto flex justify-start md:text-xl sm:text-[4vw]  gap-[1.5rem] sm:gap-[4vw]">
               {" "}
               <i
-                className={`bi bi-heart-fill  text-[1.3vw] sm:text-[4vw] ${
-                  liked ? "opacity-[100%]" : "opacity-[50%]"
-                } hover:opacity-[100%] duration-[0.6s] transition cursor-pointer`}
+                className={`bi bi-heart-fill  ${
+                  liked ? "opacity-[100%]" : "hover:opacity-[50%]"
+                } opacity-[100%] duration-[0.6s] transition cursor-pointer`}
                 onClick={handlelike}
                 style={{ color: liked ? "#CCFF00" : "white" }}
               ></i>
               <i
-                className="bi relative bi-upload text-white text-[1.3vw] sm:text-[4vw] opacity-[70%] hover:opacity-[100%] duration-[0.6s] transition cursor-pointer"
+                className="bi relative bi-share-fill text-white hover:opacity-[70%] opacity-[100%] duration-[0.6s] transition cursor-pointer"
                 style={{ color: copied == "copied url" ? "#CCFF00" : "white" }}
                 onClick={() => {
                   navigator.clipboard.writeText(
@@ -672,7 +671,7 @@ const Post = (props: any) => {
                 }}
               >
                 <p
-                  className="text-[0.8vw] w-[4.5vw] sm:text-[2vw] sm:bottom-[-2vw] sm:right-[-2vw] sm:w-[10vw]  text-opacity-[70%] absolute bottom-[-0.8vw] right-[-1.8vw]"
+                  className="md:text-sm w-[4.5vw] sm:text-[2vw] sm:bottom-[-2vw] sm:right-[-2vw] sm:w-[10vw]  text-opacity-[70%] absolute bottom-[-0.8rem] right-[-1.8rem]"
                   style={{ color: "white" }}
                 >
                   {copied}
@@ -690,11 +689,11 @@ const Post = (props: any) => {
                 setActiveModalIndex(index);
               }}
             >
-              <p className="text-[1vw] text-[#CCFF00] neuer sm:text-[3vw]">
+              <p className="md:text-sm text-[#CCFF00] neuer sm:text-[3vw]">
                 {postdata.likesCount}{" "}
                 {postdata.likesCount < 2 ? "Like" : "Likes"}
               </p>
-              <i className="bi bi-bar-chart-fill text-white text-[1.3vw] sm:text-[4vw] hover:opacity-[100%] duration-[0.6s] transition opacity-[70%] cursor-pointer"></i>
+              {/* <i className="bi bi-bar-chart-fill text-white text-[1.3vw] sm:text-[4vw] hover:opacity-[100%] duration-[0.6s] transition opacity-[70%] cursor-pointer"></i> */}
             </div>
 
             {activeModalIndex == index && (
@@ -725,12 +724,12 @@ const Post = (props: any) => {
               e.preventDefault();
               handlecomment(postdata.postId);
             }}
-            className="w-full h-auto   mt-[0vw] relative text-[1vw] sm:text-[3vw]"
+            className="w-full h-auto   mt-[0vw] relative md:text-sm sm:text-[3vw]"
           >
             <input
               type="text"
               placeholder={err ? "Login to comment" : "Write a  comment"}
-              className="w-full h-[3.4vw]  sm:h-[9vw] outline-none focus:border-opacity-[100%] sm:border-[0.3vw] border-[0.1vw] border-white border-opacity-[50%] sm:rounded-[5vw] sm:pl-[4vw] sm:pr-[12vw]  pr-[4.5vw] rounded-[2.5vw] text-white text-opacity-[80%] pl-[2vw] neuer transition duration-[0.6s] bg-[#1B1B1B]"
+              className="w-full h-[3.4rem]  sm:h-[9vw] outline-none focus:border-opacity-[100%] sm:border-[0.3vw] border-[0.1rem] border-white border-opacity-[50%] sm:rounded-[5vw] sm:pl-[4vw] sm:pr-[12vw]  pr-[4.5rem] rounded-[2.5rem] text-white text-opacity-[80%] pl-[2rem] neuer transition duration-[0.6s] bg-[#1B1B1B]"
               onChange={(e: any) => {
                 setcommentvalue(e.target.value);
               }}
@@ -740,7 +739,7 @@ const Post = (props: any) => {
             <button
               type="submit"
               disabled={disable}
-              className="text-[#CCFF00] sm:text-[3vw] neuer text-[1.2vw]  absolute sm:right-[4vw] right-[1.3vw] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
+              className="text-[#CCFF00] sm:text-[3vw] neuer    absolute sm:right-[4vw] right-[1.3rem] hover:hover:text-[#7e9426] transition duration-[0.5s] top-[-50%] translate-y-[50%] h-full"
             >
               Post{" "}
             </button>

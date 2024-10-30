@@ -89,7 +89,7 @@ export default function Home() {
         <Post_wrap />
       </FadeInTransition>
 
-      <div className="w-full h-[15vw] "></div>
+      <div className="w-full h-[10rem] "></div>
     </>
   );
 }
