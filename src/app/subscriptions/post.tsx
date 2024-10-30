@@ -438,11 +438,16 @@ const Post = (props: any) => {
         {/* the images */}
         {postdata.images.length > 0 && (
           <div
-            className="w-full bg-[#ACABA9] rounded-[1.5vw] flex flex-col md:gap-[2rem] overflow-hidden sm:gap-[1.5vw] md:py-[2.5rem]  relative   px-[0vw]"
+            className="w-full bg-[#ACABA9] rounded-[1.5vw] flex flex-col md:gap-[2rem] overflow-hidden  sm:gap-[1.5vw] md:py-[2.5rem]  relative   px-[0vw]"
             onClick={() => {
               update_engagement("Media_view", postdata.postId);
             }}
           >
+            {/* total number of images */}
+            <div className="bg-white md:py-[0.25rem] md:px-[1rem] absolute bottom-[0.5rem] md:left-[5%] w-fit z-[10] rounded-[5px] flex items-center gap-[0.5rem] md:text-sm">
+              <i className=" bi bi-image-fill"></i>
+              <p className="neuem">{postdata.images.length}</p>
+            </div>
             {/* {postdata.trimmedimages.map((e: any, index: any) => {
               const isVideoLink = videoExtensions.some((ext) =>
                 e.link.includes(`.${ext}`),
@@ -526,37 +531,29 @@ const Post = (props: any) => {
             })} */}
             <Image
               src={main_img}
-              className="md:w-[55%] shadow-md drop-shadow-2xl md:rounded-[2rem] mx-auto h-fit"
+              className="md:w-[55%] shadow-md drop-shadow-2xl md:rounded-[22px] mx-auto h-fit"
               alt="main image"
               unoptimized
               width="0"
               height="0"
             />
-            <div className="w-full h-auto">
+            <div className="w-full relative h-auto">
               {/* Thumbnails */}
               {currentIndex > 0 && (
                 <button
                   onClick={handleLeftClick}
-                  className="absolute left-[0.8vw] sm:left-[2vw] z-[9]"
+                  className="absolute md:left-[2%] translate-y-[-50%] top-[50%] sm:left-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] md:px-[0.4rem] md:py-[0.6rem]"
                 >
-                  <Image
-                    src={prev_img}
-                    alt="prev icon"
-                    className="w-[2.6vw] sm:w-[8.3vw] h-fit"
-                  />
+                  <i className="bi bi-chevron-left text-white font-bold text-xl"></i>
                 </button>
               )}
 
               {currentIndex < postdata.images.length - 1 && (
                 <button
                   onClick={handleRightClick}
-                  className="absolute right-[0.8vw] sm:right-[2vw] z-[9]"
+                  className="absolute md:right-[2%] translate-y-[-50%] top-[50%] sm:right-[2vw] z-[9] bg-[#020202] bg-opacity-[39%] backdrop-blur-md md:rounded-[13px] md:px-[0.4rem] md:py-[0.6rem]"
                 >
-                  <Image
-                    src={next_img}
-                    alt="prev icon"
-                    className="w-[2.6vw] sm:w-[8.3vw] h-fit"
-                  />
+                  <i className="bi bi-chevron-right text-white font-bold text-xl"></i>
                 </button>
               )}
               <div
@@ -586,7 +583,7 @@ const Post = (props: any) => {
                           alt="product cover images"
                           className={`${
                             e.link == main_img
-                              ? "md:border-[0.3rem]  sm:border-[1vw] md:rounded-[1rem]  border-[white]"
+                              ? "md:border-[0.15rem]  sm:border-[1vw] md:rounded-[1rem]  border-[white]"
                               : ""
                           } w-full h-full object-cover`}
                         />
