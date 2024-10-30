@@ -615,25 +615,25 @@ const Post = (props: any) => {
 
         {/* <div className="w-full px-[4vw] border2 flex flex-col gap-[0.7vw]  items-start"></div> */}
 
-        <div className="w-full md:px-[4rem] border2 text-white sm:gap-[3vw] text-opacity-[50%] sm:text-[3.5vw]  flex flex-col md:gap-[1rem] items-start ">
+        <div className="w-full md:px-[4rem] sm:px-[3%] text-white sm:gap-[3vw] text-opacity-[50%] sm:text-[3.5vw]  flex flex-col md:gap-[1rem] items-start ">
           <div className="w-full flex items-center md:text-sm gap-[0.5vw] sm:gap-[1vw] sm:text-[2.6vw]   text-white neuer">
             <p className="">{postdata.timeAgo}</p>
             <div className="rounded-[100%] bg-white bg-opacity-[30%] md:h-[0.3rem] md:w-[0.3rem] sm:h-[0.9vw] sm:w-[0.9vw]"></div>{" "}
             <p>{postdata.exactTime}</p>
           </div>
-          <h2 className="text-white capitalize md:text-3xl sm:text-[5vw] neuem">
+          <h2 className="text-white capitalize text-3xl  neuem">
             {postdata.postData.title}
           </h2>
           {showmore ? (
             <p
-              className="w-[100%] md:text-sm neuer"
+              className="w-[100%] text-sm neuer"
               dangerouslySetInnerHTML={{
                 __html: postdata.postData.description,
               }}
             ></p>
           ) : (
             <p
-              className="w-[100%] md:text-sm neuer"
+              className="w-[100%] text-sm neuer"
               dangerouslySetInnerHTML={{ __html: postdata.trimmedDescription }}
             ></p>
           )}
@@ -650,8 +650,8 @@ const Post = (props: any) => {
           )}
 
           {/* the icons */}
-          <div className="w-full relative py-[1rem]  h-auto  flex justify-between items-center">
-            <div className="w-auto flex justify-start md:text-xl sm:text-[4vw]  gap-[1.5rem] sm:gap-[4vw]">
+          <div className="w-full relative py-[1rem] sm:py-0 h-auto  flex justify-between items-center">
+            <div className="w-auto flex justify-start text-xl   gap-[1.5rem] ">
               {" "}
               <i
                 className={`bi bi-heart-fill  ${
@@ -689,7 +689,7 @@ const Post = (props: any) => {
                 setActiveModalIndex(index);
               }}
             >
-              <p className="md:text-sm text-[#CCFF00] neuer sm:text-[3vw]">
+              <p className="text-sm text-[#CCFF00] neuer ">
                 {postdata.likesCount}{" "}
                 {postdata.likesCount < 2 ? "Like" : "Likes"}
               </p>
@@ -715,8 +715,41 @@ const Post = (props: any) => {
           >
             See{" "}
             {comment_info_data.length > 0 && `all ${comment_info_data.length} `}
-            comments
+            {comment_info_data.length < 2 ? "comment" : "comments"}
           </button>
+
+          {/* for the conmment section */}
+
+          {comment_info_data.length > 0 && (
+            <div className="w-full  flex flex-col gap-[1rem]">
+              {comment_info_data.map((e: any, index: number) => {
+                return (
+                  <>
+                    {index < 2 && (
+                      <div className="  flex gap-[1rem] w-full" key={index}>
+                        <div className="h-[2.5rem] overflow-hidden w-[2.5rem] flex-shrink-0 rounded-[100%] bg-white">
+                          <Image
+                            src={e.avatar}
+                            alt="comment images"
+                            className="w-full h-full object-cover"
+                            unoptimized
+                            width="0"
+                            height="0"
+                          />{" "}
+                        </div>
+                        <div className="flex flex-col  text-xs gap-[0.5rem] w-fit">
+                          <p className="text-white capitalize neuem">
+                            {e.name}
+                          </p>
+                          <p className="neuer">{e.text} </p>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                );
+              })}
+            </div>
+          )}
 
           {/* the form to handle comments  */}
           <form
