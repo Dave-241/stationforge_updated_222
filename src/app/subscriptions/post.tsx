@@ -404,87 +404,174 @@ const Post = (props: any) => {
         console.log("New error" + err);
       });
   };
+
+  // THIS HANDLES TH NEW UPDATE FOR THE DISPLAYING OF IMAGES
+  const [main_img, setmain_img] = useState(postdata.images[0].link);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
+  // THIS IS FOR THE LEFT CLICK AND THE RIGHT CLIECK
+  const handleLeftClick = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      setTranslateX(translateX + 100 / postdata.images.length); // Adjust 100 to your container width
+    }
+  };
+
+  const handleRightClick = () => {
+    if (currentIndex < postdata.images.length - 1) {
+      // Adjust based on the number of postdata.images you want to show at once
+      setCurrentIndex(currentIndex + 1);
+      setTranslateX(translateX - 100 / postdata.images.length); // Adjust 100 to your container width
+    }
+  };
   return (
     <>
       <section
-        className={` w-[58vw] sm:w-full sm:gap-[5vw] sm:rounded-[3vw] h-auto flex flex-col py-[4vw] gap-[3vw] sm:py-[10vw] bg-[#111111] rounded-[1.5vw]`}
+        className={` md:w-[50rem] md:max-w-[90%] sm:w-full sm:gap-[5vw] sm:rounded-[3vw] h-auto flex flex-col md:pb-[4vw] gap-[3vw] sm:py-[10vw] bg-[#111111] md:p-[0.4rem] overflow-hidden rounded-[1.5vw]`}
         id={id}
         style={{ order: order }}
       >
         {/*the heading */}
 
-        <div className="w-full px-[4vw] flex flex-col gap-[0.7vw]  items-start">
-          <div className="w-full flex items-center text-[1vw] gap-[0.5vw] sm:gap-[1vw] sm:text-[2.6vw] text-opacity-[70%] text-white neuer">
-            <p className="">{postdata.timeAgo}</p>
-            <div className="rounded-[100%] bg-white bg-opacity-[30%] h-[0.3vw] w-[0.3vw] sm:h-[0.9vw] sm:w-[0.9vw]"></div>{" "}
-            <p>{postdata.exactTime}</p>
-          </div>
-          <h2 className="text-white capitalize text-[2.2vw] sm:text-[5vw] neuem">
-            {postdata.postData.title}
-          </h2>
-        </div>
         {/* the images */}
         {postdata.images.length > 0 && (
           <div
-            className="w-full flex flex-wrap gap-[1vw] sm:gap-[1.5vw] relative  justify-center items-center px-[0vw]"
+            className="w-full bg-[#ACABA9] rounded-[1.5vw] flex flex-col md:gap-[2rem] overflow-hidden sm:gap-[1.5vw] md:py-[2.5rem] md:px-[1rem] relative   px-[0vw]"
             onClick={() => {
               update_engagement("Media_view", postdata.postId);
             }}
           >
-            {postdata.trimmedimages.map((e: any, index: any) => {
+            {/* {postdata.trimmedimages.map((e: any, index: any) => {
               const isVideoLink = videoExtensions.some((ext) =>
                 e.link.includes(`.${ext}`),
               );
 
-              if (isVideoLink) {
-                return (
-                  <div
-                    key={index}
-                    className="w-[28vw]  sm:w-[44.5vw] sm:h-[36vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
-                    style={{
-                      backgroundImage: `url(/subscription/video_loader.webp)`,
-                    }}
-                    onClick={() => {
-                      setvideo(true);
-                      setimg_display_arr(postdata.images);
-                      setimg_display(e.link);
-                      setimg_display_show(true);
-                    }}
-                  >
-                    <video
-                      src={e.link}
-                      muted
-                      playsInline
-                      loop={true}
-                      autoPlay
-                      className="aspect-[1/0.9] scale-y-[1.8] scale-x-[1.4] w-full"
-                    ></video>
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    key={index}
-                    className="w-[28vw] sm:w-[44.5vw] sm:h-[36vw] avater_bg  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
-                    style={{ backgroundImage: "url(/cover.webp)" }}
-                    onClick={() => {
-                      setvideo(false);
-                      setimg_display_arr(postdata.images);
-                      setimg_display(e.link);
-                      setimg_display_show(true);
-                    }}
-                  >
-                    {" "}
-                    <img
-                      src={e.link}
-                      alt={index + "bg images"}
-                      className="h-full w-full scale-[2]"
-                    />
-                  </div>
-                );
-              }
-            })}
-            {postdata.images.length > 4 && (
+              // if (isVideoLink) {
+              //   return (
+              //     <div
+              //       key={index}
+              //       className="w-[28vw]  sm:w-[44.5vw] sm:h-[36vw]  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+              //       style={{
+              //         backgroundImage: `url(/subscription/video_loader.webp)`,
+              //       }}
+              //       onClick={() => {
+              //         setvideo(true);
+              //         setimg_display_arr(postdata.images);
+              //         setimg_display(e.link);
+              //         setimg_display_show(true);
+              //       }}
+              //     >
+              //       <video
+              //         src={e.link}
+              //         muted
+              //         playsInline
+              //         loop={true}
+              //         autoPlay
+              //         className="aspect-[1/0.9] scale-y-[1.8] scale-x-[1.4] w-full"
+              //       ></video>
+              //     </div>
+              //   );
+              // } else {
+              //   return (
+              //     <div
+              //       key={index}
+              //       className="w-[28vw] sm:w-[44.5vw] sm:h-[36vw] avater_bg  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+              //       style={{ backgroundImage: "url(/cover.webp)" }}
+              //       onClick={() => {
+              //         setvideo(false);
+              //         setimg_display_arr(postdata.images);
+              //         setimg_display(e.link);
+              //         setimg_display_show(true);
+              //       }}
+              //     >
+              //       {" "}
+              //       <img
+              //         src={e.link}
+              //         alt={index + "bg images"}
+              //         className="h-full w-full scale-[2]"
+              //       />
+              //     </div>
+              //   );
+              // }
+
+              return (
+                //   <div
+                //     key={index}
+                //     className="w-[28vw] border2 sm:w-[44.5vw] sm:h-[36vw] avater_bg  relative h-[24vw] cursor-pointer hover:scale-[1.01] transition duration-[0.6s] avater_bg rounded-[1.5vw] overflow-hidden "
+                //     style={{ backgroundImage: "url(/cover.webp)" }}
+                //     onClick={() => {
+                //       setvideo(false);
+                //       setimg_display_arr(postdata.images);
+                //       setimg_display(e.link);
+                //       setimg_display_show(true);
+                //     }}
+                //   >
+                //     {" "}
+                // <img
+                //   src={e.link}
+                //   alt={index + "bg images"}
+                //   className="h-full w-full scale-[2]"
+                // />
+                //   </div>
+                // <div className="w-full flex flex-col md:gap-[1rem]">
+                //   <img
+                //     src={e.link}
+                //     alt={index + "bg images"}
+                //     className="h-full w-full scale-[2]"
+                //   />
+                // </div>
+              );
+            })} */}
+            <Image
+              src={main_img}
+              className="md:w-[55%] shadow-md drop-shadow-2xl md:rounded-[2rem] mx-auto h-fit"
+              alt="main image"
+              unoptimized
+              width="0"
+              height="0"
+            />
+            <div className="w-full overflow-hidden">
+              <div
+                className=" flex h-full w-auto  items-center gap-[2vw] px-[2vw] sm:gap-[3.5vw] border2  "
+                style={{
+                  // transform: `translateX(${translateX}%)`,
+                  transition: "0.7s ease",
+                }}
+              >
+                {postdata.images.map((e: any, index: any) => {
+                  return (
+                    <>
+                      <div
+                        className={`w-[10vw] md:rounded-[2rem] flex-shrink-0 cursor-pointer sm:w-[20vw]  avater_bg sm:h-[20vw] h-[10vw]`}
+                        key={index}
+                        style={{ backgroundImage: "url(/cover.webp)" }}
+                        // onClick={() => {
+                        //   setcover_img_link(e.link);
+                        // }}
+                      >
+                        {" "}
+                        <Image
+                          src={e.link}
+                          unoptimized
+                          width="0"
+                          height="0"
+                          alt="product cover images"
+                          className={`${
+                            e.link == main_img
+                              ? "border-[0.5vw] shadow-md drop-shadow-2xl sm:border-[1vw] border-[#CCFF00]"
+                              : ""
+                          } w-full h-full`}
+                        />
+                      </div>
+
+                      <div className="h-full w-[0.15vw] sm:w-[0.5vw] bg-[white] bg-opacity-[31%]"></div>
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* {postdata.images.length > 4 && (
               <div
                 className="absolute sm:w-[44.7vw] sm:h-[36.1vw] sm:right-[0.67vw] right-[0.45vw] bottom-0 h-[24vw] bg-[#000000] cursor-pointer  transition duration-[0.6s] bg-opacity-[78%] rounded-[1.5vw] flex justify-center items-center w-[28.1vw] "
                 onClick={() => {
@@ -497,9 +584,20 @@ const Post = (props: any) => {
                   +{postdata.images.length - 4}
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         )}
+
+        <div className="w-full px-[4vw] border2 flex flex-col gap-[0.7vw]  items-start">
+          <div className="w-full flex items-center text-[1vw] gap-[0.5vw] sm:gap-[1vw] sm:text-[2.6vw] text-opacity-[70%]  text-white neuer">
+            <p className="">{postdata.timeAgo}</p>
+            <div className="rounded-[100%] bg-white bg-opacity-[30%] h-[0.3vw] w-[0.3vw] sm:h-[0.9vw] sm:w-[0.9vw]"></div>{" "}
+            <p>{postdata.exactTime}</p>
+          </div>
+          <h2 className="text-white capitalize text-[2.2vw] sm:text-[5vw] neuem">
+            {postdata.postData.title}
+          </h2>
+        </div>
 
         <div className="w-full px-[4vw] text-white sm:gap-[3vw] text-opacity-[50%] sm:text-[3.5vw] text-[1.2vw] flex flex-col gap-[0.7vw] items-start ">
           {showmore ? (
