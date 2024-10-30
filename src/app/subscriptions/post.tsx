@@ -567,7 +567,7 @@ const Post = (props: any) => {
                   return (
                     <>
                       <div
-                        className={`md:w-[10rem] rounded-[1rem] flex-shrink-0 cursor-pointer sm:w-[7rem] shadow-md drop-shadow-2xl overflow-hidden avater_bg sm:h-[7.5rem] md:h-[11rem]`}
+                        className={`md:w-[10rem] rounded-[1rem] sm:rounded-[0.5rem] flex-shrink-0 cursor-pointer sm:w-[5rem] shadow-md drop-shadow-2xl overflow-hidden avater_bg sm:h-[5.5rem] md:h-[11rem]`}
                         key={index}
                         style={{ backgroundImage: "url(/cover.webp)" }}
                         onClick={() => {
@@ -583,7 +583,7 @@ const Post = (props: any) => {
                           alt="product cover images"
                           className={`${
                             e.link == main_img
-                              ? "border-[0.15rem] rounded-[1rem]  border-[white]"
+                              ? "border-[0.15rem] sm:rounded-[0.5rem] rounded-[1rem]  border-[white]"
                               : ""
                           } w-full h-full object-cover`}
                         />
