@@ -557,7 +557,7 @@ const Post = (props: any) => {
                 </button>
               )}
               <div
-                className=" flex  w-auto md:px-[2rem] sm:px-[3%] items-center md:gap-[1.3rem]  sm:gap-[3.5vw]   "
+                className=" flex sm:pb-[1rem]  w-auto md:px-[2rem] sm:px-[3%] items-center md:gap-[1.3rem]  sm:gap-[3.5vw]   "
                 style={{
                   transform: `translateX(${translateX}%)`,
                   transition: "0.7s ease",
