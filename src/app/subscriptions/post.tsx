@@ -557,7 +557,7 @@ const Post = (props: any) => {
                 </button>
               )}
               <div
-                className=" flex  w-auto md:px-[2rem] sm:px-[3%] items-center md:gap-[1rem]  sm:gap-[3.5vw]   "
+                className=" flex  w-auto md:px-[2rem] sm:px-[3%] items-center md:gap-[1.3rem]  sm:gap-[3.5vw]   "
                 style={{
                   transform: `translateX(${translateX}%)`,
                   transition: "0.7s ease",
@@ -567,7 +567,7 @@ const Post = (props: any) => {
                   return (
                     <>
                       <div
-                        className={`md:w-[10rem] rounded-[1rem] flex-shrink-0 cursor-pointer sm:w-[20vw] shadow-md drop-shadow-2xl overflow-hidden avater_bg sm:h-[20vw]md:h-[16rem]`}
+                        className={`md:w-[10rem] rounded-[1rem] flex-shrink-0 cursor-pointer sm:w-[7rem] shadow-md drop-shadow-2xl overflow-hidden avater_bg sm:h-[7.5rem] md:h-[11rem]`}
                         key={index}
                         style={{ backgroundImage: "url(/cover.webp)" }}
                         onClick={() => {
