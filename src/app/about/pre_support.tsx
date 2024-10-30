@@ -62,7 +62,7 @@ const Pre_support = () => {
           <Image
             src={main}
             alt="preload support main display image"
-            className="w-full sm:hidden h-fit"
+            className="w-[100rem] max-w-full mx-auto sm:hidden h-fit"
           />
           <Image
             src={mob_main}

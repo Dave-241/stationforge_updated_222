@@ -1,13 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import img1 from "../../../public/about/wlecome_pack.webp";
+import img1 from "../../../public/about/wlecome_pack_1.webp";
+import img2 from "../../../public/about/wlecome_pack_2.webp";
+import img3 from "../../../public/about/wlecome_pack_3.webp";
 import Image from "next/image";
 
 const Welcome_pack = () => {
   const [welcome_items, setwelcome_items] = useState([
-    { img: img1, txt: "10 Orkaz Plague ", t2: "preader" },
+    { img: img3, txt: "10 Orkaz Plague ", t2: "preader" },
     { img: img1, txt: "10 Scavenger ", t2: "Junkyards", middle: "true" },
-    { img: img1, txt: "10 Grimguard ", t2: "Marksman" },
+    { img: img2, txt: "10 Grimguard ", t2: "Marksman" },
   ]);
   return (
     <>

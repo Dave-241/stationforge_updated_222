@@ -30,11 +30,11 @@ const Model_delivery = () => {
   ]);
   return (
     <>
-      <div className="w-full flex justify-center items-center gap-[3vw] sm:gap-[7vw] flex-col pt-[4vw] sm:pt-[10vw]">
-        <h2 className="text-center text-[3.2vw] text-[#CCFF00] neuem leading-[3.3vw] sm:text-[7vw] sm:leading-[6vw]">
+      <div className="w-full flex  justify-center items-center gap-[3rem] sm:gap-[7vw] flex-col pt-[4rem] sm:pt-[10vw]">
+        <h2 className="text-center md:text-5xl text-[#CCFF00] neuem sm:text-[7vw] sm:leading-[6vw]">
           Model Delivery
         </h2>
-        <p className="text-white sm:text-[3.5vw] sm:w-[90%] font-[400]  text-opacity-[30%] text-[1.2vw] neuer text-center capitalize">
+        <p className="text-white sm:text-[3.5vw] sm:w-[90%] font-[400]  text-opacity-[30%] md:text-xl neuer text-center w-[50rem] md:max-w-[90%] capitalize">
           All of our models are delivered via{" "}
           <Link
             href={"https://printedwargames.com/partner/stationforge/"}
@@ -43,23 +43,21 @@ const Model_delivery = () => {
           >
             PWG
           </Link>
-          , where they will be saved in your library{" "}
-          <br className="sm:hidden " /> forever, even if you unsubscribe. Simply
-          create an account on PWG with the same e-{" "}
-          <br className="sm:hidden " />
-          mail you signed up with on Patreon to get your minis.
+          , where they will be saved in your library forever, even if you
+          unsubscribe. Simply create an account on PWG with the same e- mail you
+          signed up with on Patreon to get your minis.
         </p>
         {/* display the items */}
-        <div className="w-full sm:h-[45vw]  flex justify-center overflow-x-scroll h-auto pb-[4vw] cover_scrollbar sm:relative ">
-          <div className="w-[85vw] sm:absolute sm:flex-wrap sm:w-[255vw]  sm:h-auto sm:top-0 sm:left-0 h-auto flex gap-[2.7vw] justify-center sm:justify-start sm:px-[3vw] sm:gap-[3.5vw]">
+        <div className="w-full sm:h-[45vw]  flex justify-center overflow-x-scroll h-auto pb-[4rem] cover_scrollbar sm:relative ">
+          <div className="w-[100rem] md:max-w-[85%] sm:absolute sm:flex-wrap sm:w-[255vw]  sm:h-auto sm:top-0 sm:left-0 h-auto flex gap-[2.7rem] justify-center sm:justify-start sm:px-[3vw] sm:gap-[3.5vw]">
             {welcome_items.map((e: any, index: any) => {
               return (
                 <div
                   key={index}
-                  className=" w-full sm:w-[80vw] sm:py-[6vw]   h-auto py-[1.5vw] px-[2vw] flex flex-col bg-[#111111] rounded-[2vw] gap-[2vw] items-start justify-center sm:gap-[10vw] sm:px-[5vw] sm:rounded-[3vw] "
+                  className=" w-full sm:w-[80vw] sm:py-[6vw]   h-auto py-[1.5rem] px-[2rem] flex flex-col bg-[#111111] rounded-[2rem] gap-[2rem] items-start justify-center sm:gap-[10vw] sm:px-[5vw] sm:rounded-[3vw] "
                 >
                   <div className="w-full h-auto   overflow-hidden rounded-[3vw]">
-                    <p className="neuem text-[1.4vw] sm:text-[4vw] text-white capitalize ">
+                    <p className="neuem md:text-2xl sm:text-[4vw] text-white capitalize ">
                       {e.head}
                     </p>
                   </div>
@@ -67,9 +65,9 @@ const Model_delivery = () => {
                     <Image
                       src={e.img}
                       alt={e.txt}
-                      className="w-[2.5vw] sm:w-[10vw] h-fit"
+                      className="w-[2.5rem] sm:w-[10vw] h-fit"
                     />
-                    <p className="text-[1.1vw]  text-opacity-[80%] text-white neuer sm:leading-[5vw] font-[300] sm:text-[3.1vw]  leading-[2vw]">
+                    <p className="md:text-base text-opacity-[80%] text-white neuer sm:leading-[5vw] font-[300] sm:text-[3.1vw]  leading-[2vw]">
                       {e.txt} <br /> {e.t2}
                     </p>
                   </div>
@@ -79,8 +77,8 @@ const Model_delivery = () => {
           </div>
         </div>
 
-        <div className="w-full pb-[4vw] sm:px-[3vw]">
-          <p className="text-white text-center capitalize sm:leading-[5vw] sm:text-start sm:text-[3.5vw] text-[1vw]">
+        <div className="w-full pb-[4rem] sm:px-[3vw]">
+          <p className="text-white text-center capitalize sm:leading-[5vw] sm:text-start sm:text-[3.5vw] md:text-sm">
             <span className="text-[#CCFF00] ">
               Note <span className="sm:hidden ">.</span>{" "}
               <div className="w-full hidden sm:block h-[2vw]"></div>
