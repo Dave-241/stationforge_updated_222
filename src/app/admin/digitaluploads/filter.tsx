@@ -48,16 +48,18 @@ const Filters = ({
 
   return (
     <>
-      <div className="w-full  h-auto  flex flex-col gap-[2vw] ">
-        <h1 className="neuem text-center  text-[2.67vw]">Digital Uploads</h1>
+      <div className="w-full  h-auto  flex flex-col gap-[2rem] ">
+        <h1 className="neuem text-center pb-[0.67rem] lg:text-4xl">
+          Digital Uploads
+        </h1>
 
-        <div className="w-full h-[0.1vw] bg-black bg-opacity-[40%]"></div>
+        <div className="w-full h-[0.1rem] lg:block hidden bg-black bg-opacity-[40%]"></div>
 
-        <div className="w-full  px-[3vw] flex flex-col mb-[2vw] gap-[1vw]">
-          <h1 className="neuer text-[1.2vw] px-[1vw] ">Select year</h1>
+        <div className="w-full  lg:px-[3rem] px-[3%] flex flex-col  gap-[1rem]">
+          <h1 className="neuer text-[1.2rem] px-[1rem] ">Select year</h1>
 
           <select
-            className="w-full cursor-pointer h-[3.5vw] outline-none  text-[1.3vw] neuer px-[1vw] rounded-[1vw]"
+            className="w-full cursor-pointer h-[3.5rem] outline-none  text-sm neuer px-[1rem] rounded-[1rem]"
             //   value={selectedYear}
             onChange={(e) => {
               setselected_year(parseInt(e.target.value));
@@ -73,12 +75,12 @@ const Filters = ({
           </select>
         </div>
         {/* select month */}
-        <div className="w-full flex flex-col px-[3vw]  gap-[1vw]">
+        <div className="w-full flex flex-col  lg:px-[3rem] px-[3%]  gap-[1rem]">
           <div className="w-full flex justify-between items-center ">
-            <h1 className="neuer text-[1.2vw] px-[1vw] ">Select month</h1>
+            <h1 className="neuer text-xl px-[1rem] ">Select month</h1>
 
             <button
-              className="w-[6vw] h-[3vw] hover:bg-opacity-[40%] bg-[#CCFF00] rounded-[1vw] text-[0.9vw] neuer"
+              className="px-[1rem] py-[0.6rem] hover:bg-opacity-[40%] bg-[#CCFF00] rounded-[1rem] text-sm neuer"
               onClick={() => {
                 setselected_month("");
               }}
@@ -87,12 +89,12 @@ const Filters = ({
             </button>
           </div>
 
-          <div className="w-full h-auto bg-white justify-center rounded-[2.5vw] pt-[3vw] pb-[2vw] px-[2vw] flex flex-wrap gap-[1vw] ">
+          <div className="w-full h-auto bg-white justify-center lg:rounded-[2.5rem] md:rounded-[1rem] py-[1.2rem] px-[1%] flex flex-wrap gap-[2%] ">
             {monthNames.map((e: any, index: any) => {
               return (
                 <div
                   key={index}
-                  className="flex justify-center h-[3vw] rounded-[0.7vw] mb-[1vw] bg-[#EEEEEE] w-[29%] text-[0.85vw] cursor-pointer hover:bg-opacity-[40%] items-center neuer text-black"
+                  className="flex justify-center h-[3rem] rounded-[0.7rem] mb-[1rem] bg-[#EEEEEE] w-[28%] md:text-[1vw] lg:text-xs cursor-pointer hover:bg-opacity-[40%] items-center neuer text-black"
                   style={{
                     backgroundColor: selected_month == e ? "#CCFF00" : "",
                   }}

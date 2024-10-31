@@ -185,10 +185,10 @@ export default function Home() {
           {notification && <Notification_modal />}
           <div className="w-full h-[10rem] sm:h-[27vw]"></div>
           {/* this is for the digital sales record  */}
-          <div className="w-full  md:w-[100rem] md:max-w-full mx-auto flex justify-center  px-[2rem] py-[2rem]   h-auto">
+          <div className="w-full  md:w-[100rem] md:max-w-full mx-auto flex justify-center  lg:px-[2rem] py-[2rem]   h-auto">
             {/* this is for the factions */}
             {/* this filter is hidden for mobile screesn */}
-            <div className="w-[30%] sm:hidden sticky top-0 left-0 h-[10rem] ">
+            <div className="w-[30%] sm:hidden sticky top-[2rem]  left-0 h-[100vh] ">
               <Filters
                 setselected_month={setselected_month}
                 selected_month={selected_month}

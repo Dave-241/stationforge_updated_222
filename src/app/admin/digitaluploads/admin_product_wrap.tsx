@@ -119,15 +119,15 @@ const Admin_Product_wrap = ({
       {!product_is_loading ? (
         <>
           {/* the actual ui */}
-          <div className="w-full border2 sm:border-none  h-auto border-l-[0.1vw]   border-black border-opacity-[40%]  sm:gap-[5vw] flex flex-col gap-[2rem] ">
+          <div className="w-full  sm:border-none  h-auto border-l-[0.1rem]   border-black border-opacity-[40%]  sm:gap-[5vw] flex flex-col gap-[2rem] ">
             {/* this design for desktop */}
-            <div className="w-full  h-auto flex sm:hidden items-center pl-[3rem]  sm:pl-[0vw]  justify-between gap-[1.2rem">
+            <div className="w-full  h-auto flex sm:hidden items-center  pl-[1rem]  sm:pl-[0vw]  justify-between gap-[1rem]">
               {/* the heading */}
-              <h1 className="neuem text-xl">
+              <h1 className="neuem lg:text-xl md:text-base">
                 All Models Added in {selected_month} {selected_year}
               </h1>
 
-              <div className="w-auto border2 items-center  flex justify-center   relative ">
+              <div className="w-auto  items-center  flex justify-center   relative ">
                 <div className="absolute h-full  w-[3.2rem] pr-[0.3rem] flex justify-end items-center top-0 left-0 z-[13]">
                   <Image
                     src={searchimg}
@@ -144,19 +144,32 @@ const Admin_Product_wrap = ({
                   }}
                 />
               </div>
+              <div className=" md:flex-col lg:flex-row flex gap-[0.5rem]">
+                <Link
+                  href={"/admin/forge-upload"}
+                  onClick={() => {
+                    setpage_loader(true);
+                  }}
+                  style={{ whiteSpace: "nowrap" }}
+                  className="bg-[#F5F5F5] hover:bg-white hover:text-black cursor-pointer py-[1rem]  hover:bg-opacity-[40%] neuer flex justify-center text-[#95B611] items-center text-xs rounded-[1rem] px-[1rem]"
+                >
+                  Manage subscription
+                </Link>
 
-              <Link
-                href={"/admin/forge-upload"}
-                onClick={() => {
-                  setpage_loader(true);
-                }}
-                className="bg-[#CCFF00] cursor-pointer hover:bg-opacity-[40%] neuer flex justify-center items-center text-[0.9vw] rounded-[1vw] h-[4vw] w-[15vw]"
-              >
-                Add Monthly Allocations
-              </Link>
+                <Link
+                  href={"/admin/forge-upload"}
+                  onClick={() => {
+                    setpage_loader(true);
+                  }}
+                  style={{ whiteSpace: "nowrap" }}
+                  className="bg-[#CCFF00] cursor-pointer py-[1rem]  hover:bg-opacity-[40%] neuer flex justify-center items-center text-xs rounded-[1rem] px-[1rem]"
+                >
+                  Add Monthly Allocations
+                </Link>
+              </div>
             </div>
 
-            <div className="w-full h-[0.1vw] bg-black bg-opacity-[40%] sm:hidden"></div>
+            <div className="w-full h-[0.1rem] bg-black bg-opacity-[40%] sm:hidden"></div>
 
             {/* design for mobile */}
             <div className="w-full hidden sm:flex  flex-col gap-[5vw]">
@@ -164,15 +177,27 @@ const Admin_Product_wrap = ({
               <div className="w-full h-auto  flex justify-between items-center">
                 <h1 className="neuem text-[5vw] ">Digital Uploads</h1>
 
-                <Link
-                  href={"/admin/forge-upload"}
-                  onClick={() => {
-                    setpage_loader(true);
-                  }}
-                  className="bg-[#CCFF00] flex justify-center items-center w-[40vw] text-[3vw] rounded-[2vw] h-[10vw]"
-                >
-                  Add Monthly Allocations
-                </Link>
+                <div className="flex gap-[0.5rem] flex-col">
+                  <Link
+                    href={"/admin/forge-upload"}
+                    onClick={() => {
+                      setpage_loader(true);
+                    }}
+                    className="bg-[#CCFF00] hover:bg-opacity-[50%] flex justify-center items-center w-[40vw] text-sm rounded-[2vw] h-[10vw]"
+                  >
+                    Add Monthly Allocations
+                  </Link>
+
+                  <Link
+                    href={"/admin/forge-upload"}
+                    onClick={() => {
+                      setpage_loader(true);
+                    }}
+                    className="bg-[#F5F5F5] flex text-[#95B611] hover:bg-white hover:text-black  justify-center items-center w-[40vw] text-sm rounded-[2vw] h-[10vw]"
+                  >
+                    Manage subscription
+                  </Link>
+                </div>
               </div>
 
               <div className="w-full bg-black bg-opacity-[30%] h-[0.5vw]"></div>
@@ -210,7 +235,7 @@ const Admin_Product_wrap = ({
                 <input
                   type="text"
                   placeholder="Search model"
-                  className="h-[12vw] w-full  text-black neuer text-[4vw] outline-none focus:border transition duration-[0.8s] pl-[12vw] pr-[1vw]  rounded-[6vw] placeholder:text-black neuer bg-[#000000] bg-opacity-[10%]  border-white border-opacity-[30%] border-[0.1vw]"
+                  className="h-[12vw] w-full  text-black neuer text-[4vw] outline-none focus:border transition duration-[0.8s] pl-[12rem] pr-[1vw]  rounded-[6vw] placeholder:text-black neuer bg-[#000000] bg-opacity-[10%]  border-white border-opacity-[30%] border-[0.1vw]"
                   onChange={(e) => {
                     // setsearch_value(e.target.value);
                   }}
@@ -218,7 +243,7 @@ const Admin_Product_wrap = ({
               </div>
             </div>
 
-            <div className="w-full  flex  flex-wrap sm:pl-[0vw] pl-[3vw]  justify-start gap-[2.2%] sm:gap-[4%]">
+            <div className="w-full   flex  flex-wrap sm:pl-[0vw] lg:pl-[2rem] md:pl-[3%] justify-start gap-[2.2%] sm:gap-[4%]">
               {productStats_copy_filter.map((e: any, index: any) => {
                 return (
                   <Product
