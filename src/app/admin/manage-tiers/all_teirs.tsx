@@ -64,7 +64,7 @@ const All_tiers = () => {
           })}
 
           <Link
-            href={"/admin/forge-upload"}
+            href={"/admin/add-tiers"}
             onClick={() => {
               setpage_loader(true);
             }}
