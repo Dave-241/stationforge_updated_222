@@ -146,7 +146,7 @@ const Admin_Product_wrap = ({
               </div>
               <div className=" md:flex-col lg:flex-row flex gap-[0.5rem]">
                 <Link
-                  href={"/admin/forge-upload"}
+                  href={"/admin/manage-tiers"}
                   onClick={() => {
                     setpage_loader(true);
                   }}
@@ -157,7 +157,7 @@ const Admin_Product_wrap = ({
                 </Link>
 
                 <Link
-                  href={"/admin/manage-tiers"}
+                  href={"/admin/forge-upload"}
                   onClick={() => {
                     setpage_loader(true);
                   }}
@@ -189,7 +189,7 @@ const Admin_Product_wrap = ({
                   </Link>
 
                   <Link
-                    href={"/admin/forge-upload"}
+                    href={"/admin/manage-tiers"}
                     onClick={() => {
                       setpage_loader(true);
                     }}

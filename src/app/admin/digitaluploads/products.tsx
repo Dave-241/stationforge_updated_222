@@ -21,14 +21,14 @@ const Product = ({
             className="w-full h-full object-cover "
           />
         </div>
-        <p className="text-sm neuem capitalize lg:px-[1rem] md:px-[3%] sm:text-[3vw]">
+        <p className="text-sm neuem capitalize lg:px-[1rem] px-[3%] sm:text-[3vw]">
           {" "}
           {data.title}
         </p>{" "}
-        <div className="w-full mb-[1.2rem] sm:mb-[3vw] flex justify-between items-center lg:px-[1rem] md:px-[3%] ">
+        <div className="w-full mb-[1.2rem] sm:mb-[3vw] flex justify-between items-center lg:px-[1rem] px-[3%] ">
           <button
             style={{ whiteSpace: "nowrap" }}
-            className="bg-[#CCFF00] sm:text-[2.7vw] sm:h-[7vw] sm:w-[28vw] sm:rounded-[1.6vw] hover:bg-opacity-[40%] px-[1.2rem] py-[0.6rem]  md:text-xs rounded-[1rem]"
+            className="bg-[#CCFF00] sm:text-[2.7vw] sm:h-[6vw] sm:w-[25vw] sm:rounded-[1.6vw] sm:py-0 hover:bg-opacity-[40%] px-[1.2rem] py-[0.6rem]  md:text-xs rounded-[1rem]"
             onClick={() => {
               setproduct_id(data.productId);
               setinfo_download(data.downloadedItemCount);

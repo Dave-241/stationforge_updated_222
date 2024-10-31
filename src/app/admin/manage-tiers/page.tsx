@@ -20,6 +20,7 @@ import {
 import { useAdmin_context } from "@/app/utils/admin_context";
 import Admin_Settings_modal from "@/app/admin_general_component/admin_settings";
 import Notification_modal from "@/app/admin_general_component/notifications";
+import All_tiers from "./all_teirs";
 
 export default function Home() {
   const { page_loader, setpage_loader, setfrom }: any = useProfile_Context();
@@ -92,6 +93,9 @@ export default function Home() {
           {show_setting && <Admin_Settings_modal />}
           {notification && <Notification_modal />}
           <div className="w-full h-[10rem] sm:h-[27vw]"></div>
+          <div className="w-[100rem] md:max-w-[95%] mx-auto mb-[4rem]  sm:w-[95%]">
+            <All_tiers />
+          </div>
         </>
       ) : null}
     </>
