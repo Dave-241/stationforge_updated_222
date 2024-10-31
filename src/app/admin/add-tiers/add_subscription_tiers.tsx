@@ -4,6 +4,7 @@ import { useProfile_Context } from "@/app/utils/profile_context";
 import { useRouter } from "next/navigation";
 import { Editor } from "@tinymce/tinymce-react";
 import { useState } from "react";
+import Link from "next/link";
 
 const Add_subscription_tiers = () => {
   const router = useRouter();
@@ -126,6 +127,14 @@ const Add_subscription_tiers = () => {
               initialValue={"Enter description *"}
             />{" "}
           </div>
+
+          <button
+            onClick={() => {}}
+            style={{ whiteSpace: "nowrap" }}
+            className="bg-[#CCFF00] cursor-pointer py-[1rem] sm:w-full sm:rounded-[0.5rem] hover:bg-opacity-[40%] neuer capitalize flex justify-center items-center text-sm rounded-[1rem] px-[5rem]"
+          >
+            Publish{" "}
+          </button>
         </div>
       </div>
     </>
