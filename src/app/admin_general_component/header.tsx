@@ -95,9 +95,9 @@ const Header = ({ position, padding, top, blur }: any) => {
   return (
     <>
       <div
-        className={`w-full fixed top-[1vw] ${
+        className={`w-full  md:w-[100rem] max-w-full fixed top-[1vw] ${
           blur ? "sm:backdrop-blur-[5px] " : ""
-        }  sm:top-0 sm:py-[2.5vw]  right-0 h-auto px-[2vw] z-[999]`}
+        }  sm:top-0 sm:py-[2.5vw]  left-[50%] translate-x-[-50%] h-auto lg:px-[2rem] px-[1%] z-[999]`}
         style={{ position: position, padding: padding, top: top }}
       >
         {mobile_bg_changer && (
@@ -110,7 +110,7 @@ const Header = ({ position, padding, top, blur }: any) => {
           />
         )}
         <nav
-          className="w-full  sm:bg-opacity-[90%] drop-shadow-2xl rounded-[2vw] flex items-center justify-between sm:px-[3vw] h-[6vw] sm:h-[20vw] sm:rounded-[5vw] px-[2vw]"
+          className="w-full  sm:bg-opacity-[90%] drop-shadow-2xl rounded-[2rem] flex items-center justify-between sm:px-[3vw] h-[6rem] sm:h-[20vw] sm:rounded-[5vw] px-[2rem]"
           style={{
             backgroundColor: mobile_bg_changer ? "#181818" : "#000002",
             transition: "0.6s ease",
@@ -192,6 +192,7 @@ const Header = ({ position, padding, top, blur }: any) => {
             {/* logo */}
             <Link
               href={"/"}
+              className="lg:w-[10rem] md:w-[5rem]"
               onClick={() => {
                 if (pathname == "/") {
                   setpage_loader(false);
@@ -203,16 +204,17 @@ const Header = ({ position, padding, top, blur }: any) => {
               <Image
                 src={logo}
                 alt="Stationforge logo"
-                className="w-[10vw] h-fit"
+                className="w-full h-fit"
               />
             </Link>
 
             {/* the linking options */}
-            <div className="w-auto flex justify-center  items-center gap-[2vw] ">
+            <div className="w-auto flex justify-center  items-center lg:gap-[2rem] gap-[0.4rem] ">
               {nav_array.map((e: any, index: any) => {
                 return (
                   <Link
                     key={index}
+                    style={{ whiteSpace: "nowrap" }}
                     onClick={() => {
                       if (pathname == "/admin/postinsight") {
                         setpage_loader(false);
@@ -221,9 +223,9 @@ const Header = ({ position, padding, top, blur }: any) => {
                       }
                     }}
                     href={e.link}
-                    className={`text-[0.9vw]   transition duration-[0.3s] hover:text-opacity-[100%] h-full ${
+                    className={`text-xs  transition duration-[0.3s] hover:text-opacity-[100%] h-full ${
                       pathname == e.link
-                        ? "text-white text-opacity-[100%]  bg-[#161515] py-[0.5vw] px-[1vw] rounded-[1.2vw] "
+                        ? "text-white text-opacity-[100%]  bg-[#161515] py-[0.5rem] px-[1rem] rounded-[1.2rem] "
                         : "text-white text-opacity-[40%]"
                     } `}
                   >
@@ -234,20 +236,20 @@ const Header = ({ position, padding, top, blur }: any) => {
             </div>
 
             {/* the search , moderator and other actions */}
-            <div className="w-auto flex items-center justify-center  gap-[1vw] ">
+            <div className="w-auto flex  items-center justify-center  gap-[1rem] ">
               {/* this is the input field  */}
-              <div className="w-auto  relative items-center  flex justify-center   ">
-                <div className="absolute  h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
+              <div className="w-auto md:hidden relative items-center  lg:flex justify-center   ">
+                <div className="absolute  h-full  w-[3.2rem] pr-[0.3rem] flex justify-end items-center top-0 left-0 z-[13]">
                   <Image
                     src={searchimg}
                     alt="Search icon image"
-                    className="w-[1.3vw]  h-fit"
+                    className="w-[1.3rem]  h-fit"
                   />
                 </div>
                 <input
                   type="text"
                   placeholder="Search pages"
-                  className="h-[3vw] w-[23vw] search  text-white neuer text-[0.9vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] backdrop-blur-[15px] bg-transparent  border-white border-opacity-[30%] border-[0.1vw]"
+                  className="h-[3rem] search  text-white neuer text-sm outline-none focus:border transition duration-[0.8s] pl-[3.5rem] pr-[1rem]  rounded-[3vw] backdrop-blur-[15px] bg-transparent  border-white border-opacity-[30%] border-[0.1rem]"
                   onFocus={() => {
                     setshow_search_items(true);
                   }}
@@ -267,10 +269,11 @@ const Header = ({ position, padding, top, blur }: any) => {
 
               <Link
                 href={"/admin/add-moderator"}
+                style={{ whiteSpace: "nowrap" }}
                 onClick={() => {
                   setpage_loader(true);
                 }}
-                className="text-white border-[0.1vw] border-white border-opacity-[30%] rounded-[1.6vw] py-[0.8vw] px-[1.6vw] hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black  text-[0.8vw]"
+                className="text-white border-[0.1rem] border-white border-opacity-[30%] rounded-[1.6rem] py-[0.8rem] px-[1.6rem] hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black  text-xs"
               >
                 Add a moderator
               </Link>
@@ -279,7 +282,7 @@ const Header = ({ position, padding, top, blur }: any) => {
                 onClick={() => {
                   setnotification(true);
                 }}
-                className="w-[2.5vw]  cursor-pointer   h-[2.5vw] border-[0.1vw] border-white border-opacity-[30%] flex justify-center items-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    text-white text-[1.2vw] rounded-[100%]"
+                className="w-[2.5rem]  cursor-pointer   h-[2.5rem] border-[0.1rem] border-white border-opacity-[30%] flex justify-center items-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    text-white text-base rounded-[100%]"
                 // onClick={handlecustomclaim}
               >
                 {" "}
@@ -290,7 +293,7 @@ const Header = ({ position, padding, top, blur }: any) => {
                 onClick={() => {
                   setpage_loader(true);
                 }}
-                className="w-[2.5vw] h-[2.5vw] border-[0.1vw] border-white border-opacity-[30%] flex justify-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    items-center  text-white text-[1.2vw] rounded-[100%]"
+                className="w-[2.5rem] h-[2.5rem] border-[0.1rem] border-white border-opacity-[30%] flex justify-center hover:bg-[#CCFF00] duration-[0.6s] transition hover:text-black    items-center  text-white text-base rounded-[100%]"
               >
                 <i className="bi bi-chat-dots"></i>
               </Link>
@@ -298,11 +301,7 @@ const Header = ({ position, padding, top, blur }: any) => {
                 onClick={() => {
                   setshow_setting(true);
                 }}
-                className="w-[3vw] h-[3vw] overflow-hidden cursor-pointer  rounded-[100%] avater_bg "
-                style={{
-                  backgroundImage:
-                    "url(https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w)",
-                }}
+                className="w-[3rem] h-[3rem] overflow-hidden cursor-pointer  rounded-[100%] avater_bg "
               >
                 <Image
                   unoptimized
@@ -314,7 +313,7 @@ const Header = ({ position, padding, top, blur }: any) => {
                       : "url(https://firebasestorage.googleapis.com/v0/b/fir-9-dojo-24129.appspot.com/o/avatar.jpg?alt=media&token=eb3bea40-608e-46c7-a13e-17f13946f193&_gl=1*18pfgon*_ga*MTg2NzQwODY0MS4xNjk0ODM5ODQ1*_ga_CW55HF8NVT*MTY5ODU4MTA5Ny40OC4xLjE2OTg1ODExNDEuMTYuMC4w)"
                   }
                   alt="bg"
-                  className="w-full h-full"
+                  className="w-full object-cover h-full"
                 />
               </div>
             </div>

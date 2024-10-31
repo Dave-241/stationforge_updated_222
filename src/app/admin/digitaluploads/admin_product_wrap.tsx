@@ -119,26 +119,26 @@ const Admin_Product_wrap = ({
       {!product_is_loading ? (
         <>
           {/* the actual ui */}
-          <div className="w-full sm:border-none  h-auto border-l-[0.1vw]   border-black border-opacity-[40%]  sm:gap-[5vw] flex flex-col gap-[2vw] ">
+          <div className="w-full border2 sm:border-none  h-auto border-l-[0.1vw]   border-black border-opacity-[40%]  sm:gap-[5vw] flex flex-col gap-[2rem] ">
             {/* this design for desktop */}
-            <div className="w-full  h-auto flex sm:hidden items-center pl-[3vw]  sm:pl-[0vw]  justify-between gap-[1.2vw]">
+            <div className="w-full  h-auto flex sm:hidden items-center pl-[3rem]  sm:pl-[0vw]  justify-between gap-[1.2rem">
               {/* the heading */}
-              <h1 className="neuem text-[1.5vw]">
+              <h1 className="neuem text-xl">
                 All Models Added in {selected_month} {selected_year}
               </h1>
 
-              <div className="w-auto  items-center  flex justify-center   relative ">
-                <div className="absolute h-full  w-[3.2vw] pr-[0.3vw] flex justify-end items-center top-0 left-0 z-[13]">
+              <div className="w-auto border2 items-center  flex justify-center   relative ">
+                <div className="absolute h-full  w-[3.2rem] pr-[0.3rem] flex justify-end items-center top-0 left-0 z-[13]">
                   <Image
                     src={searchimg}
                     alt="Search icon image"
-                    className="w-[1.3vw]  h-fit"
+                    className="w-[1.3rem]  h-fit"
                   />
                 </div>
                 <input
                   type="text"
                   placeholder="Search model"
-                  className="h-[3vw] w-[23vw]  text-black neuer text-[0.9vw] outline-none focus:border transition duration-[0.8s] pl-[3.5vw] pr-[1vw]  rounded-[3vw] placeholder:text-black neuer bg-[#000000] bg-opacity-[10%]  border-white border-opacity-[30%] border-[0.1vw]"
+                  className="h-[3rem] w-full  text-black neuer text-sm outline-none focus:border transition duration-[0.8s] pl-[3.5rem] pr-[1rem]  rounded-[3rem] placeholder:text-black neuer bg-[#000000] bg-opacity-[10%]  border-white border-opacity-[30%] border-[0.1rem]"
                   onChange={(e) => {
                     update_search_text(e.target.value);
                   }}
@@ -218,7 +218,7 @@ const Admin_Product_wrap = ({
               </div>
             </div>
 
-            <div className="w-full  flex flex-wrap sm:pl-[0vw] pl-[3vw]  justify-start gap-[2.2%] sm:gap-[4%]">
+            <div className="w-full  flex  flex-wrap sm:pl-[0vw] pl-[3vw]  justify-start gap-[2.2%] sm:gap-[4%]">
               {productStats_copy_filter.map((e: any, index: any) => {
                 return (
                   <Product

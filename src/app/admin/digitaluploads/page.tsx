@@ -183,12 +183,12 @@ export default function Home() {
           <Header />
           {show_setting && <Admin_Settings_modal />}
           {notification && <Notification_modal />}
-          <div className="w-full h-[10vw] sm:h-[27vw]"></div>
+          <div className="w-full h-[10rem] sm:h-[27vw]"></div>
           {/* this is for the digital sales record  */}
-          <div className="w-full  flex justify-center  px-[2vw] py-[2vw]   h-auto">
+          <div className="w-full  md:w-[100rem] md:max-w-full mx-auto flex justify-center  px-[2rem] py-[2rem]   h-auto">
             {/* this is for the factions */}
             {/* this filter is hidden for mobile screesn */}
-            <div className="w-[30%] sm:hidden sticky top-0 left-0 h-[10vw]">
+            <div className="w-[30%] sm:hidden sticky top-0 left-0 h-[10rem] ">
               <Filters
                 setselected_month={setselected_month}
                 selected_month={selected_month}
