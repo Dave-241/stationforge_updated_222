@@ -157,7 +157,7 @@ const Admin_Product_wrap = ({
                 </Link>
 
                 <Link
-                  href={"/admin/forge-upload"}
+                  href={"/admin/manage-tiers"}
                   onClick={() => {
                     setpage_loader(true);
                   }}
