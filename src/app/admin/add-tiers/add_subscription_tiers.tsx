@@ -5,135 +5,259 @@ import { useRouter } from "next/navigation";
 import { Editor } from "@tinymce/tinymce-react";
 import { useState } from "react";
 import Link from "next/link";
+import Stripe from "stripe";
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  serverTimestamp,
+} from "firebase/firestore";
+import firebaseConfig from "@/app/utils/fire_base_config";
+import { initializeApp } from "firebase/app";
+
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || "");
 
 const Add_subscription_tiers = () => {
   const router = useRouter();
-
-  const item = ["", ""];
   const { setpage_loader }: any = useProfile_Context();
 
-  //   THIS IS FOR THE TINY MCE EDITOR
-  //   THIS IS FOR THE TINY MCE EDITOR
-  //   THIS IS FOR THE TINY MCE EDITOR
-  //   THIS IS FOR THE TINY MCE EDITOR
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(""); // For HTML content
+  const [plainTextValue, setPlainTextValue] = useState(""); // For plain text content
+  const [tierName, setTierName] = useState("");
+  const [seatLimit, setSeatLimit] = useState("");
+  const [pricePerMonth, setPricePerMonth] = useState("");
+  const [pricePerYear, setPricePerYear] = useState("");
+  const [hidden, sethidden] = useState(false);
+  // const [discount, setDiscount] = useState("");
+  const [isPublishing, setIsPublishing] = useState(false);
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Firestore
+  const db = getFirestore(app);
 
   const onEditorInputChange = (newValue: any, editor: any) => {
     setValue(newValue);
-
-    console.log("new value");
-    // setText(editor.getContent());
+    const plainText = editor.getContent({ format: "text" }); // Extract plain text
+    setPlainTextValue(plainText);
   };
+
+  // Function to create subscription tier on Stripe
+  const handleCreateSubscriptionTier = async () => {
+    // if (parseInt(discount) > 100) {
+    //   alert("Discount cannot be more than 100%");
+    //   return;
+    // }
+
+    setIsPublishing(true); // Show publishing indicator
+    try {
+      const product = await stripe.products.create({
+        name: tierName,
+        description: plainTextValue, // Use plain text for description
+      });
+
+      const monthlyPrice = await stripe.prices.create({
+        product: product.id,
+        unit_amount: parseInt(pricePerMonth) * 100,
+        currency: "usd",
+        recurring: { interval: "month" },
+      });
+
+      const yearlyPrice = await stripe.prices.create({
+        product: product.id,
+        unit_amount: parseInt(pricePerYear) * 100,
+        currency: "usd",
+        recurring: { interval: "year" },
+      });
+
+      // let promotionCode = null;
+      // if (discount) {
+      //   const coupon = await stripe.coupons.create({
+      //     percent_off: parseInt(discount),
+      //     duration: "forever",
+      //   });
+
+      //   promotionCode = await stripe.promotionCodes.create({
+      //     coupon: coupon.id,
+      //   });
+      // }
+
+      console.log({
+        product,
+        monthlyPrice,
+        yearlyPrice,
+        // promotionCode,
+      });
+      // alert("Subscription tier created successfully!");
+
+      // update the engagement collection
+      const collection_ref = collection(db, "tiers");
+      addDoc(collection_ref, {
+        createdAt: serverTimestamp(),
+        name: tierName,
+        description: value,
+        monthly_price: pricePerMonth,
+        yearly_price: pricePerYear,
+        product_id: product.id,
+        monthly_price_id: monthlyPrice.id,
+        yearly_price_id: yearlyPrice.id,
+        hidden: hidden,
+        seat_limit: seatLimit,
+      })
+        .then(() => {
+          // console.log("this is engagement");
+          setTierName("");
+          setSeatLimit("");
+          setPricePerMonth("");
+          setPricePerYear("");
+          // setDiscount("");
+          setValue("");
+          setPlainTextValue("");
+          router.push("/admin/manage-tiers");
+        })
+        .catch((err) => {
+          console.log("New error" + err);
+          alert("There was an error creating the subscription tier.");
+
+          setIsPublishing(false);
+        });
+    } catch (error) {
+      console.error("Error creating subscription tier:", error);
+      alert("There was an error creating the subscription tier.");
+    } finally {
+      setIsPublishing(false); // Stop publishing indicator
+    }
+  };
+
   return (
     <>
-      <div className="flex flex-col gap-[1.5rem] ">
-        <div className="relative  sm:pb-[2rem]">
+      <div className="flex flex-col gap-[1.5rem]">
+        <div className="relative sm:pb-[2rem]">
           <button
-            className="text-base  neuem "
+            className="text-base neuem"
             onClick={() => {
               router.back();
             }}
           >
-            {" "}
             <i className="bi bi-chevron-left"></i> Back
           </button>
           <p
             style={{ whiteSpace: "nowrap" }}
             className="neueb absolute bottom-0 left-[50%] translate-x-[-50%]"
           >
-            ADD SUBSCRIBTION TIER
-          </p>
-        </div>{" "}
-        <div className="flex items-center gap-[1rem] w-[35rem] mx-auto text-[#353232] text-opacity-[50%] max-w-full  ">
-          <i className="bi bi-exclamation-circle-fill"></i>
-          <p className="neuem text-sm">
-            From this viewpoint , you can set a tier name, category, access,
-            license, pricing and description early bed seat limit and pricing
-            cannot be changed once set
+            ADD SUBSCRIPTION TIER
           </p>
         </div>
-        {/* the forms */}
-        <div className="w-full flex md:w-[60rem] max-w-full sm:w-full mx-auto  neuem items-center  flex-col gap-[2rem]">
-          <div className="flex flex-col  w-full gap-[0.5rem]">
+
+        <div className="flex items-center gap-[1rem] w-[35rem] mx-auto text-[#353232] text-opacity-[50%] max-w-full">
+          <i className="bi bi-exclamation-circle-fill"></i>
+          <p className="neuem text-sm">
+            From this viewpoint, you can set a tier name, category, access,
+            license, pricing, and description. Early bird seat limit and pricing
+            cannot be changed once set.
+          </p>
+        </div>
+
+        <div className="w-full flex md:w-[60rem] max-w-full sm:w-full mx-auto neuem items-center flex-col gap-[2rem]">
+          {/* Tier Name */}
+          <div className="flex flex-col w-full gap-[0.5rem]">
             <label className="neueb">Tier name</label>
             <input
               type="text"
-              className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%]  bg-white"
+              value={tierName}
+              onChange={(e) => setTierName(e.target.value)}
+              className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%] bg-white"
               placeholder="Enter tier name *"
             />
           </div>
+
           {/* hide button */}
           <div className="w-full my-[-1rem]">
-            <button className="">
-              <i className="bi bi-eye-slash-fill pr-[1rem]"></i>
-              Hide
+            <button
+              onClick={() => {
+                sethidden(!hidden);
+              }}
+              className=""
+            >
+              {!hidden ? (
+                <i className="bi bi-eye-fill pr-[1rem]"></i>
+              ) : (
+                <i className="bi bi-eye-slash-fill pr-[1rem]"></i>
+              )}
+
+              {hidden ? "Click to Unhide" : "Click to Hide"}
             </button>{" "}
           </div>
 
-          {/* second input form */}
-          <div className="flex flex-col  w-full gap-[0.5rem]">
+          {/* Seat Limit */}
+          <div className="flex flex-col w-full gap-[0.5rem]">
             <label className="neueb">Set seat limit</label>
             <input
               type="number"
-              className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%]  bg-white"
+              value={seatLimit}
+              onChange={(e) => setSeatLimit(e.target.value)}
+              className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%] bg-white"
               placeholder="Enter seat limit *"
             />
           </div>
 
-          {/* this is for pricing */}
-          <div className="flex flex-col pb-[1rem]  w-full gap-[0.5rem]">
+          {/* Pricing */}
+          <div className="flex flex-col pb-[1rem] w-full gap-[0.5rem]">
             <label className="neueb">Pricing*</label>
-            <p className="neuem text-sm  w-[15rem] pb-[2rem]  text-[#353232] text-opacity-[50%] max-w-full">
+            <p className="neuem text-sm w-[15rem] pb-[2rem] text-[#353232] text-opacity-[50%] max-w-full">
               Select pricing option for this tier. Note prices cannot be changed
               after addition
-            </p>{" "}
+            </p>
             <div className="w-full flex sm:flex-col gap-[1rem]">
               <div className="flex flex-col w-full gap-[0.5rem]">
-                <label className="neuer text-base">Price per month</label>
+                <label className="neuer text-base">Price per month ( $ )</label>
                 <input
                   type="number"
-                  className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%]  bg-white"
-                  placeholder=" 0$"
+                  value={pricePerMonth}
+                  onChange={(e) => setPricePerMonth(e.target.value)}
+                  className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%] bg-white"
+                  placeholder="0$"
                 />
               </div>
               <div className="flex flex-col w-full gap-[0.5rem]">
-                <label className="neuer text-base">Price per year</label>
+                <label className="neuer text-base">Price per year ( $ )</label>
                 <input
                   type="number"
-                  className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%]  bg-white"
-                  placeholder=" 0$"
+                  value={pricePerYear}
+                  onChange={(e) => setPricePerYear(e.target.value)}
+                  className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%] bg-white"
+                  placeholder="0$"
                 />
               </div>
-              <div className="flex flex-col w-full gap-[0.5rem]">
-                <label className="neuer text-base">Discount</label>
+              {/* <div className="flex flex-col w-full gap-[0.5rem]">
+                <label className="neuer text-base">Discount ( % )</label>
                 <input
                   type="number"
-                  className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%]  bg-white"
-                  placeholder=" 0%"
+                  value={discount}
+                  onChange={(e) => setDiscount(e.target.value)}
+                  className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%] bg-white"
+                  placeholder="0%"
                 />
-              </div>
+              </div> */}
             </div>
           </div>
-          {/* Description on here*/}
-          <div className="flex flex-col  w-full gap-[0.5rem]">
+
+          {/* Description */}
+          <div className="flex flex-col w-full gap-[0.5rem]">
             <label className="neueb">Description</label>
-            {/* this is for the editor  */}
             <Editor
-              apiKey={"o6poh8mrrg3olm60uzci8redu8zma5ystr23b8f78hku2msu"} // your api key here
-              onEditorChange={(newValue, editor) =>
-                onEditorInputChange(newValue, editor)
-              }
+              apiKey={"o6poh8mrrg3olm60uzci8redu8zma5ystr23b8f78hku2msu"}
+              onEditorChange={onEditorInputChange}
               value={value}
               initialValue={"Enter description *"}
-            />{" "}
+            />
           </div>
 
+          {/* Publish Button */}
           <button
-            onClick={() => {}}
-            style={{ whiteSpace: "nowrap" }}
+            onClick={handleCreateSubscriptionTier}
             className="bg-[#CCFF00] cursor-pointer py-[1rem] sm:w-full sm:rounded-[0.5rem] hover:bg-opacity-[40%] neuer capitalize flex justify-center items-center text-sm rounded-[1rem] px-[5rem]"
           >
-            Publish{" "}
+            {isPublishing ? "Publishing..." : "Publish"}
           </button>
         </div>
       </div>

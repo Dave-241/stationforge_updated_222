@@ -21,6 +21,7 @@ const StandardPlan = ({
   currentplan,
   email,
   uuid,
+  plan,
   customer,
   current_subscription_plain,
   standard_isloading,
@@ -154,9 +155,12 @@ const StandardPlan = ({
       return;
     }
   };
+
+  const [isExpanded, setIsExpanded] = useState(false); // For read more functionality
+  const trimmed_text = plan.description.slice(0, 200);
   return (
     <>
-      <div className="md:w-[40%] lg:w-[30%] sm:w-[80vw] sm:flex-shrink-0 sm:py-[12vw] md:h-auto md:py-[2rem] lg:py-[4rem]  md:px-[1.2rem] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] md:rounded-[1.2rem] sm:border-l-[1.6vw] md:border-l-[0.5rem] md:gap-[2rem] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
+      <div className="md:w-[40%] h-fit lg:w-[30%] sm:w-[80vw] sm:flex-shrink-0 sm:py-[12vw] md:h-auto md:py-[2rem] lg:py-[4rem]  md:px-[1.2rem] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] md:rounded-[1.2rem] sm:border-l-[1.6vw] md:border-l-[0.5rem] md:gap-[2rem] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
         {/* first row div */}
         <div className="w-full flex justify-between items-center">
           <Image
@@ -172,7 +176,7 @@ const StandardPlan = ({
         {/* second row div */}
         <div className="w-full flex   flex-col gap-[0.4vw] sm:gap-[1vw] ">
           <h2 className="md:text-3xl text-white neuem sm:text-[6vw]">
-            Standard Tier
+            {plan.name}
           </h2>
           {/* <h3 className="text-white neuer text-opacity-[40%] sm:text-[2.7vw] text-[1vw]">
             Access to monthly releases <br className="sm:hidden" />
@@ -183,43 +187,46 @@ const StandardPlan = ({
         {/* thired div  */}
         <div className="w-full">
           <h3 className="text-white md:text-3xl neuem sm:text-[4vw] ">
-            $10{" "}
+            ${plan.monthly_price}{" "}
             <span className="text-opacity-[60%] text-white md:text-xl sm:text-[3vw]">
               /Month
             </span>
           </h3>
         </div>
 
-        {/* fourth div */}
-        {/* <ul className="w-full h-auto flex-col flex gap-[1vw] sm:gap-[3vw] pb-[1.5vw]">
-          {list.map((e: any, index: any) => {
-            return (
-              <li key={index} className="flex gap-[1.2vw] items-center">
-                <Image
-                  src={e.img}
-                  alt={e.txt}
-                  className="w-[3vw] sm:w-[10vw] h-fit"
-                />
-                <p className="text-[1vw] text-white neuer sm:text-[3vw]">
-                  {e.txt}
-                </p>
-              </li>
-            );
-          })}
-        </ul> */}
+        <div className="flex flex-col">
+          <div
+            style={{ color: "white" }}
+            className={` neuer md:container   text-white bg-transparent text-dark-blue dark:text-white 
+            [&_p]:text-sm  [&_p]:text-[black] [&_p_md]:text-sm  [&_p]:leading-relaxed 
+            [&_h1]:text-3xl [&_h1]:w-full [&_h1]:font-bold [&_h1]:mb-2 
+            [&_h2]:text-2xl [&_h2]:w-full [&_h2_md]:text-3xl [&_h2_lg]:text-4xl [&_h2]:font-bold [&_h2]:mb-4 
+            [&_h3]:text-xl [&_h3]:w-full [&_h3_md]:text-2xl [&_h3_lg]:text-3xl [&_h3]:font-bold [&_h3]:mb-4 
+            [&_h4]:text-lg [&_h4]:w-full [&_h4_md]:text-xl [&_h4_lg]:text-2xl [&_h4]:font-bold [&_h4]:mb-4 
+            [&_h5]:text-base [&_h5]:w-full [&_h5_md]:text-lg [&_h5_lg]:text-xl [&_h5]:font-bold [&_h5]:mb-4 
+            [&_h6]:text-sm [&_h6]:w-full [&_h6_md]:text-base [&_h6_lg]:text-lg [&_h6]:font-bold [&_h6]:mb-4 
+            [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:mb-5
+            [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:mb-5
+            [&_li]:mb-6
+            [&_table]:w-full [&_table]:border-collapse [&_table]:border 
+            [&_th]:border [&_th]:px-4 [&_th]:py-2 [&_th]:bg-gray-200 [&_th]:text-left 
+            [&_td]:border [&_td]:px-4 [&_td]:py-2
+            [&_img]:inline [&_img]:m-2
+            [&_a]:underline [&_a]:underline-offset-[5px] [&_a]:text-[#440C0C]
+            `}
+            // dangerouslySetInnerHTML={{ __html: plan.description }}
+            dangerouslySetInnerHTML={{
+              __html: isExpanded ? plan.description : trimmed_text,
+            }}
+          ></div>
 
-        {/* description */}
-        <p className="md:text-xs  text-white neuer sm:text-[2.9vw]">
-          Permission to print and distribute physical models (not the STL.
-          files) through your website/marketplaces. Use the original pictures
-          only from the page with the Station Forge logo. Re-rendering photos is
-          not permitted and will be taken down by our team. Renaming the Station
-          Forge models, removing watermarks, or using other brand names for our
-          models is not allowed. Taking precautions against piracy after
-          pledging to this tier you must provide us with the links to the
-          websites of your profile on where you are planning to sell our
-          <span className="text-[#CCFF00]"> Read more</span>
-        </p>
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="text-[#CCFF00] mt-[1rem] text-sm text-left underline "
+          >
+            {isExpanded ? "Read Less" : "Read More"}
+          </button>
+        </div>
 
         {/* fivth div  also known as button */}
         <button
@@ -248,23 +255,10 @@ const StandardPlan = ({
           {customer && currentplan == 3 && "Manage active subscription "}
           {customer && currentplan == 4 && "Downgrade subscription "}
 
-          {/* {customer &&
-            current_subscription_plain == "Merchant tier" &&
-            "Downgrade "} */}
-
           {standard_isloading && (
             <div className="rounded-[100%] sm:h-[7vw] sm:border-t-[1vw] sm:w-[7vw] md:h-[2rem] md:w-[2rem]  border-solid  md:border-t-[0.3rem] border-[black] animate-spin"></div>
           )}
         </button>
-
-        {/* {customer == "" && (
-          <button
-            className="w-full h-[4vw] text-[1.6vw] neuem rounded-[3.7vw] sm:rounded-[5vw] transition duration-[0.2s] hover:bg-[#7e9426] bg-[#CCFF00] sm:text-[4vw] sm:h-[10vw] "
-            onClick={paynow}
-          >
-            Join
-          </button>
-        )} */}
       </div>{" "}
     </>
   );
