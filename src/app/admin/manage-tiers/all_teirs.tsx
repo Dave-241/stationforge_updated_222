@@ -49,7 +49,7 @@ const All_tiers = () => {
                   </button>
                   <button className="neuem text-sm">EDIT</button>
                   <Link
-                    href={"/admin/forge-upload"}
+                    href={"/admin/add-tiers"}
                     onClick={() => {
                       setpage_loader(true);
                     }}
