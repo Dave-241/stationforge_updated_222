@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import stan_1 from "../../../public/subscription/stan_1.webp";
+import stan_1_old from "../../../public/subscription/stan_1.webp";
+import stan_1 from "../../../public/subscription/mer_1.webp";
+
 import stan_2 from "../../../public/subscription/stan_2.webp";
 import stan_3 from "../../../public/subscription/stan_3.webp";
 import stan_4 from "../../../public/subscription/stan_4.webp";
@@ -160,7 +162,7 @@ const StandardPlan = ({
   const trimmed_text = plan.description.slice(0, 200);
   return (
     <>
-      <div className="md:w-[40%] h-fit lg:w-[30%] sm:w-[80vw] sm:flex-shrink-0 sm:py-[12vw] md:h-auto md:py-[2rem] lg:py-[4rem]  md:px-[1.2rem] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] md:rounded-[1.2rem] sm:border-l-[1.6vw] md:border-l-[0.5rem] md:gap-[2rem] sm:gap-[4vw] sm:rounded-[4vw]   border-[#4C89E5]">
+      <div className="md:w-[40%] h-fit lg:w-[30%] sm:w-[80vw] sm:flex-shrink-0 sm:py-[10vw] md:h-auto md:py-[2rem] lg:py-[2rem] subscription_merchant_background_color  md:px-[1.2rem] sm:px-[6vw] flex flex-col justify-center items-center  bg-[#111111] md:rounded-[1.2rem] sm:border-l-[1.6vw] md:border-l-[0.5rem] md:gap-[2rem] sm:gap-[4vw] sm:rounded-[4vw]   border-[#CCFF00]">
         {/* first row div */}
         <div className="w-full flex justify-between items-center">
           <Image
@@ -175,7 +177,7 @@ const StandardPlan = ({
         </div>
         {/* second row div */}
         <div className="w-full flex   flex-col gap-[0.4vw] sm:gap-[1vw] ">
-          <h2 className="md:text-3xl text-white neuem sm:text-[6vw]">
+          <h2 className="md:text-3xl text-black neuem sm:text-[6vw]">
             {plan.name}
           </h2>
           {/* <h3 className="text-white neuer text-opacity-[40%] sm:text-[2.7vw] text-[1vw]">
@@ -186,9 +188,9 @@ const StandardPlan = ({
 
         {/* thired div  */}
         <div className="w-full">
-          <h3 className="text-white md:text-3xl neuem sm:text-[4vw] ">
+          <h3 className="text-black md:text-3xl neuem sm:text-[4vw] ">
             ${plan.monthly_price}{" "}
-            <span className="text-opacity-[60%] text-white md:text-xl sm:text-[3vw]">
+            <span className="text-opacity-[60%] text-black md:text-xl sm:text-[3vw]">
               /Month
             </span>
           </h3>
@@ -196,8 +198,8 @@ const StandardPlan = ({
 
         <div className="flex flex-col">
           <div
-            style={{ color: "white" }}
-            className={` neuer md:container   text-white bg-transparent text-dark-blue dark:text-white 
+            style={{ color: "black" }}
+            className={` neuer md:container   text-black bg-transparent text-dark-blue dark:text-black 
             [&_p]:text-sm  [&_p]:text-[black] [&_p_md]:text-sm  [&_p]:leading-relaxed 
             [&_h1]:text-3xl [&_h1]:w-full [&_h1]:font-bold [&_h1]:mb-2 
             [&_h2]:text-2xl [&_h2]:w-full [&_h2_md]:text-3xl [&_h2_lg]:text-4xl [&_h2]:font-bold [&_h2]:mb-4 
@@ -207,9 +209,9 @@ const StandardPlan = ({
             [&_h6]:text-sm [&_h6]:w-full [&_h6_md]:text-base [&_h6_lg]:text-lg [&_h6]:font-bold [&_h6]:mb-4 
             [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:mb-5
             [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:mb-5
-            [&_li]:mb-6
+            [&_li]:mb-3
             [&_table]:w-full [&_table]:border-collapse [&_table]:border 
-            [&_th]:border [&_th]:px-4 [&_th]:py-2 [&_th]:bg-gray-200 [&_th]:text-left 
+            [&_th]:border [&_th]:px-4 [&_th]:py-2 [&_th]:bg-black [&_th]:text-left 
             [&_td]:border [&_td]:px-4 [&_td]:py-2
             [&_img]:inline [&_img]:m-2
             [&_a]:underline [&_a]:underline-offset-[5px] [&_a]:text-[#440C0C]
