@@ -79,7 +79,7 @@ const Subscription_Plans = () => {
   return (
     <>
       <div className="w-full h-auto justify-center flex flex-col items-center sm:pb[6vw] md:pb-[3rem] relative">
-        <div className="w-auto md:py-[2.5rem] sm:rounded-[2.6vw] sm:py-[5vw] sm:px-[5vw] md:px-[4rem] md:rounded-[0.8rem] md:border-[0.1rem] border-opacity-[40%] border-white flex flex-col md:gap-[0.7rem] z-[9] bg-black">
+        <div className="w-auto md:py-[2.5rem] sm:rounded-[2.6vw] sm:py-[5vw] sm:px-[5vw] md:px-[4rem] md:rounded-[0.8rem] border-[0.1rem] border-opacity-[40%] border-white flex flex-col md:gap-[0.7rem] z-[9] bg-black">
           <h1 className="md:text-3xl sm:text-[5vw] neuem text-white text-center">
             Choose a plan
           </h1>
@@ -93,7 +93,7 @@ const Subscription_Plans = () => {
           </p>
           {/* Pricing plans */}
           <div className="h-auto cover_scrollbar sm:flex w-full sm:relative sm:overflow-x-scroll">
-            <div className="sm:w-auto md:w-[100rem] md:max-w-full md:mx-auto sm:px-[4vw] md:pt-[3rem]  sm:pt-[6.5vw] md:justify-center items-start sm:items-center flex md:gap-[5%] sm:gap-[5vw]">
+            <div className="sm:w-auto md:w-[100rem]  md:max-w-[95%] md:mx-auto sm:px-[4vw] flex-wrap md:pt-[3rem]  sm:pt-[6.5vw] md:justify-center items-start sm:items-center flex md:gap-[1rem] sm:gap-[5vw]">
               {plans.map((plan: any, index: any) => (
                 <StandardPlan
                   key={index}
