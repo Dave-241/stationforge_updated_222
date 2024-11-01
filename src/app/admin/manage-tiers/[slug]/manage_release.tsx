@@ -61,6 +61,34 @@ const Manage_release = ({ id }: any) => {
     product.title.toLowerCase().includes(searchText.toLowerCase()),
   );
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Get document with the specific ID from the 'tier' collection
+        const docRef = doc(db, "tiers", id);
+        const docSnapshot = await getDoc(docRef);
+
+        if (docSnapshot.exists()) {
+          const docData = docSnapshot.data();
+          const { month, year } = docData;
+
+          // Find month name based on the month number
+          const monthName: any = months.find((m) => m.number == month)?.number;
+          // Update state with the retrieved values
+          //   console.log(monthName);
+          setSelectedMonth(monthName);
+          setSelectedYear(year);
+        } else {
+          console.log("No such document found.");
+        }
+      } catch (error) {
+        console.error("Error fetching document:", error);
+      }
+    };
+
+    // Only fetch data if 'id' exists
+    if (id) fetchData();
+  }, [id]);
   // Initial fetch for products and product details
   useEffect(() => {
     const fetchProducts = async () => {
@@ -142,65 +170,83 @@ const Manage_release = ({ id }: any) => {
 
   // Function to upload and manage documents
   // Function to upload and manage documents
+
+  const [status, setStatus] = useState("publish update"); // Default status
+
   const uploadDocuments = async (newDocs: any) => {
-    // Step 1: Fetch existing docs from the database
-    const existingDocsSnapshot = await getDocs(
-      query(
-        collection(db, "product_tier_category"),
-        where("tier_id", "==", id), // Filters documents where tier_id equals prop_id
-      ),
-    );
-    const existingDocs = existingDocsSnapshot.docs.map((snapshotDoc) => ({
-      id: snapshotDoc.id,
-      ...snapshotDoc.data(),
-    }));
-
-    // Step 2: Find docs to add or update, and docs to delete
-    const newDocIds = newDocs.map((doc: any) => doc.id);
-    const existingDocIds = existingDocs.map((doc) => doc.id);
-
-    const docsToUpdate = newDocs.filter((newDoc: any) =>
-      existingDocIds.includes(newDoc.id),
-    );
-    const docsToCreate = newDocs.filter(
-      (newDoc: any) => !existingDocIds.includes(newDoc.id),
-    );
-    const docsToDelete = existingDocs.filter(
-      (existingDoc) => !newDocIds.includes(existingDoc.id),
-    );
-
-    // Step 3: Update existing docs (only updating product_id)
-    for (const docToUpdate of docsToUpdate) {
-      await updateDoc(
-        doc(db, "product_tier_category", docToUpdate.id),
-        { product_id: docToUpdate.id },
-        // { merge: true }, // Ensures only the specified field is updated
+    setStatus("updating"); // Set status to updating at the start
+    try {
+      // Step 1: Fetch existing docs from the database
+      const existingDocsSnapshot = await getDocs(
+        query(
+          collection(db, "product_tier_category"),
+          where("tier_id", "==", id), // Filters documents where tier_id equals prop_id
+        ),
       );
 
-      console.log("udate", docToUpdate);
-    }
+      const existingDocs = existingDocsSnapshot.docs.map((snapshotDoc) => ({
+        id: snapshotDoc.id,
+        ...snapshotDoc.data(),
+      }));
 
-    // Step 4: Add new docs with specified fields using addDoc
-    for (const docToCreate of docsToCreate) {
-      await addDoc(collection(db, "product_tier_category"), {
-        addedAt: serverTimestamp(), // Current timestamp
-        modelId: docToCreate.id,
-        tier_id: id, // Assuming "id" is intended to be tier_id
+      // Step 2: Find docs to add, update, or delete
+      const newDocIds = newDocs.map((doc: any) => doc.id);
+      const existingDocIds = existingDocs.map((doc) => doc.id);
+
+      const docsToUpdate = newDocs.filter((newDoc: any) =>
+        existingDocIds.includes(newDoc.id),
+      );
+      const docsToCreate = newDocs.filter(
+        (newDoc: any) => !existingDocIds.includes(newDoc.id),
+      );
+      const docsToDelete = existingDocs.filter(
+        (existingDoc) => !newDocIds.includes(existingDoc.id),
+      );
+
+      // Step 3: Update existing docs (only updating product_id)
+      for (const docToUpdate of docsToUpdate) {
+        await updateDoc(doc(db, "product_tier_category", docToUpdate.id), {
+          product_id: docToUpdate.id,
+        });
+        console.log("Updated document:", docToUpdate);
+      }
+
+      // Step 4: Add new docs with specified fields
+      for (const docToCreate of docsToCreate) {
+        await addDoc(collection(db, "product_tier_category"), {
+          addedAt: serverTimestamp(),
+          modelId: docToCreate.id,
+          tier_id: id,
+        });
+        console.log("Added document:", docToCreate);
+      }
+
+      // Step 5: Delete docs that are no longer in the newDocs list
+      for (const existingDoc of docsToDelete) {
+        await deleteDoc(doc(db, "product_tier_category", existingDoc.id));
+        console.log("Deleted document:", existingDoc);
+      }
+
+      // Step 6: Update parent document (tiers)
+      await updateDoc(doc(db, "tiers", id), {
+        year: selectedYear,
+        month: selectedMonth,
       });
-      console.log("create", docToCreate);
+
+      console.log(
+        "Documents successfully uploaded, updated, or deleted as needed.",
+      );
+      setStatus("completed"); // Set status to completed on success
+
+      setTimeout(() => {
+        setStatus("publish update");
+      }, 5000);
+      // Reload the page if needed
+      window.location.reload();
+    } catch (error) {
+      console.error("Error uploading documents:", error);
+      setStatus("error"); // Set status to error on failure
     }
-
-    // Step 5: Delete docs that are no longer in the newDocs list
-    for (const existingDoc of docsToDelete) {
-      await deleteDoc(doc(db, "product_tier_category", existingDoc.id));
-      console.log("delete", existingDoc);
-    }
-
-    console.log(
-      "Documents successfully uploaded, updated, or deleted as needed.",
-    );
-
-    window.location.reload();
   };
 
   return (
@@ -235,7 +281,7 @@ const Manage_release = ({ id }: any) => {
                 id="year"
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
-                className="border rounded-[20px] neuer bg-[#EFEFEF] py-[1.2rem] px-[1rem]"
+                className="border outline-none border-none rounded-[20px] neuer bg-[#EFEFEF] py-[1.2rem] px-[1rem]"
               >
                 <option value="">Select Year</option>
                 {years.map((year) => (
@@ -255,7 +301,7 @@ const Manage_release = ({ id }: any) => {
                 id="month"
                 value={selectedMonth}
                 onChange={(e) => setSelectedMonth(e.target.value)}
-                className="border rounded-[20px] neuer bg-[#EFEFEF] py-[1.2rem] px-[1rem]"
+                className="border outline-none border-none rounded-[20px] neuer bg-[#EFEFEF] py-[1.2rem] px-[1rem]"
               >
                 <option value="">Select Month</option>
                 {months.map((month) => (
@@ -390,7 +436,7 @@ const Manage_release = ({ id }: any) => {
             style={{ whiteSpace: "nowrap" }}
             className="bg-[#CCFF00] hover:bg-white sm:w-full border hover:border-[#95B611] hover:text-black cursor-pointer py-[1rem] hover:bg-opacity-[40%] neuer flex justify-center text-[black] items-center text-sm rounded-[1rem] px-[3rem] capitalize sm:px-0"
           >
-            Update Teir Infomation
+            {status}
           </button>
         </div>
       </div>
