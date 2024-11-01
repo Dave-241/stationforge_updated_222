@@ -134,9 +134,12 @@ const Manage_release = ({ id }: any) => {
               </div>
 
               <div className="w-full sm:w-[30rem] flex-col overflow-y-scroll h-[24rem] flex bg-white ">
-                {example_arr.map(() => {
+                {example_arr.map((e: any, index: number) => {
                   return (
-                    <div className="w-full sm:flex-shrink-0 text-center text-sm border-b border-b-gray-400 flex">
+                    <div
+                      key={index}
+                      className="w-full sm:flex-shrink-0 text-center text-sm border-b border-b-gray-400 flex"
+                    >
                       <div className="w-[40%] border-r border-gray-400 py-[1.2rem]">
                         <p className="neuem">Welcome pack</p>
                       </div>
