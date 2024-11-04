@@ -14,6 +14,7 @@ import {
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import TailwindLoader from "./tailwind_loader";
+import Delete_tier_modal from "./delete_tier_modal";
 
 const All_tiers = () => {
   const router = useRouter();
@@ -59,6 +60,11 @@ const All_tiers = () => {
       hidden: status,
     });
   };
+
+  const [show_delete_modal, setshow_delete_modal] = useState(false);
+  const [tier_id, settier_id] = useState("");
+  const [teir_name, setteir_name] = useState("");
+  const [teir_subscription_id, setteir_subscription_id] = useState("");
   return (
     <>
       <div className="flex flex-col gap-[2rem]">
@@ -102,10 +108,23 @@ const All_tiers = () => {
                     >
                       <i className="bi bi-eye-fill"></i>
                     </button>
-                    <button className="text-[#FF0000] text-xl">
+                    <button
+                      onClick={() => {
+                        setteir_name(tier.name);
+                        settier_id(tier.id);
+                        setteir_subscription_id(tier.product_id);
+                        setshow_delete_modal(true);
+                      }}
+                      className="text-[#FF0000] hover:text-black text-xl"
+                    >
                       <i className="bi bi-trash3-fill"></i>
                     </button>
-                    <button className="neuem text-sm">EDIT</button>
+                    <Link
+                      href={`/admin/add-tiers/${tier.id}`}
+                      className="neuem flex items-center hover:text-green-700 text-sm"
+                    >
+                      EDIT
+                    </Link>
                     <Link
                       href={`/admin/manage-tiers/${tier.id}`}
                       onClick={() => {
@@ -155,10 +174,22 @@ const All_tiers = () => {
                     >
                       <i className="bi bi-eye-slash-fill"></i>
                     </button>
-                    <button className="text-[#FF0000] text-xl">
+                    <button
+                      onClick={() => {
+                        setteir_name(tier.name);
+                        settier_id(tier.id);
+                        setshow_delete_modal(true);
+                      }}
+                      className="text-[#FF0000] hover:text-black text-xl"
+                    >
                       <i className="bi bi-trash3-fill"></i>
                     </button>
-                    <button className="neuem text-sm">EDIT</button>
+                    <Link
+                      href={`/admin/add-tiers/${tier.id}`}
+                      className="neuem flex items-center hover:text-green-700 text-sm"
+                    >
+                      EDIT
+                    </Link>{" "}
                     <Link
                       href={`/admin/manage-tiers/${tier.id}`}
                       onClick={() => {
@@ -176,6 +207,15 @@ const All_tiers = () => {
           </>
         )}
       </div>
+
+      {show_delete_modal && (
+        <Delete_tier_modal
+          tier_id={tier_id}
+          teir_name={teir_name}
+          teir_subscription_id={teir_subscription_id}
+          setshow_delete_modal={setshow_delete_modal}
+        />
+      )}
     </>
   );
 };

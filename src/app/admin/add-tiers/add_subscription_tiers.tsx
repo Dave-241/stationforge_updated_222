@@ -26,7 +26,6 @@ const Add_subscription_tiers = () => {
   const [tierName, setTierName] = useState("");
   const [seatLimit, setSeatLimit] = useState("");
   const [pricePerMonth, setPricePerMonth] = useState("");
-  const [pricePerYear, setPricePerYear] = useState("");
   const [hidden, sethidden] = useState(false);
   // const [discount, setDiscount] = useState("");
   const [isPublishing, setIsPublishing] = useState(false);
@@ -43,11 +42,6 @@ const Add_subscription_tiers = () => {
 
   // Function to create subscription tier on Stripe
   const handleCreateSubscriptionTier = async () => {
-    // if (parseInt(discount) > 100) {
-    //   alert("Discount cannot be more than 100%");
-    //   return;
-    // }
-
     setIsPublishing(true); // Show publishing indicator
     try {
       const product = await stripe.products.create({
@@ -62,33 +56,6 @@ const Add_subscription_tiers = () => {
         recurring: { interval: "month" },
       });
 
-      const yearlyPrice = await stripe.prices.create({
-        product: product.id,
-        unit_amount: parseInt(pricePerYear) * 100,
-        currency: "usd",
-        recurring: { interval: "year" },
-      });
-
-      // let promotionCode = null;
-      // if (discount) {
-      //   const coupon = await stripe.coupons.create({
-      //     percent_off: parseInt(discount),
-      //     duration: "forever",
-      //   });
-
-      //   promotionCode = await stripe.promotionCodes.create({
-      //     coupon: coupon.id,
-      //   });
-      // }
-
-      console.log({
-        product,
-        monthlyPrice,
-        yearlyPrice,
-        // promotionCode,
-      });
-      // alert("Subscription tier created successfully!");
-
       // update the engagement collection
       const collection_ref = collection(db, "tiers");
       addDoc(collection_ref, {
@@ -96,10 +63,8 @@ const Add_subscription_tiers = () => {
         name: tierName,
         description: value,
         monthly_price: pricePerMonth,
-        yearly_price: pricePerYear,
         product_id: product.id,
         monthly_price_id: monthlyPrice.id,
-        yearly_price_id: yearlyPrice.id,
         hidden: hidden,
         seat_limit: seatLimit,
       })
@@ -108,8 +73,6 @@ const Add_subscription_tiers = () => {
           setTierName("");
           setSeatLimit("");
           setPricePerMonth("");
-          setPricePerYear("");
-          // setDiscount("");
           setValue("");
           setPlainTextValue("");
           router.push("/admin/manage-tiers");
@@ -188,18 +151,6 @@ const Add_subscription_tiers = () => {
             </button>{" "}
           </div>
 
-          {/* Seat Limit */}
-          <div className="flex flex-col w-full gap-[0.5rem]">
-            <label className="neueb">Set seat limit</label>
-            <input
-              type="number"
-              value={seatLimit}
-              onChange={(e) => setSeatLimit(e.target.value)}
-              className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%] bg-white"
-              placeholder="Enter seat limit *"
-            />
-          </div>
-
           {/* Pricing */}
           <div className="flex flex-col pb-[1rem] w-full gap-[0.5rem]">
             <label className="neueb">Pricing*</label>
@@ -218,26 +169,18 @@ const Add_subscription_tiers = () => {
                   placeholder="0$"
                 />
               </div>
+
+              {/* Seat Limit */}
               <div className="flex flex-col w-full gap-[0.5rem]">
-                <label className="neuer text-base">Price per year ( $ )</label>
+                <label className="neuer">Set seat limit</label>
                 <input
                   type="number"
-                  value={pricePerYear}
-                  onChange={(e) => setPricePerYear(e.target.value)}
+                  value={seatLimit}
+                  onChange={(e) => setSeatLimit(e.target.value)}
                   className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%] bg-white"
-                  placeholder="0$"
+                  placeholder="Enter seat limit *"
                 />
               </div>
-              {/* <div className="flex flex-col w-full gap-[0.5rem]">
-                <label className="neuer text-base">Discount ( % )</label>
-                <input
-                  type="number"
-                  value={discount}
-                  onChange={(e) => setDiscount(e.target.value)}
-                  className="outline-none border-none rounded-[15px] focus:border border-black w-full h-[4.5rem] px-[3%] bg-white"
-                  placeholder="0%"
-                />
-              </div> */}
             </div>
           </div>
 
