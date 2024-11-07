@@ -102,7 +102,7 @@ const Subscription_Plans = () => {
           </p>
           {/* Pricing plans */}
           <div className="h-auto cover_scrollbar sm:flex w-full sm:relative sm:overflow-x-scroll">
-            <div className="sm:w-auto md:w-[100rem]  md:max-w-[95%] md:mx-auto sm:px-[4vw] flex-wrap md:pt-[3rem]  sm:pt-[6.5vw] md:justify-center items-start sm:items-center flex md:gap-[1rem] sm:gap-[5vw]">
+            <div className="sm:w-auto md:w-[100rem]  md:max-w-[95%] md:mx-auto sm:px-[4vw] md:flex-wrap md:pt-[3rem]  sm:pt-[6.5vw] md:justify-center items-start sm:items-center flex md:gap-[1rem] sm:gap-[5vw]">
               {plans.map((plan: any, index: any) => (
                 <StandardPlan
                   key={index}
