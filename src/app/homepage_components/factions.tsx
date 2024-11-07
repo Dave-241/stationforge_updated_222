@@ -20,14 +20,14 @@ const Fractions = ({
       <div className="w-full h-auto pb-[1rem]  pt-[2rem] px-[1rem] sticky top-[4rem] flex flex-col gap-[1rem]">
         <h3 className="neuer text-4xl pb-[0.3rem] text-white">Factions</h3>
 
-        <div className="h-[0.1vw] bg-white bg-opacity-[10%] w-full"></div>
+        <div className="h-[0.1rem] bg-white bg-opacity-[10%] w-full"></div>
 
-        <div className="w-full left-0 h-auto relative  flex flex-wrap gap-[1vw]">
+        <div className="w-full left-0 h-auto relative  flex flex-wrap gap-[2%]">
           {faction_option.map((e: any, index: number) => {
             return (
               <div
                 key={index}
-                className="w-[9vw] rounded-[1.5vw]  h-[6vw] bg-[#CCFF00] flex justify-center items-center text-black neuer cursor-pointer text-[1.1vw]"
+                className="lg:w-[32%] mb-[1rem] md:w-[48%] rounded-[1.5rem]  h-[5rem] bg-[#CCFF00] flex justify-center items-center text-black neuer cursor-pointer "
                 style={{
                   backgroundColor:
                     active_faction == e.id ? "#CCFF00" : "#111111",

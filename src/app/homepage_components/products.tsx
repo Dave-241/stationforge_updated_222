@@ -46,9 +46,9 @@ const Products = (props: any) => {
 
   return (
     <>
-      <div className="w-[68%] sm:w-full sm:border-none h-auto pb-[1vw] pt-[2vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw] sm:gap-[8vw]">
+      <div className="w-[68%] sm:w-full sm:border-none h-auto pb-[1rem] pt-[2rem]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13rem] border-opacity-[10%]  flex flex-col gap-[1rem] sm:gap-[8vw]">
         <div className="w-full lg:flex-row md:flex-col flex justify-between  lg:items-center md:gap-[1rem] lg:gap-0 px-[3%]">
-          <h3 className="neuer text-2xl text-white  sm:text-[5vw] sm:leading-[6vw]">
+          <h3 className="neuer text-2xl text-white  ">
             All New Models <br className="md:hidden " /> ({currentMonthName})
           </h3>
           <div className="w-auto  relative sm:hidden z-[999]">
@@ -128,13 +128,13 @@ const Products = (props: any) => {
             </div>
           )}
 
-          <div className=" w-full flex-wrap justify-between flex">
+          <div className=" w-full flex-wrap xl:justify-start xl:gap-[1.5%] justify-between flex">
             {products.map((e: any, index: any) => {
               return (
                 <>
                   <div
                     key={index}
-                    className="lg:w-[32%] mb-[1rem] md:mb-[1.2rem] w-[48.5%] group    gap-[1.2rem] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col  rounded-[2rem]"
+                    className="lg:w-[32%] xl:w-[18%] mb-[1rem] md:mb-[1.2rem] w-[48.5%] group    gap-[1.2rem] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col  rounded-[2rem]"
                   >
                     <div
                       className="w-full  avater_bg h-[11rem] md:h-[15rem] lg:h-[20rem] overflow-hidden"
