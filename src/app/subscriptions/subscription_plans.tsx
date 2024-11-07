@@ -37,6 +37,7 @@ const Subscription_Plans = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setuuid(user.uid);
+        setemail(user.email || "");
       } else {
         setuuid("");
         setcustomer("");
@@ -75,6 +76,14 @@ const Subscription_Plans = () => {
 
   const searchParams = useSearchParams();
   const session_id = searchParams.get("session_id");
+  // Initialize loading state once the list is available
+  const [loading, setLoading] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    if (plans.length > 0) {
+      setLoading(new Array(plans.length).fill(false)); // Set loading for each item
+    }
+  }, [plans]); // Runs every time the list changes
 
   return (
     <>
@@ -98,8 +107,11 @@ const Subscription_Plans = () => {
                 <StandardPlan
                   key={index}
                   plan={plan}
+                  index={index}
                   email={email}
                   uuid={uuid}
+                  setloading={setLoading}
+                  loading={loading}
                   currentplan={currentplan}
                   customer={customer}
                   current_subscription_plain={current_subscription_plain}

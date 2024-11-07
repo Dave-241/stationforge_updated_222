@@ -18,6 +18,9 @@ import {
   stripe,
 } from "../utils/stripe";
 import { useProfile_Context } from "../utils/profile_context";
+// Initialize Stripe once at the top of your module, outside of your function
+const pusblishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "";
+const stripePromise = loadStripe(pusblishableKey);
 
 const StandardPlan = ({
   currentplan,
@@ -28,27 +31,11 @@ const StandardPlan = ({
   current_subscription_plain,
   standard_isloading,
   setstandard_isloading,
+  index,
+  loading,
+  setloading,
 }: any) => {
   const { setpage_loader, Add_notification }: any = useProfile_Context();
-
-  const [list, setlist] = useState([
-    {
-      img: stan_2,
-      txt: "Early access to content",
-    },
-    {
-      img: stan_3,
-      txt: "Digital downloads",
-    },
-    {
-      img: stan_4,
-      txt: "20% OFF on all the previous months releases",
-    },
-    {
-      img: stan_5,
-      txt: "Discord access",
-    },
-  ]);
 
   const router = useRouter();
 
@@ -58,41 +45,52 @@ const StandardPlan = ({
     nextMonth.setMonth(currentDate.getMonth() + 1, 1); // Set to 1st day of next month
     return Math.floor(nextMonth.getTime() / 1000); // Convert to Unix timestamp (in seconds)
   }
-
-  const paynow = async () => {
-    if (uuid != "" && email != "") {
-      try {
-        setstandard_isloading(true);
-        Add_notification("Initiated standard subscription");
-
-        // console.log("this was standard");
-        const pusblishablekey: any =
-          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-        const stripe_promise = loadStripe(pusblishablekey);
-        const stripe = await stripe_promise;
-        const session_url = await pay_standard_Subscriptions(uuid, email);
-
-        if (session_url.id) {
-          const result = await stripe?.redirectToCheckout({
-            sessionId: session_url.id,
-          });
-        }
-      } catch (error: any) {
-        setstandard_isloading(false);
-
-        console.error("Error creating Checkout session:", error);
-        if (error && error.raw && error.raw.message) {
-          console.error("Stripe API Error Message:", error.raw.message);
-        }
-        throw error;
-      }
-    } else {
-      setstandard_isloading(false);
-
-      return;
-    }
+  // Function to set individual loading state for an item
+  const handleLoadingState = (index: number, state: boolean) => {
+    const newLoadingState = [...loading];
+    newLoadingState[index] = state;
+    setloading(newLoadingState);
   };
 
+  const paynow = async (index: number) => {
+    if (!uuid || !email || !plan.product_id) {
+      console.warn("UUID, Email, or Product ID missing.");
+      handleLoadingState(index, false); // Set loading to false for this item
+      return;
+    }
+
+    try {
+      handleLoadingState(index, true); // Set loading to true for this item
+      Add_notification("Initiated standard subscription");
+
+      // Fetch the Stripe session URL using the product_id
+      const session_url = await pay_standard_Subscriptions(
+        plan.monthly_price_id,
+        uuid,
+        email,
+        plan.product_id,
+      );
+
+      // Proceed only if session URL is successfully retrieved
+      if (session_url.id) {
+        const stripe = await stripePromise;
+        const result = await stripe?.redirectToCheckout({
+          sessionId: session_url.id,
+        });
+
+        // Handle result errors
+        if (result && result.error) {
+          console.error("Stripe redirection error:", result.error.message);
+          throw new Error(result.error.message);
+        }
+      }
+    } catch (error: any) {
+      handleLoadingState(index, false); // Set loading to false for this item
+      console.error("Error creating Checkout session:", error);
+    } finally {
+      handleLoadingState(index, false); // Set loading to false for this item
+    }
+  };
   const manage_merchant_subscriptions = async () => {
     if (customer != "") {
       try {
@@ -238,7 +236,7 @@ const StandardPlan = ({
               setpage_loader(true);
               router.push("/login?ref=subscription");
             } else if (!customer) {
-              paynow();
+              paynow(index);
             } else if (customer && currentplan == 1) {
               renew_subscription_to_standard();
             } else if (
@@ -257,8 +255,8 @@ const StandardPlan = ({
           {customer && currentplan == 3 && "Manage active subscription "}
           {customer && currentplan == 4 && "Downgrade subscription "}
 
-          {standard_isloading && (
-            <div className="rounded-[100%] sm:h-[7vw] sm:border-t-[1vw] sm:w-[7vw] md:h-[2rem] md:w-[2rem]  border-solid  md:border-t-[0.3rem] border-[black] animate-spin"></div>
+          {loading[index] && (
+            <div className="rounded-[100%] sm:h-[7vw] sm:border-t-[1vw] sm:w-[7vw] md:h-[2rem] md:w-[2rem] border-solid md:border-t-[0.3rem] border-[black] animate-spin"></div>
           )}
         </button>
       </div>{" "}

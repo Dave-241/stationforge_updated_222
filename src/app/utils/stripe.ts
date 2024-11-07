@@ -32,39 +32,44 @@ function getNextMonthTimestamp() {
   return Math.floor(nextMonth.getTime() / 1000);
 }
 
-export const pay_standard_Subscriptions: any = async (
-  userid: string,
-  email: string,
+export const pay_standard_Subscriptions = async (
+  price: any,
+  userid: any,
+  email: any,
+  product_id: any, // still including product_id in case you need it in metadata
 ) => {
   const billing_url = `${
     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/"
-  }${"subscriptions"}`;
+  }subscriptions`;
 
-  const stripeSession = await stripe.checkout.sessions.create({
-    success_url: billing_url,
-    cancel_url: billing_url,
-    payment_method_types: ["card"],
-    mode: "subscription",
-    billing_address_collection: "auto",
-    customer_email: email,
-    line_items: [
-      {
-        price: process.env.NEXT_PUBLIC_STANDARD_PRICE,
-        quantity: 1,
+  // Use the single pricing plan for all products
+  // const price = process.env.NEXT_PUBLIC_STANDARD_PRICE;
+
+  try {
+    const stripeSession = await stripe.checkout.sessions.create({
+      success_url: billing_url,
+      cancel_url: billing_url,
+      payment_method_types: ["card"],
+      mode: "subscription",
+      billing_address_collection: "auto",
+      customer_email: email,
+      line_items: [
+        {
+          price, // single price ID from the environment variable
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        userId: userid,
+        product_id: product_id, // for tracking which product triggered the subscription
       },
-    ],
-    metadata: {
-      userId: userid,
-    },
-    // subscription_data: {
-    //   // Set the billing cycle anchor to the 1st of the next month
-    //   billing_cycle_anchor: getNextMonthTimestamp(),
-    //   // proration_behavior: "create_prorations",
-    // },
-  });
+    });
 
-  // console.log(stripeSession.url);
-  return { id: stripeSession.id };
+    return { id: stripeSession.id };
+  } catch (error) {
+    console.error("Error creating Checkout session:", error);
+    throw error;
+  }
 };
 
 export const pay_merchant_Subscriptions: any = async (
