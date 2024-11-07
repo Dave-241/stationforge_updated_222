@@ -48,7 +48,7 @@ const Products = (props: any) => {
     <>
       <div className="w-[68%] sm:w-full sm:border-none h-auto pb-[1vw] pt-[2vw]  border-r-[white] border-r-[0.1vw]  border-l-[white] border-l-[0.13vw] border-opacity-[10%]  flex flex-col gap-[1vw] sm:gap-[8vw]">
         <div className="w-full flex justify-between items-center px-[2vw]">
-          <h3 className="neuer text-[2.2vw] text-white sm:text-[5vw] sm:leading-[6vw]">
+          <h3 className="neuer text-xl text-white sm:text-[5vw] sm:leading-[6vw]">
             All New Models <br className="sm:block hidden" /> (
             {currentMonthName})
           </h3>
@@ -113,17 +113,17 @@ const Products = (props: any) => {
             className="h-[12vw] w-full  sm:block hidden placeholder:text-white text-white neuer text-[3.5vw] outline-none focus:border transition duration-[0.8s] pl-[12vw] pr-[1vw]  rounded-[7vw] backdrop-blur-[15px] bg-[white] bg-opacity-[10%] "
           />
         </div>
-        <div className="h-[0.1vw] bg-white  bg-opacity-[10%] w-full sm:hidden"></div>
+        <div className="h-[0.1rem] bg-white  bg-opacity-[10%] w-full sm:hidden"></div>
 
-        <div className="w-full  flex flex-wrap justify-start px-[1.8vw] sm:px-0 gap-[1.7vw] sm:gap-[3vw] ">
+        <div className="w-full  flex flex-wrap justify-start px-[1.8vw] sm:px-0 gap-[1.7rem] sm:gap-[3vw] ">
           {is_network_err && (
-            <div className="w-full h-[23vw] sm:text-[3.5vw]  flex justify-center items-center text-[white] neuer text-opacity-[70%] text-[1.4vw]">
+            <div className="w-full py-[10rem]  flex justify-center items-center text-[white] neuer text-opacity-[70%] ">
               Something went wrong, Kindly refresh this page
             </div>
           )}
           {products.length == 0 && !product_is_loading && (
-            <div className=" w-full sm:h-[40vw] h-[25vw] flex justify-center items-center ">
-              <p className="text-white text-[1.2vw] sm:text-[4vw] neuer text-opacity-[70%]">
+            <div className=" w-full py-[10rem] flex justify-center items-center ">
+              <p className="text-white  neuer text-opacity-[70%]">
                 No product to show
               </p>
             </div>
@@ -135,14 +135,14 @@ const Products = (props: any) => {
                 <>
                   <div
                     key={index}
-                    className="lg:w-[32%] mb-[1rem] md:mb-[1.2rem] sm:w-[48.5%] group    sm:gap-[3vw] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2rem]"
+                    className="lg:w-[32%] mb-[1rem] md:mb-[1.2rem] sm:w-[48.5%] group    gap-[1.2rem] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col  rounded-[2rem]"
                     onClick={() => {
                       setpage_loader(true);
                       // route.push(``);
                     }}
                   >
                     <div
-                      className="w-full  avater_bg sm:h-[15rem] h-[20rem] overflow-hidden"
+                      className="w-full  avater_bg sm:h-[10rem] h-[20rem] overflow-hidden"
                       style={{ backgroundImage: "url(/cover.webp)" }}
                     >
                       <Image
@@ -154,14 +154,14 @@ const Products = (props: any) => {
                         className="w-full h-full object-cover group-hover:scale-[1.05] duration-[0.5s] transition"
                       />
                     </div>
-                    <div className="w-full flex-col px-[1rem] pb-[0.5rem] flex md:gap-[1.2rem] gap-[1rem] md:pb-[1.4rem]">
+                    <div className="w-full flex-col px-[1rem] flex md:gap-[1.2rem] gap-[1rem] pb-[1.4rem]">
                       <p className="neuem md:text-base text-sm text-white capitalize">
                         {e.title}
                       </p>
-                      <div className="w-full items-center  flex justify-between">
+                      <div className="w-full items-center gap-[1rem]  flex justify-between">
                         <Link
                           href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
-                          className="bg-[#CCFF00] text-sm hover:bg-opacity-[70%]  sm:py-[1.2vw] sm:px-[5vw] sm:rounded-[3vw]   rounded-[1.2vw] py-[0.6vw] px-[1.8vw] neuer text-black w-fit h-fit text-[1vw]"
+                          className="bg-[#CCFF00] md:text-sm text-xs hover:bg-opacity-[70%]  sm:py-[1.2vw] sm:px-[5vw] sm:rounded-[3vw]   rounded-[1.2rem] py-[0.6rem] px-[1.8rem] neuer text-black w-fit h-fit text-[1vw]"
                         >
                           View
                         </Link>
