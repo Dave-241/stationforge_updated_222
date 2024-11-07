@@ -15,8 +15,11 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
 import TailwindLoader from "./tailwind_loader";
 import Delete_tier_modal from "./delete_tier_modal";
+import Stripe from "stripe";
 
 const All_tiers = () => {
+  const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || "");
+
   const router = useRouter();
   const { setpage_loader }: any = useProfile_Context();
   // Initialize Firestore
@@ -54,7 +57,13 @@ const All_tiers = () => {
     return () => unsubscribe();
   }, [setpage_loader]);
 
-  const update_hidden = async (id: any, status: any) => {
+  const update_hidden = async (id: any, status: any, stripe_id: any) => {
+    // Update the subscription to pause it
+    console.log(stripe_id);
+    await stripe.products.update(stripe_id, {
+      active: !status,
+    });
+
     // Step 6: Update parent document (tiers)
     await updateDoc(doc(db, "tiers", id), {
       hidden: status,
@@ -102,7 +111,7 @@ const All_tiers = () => {
                   <div className="flex gap-[1rem]">
                     <button
                       onClick={() => {
-                        update_hidden(tier.id, true);
+                        update_hidden(tier.id, true, tier.product_id);
                       }}
                       className="text-xl hover:text-[#95B611]"
                     >
@@ -168,7 +177,7 @@ const All_tiers = () => {
                   <div className="flex gap-[1rem]">
                     <button
                       onClick={() => {
-                        update_hidden(tier.id, false);
+                        update_hidden(tier.id, false, tier.product_id);
                       }}
                       className=" hover:text-[#95B611] text-xl"
                     >

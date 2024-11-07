@@ -38,6 +38,7 @@ const Add_subscription_tiers = () => {
     setValue(newValue);
     const plainText = editor.getContent({ format: "text" }); // Extract plain text
     setPlainTextValue(plainText);
+    console.log("playtest", plainText);
   };
 
   // Function to create subscription tier on Stripe
