@@ -108,29 +108,26 @@ export const pay_merchant_Subscriptions: any = async (
   return { id: stripeSession.id };
 };
 
-export const manage_subscription: any = async (customerid: string) => {
-  const billing_url = `${
-    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/"
-  }${"subscriptions"}`;
+export const manageSubscription = async (customerid: string) => {
+  try {
+    // Define the return URL to which the user will be redirected after managing their subscription
+    const returnUrl = process.env.NEXT_PUBLIC_APP_URL
+      ? `${process.env.NEXT_PUBLIC_APP_URL}/subscriptions`
+      : "http://localhost:3000/subscriptions";
 
-  const stripeSession = await stripe.billingPortal.sessions.create({
-    customer: customerid,
-    return_url: billing_url,
-  });
-  return { url: stripeSession.url };
+    // Create a billing portal session with Stripe for the customer
+    const stripeSession = await stripe.billingPortal.sessions.create({
+      customer: customerid,
+      return_url: returnUrl,
+    });
+
+    // Return the billing portal URL
+    return { url: stripeSession.url };
+  } catch (error) {
+    console.error("Error creating Stripe billing portal session:", error);
+    throw error;
+  }
 };
-
-// export const upgrade_subscriptions: any = async (customerid: string) => {
-//   const billing_url = `${
-//     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000/"
-//   }${"subscriptions"}`;
-
-//   const subscriptions = await stripe.subscriptions.list({
-//     customer: customerid,
-//   });
-
-//   return { url: subscriptions.url };
-// };
 
 export const renew_subscription: any = async (
   customerid: string,

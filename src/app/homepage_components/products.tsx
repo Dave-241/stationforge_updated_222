@@ -128,7 +128,7 @@ const Products = (props: any) => {
             </div>
           )}
 
-          <div className=" w-full flex-wrap xl:justify-start xl:gap-[1.5%] justify-between flex">
+          <div className=" w-full flex-wrap md:justify-start gap-[1.5%] justify-between flex">
             {products.map((e: any, index: any) => {
               return (
                 <>

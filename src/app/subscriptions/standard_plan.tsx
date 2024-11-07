@@ -1,23 +1,26 @@
 "use client ";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import stan_1_old from "../../../public/subscription/stan_1.webp";
 import stan_1 from "../../../public/subscription/mer_1.webp";
 
-import stan_2 from "../../../public/subscription/stan_2.webp";
-import stan_3 from "../../../public/subscription/stan_3.webp";
-import stan_4 from "../../../public/subscription/stan_4.webp";
-import stan_5 from "../../../public/subscription/stan_5.webp";
 import { useRouter } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 import {
-  manage_subscription,
+  manageSubscription,
   pay_standard_Subscriptions,
-  renew_subscription,
-  stripe,
 } from "../utils/stripe";
 import { useProfile_Context } from "../utils/profile_context";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import firebaseConfig from "../utils/fire_base_config";
 // Initialize Stripe once at the top of your module, outside of your function
 const pusblishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "";
 const stripePromise = loadStripe(pusblishableKey);
@@ -27,24 +30,54 @@ const StandardPlan = ({
   email,
   uuid,
   plan,
-  customer,
   current_subscription_plain,
-  standard_isloading,
-  setstandard_isloading,
   index,
   loading,
   setloading,
 }: any) => {
   const { setpage_loader, Add_notification }: any = useProfile_Context();
+  const [customer, setCustomer] = useState<string | null>(null);
+  const app = initializeApp(firebaseConfig);
 
+  const db = getFirestore(app);
+
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      try {
+        // Reference to the collection in Firestore
+        const collectionRef = collection(db, "user_subscription_webhook");
+
+        // Create a query to find the document with the specified email and priceId
+        const q = query(
+          collectionRef,
+          where("email", "==", email),
+          where("price_id", "==", plan.monthly_price_id),
+        );
+
+        // Fetch the documents
+        const querySnapshot = await getDocs(q);
+        console.log(email, plan.monthly_price_id);
+        // Check if the document exists and update state with the customer field
+        if (!querySnapshot.empty) {
+          const docData = querySnapshot.docs[0].data(); // Assuming only one match
+          setCustomer(docData.customer); // Store the customer field in state
+
+          console.log(docData);
+        } else {
+          console.log("No matching document found.");
+        }
+      } catch (error) {
+        console.error("Error fetching customer data:", error);
+      }
+    };
+
+    // Fetch customer data if email and priceId are provided
+    if (email && plan.monthly_price_id) {
+      fetchCustomerData();
+    }
+  }, [email, plan.monthly_price_id]);
   const router = useRouter();
 
-  function getNextMonthTimestamp() {
-    const currentDate = new Date();
-    const nextMonth = new Date(currentDate);
-    nextMonth.setMonth(currentDate.getMonth() + 1, 1); // Set to 1st day of next month
-    return Math.floor(nextMonth.getTime() / 1000); // Convert to Unix timestamp (in seconds)
-  }
   // Function to set individual loading state for an item
   const handleLoadingState = (index: number, state: boolean) => {
     const newLoadingState = [...loading];
@@ -91,68 +124,32 @@ const StandardPlan = ({
       handleLoadingState(index, false); // Set loading to false for this item
     }
   };
-  const manage_merchant_subscriptions = async () => {
-    if (customer != "") {
-      try {
-        setstandard_isloading(true);
 
-        const manage_session = await manage_subscription(customer);
-        const pusblishablekey: any =
-          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-        const stripe_promise = loadStripe(pusblishablekey);
-
-        const stripe = await stripe_promise;
-        if (manage_session.url && stripe) {
-          router.push(manage_session.url);
-        }
-      } catch (error: any) {
-        setstandard_isloading(false);
-
-        console.error("Error creating Checkout session:", error);
-        if (error && error.raw && error.raw.message) {
-          console.error("Stripe API Error Message:", error.raw.message);
-        }
-        throw error;
-      }
-    } else {
-      setstandard_isloading(false);
-
+  const manage_subscription = async (index: number) => {
+    if (!uuid || !email || !plan.product_id) {
+      console.warn("UUID, Email, or Product ID missing.");
+      handleLoadingState(index, false); // Set loading to false for this item
       return;
     }
-  };
 
-  const renew_subscription_to_standard = async () => {
-    if (customer != "") {
-      try {
-        setstandard_isloading(true);
-        const pusblishablekey: any =
-          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-        const stripe_promise = loadStripe(pusblishablekey);
-        const stripe = await stripe_promise;
-        const session_url = await renew_subscription(
-          customer,
-          uuid,
-          email,
-          process.env.NEXT_PUBLIC_STANDARD_PRICE,
-        );
-        if (session_url.id) {
-          const result = await stripe?.redirectToCheckout({
-            sessionId: session_url.id,
-          });
-        }
-      } catch (error: any) {
-        setstandard_isloading(false);
+    try {
+      handleLoadingState(index, true); // Set loading to true for this item
+      Add_notification("Initiated standard subscription");
 
-        console.error("Error creating Checkout session:", error);
-        if (error && error.raw && error.raw.message) {
-          console.error("Stripe API Error Message:", error.raw.message);
-        }
-        throw error;
+      // Fetch the Stripe session URL using the product_id
+      const session_url = await manageSubscription("cus_RAlhqOHiyFDBNt");
+
+      // Proceed only if session URL is successfully retrieved
+      if (session_url.url) {
+        const stripe = await stripePromise;
+
+        router.push(session_url.url);
       }
-    } else {
-      setstandard_isloading(false);
-
-      return;
+    } catch (error: any) {
+      handleLoadingState(index, false); // Set loading to false for this item
+      console.error("Error creating Checkout session:", error);
+    } finally {
+      handleLoadingState(index, false); // Set loading to false for this item
     }
   };
 
@@ -216,7 +213,7 @@ const StandardPlan = ({
             `}
             // dangerouslySetInnerHTML={{ __html: plan.description }}
             dangerouslySetInnerHTML={{
-              __html: isExpanded ? plan.description : trimmed_text,
+              __html: isExpanded ? plan.description : trimmed_text + "...",
             }}
           ></div>
 
@@ -237,23 +234,13 @@ const StandardPlan = ({
               router.push("/login?ref=subscription");
             } else if (!customer) {
               paynow(index);
-            } else if (customer && currentplan == 1) {
-              renew_subscription_to_standard();
-            } else if (
-              (customer != "" && currentplan == 3) ||
-              currentplan == 4
-            ) {
-              manage_merchant_subscriptions();
+            } else if (customer) {
+              manage_subscription(index);
             }
           }}
         >
           {!customer && "Join"}
-          {customer &&
-            currentplan == 1 &&
-            current_subscription_plain == "Public user" &&
-            "Renew subscription"}
-          {customer && currentplan == 3 && "Manage active subscription "}
-          {customer && currentplan == 4 && "Downgrade subscription "}
+          {customer && "Manage Teir"}
 
           {loading[index] && (
             <div className="rounded-[100%] sm:h-[7vw] sm:border-t-[1vw] sm:w-[7vw] md:h-[2rem] md:w-[2rem] border-solid md:border-t-[0.3rem] border-[black] animate-spin"></div>

@@ -1,5 +1,4 @@
 import { stripe, update_user_doc } from "@/app/utils/stripe";
-import { Console } from "console";
 import { headers } from "next/headers";
 import Cors from "micro-cors";
 import nodemailer from "nodemailer";
@@ -8,10 +7,10 @@ import type Stripe from "stripe";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   getFirestore,
-  onSnapshot,
   query,
   serverTimestamp,
   updateDoc,
@@ -19,9 +18,7 @@ import {
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/utils/fire_base_config";
-import { useEffect } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useProfile_Context } from "@/app/utils/profile_context";
+
 const cors = Cors({
   allowMethods: ["POST", "HEAD"],
 });
@@ -29,7 +26,6 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore
 const db = getFirestore(app);
-const auth: any = getAuth();
 export async function POST(request: Request) {
   // Function to calculate the Unix timestamp for the 1st day of the next month
   function getNextMonthTimestamp() {
@@ -54,171 +50,74 @@ export async function POST(request: Request) {
     );
   }
 
-  //   this is the funtion to update on after the webhook
-  // const update_user_doc = async (
-  //   e: number,
-  //   id: string,
-  //   type: string,
-  //   subscriptionid: string,
-  //   subscriptionCancel: boolean,
-  // ) => {
-  //   try {
-  //     const userQuery = query(
-  //       collection(db, "users"),
-  //       where("userid", "==", id),
-  //     );
-  //     const userDocs = await getDocs(userQuery);
-  //     // console.log(userDocs);
-  //     if (userDocs.empty) {
-  //       console.log("No user document found for the current user");
-  //       return;
-  //     }
-
-  //     const userDocRef = doc(db, "users", userDocs.docs[0].id);
-  //     await updateDoc(userDocRef, {
-  //       subscribedAt: serverTimestamp(),
-  //       step: e,
-  //       subscriptionCancelled: subscriptionCancel,
-  //       subscription: type,
-  //       allocations: 30,
-  //       subscriptionId: subscriptionid,
-  //       // no_of_subscriptions: 1,
-  //     });
-
-  //     // Add_notification("has completed first subscription");
-  //   } catch (error) {
-  //     console.error("Error updating user document:", error);
-  //     throw error;
-  //   }
-  // };
-
   //   this function updates t when the user either cancels or renews subscriptions
-  const Cancel_subscription = async (
-    subscriptionid: string,
-    cancelled: boolean,
-    step: number,
-    subscription_no: number,
-    subscription: string,
-  ) => {
+  const deleteUserSubscription = async (email: string, priceId: string) => {
     try {
-      const userQuery = query(
-        collection(db, "users"),
-        where("subscriptionId", "==", subscriptionid),
+      const subscriptionCollection = collection(
+        db,
+        "user_subscription_webhook",
       );
-      const userDocs = await getDocs(userQuery);
-      if (userDocs.empty) {
-        console.log("No user document found for the current user");
-        return;
-      }
-      const current_number = userDocs.docs[0].data().no_of_subscriptions;
 
-      const userDocRef = doc(db, "users", userDocs.docs[0].id);
-      await updateDoc(userDocRef, {
-        step: step,
-        subscriptionCancelled: cancelled,
-        // no_of_subscriptions: current_number + subscription_no,
-        subscription: subscription,
-        cancelledAt: serverTimestamp(),
+      // Query to find the document with matching email and price_id
+      const q = query(
+        subscriptionCollection,
+        where("email", "==", email),
+        where("price_id", "==", priceId),
+      );
+
+      const querySnapshot = await getDocs(q);
+
+      // Loop through the matched documents and delete them
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
       });
+
+      console.log(
+        `Subscription document with email: ${email} and price_id: ${priceId} deleted successfully.`,
+      );
     } catch (error) {
-      console.error("Error updating user document:", error);
+      console.error("Error deleting subscription document:", error);
       throw error;
     }
   };
-  //   this function updates t when the user either cancels or renews subscriptions
+
   const update_users_info = async (
     Email: string,
-    cancelled: boolean,
-    step: number,
-    subscriptionid: boolean,
-    subscription: string,
-  ) => {
-    try {
-      const userQuery = query(
-        collection(db, "users"),
-        where("Email", "==", Email),
-      );
-      const userDocs = await getDocs(userQuery);
-      if (userDocs.empty) {
-        console.log("No user document found for the current user");
-        return;
-      }
-      // const current_number = userDocs.docs[0].data().no_of_subscriptions;
-
-      const userDocRef = doc(db, "users", userDocs.docs[0].id);
-      await updateDoc(userDocRef, {
-        subscribedAt: serverTimestamp(),
-        step: step,
-        subscriptionCancelled: cancelled,
-        subscriptionId: subscriptionid,
-        subscription: subscription,
-        allocations: 30,
-      });
-    } catch (error) {
-      console.error("Error updating user document:", error);
-      throw error;
-    }
-  };
-  const update_users_info_without_increasing_allocation = async (
-    Email: string,
-    cancelled: boolean,
-    step: number,
-    subscriptionid: boolean,
-    subscription: string,
-  ) => {
-    try {
-      const userQuery = query(
-        collection(db, "users"),
-        where("Email", "==", Email),
-      );
-      const userDocs = await getDocs(userQuery);
-      if (userDocs.empty) {
-        console.log("No user document found for the current user");
-        return;
-      }
-      // const current_number = userDocs.docs[0].data().no_of_subscriptions;
-
-      const userDocRef = doc(db, "users", userDocs.docs[0].id);
-      await updateDoc(userDocRef, {
-        subscribedAt: serverTimestamp(),
-        step: step,
-        subscriptionCancelled: cancelled,
-        subscriptionId: subscriptionid,
-        subscription: subscription,
-      });
-    } catch (error) {
-      console.error("Error updating user document:", error);
-      throw error;
-    }
-  };
-
-  const update_sub_renewal = async (
+    customer: string,
     subscriptionid: string,
-    cancelled: boolean,
-    step: number,
-    update_allocation: boolean,
-    subscription: string,
   ) => {
     try {
-      const userQuery = query(
-        collection(db, "users"),
-        where("subscriptionId", "==", subscriptionid),
+      // Reference to the Firestore collection
+      const subscriptionCollection = collection(
+        db,
+        "user_subscription_webhook",
       );
-      const userDocs = await getDocs(userQuery);
-      if (userDocs.empty) {
-        console.log("No user document found for the current user");
-        return;
-      }
-      const current_number = userDocs.docs[0].data().no_of_subscriptions;
 
-      const userDocRef = doc(db, "users", userDocs.docs[0].id);
-      await updateDoc(userDocRef, {
-        subscribedAt: serverTimestamp(),
-        step: step,
-        subscriptionCancelled: cancelled,
-        allocations: 30,
-        subscription: subscription,
-      });
+      // Query to check if there is an existing document with the given email and price_id
+      const existingSubscriptionQuery = query(
+        subscriptionCollection,
+        where("email", "==", Email),
+        where("price_id", "==", subscriptionid),
+      );
+
+      // Execute the query
+      const querySnapshot = await getDocs(existingSubscriptionQuery);
+
+      // If no matching documents are found, add a new document
+      if (querySnapshot.empty) {
+        await addDoc(subscriptionCollection, {
+          email: Email,
+          price_id: subscriptionid,
+          createdAt: serverTimestamp(),
+          active: true,
+          customer: customer,
+        });
+        console.log("New subscription document created.");
+      } else {
+        console.log(
+          "Subscription document already exists for this email and price_id.",
+        );
+      }
     } catch (error) {
       console.error("Error updating user document:", error);
       throw error;
@@ -284,18 +183,6 @@ export async function POST(request: Request) {
     await transporter.sendMail(emailOptions);
   };
 
-  const update_transaction = (amount: number, plan: any) => {
-    const transaction_ref = collection(db, "transaction");
-
-    addDoc(transaction_ref, {
-      amount: amount / 100,
-      createdAt: serverTimestamp(),
-      plan: plan,
-    }).catch((err) => {
-      console.log(err);
-    });
-  };
-
   switch (event.type) {
     case "checkout.session.completed":
       const checkoutSessionCompleted = event.data.object;
@@ -303,41 +190,18 @@ export async function POST(request: Request) {
         session.subscription as string,
       );
 
-      // console.log(subscription.plan.id, session.metadata.userId);
-      // if (subscription.plan.id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-      //   update_user_doc(
-      //     4,
-      //     session.metadata.userId,
-      //     "Merchant tier",
-      //     session.customer,
-      //     false,
-      //   );
-      // } else if (
-      //   subscription.plan.id == process.env.NEXT_PUBLIC_STANDARD_PRICE
-      // ) {
-      //   update_user_doc(
-      //     3,
-      //     session.metadata.userId,
-      //     "Standard tier",
-      //     session.customer,
-      //     false,
-      //   );
-      // }
-      // console.log("this is it " + subscription.id);
-
-      //   console.log("Checkout was completed just now ");
       // Then define and call a function to handle the event checkout.session.completed
       break;
     case "customer.subscription.deleted":
       //   console.log("this was urrent");
       const customerSubscriptionDeleted: any = await event.data.object;
 
-      Cancel_subscription(
-        customerSubscriptionDeleted.customer,
-        true,
-        1,
-        0,
-        "Public user",
+      const deleted_plain_id = await customerSubscriptionDeleted.items.data[0]
+        .price.id;
+
+      deleteUserSubscription(
+        customerSubscriptionDeleted.email,
+        deleted_plain_id,
       );
 
       // Then define and call a function to handle the event customer.subscription.deleted
@@ -359,7 +223,6 @@ export async function POST(request: Request) {
 
       const next_first_month = await getNextMonthTimestamp();
 
-      const currentTimestamp = Math.floor(new Date().getTime() / 1000);
       console.log(trial_end, next_first_month, billing_anchor);
       // Check if the subscription is still in trial
 
@@ -382,52 +245,11 @@ export async function POST(request: Request) {
         );
       }
 
-      // if (!billing_anchor || billing_anchor == next_first_month) {
-      //   return;
-      // } else {
-      //   const subscription_created = await stripe.subscriptions.update(
-      //     customerSubscriptionUpdated.id,
-      //     {
-      //       trial_end: getNextMonthTimestamp(),
-      //       proration_behavior: "none",
-      //     },
-      //   );
-
-      //   console.log(subscription_created);
-      // }
-
-      // checkBillingCycleAnchor(billing_anchor);
-      // Check if the subscription status is "canceled"
-      // if (customerSubscriptionUpdated.items.data[0].status === "canceled") {
-      //   break;
-      // } else {
-      //   const plain_id = customerSubscriptionUpdated.items.data[0].price.id;
-      //   // console.log(plain_id);
-
-      //   if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-      //     update_users_info(
-      //       customerSubscriptionUpdated.customer,
-      //       false,
-      //       4,
-      //       true,
-      //       "Merchant tier",
-      //     );
-      //   } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-      //     update_users_info(
-      //       customerSubscriptionUpdated.customer,
-      //       false,
-      //       3,
-      //       false,
-      //       "Standard tier",
-      //     );
-      //   }
-      // }
-
       // Then define and call a function to handle the event customer.subscription.updated
       break;
     case "invoice.payment_succeeded":
       const invoicePaymentSucceeded: any = await event.data.object;
-      // console.log("this just ran sha ", invoicePaymentSucceeded.amount_paid);
+
       // Check if subscription is available in the invoicePaymentSucceeded object
       const subscriptionId = await invoicePaymentSucceeded.subscription;
       // Fetch the subscription details from Stripe
@@ -438,100 +260,33 @@ export async function POST(request: Request) {
         .id;
 
       // Use currentPlanId for further processing
-      console.log(invoicePaymentSucceeded.billing_reason);
-
-      // this must run
-      if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-        update_transaction(
-          invoicePaymentSucceeded.amount_paid > 0 &&
-            invoicePaymentSucceeded.amount_paid,
-          "Merchant",
-        );
-      } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-        update_transaction(
-          invoicePaymentSucceeded.amount_paid > 0 &&
-            invoicePaymentSucceeded.amount_paid,
-          "Standard",
-        );
-      }
+      console.log(
+        invoicePaymentSucceeded,
+        "this is the detail you are looing for ",
+      );
 
       if (
         invoicePaymentSucceeded.billing_reason == "subscription_cycle" ||
         invoicePaymentSucceeded.billing_reason == "subscription_create"
       ) {
-        if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-          update_users_info(
-            invoicePaymentSucceeded.customer_email,
-            false,
-            4,
-            invoicePaymentSucceeded.customer,
-            "Merchant tier",
-          );
-        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-          update_users_info(
-            invoicePaymentSucceeded.customer_email,
-            false,
-            3,
-            invoicePaymentSucceeded.customer,
-            "Standard tier",
-          );
-        }
-      } else if (
-        invoicePaymentSucceeded.billing_reason == "subscription_update"
-      ) {
-        if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-          update_users_info_without_increasing_allocation(
-            invoicePaymentSucceeded.customer_email,
-            false,
-            4,
-            invoicePaymentSucceeded.customer,
-            "Merchant tier",
-          );
-        } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-          update_users_info_without_increasing_allocation(
-            invoicePaymentSucceeded.customer_email,
-            false,
-            3,
-            invoicePaymentSucceeded.customer,
-            "Standard tier",
-          );
-        }
+        update_users_info(
+          invoicePaymentSucceeded.customer_email,
+          invoicePaymentSucceeded.customer,
+          plain_id,
+        );
       }
-      //  else {
-      //   // Retrieve customer details to get metadata
-      //   // continue from here
-      //   if (plain_id == process.env.NEXT_PUBLIC_MERCHANT_PRICE) {
-      //     update_users_info(
-      //       invoicePaymentSucceeded.customer,
-      //       false,
-      //       4,
-      //       true,
-      //       "Merchant tier",
-      //     );
-      //     update_transaction(
-      //       invoicePaymentSucceeded.amount_paid > 0 &&
-      //         invoicePaymentSucceeded.amount_paid,
-      //       "Merchant",
-      //     );
-      //   } else if (plain_id == process.env.NEXT_PUBLIC_STANDARD_PRICE) {
-      //     update_users_info(
-      //       invoicePaymentSucceeded.customer,
-      //       false,
-      //       3,
-      //       false,
-      //       "Standard tier",
-      //     );
-      //     update_transaction(
-      //       invoicePaymentSucceeded.amount_paid > 0 &&
-      //         invoicePaymentSucceeded.amount_paid,
-      //       "Standard",
-      //     );
-      //   }
 
-      //   break;
+      //  else if (
+      //   invoicePaymentSucceeded.billing_reason == "subscription_update"
+      // ) {
+      //   update_users_info_without_increasing_allocation(
+      //     invoicePaymentSucceeded.customer_email,
+      //     false,
+      //     4,
+      //     invoicePaymentSucceeded.customer,
+      //     "Merchant tier",
+      //   );
       // }
-
-      // console.log(invoicePaymentSucceeded.billing_reason, plain_id);
 
       // Then define and call a function to handle the event invoice.payment_succeeded
       break;
@@ -543,8 +298,6 @@ export async function POST(request: Request) {
         customer: invoicePaymentfailed.customer,
         return_url: billing_url, // Specify the return URL after the customer updates their information
       });
-
-      //   console.log(invoicePaymentfailed.customer); // Then define and call a function to handle the event invoice.payment_succeeded
 
       sendmails_when_invoice_fails(
         invoicePaymentfailed.customer,
