@@ -136,13 +136,9 @@ const Products = (props: any) => {
                   <div
                     key={index}
                     className="lg:w-[32%] mb-[1rem] md:mb-[1.2rem] sm:w-[48.5%] group    gap-[1.2rem] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col  rounded-[2rem]"
-                    onClick={() => {
-                      setpage_loader(true);
-                      // route.push(``);
-                    }}
                   >
                     <div
-                      className="w-full  avater_bg sm:h-[10rem] h-[20rem] overflow-hidden"
+                      className="w-full  avater_bg sm:h-[11rem] h-[20rem] overflow-hidden"
                       style={{ backgroundImage: "url(/cover.webp)" }}
                     >
                       <Image
@@ -158,9 +154,13 @@ const Products = (props: any) => {
                       <p className="neuem md:text-base text-sm text-white capitalize">
                         {e.title}
                       </p>
-                      <div className="w-full items-center gap-[1rem]  flex justify-between">
+                      <div className="w-full items-center gap-[1rem] md:gap-[1rem] flex justify-between">
                         <Link
                           href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
+                          onClick={() => {
+                            setpage_loader(true);
+                            // route.push(``);
+                          }}
                           className="bg-[#CCFF00] md:text-sm text-xs hover:bg-opacity-[70%]  sm:py-[1.2vw] sm:px-[5vw] sm:rounded-[3vw]   rounded-[1.2rem] py-[0.6rem] px-[1.8rem] neuer text-black w-fit h-fit text-[1vw]"
                         >
                           View
