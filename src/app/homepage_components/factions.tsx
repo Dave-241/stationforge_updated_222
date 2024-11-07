@@ -17,8 +17,8 @@ const Fractions = ({
 
   return (
     <div className="relative w-[32%] sm:hidden">
-      <div className="w-full h-auto pb-[1vw]  pt-[2vw] px-[1vw] sticky top-[8vw] flex flex-col gap-[1vw]">
-        <h3 className="neuer text-[2vw] pb-[0.3vw] text-white">Factions</h3>
+      <div className="w-full h-auto pb-[1rem]  pt-[2rem] px-[1rem] sticky top-[4rem] flex flex-col gap-[1rem]">
+        <h3 className="neuer text-4xl pb-[0.3rem] text-white">Factions</h3>
 
         <div className="h-[0.1vw] bg-white bg-opacity-[10%] w-full"></div>
 
@@ -46,10 +46,10 @@ const Fractions = ({
           })}
         </div>
 
-        <p className="text-[1.5vw] pt-[1vw] neuer text-white">Sub Factions</p>
-        <div className="w-full rounded-[2vw]  bg-[#111111] min-h-[10vw] flex-wrap flex justify-start items-center gap-[0.6vw] py-[2vw] px-[0.3vw]">
+        <p className="text-2xl pt-[1rem] neuer text-white">Sub Factions</p>
+        <div className="w-full rounded-[2rem]  bg-[#111111] min-h-[10rem] flex-wrap flex justify-start items-center gap-[1.3%]  pt-[1rem] px-[2%]">
           {sub_faction_arr?.length == 0 && (
-            <p className="neuer text-[1.1vw] text-white text-center w-full">
+            <p className="neuer pb-[1rem] text-white text-center w-full">
               Non Available
             </p>
           )}
@@ -58,7 +58,7 @@ const Fractions = ({
             return (
               <div
                 key={index}
-                className="w-[9vw] flex justify-center items-center rounded-[1.2vw] h-[4vw] text-white text-opacity-[70%] neuer  cursor-pointer hover:bg-opacity-[50%]"
+                className="lg:w-[31%] md:w-[48%] flex mb-[1rem] justify-center items-center rounded-[1.2rem] h-[4rem] text-white text-opacity-[70%] neuer  cursor-pointer hover:bg-opacity-[50%]"
                 style={{
                   backgroundColor:
                     active_sub_faction == e ? "#CCFF00" : "black",
@@ -70,7 +70,7 @@ const Fractions = ({
                   // setselected_sub_faction(e);
                 }}
               >
-                <p className="text-center neuer text-[1vw] ">{e}</p>
+                <p className="text-center neuer  ">{e}</p>
               </div>
             );
           })}
