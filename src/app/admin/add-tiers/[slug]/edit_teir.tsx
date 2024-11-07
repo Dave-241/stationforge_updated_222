@@ -28,6 +28,9 @@ const Edit_teir = ({ id }: any) => {
   const [value, setValue] = useState("");
   const [value_copy, setValue_copy] = useState("");
   const [plainTextValue, setPlainTextValue] = useState("");
+
+  // Initializing the editor key with 0 to force re-render when updated
+  const [editorKey, setEditorKey] = useState(0);
   const [tierName, setTierName] = useState("");
   const [seatLimit, setSeatLimit] = useState("");
   const [pricePerMonth, setPricePerMonth] = useState<any>("");
@@ -49,6 +52,9 @@ const Edit_teir = ({ id }: any) => {
           setValue(data.description || "");
           setValue_copy(data.description || "");
           console.log(data.description);
+
+          // Trigger editor re-render after data is loaded
+          setEditorKey((prevKey) => prevKey + 1);
 
           setSeatLimit(data.seat_limit || "");
           setPricePerMonth(data.pricePerMonth || "");
@@ -182,8 +188,11 @@ const Edit_teir = ({ id }: any) => {
                 apiKey="o6poh8mrrg3olm60uzci8redu8zma5ystr23b8f78hku2msu"
                 onEditorChange={onEditorInputChange}
                 value={value}
-                initialValue="Enter description *"
-                onInit={(evt, editor) => setValue(value_copy)} // Sets the value when the editor is initialized
+                key={editorKey} // Re-renders the editor after data loads
+                init={{
+                  placeholder: "Enter description *",
+                  height: 300,
+                }}
               />
             </div>
 

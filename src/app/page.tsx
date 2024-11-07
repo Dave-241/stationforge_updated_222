@@ -165,277 +165,85 @@ export default function Home() {
     // setsecond_copy_products(products);
   }, [products]);
 
-  const fetchProductsBasedOnSubscription = async (userId: any) => {
+  useEffect(() => {
+    // setproduct_is_loading(true);
     const db = getFirestore();
-    const usersRef = collection(db, "users");
-    const productsRef = collection(db, "products");
+    const tiersRef = collection(db, "tiers");
 
-    // Create a query to find the user document where user_id == userId
-    const userQuery = query(usersRef, where("userid", "==", userId));
+    // Get current year and month
+    const currentYear = new Date().getFullYear().toString();
+    const currentMonth = new Date().getMonth() + 1;
 
-    // Fetch the user's document
-    const userSnapshot = await getDocs(userQuery);
-    if (userSnapshot.empty) {
-      console.log("No such user!");
-      return;
-    }
-
-    const userDoc = userSnapshot.docs[0];
-    const subscriptionHistory = userDoc.data().subscription_history;
-    let productsArray: any = [];
-
-    // Check for products in the current month
-    const startOfMonth = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      1,
-    );
-    const endOfMonth = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth() + 1,
-      0,
+    // Query to filter tiers collection
+    const tierQuery = query(
+      tiersRef,
+      where("hidden", "==", false),
+      where("year", "==", currentYear),
+      where("month", "==", currentMonth.toString()),
     );
 
-    const currentMonthQuery = query(
-      productsRef,
-      orderBy("createdAt", "desc"),
-      where("createdAt", ">=", startOfMonth),
-      where("createdAt", "<=", endOfMonth),
-    );
+    console.log(currentYear, currentMonth);
+    // Listen for changes in the filtered "tiers" collection
+    const unsubscribeTiers = onSnapshot(tierQuery, (tierSnapshot) => {
+      const allFetchedProducts: any = []; // Accumulate final products with tier info
 
-    const currentMonthSnapshot = await getDocs(currentMonthQuery);
-    let currentMonthProducts = currentMonthSnapshot.docs.map((doc) => {
-      const { cover_png, title, factions, subfactions } = doc.data();
-      return {
-        id: doc.id,
-        cover_png,
-        title,
-        factions,
-        subfactions,
-      };
+      // setis_network_err(false);
+
+      tierSnapshot.forEach((tierDoc) => {
+        const { name } = tierDoc.data();
+        const tierId = tierDoc.id;
+        // Fetch documents in "tier_product_category" where tier_id matches current tier ID
+        const tierProductCategoryRef = collection(db, "product_tier_category");
+        const tierProductQuery = query(
+          tierProductCategoryRef,
+          where("tier_id", "==", tierId),
+        );
+
+        onSnapshot(tierProductQuery, (tierProductSnapshot) => {
+          tierProductSnapshot.forEach((tierProductDoc) => {
+            const { modelId } = tierProductDoc.data();
+
+            // Fetch corresponding product in "products" collection using product_id
+            const productDocRef = doc(db, "products", modelId);
+            onSnapshot(
+              productDocRef,
+              (productDoc) => {
+                if (productDoc.exists()) {
+                  const productData = productDoc.data();
+
+                  // Add tier name to product data
+                  allFetchedProducts.push({
+                    id: productDoc.id,
+                    ...productData,
+                    name,
+                  });
+
+                  // Update products state with accumulated results
+                  setproducts([...allFetchedProducts]);
+                  setproduct_is_loading(false);
+                }
+              },
+              (error) => {
+                console.error("Error fetching product: ", error);
+                setis_network_err(true);
+                setproduct_is_loading(false);
+              },
+            );
+          });
+        });
+      });
     });
 
-    if (currentMonthProducts.length > 0) {
-      // If products are found in the current month, fetch all products from subscription history up to the previous month of the current month
-      productsArray = [...productsArray, ...currentMonthProducts];
-
-      for (const timestamp of subscriptionHistory) {
-        const date = new Date(timestamp.seconds * 1000);
-        const year = date.getFullYear();
-        const month = date.getMonth();
-
-        const startOfSubscriptionMonth = new Date(year, month, 1);
-        const endOfSubscriptionMonth = new Date(year, month + 1, 0);
-
-        const subscriptionMonthQuery = query(
-          productsRef,
-          orderBy("createdAt", "desc"),
-          where("createdAt", ">=", startOfSubscriptionMonth),
-          where("createdAt", "<=", endOfSubscriptionMonth),
-        );
-
-        const subscriptionMonthSnapshot = await getDocs(subscriptionMonthQuery);
-        const subscriptionMonthProducts = subscriptionMonthSnapshot.docs.map(
-          (doc) => {
-            const { cover_png, title, factions, subfactions } = doc.data();
-            return {
-              id: doc.id,
-              cover_png,
-              title,
-              factions,
-              subfactions,
-            };
-          },
-        );
-
-        productsArray = [...productsArray, ...subscriptionMonthProducts];
-      }
-    } else {
-      // If no products are found in the current month, fetch all products from the previous month
-      const startOfPrevMonth = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth() - 1,
-        1,
-      );
-      const endOfPrevMonth = new Date(
-        new Date().getFullYear(),
-        new Date().getMonth(),
-        0,
-      );
-
-      const previousMonthQuery = query(
-        productsRef,
-        orderBy("createdAt", "desc"),
-        where("createdAt", ">=", startOfPrevMonth),
-        where("createdAt", "<=", endOfPrevMonth),
-      );
-
-      const prevMonthSnapshot = await getDocs(previousMonthQuery);
-      const prevMonthProducts = prevMonthSnapshot.docs.map((doc) => {
-        const { cover_png, title, factions, subfactions } = doc.data();
-        return {
-          id: doc.id,
-          cover_png,
-          title,
-          factions,
-          subfactions,
-        };
-      });
-
-      productsArray = [...productsArray, ...prevMonthProducts];
-
-      // Fetch all products from subscription history up to the previous month of the previous month
-      for (const timestamp of subscriptionHistory) {
-        const date = new Date(timestamp.seconds * 1000);
-        const year = date.getFullYear();
-        const month = date.getMonth();
-
-        const startOfSubscriptionMonth = new Date(year, month, 1);
-        const endOfSubscriptionMonth = new Date(year, month + 1, 0);
-        const prevMonth = startOfPrevMonth.getMonth();
-        const prevYear = startOfPrevMonth.getFullYear();
-
-        const subMonth = startOfSubscriptionMonth.getMonth();
-        const subYear = startOfSubscriptionMonth.getFullYear();
-
-        // Compare year and month
-        if (prevYear === subYear && prevMonth === subMonth) {
-          continue;
-        }
-        const subscriptionMonthQuery = query(
-          productsRef,
-          orderBy("createdAt", "desc"),
-          where("createdAt", ">=", startOfSubscriptionMonth),
-          where("createdAt", "<=", endOfSubscriptionMonth),
-        );
-
-        const subscriptionMonthSnapshot = await getDocs(subscriptionMonthQuery);
-        const subscriptionMonthProducts = subscriptionMonthSnapshot.docs.map(
-          (doc) => {
-            const { cover_png, title, factions, subfactions } = doc.data();
-            return {
-              id: doc.id,
-              cover_png,
-              title,
-              factions,
-              subfactions,
-            };
-          },
-        );
-
-        console.log(
-          "this is checked by me though",
-          subscriptionMonthProducts,
-          startOfSubscriptionMonth,
-          startOfPrevMonth,
-          endOfPrevMonth,
-          endOfSubscriptionMonth,
-        );
-
-        productsArray = [...productsArray, ...subscriptionMonthProducts];
-      }
-    }
-
-    // Set the products state with the fetched products
-    setproducts(productsArray);
-    setis_network_err(false);
-    setproduct_is_loading(false);
-  };
-
-  const fetchProducts = async () => {
-    const db = getFirestore();
-    const productsRef = collection(db, "products");
-
-    // Get the first and last day of the current month
-    const startOfMonth = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      1,
-    );
-    const endOfMonth = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth() + 1,
-      0,
-    );
-
-    // Get the first and last day of the previous month
-    const startOfPrevMonth = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth() - 1,
-      1,
-    );
-    const endOfPrevMonth = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      0,
-    );
-
-    // Create a query to filter products created within the current month
-    const currentMonthQuery = query(
-      productsRef,
-      orderBy("createdAt", "desc"),
-      where("createdAt", ">=", startOfMonth),
-      where("createdAt", "<=", endOfMonth),
-    );
-
-    // Create a query to filter products created within the previous month
-    const previousMonthQuery = query(
-      productsRef,
-      orderBy("createdAt", "desc"),
-      where("createdAt", ">=", startOfPrevMonth),
-      where("createdAt", "<=", endOfPrevMonth),
-    );
-
-    setis_network_err(true);
-    setproduct_is_loading(true);
-
-    try {
-      const querySnapshot = await getDocs(currentMonthQuery);
-      let productsArray = querySnapshot.docs.map((doc) => {
-        const { cover_png, title, factions, subfactions } = doc.data();
-        return {
-          id: doc.id,
-          cover_png,
-          title,
-          factions,
-          subfactions,
-        };
-      });
-
-      if (productsArray.length === 0) {
-        // If no products for the current month, query for the previous month
-        const prevQuerySnapshot = await getDocs(previousMonthQuery);
-        productsArray = prevQuerySnapshot.docs.map((doc) => {
-          const { cover_png, title, factions, subfactions } = doc.data();
-          return {
-            id: doc.id,
-            cover_png,
-            title,
-            factions,
-            subfactions,
-          };
-        });
-      }
-
-      setproducts(productsArray);
-      setis_network_err(false);
-    } catch (error) {
-      console.error("Error getting products: ", error);
-    } finally {
-      setproduct_is_loading(false);
-    }
-  };
+    return () => unsubscribeTiers();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         // User is authenticated, fetch products based on subscription history
-        setis_network_err(true);
-        setproduct_is_loading(true);
+
         console.log(user.uid);
-        await fetchProductsBasedOnSubscription(user.uid);
       } else {
-        fetchProducts();
         // User is not authenticated, load only the products from this month. If this month is not available, then load the past month.
       }
     });
@@ -495,6 +303,7 @@ export default function Home() {
               setsearch_text={setsearch_text}
               is_network_err={is_network_err}
               search_text={search_text}
+              product_is_loading={product_is_loading}
             />
           </>
         ) : (
@@ -504,25 +313,7 @@ export default function Home() {
           </>
         )}
       </div>
-
-      {/* <button
-        className="w-[100vw] h-[100vh]"
-        onClick={() => {
-
-          axios
-            .delete(
-              `https://pop-up-x6pg.onrender.com/banner/6595408b026be0da5721b3f4`,
-            )
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((error) => {
-              console.error("Error deleting banner:", error);
-            });
-        }}
-      >
-        click me{" "}
-      </button> */}
+      <div className="h-[3rem]"></div>
     </>
   );
 }

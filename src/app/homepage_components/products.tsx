@@ -23,6 +23,7 @@ const Products = (props: any) => {
     is_network_err,
     search_text,
     setmobile_faction_active,
+    product_is_loading,
   } = props;
   const [opacity, setopacity] = useState(0.5);
   const { toggleDropdown, setpage_loader }: any = useProfile_Context();
@@ -120,64 +121,71 @@ const Products = (props: any) => {
               Something went wrong, Kindly refresh this page
             </div>
           )}
-          {products.length == 0 && !is_network_err && (
+          {products.length == 0 && !product_is_loading && (
             <div className=" w-full sm:h-[40vw] h-[25vw] flex justify-center items-center ">
               <p className="text-white text-[1.2vw] sm:text-[4vw] neuer text-opacity-[70%]">
-                No item matches your search
+                No product to show
               </p>
             </div>
           )}
-          {products.map((e: any, index: any) => {
-            // if (index == 9 ) {
 
-            // }
-            return (
-              <>
-                <Link
-                  href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
-                  key={index}
-                  className="w-[19.6vw] sm:w-[45.5vw]   sm:gap-[3vw] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2vw]"
-                  onClick={() => {
-                    setpage_loader(true);
-                    // route.push(``);
-                  }}
-                >
+          <div className=" w-full flex-wrap justify-between flex">
+            {products.map((e: any, index: any) => {
+              return (
+                <>
                   <div
-                    className="w-full  avater_bg sm:h-[45vw] h-[20vw] overflow-hidden"
-                    style={{ backgroundImage: "url(/cover.webp)" }}
+                    key={index}
+                    className="lg:w-[32%] mb-[1rem] md:mb-[1.2rem] sm:w-[48.5%] group    sm:gap-[3vw] sm:rounded-[4vw]  border-white  border border-opacity-[30%] overflow-hidden cursor-pointer hover:scale-[1.008] transition duration-[0.6s] h-auto flex flex-col gap-[1.3vw] rounded-[2rem]"
+                    onClick={() => {
+                      setpage_loader(true);
+                      // route.push(``);
+                    }}
                   >
-                    <Image
-                      src={e.cover_png}
-                      alt={e.title}
-                      unoptimized
-                      width="0"
-                      height="0"
-                      className="w-full h-full scale-[1.2]"
-                    />
-                  </div>
-                  <div className="w-full px-[1vw] sm:px-[3vw] flex justify-between  items-center">
-                    <p className="neuem text-[1.2vw] text-white sm:text-[3vw]   sm:leading-[3.5vw]">
-                      {e.title}
-                    </p>
-                  </div>
+                    <div
+                      className="w-full  avater_bg sm:h-[15rem] h-[20rem] overflow-hidden"
+                      style={{ backgroundImage: "url(/cover.webp)" }}
+                    >
+                      <Image
+                        src={e.cover_png}
+                        alt={e.title}
+                        unoptimized
+                        width="0"
+                        height="0"
+                        className="w-full h-full object-cover group-hover:scale-[1.05] duration-[0.5s] transition"
+                      />
+                    </div>
+                    <div className="w-full flex-col px-[1rem] pb-[0.5rem] flex md:gap-[1.2rem] gap-[1rem] md:pb-[1.4rem]">
+                      <p className="neuem md:text-base text-sm text-white capitalize">
+                        {e.title}
+                      </p>
+                      <div className="w-full items-center  flex justify-between">
+                        <Link
+                          href={`/product-showcase?product_id=${e.id}&faction=${e.factions}`}
+                          className="bg-[#CCFF00] text-sm hover:bg-opacity-[70%]  sm:py-[1.2vw] sm:px-[5vw] sm:rounded-[3vw]   rounded-[1.2vw] py-[0.6vw] px-[1.8vw] neuer text-black w-fit h-fit text-[1vw]"
+                        >
+                          View
+                        </Link>
 
-                  <button className="bg-[#CCFF00] sm:text-[3vw] hover:bg-opacity-[70%] sm:ml-[3vw] sm:py-[1.2vw] sm:px-[5vw] sm:rounded-[3vw] sm:mb-[4vw] ml-[1vw] rounded-[1.2vw] py-[0.6vw] px-[1.8vw] neuer text-black w-fit h-fit mb-[2vw] text-[1vw]">
-                    View
-                  </button>
-                </Link>
-                {index === 8 && (
-                  <div className="w-full h-auto  sm:hidden">
-                    <Banner />
+                        <p className="text-white text-xs neuer text-opacity-[40%]">
+                          <i className="bi bi-award-fill"></i> {e.name}
+                        </p>
+                      </div>{" "}
+                    </div>
                   </div>
-                )}
-                {index === 7 && (
-                  <div className="w-full h-auto hidden sm:my-[2.5vw] sm:block">
-                    <Mob_Banner />
-                  </div>
-                )}
-              </>
-            );
-          })}
+                  {index === 8 && (
+                    <div className="w-full h-auto  sm:hidden">
+                      <Banner />
+                    </div>
+                  )}
+                  {index === 7 && (
+                    <div className="w-full h-auto hidden sm:my-[2.5vw] sm:block">
+                      <Mob_Banner />
+                    </div>
+                  )}
+                </>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>
